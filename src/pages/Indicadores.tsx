@@ -1,0 +1,471 @@
+import { useState, useEffect } from 'react'
+import {
+  TrendingUp,
+  TrendingDown,
+  RefreshCw,
+  Info,
+  Calendar,
+  Layers,
+  Database,
+  ArrowUpRight,
+  ChevronRight,
+  Filter,
+} from 'lucide-react'
+import {
+  ResponsiveContainer,
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  Tooltip,
+  CartesianGrid,
+  Legend,
+} from 'recharts'
+import { EconomicIndicator, IndicatorCategory } from '@/types'
+import { getEconomicIndicators, syncIndicatorsNow } from '@/services/indicators'
+import { useRealtime } from '@/hooks/use-realtime'
+import IndicatorAreaChart from '@/components/IndicatorAreaChart'
+import Sparkline from '@/components/Sparkline'
+import { toast } from '@/hooks/use-toast'
+
+export default function Indicadores() {
+  const [indicators, setIndicators] = useState<EconomicIndicator[]>([])
+  const [selectedCategory, setSelectedCategory] = useState<IndicatorCategory | 'all'>('all')
+  const [loading, setLoading] = useState(true)
+  const [syncing, setSyncing] = useState(false)
+  const [lastUpdatedTime, setLastUpdatedTime] = useState<string>('')
+
+  const loadIndicators = async () => {
+    setLoading(true)
+    const data = await getEconomicIndicators()
+    setIndicators(data)
+    setLoading(false)
+    setLastUpdatedTime(
+      new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }),
+    )
+  }
+
+  useEffect(() => {
+    loadIndicators()
+  }, [])
+
+  // Real-time synchronization
+  useRealtime<EconomicIndicator>('economic_indicators', () => {
+    getEconomicIndicators().then((data) => {
+      setIndicators(data)
+      setLastUpdatedTime(
+        new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }),
+      )
+    })
+  })
+
+  const handleManualSync = async () => {
+    setSyncing(true)
+    const success = await syncIndicatorsNow()
+    setSyncing(false)
+    if (success) {
+      toast({
+        title: 'Sincronizado com o Banco Central',
+        description: 'Séries do SGS atualizadas com as últimas observações publicadas.',
+      })
+      loadIndicators()
+    } else {
+      toast({
+        title: 'Informação',
+        description: 'As séries já estão atualizadas com as informações mais recentes do BCB.',
+      })
+    }
+  }
+
+  const categoryChips: { id: IndicatorCategory | 'all'; label: string }[] = [
+    { id: 'all', label: 'Todos os Indicadores' },
+    { id: 'juros', label: 'Juros' },
+    { id: 'inflacao', label: 'Inflação' },
+    { id: 'cambio', label: 'Câmbio' },
+    { id: 'atividade', label: 'Atividade Econômica' },
+  ]
+
+  const filteredIndicators = indicators.filter((ind) => {
+    if (selectedCategory === 'all') return true
+    return ind.category === selectedCategory
+  })
+
+  // Comparison Multi-series line chart: IPCA 12m vs IGP-M
+  const ipcaInd = indicators.find((i) => i.code === 'ipca_12m')
+  const igpmInd = indicators.find((i) => i.code === 'igpm_12m')
+
+  const comparisonChartData = (() => {
+    const ipcaHist = ipcaInd?.history || []
+    const igpmHist = igpmInd?.history || []
+    const len = Math.min(ipcaHist.length, igpmHist.length, 30)
+    if (len === 0) return []
+
+    const ipcaSlice = ipcaHist.slice(-len)
+    const igpmSlice = igpmHist.slice(-len)
+
+    return ipcaSlice.map((item, idx) => {
+      const igpmItem = igpmSlice[idx] || item
+      let label = item.date
+      if (item.date && item.date.includes('-')) {
+        const p = item.date.split('-')
+        if (p.length === 3) label = `${p[2]}/${p[1]}`
+      }
+      return {
+        date: item.date,
+        displayDate: label,
+        ipca: item.value,
+        igpm: igpmItem.value,
+      }
+    })
+  })()
+
+  return (
+    <div className="flex flex-col min-h-screen">
+      {/* 1. Header Band (Navy) */}
+      <section className="bg-[#0B1F3A] text-white py-12 border-b border-[#1A365D]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div>
+              <div className="inline-flex items-center gap-2 mb-2">
+                <span className="w-2 h-2 rounded-full bg-[#B8892F]" />
+                <span className="text-[11px] font-mono uppercase tracking-[0.2em] text-[#D4A853] font-bold">
+                  Sistema Gerenciador de Séries Temporais (SGS / BCB)
+                </span>
+              </div>
+              <h1 className="font-serif text-3xl sm:text-4xl font-bold text-[#F6F4EE]">
+                Indicadores Econômicos
+              </h1>
+              <p className="text-sm text-slate-300 mt-2 max-w-2xl leading-relaxed">
+                Atualizados automaticamente a partir do Banco Central do Brasil (SGS) todos os dias
+                às 08:00 e 18:00 UTC. Séries históricas com acompanhamento em tempo real.
+              </p>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-3">
+              {lastUpdatedTime && (
+                <div className="bg-[#102A4E] border border-[#1E4377] px-3 py-2 rounded text-xs font-mono text-slate-300 flex items-center gap-2">
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                  </span>
+                  <span>Última checagem: {lastUpdatedTime}</span>
+                </div>
+              )}
+
+              <button
+                type="button"
+                onClick={handleManualSync}
+                disabled={syncing}
+                className="inline-flex items-center gap-2 px-4 py-2 bg-[#B8892F] hover:bg-[#D4A853] text-[#0B1F3A] text-xs font-mono font-bold uppercase tracking-wider rounded transition-colors disabled:opacity-50"
+              >
+                <RefreshCw className={`w-3.5 h-3.5 ${syncing ? 'animate-spin' : ''}`} />
+                <span>{syncing ? 'Atualizando...' : 'Sincronizar BCB'}</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 2. Category Filter Bar */}
+      <section className="bg-white border-b border-[#E5E0D6] sticky top-[73px] z-30 shadow-xs">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-1">
+            <span className="text-xs font-mono text-slate-500 uppercase font-semibold flex items-center gap-1 mr-2 shrink-0">
+              <Filter className="w-3.5 h-3.5" /> Filtrar:
+            </span>
+            {categoryChips.map((chip) => {
+              const isActive = selectedCategory === chip.id
+              return (
+                <button
+                  key={chip.id}
+                  onClick={() => setSelectedCategory(chip.id)}
+                  className={`px-3.5 py-1.5 rounded text-xs font-mono transition-all shrink-0 ${
+                    isActive
+                      ? 'bg-[#B8892F] text-[#0B1F3A] font-bold shadow-xs'
+                      : 'bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium'
+                  }`}
+                >
+                  {chip.label}
+                </button>
+              )
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* 3. Main Content: Indicator Cards Grid */}
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex-1">
+        {loading ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 animate-pulse">
+            {[1, 2, 3, 4].map((i) => (
+              <div
+                key={i}
+                className="bg-white rounded-lg p-6 border border-slate-200 h-80 flex flex-col justify-between"
+              >
+                <div className="h-6 bg-slate-200 rounded w-1/3 mb-4" />
+                <div className="h-12 bg-slate-200 rounded w-1/2 mb-4" />
+                <div className="h-32 bg-slate-100 rounded w-full" />
+              </div>
+            ))}
+          </div>
+        ) : filteredIndicators.length === 0 ? (
+          <div className="text-center py-16 bg-white rounded-lg border border-dashed border-slate-300 p-8">
+            <Database className="w-12 h-12 text-slate-400 mx-auto mb-4" />
+            <h3 className="font-serif text-lg font-bold text-[#0B1F3A] mb-2">
+              Nenhum indicador encontrado para esta categoria
+            </h3>
+            <p className="text-sm text-slate-500 mb-6">
+              Tente selecionar outra categoria ou recarregar os dados do Banco Central.
+            </p>
+            <button
+              onClick={() => setSelectedCategory('all')}
+              className="px-4 py-2 bg-[#0B1F3A] text-white text-xs font-mono font-bold uppercase tracking-wider rounded"
+            >
+              Ver todos os indicadores
+            </button>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {filteredIndicators.map((indicator) => {
+              const variation = indicator.variation ?? 0
+              const isPositive = variation > 0
+              const isNegative = variation < 0
+
+              let formattedDate = indicator.reference_date
+              if (indicator.reference_date && indicator.reference_date.includes('-')) {
+                const [y, m, d] = indicator.reference_date.split('-')
+                formattedDate = `${d}/${m}/${y}`
+              }
+
+              // Color scheme by category
+              const chartColor =
+                indicator.category === 'juros'
+                  ? '#0B1F3A'
+                  : indicator.category === 'inflacao'
+                    ? '#B8892F'
+                    : indicator.category === 'cambio'
+                      ? '#1F7A4D'
+                      : '#4F46E5'
+
+              return (
+                <div
+                  key={indicator.id}
+                  className="bg-white rounded-xl p-6 border border-[#E5E0D6] card-subtle-shadow flex flex-col justify-between"
+                >
+                  {/* Top Row: Details & Main Value */}
+                  <div>
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-[#B8892F]">
+                        {indicator.category.toUpperCase()} • CÓDIGO SGS:{' '}
+                        {indicator.source_code || indicator.code}
+                      </span>
+                      <span className="text-[11px] font-mono text-slate-500">
+                        Ref: {formattedDate}
+                      </span>
+                    </div>
+
+                    <h2 className="font-serif text-2xl font-bold text-[#0B1F3A] mb-2">
+                      {indicator.name}
+                    </h2>
+
+                    <p className="text-xs text-slate-600 mb-6 leading-relaxed">
+                      {indicator.description}
+                    </p>
+
+                    <div className="flex flex-wrap items-baseline justify-between gap-4 p-4 bg-[#F6F4EE] rounded-lg border border-[#EDE9DE] mb-6">
+                      <div className="flex items-baseline gap-2">
+                        <span className="font-mono text-4xl font-extrabold text-[#0B1F3A] tracking-tight">
+                          {indicator.current_value.toLocaleString('pt-BR', {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2,
+                          })}
+                        </span>
+                        <span className="text-base font-semibold font-mono text-slate-600">
+                          {indicator.unit}
+                        </span>
+                      </div>
+
+                      <div className="flex items-center gap-2 font-mono text-xs">
+                        <span
+                          className={`inline-flex items-center gap-1 font-bold px-2.5 py-1 rounded ${
+                            isPositive
+                              ? 'text-[#1F7A4D] bg-[#1F7A4D]/15'
+                              : isNegative
+                                ? 'text-[#C0392B] bg-[#C0392B]/15'
+                                : 'text-slate-600 bg-slate-200'
+                          }`}
+                        >
+                          {isPositive && <TrendingUp className="w-3.5 h-3.5" />}
+                          {isNegative && <TrendingDown className="w-3.5 h-3.5" />}
+                          <span>
+                            {isPositive ? '+' : ''}
+                            {variation.toLocaleString('pt-BR', {
+                              minimumFractionDigits: 2,
+                              maximumFractionDigits: 2,
+                            })}
+                          </span>
+                        </span>
+                        <span className="text-slate-500">variação recente</span>
+                      </div>
+                    </div>
+
+                    {/* Interactive Area Chart */}
+                    <div className="mb-6">
+                      <IndicatorAreaChart
+                        history={indicator.history}
+                        unit={indicator.unit}
+                        color={chartColor}
+                        height={220}
+                        name={`Evolução histórica (${indicator.short_name})`}
+                      />
+                    </div>
+
+                    {/* Recent 10 Observations Table */}
+                    {indicator.history && indicator.history.length > 0 && (
+                      <div className="mt-4 pt-4 border-t border-slate-100">
+                        <span className="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-700 block mb-2">
+                          Últimas Observações Registradas
+                        </span>
+                        <div className="grid grid-cols-2 sm:grid-cols-5 gap-2 text-xs font-mono">
+                          {indicator.history
+                            .slice(-10)
+                            .reverse()
+                            .map((obs, idx) => {
+                              let dLabel = obs.date
+                              if (obs.date && obs.date.includes('-')) {
+                                const [y, m, d] = obs.date.split('-')
+                                dLabel = `${d}/${m}/${y}`
+                              }
+                              return (
+                                <div
+                                  key={idx}
+                                  className="p-2 bg-slate-50 rounded border border-slate-200/80 flex flex-col"
+                                >
+                                  <span className="text-[10px] text-slate-500">{dLabel}</span>
+                                  <span className="font-bold text-[#0B1F3A] tabular-nums">
+                                    {obs.value.toLocaleString('pt-BR', {
+                                      minimumFractionDigits: 2,
+                                      maximumFractionDigits: 2,
+                                    })}{' '}
+                                    {indicator.unit}
+                                  </span>
+                                </div>
+                              )
+                            })}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Card Footer */}
+                  <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-[11px] font-mono text-slate-500">
+                    <span>Fonte: {indicator.source}</span>
+                    <span className="text-slate-600 font-semibold">{indicator.frequency}</span>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        )}
+
+        {/* 4. COMPARATIVO SECTION (IPCA 12m vs IGP-M) */}
+        {comparisonChartData.length > 0 && (
+          <section className="mt-16 bg-white rounded-xl p-8 border border-[#E5E0D6] card-subtle-shadow">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 border-b border-slate-100 pb-4">
+              <div>
+                <span className="text-xs font-mono uppercase tracking-widest text-[#B8892F] font-bold">
+                  Análise Comparativa
+                </span>
+                <h2 className="font-serif text-2xl font-bold text-[#0B1F3A] mt-1">
+                  Dispersão de Inflação: IPCA 12m vs IGP-M 12m
+                </h2>
+                <p className="text-xs text-slate-600 mt-1">
+                  Comparação direta entre o índice oficial de preços ao consumidor (IBGE) e o índice
+                  geral de preços de mercado (FGV).
+                </p>
+              </div>
+
+              <div className="flex items-center gap-4 text-xs font-mono">
+                <span className="flex items-center gap-1.5 text-[#0B1F3A] font-bold">
+                  <span className="w-3 h-3 rounded bg-[#0B1F3A]" /> IPCA 12m (Consumo)
+                </span>
+                <span className="flex items-center gap-1.5 text-[#B8892F] font-bold">
+                  <span className="w-3 h-3 rounded bg-[#B8892F]" /> IGP-M 12m (Contratos/Atacado)
+                </span>
+              </div>
+            </div>
+
+            <div style={{ width: '100%', height: 320 }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart
+                  data={comparisonChartData}
+                  margin={{ top: 10, right: 10, left: -10, bottom: 0 }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" stroke="#E2E8F0" vertical={false} />
+                  <XAxis
+                    dataKey="displayDate"
+                    tick={{ fill: '#64748B', fontSize: 11, fontFamily: 'JetBrains Mono' }}
+                    axisLine={{ stroke: '#CBD5E1' }}
+                    tickLine={false}
+                  />
+                  <YAxis
+                    tick={{ fill: '#64748B', fontSize: 11, fontFamily: 'JetBrains Mono' }}
+                    axisLine={false}
+                    tickLine={false}
+                    domain={['auto', 'auto']}
+                    tickFormatter={(v) => `${v}%`}
+                  />
+                  <Tooltip
+                    content={({ active, payload }) => {
+                      if (active && payload && payload.length) {
+                        const row = payload[0].payload
+                        return (
+                          <div className="bg-[#0B1F3A] text-white p-3 rounded shadow-xl border border-[#B8892F] text-xs font-mono">
+                            <p className="text-slate-300 mb-1">{row.date}</p>
+                            <p className="font-bold text-slate-100">
+                              IPCA 12m: {row.ipca?.toFixed(2)}%
+                            </p>
+                            <p className="font-bold text-[#D4A853]">
+                              IGP-M 12m: {row.igpm?.toFixed(2)}%
+                            </p>
+                            <p className="text-[10px] text-slate-400 mt-1 pt-1 border-t border-slate-700">
+                              Spread: {(row.igpm - row.ipca).toFixed(2)} p.p.
+                            </p>
+                          </div>
+                        )
+                      }
+                      return null
+                    }}
+                  />
+                  <Line
+                    type="monotone"
+                    dataKey="ipca"
+                    name="IPCA 12m"
+                    stroke="#0B1F3A"
+                    strokeWidth={3}
+                    dot={{ r: 3, fill: '#0B1F3A' }}
+                    activeDot={{ r: 5 }}
+                  />
+                  <Line
+                    type="monotone"
+                    dataKey="igpm"
+                    name="IGP-M 12m"
+                    stroke="#B8892F"
+                    strokeWidth={3}
+                    dot={{ r: 3, fill: '#B8892F' }}
+                    activeDot={{ r: 5 }}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+
+            <div className="mt-4 pt-3 border-t border-slate-100 text-xs text-slate-500 flex items-center justify-between font-mono">
+              <span>Fontes: IBGE e FGV (SGS/BCB)</span>
+              <span>Diferencial de indexação para contratos corporativos</span>
+            </div>
+          </section>
+        )}
+      </main>
+    </div>
+  )
+}
