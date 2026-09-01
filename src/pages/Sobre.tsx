@@ -10,14 +10,9 @@ import {
   ArrowRight,
   Calculator,
   Target,
-  LineChart,
-  PieChart,
-  Layers,
   AlertTriangle,
-  BadgePercent,
   Check,
 } from 'lucide-react'
-import { Link } from 'react-router-dom'
 
 export default function Sobre() {
   const coreFeatures = [
@@ -25,19 +20,19 @@ export default function Sobre() {
       icon: BarChart3,
       badge: '48 Indicadores',
       title: 'Diagnóstico por 48 Indicadores de Desempenho',
-      desc: 'Demonstramos com precisão matemática os pontos fortes e fracos da sua estrutura financeira através de 48 métricas e indicadores de desempenho rigorosos.',
+      desc: 'Demonstramos com precisão analítica os pontos fortes e as vulnerabilidades da sua estrutura financeira, fundamentados em quarenta e oito indicadores de desempenho rigorosos.',
     },
     {
       icon: AlertTriangle,
-      badge: 'Prevenção e Solvência',
+      badge: 'Prevenção & Solvência',
       title: 'Análise de Insolvência Imediata e em 12 Meses',
-      desc: 'Demonstramos antecipadamente se a sua empresa apresenta riscos de insolvência imediata ou no período de doze meses, permitindo ações corretivas em tempo hábil.',
+      desc: 'Identificamos antecipadamente se a empresa apresenta riscos de insolvência imediata ou no período de doze meses, assegurando a tomada de medidas corretivas em tempo hábil.',
     },
     {
       icon: ShieldCheck,
       badge: 'Valuation & Ativos',
       title: 'Avaliação Segura de Ativos para Venda do Negócio',
-      desc: 'Numa possível venda do seu negócio, utilizamos indicadores seguros e fundamentados para avaliar com precisão o valor real dos seus Ativos.',
+      desc: 'Numa eventual alienação ou negociação do seu negócio, empregamos indicadores consolidados e seguros para determinar com exatidão o valor real dos seus ativos.',
     },
   ]
 
@@ -46,42 +41,42 @@ export default function Sobre() {
       number: '01',
       title: 'Planejamento Financeiro',
       icon: Calculator,
-      highlight: 'Gestão de Capital de Giro & Investimento de Lucros',
+      highlight: 'Gestão do Fluxo de Caixa, Capital de Giro e Reinvestimento',
       description:
         'Com essa ferramenta vamos planejar de forma eficiente o fluxo de entrada e saída do capital de giro e demonstrar sugestões possíveis para a empresa investir os lucros no seu próprio negócio.',
       benefits: [
-        'Planejamento eficiente do fluxo de entrada e saída de caixa',
-        'Gestão estratégica e otimizada do capital de giro',
-        'Sugestões estruturadas para reinvestir os lucros no próprio negócio',
-        'Proteção da liquidez operacional da empresa',
+        'Planejamento eficiente e minucioso do fluxo de entrada e saída de caixa',
+        'Gestão estratégica e otimizada do capital de giro operacional',
+        'Sugestões fundamentadas para reinvestir os lucros no próprio negócio',
+        'Preservação e blindagem da liquidez corrente da empresa',
       ],
     },
     {
       number: '02',
       title: 'Planejamento Econômico',
       icon: TrendingUp,
-      highlight: 'Maximização do Lucro Mensal',
+      highlight: 'Maximização e Sustentabilidade do Lucro Mensal',
       description:
-        'Com ele vamos melhorar o lucro mensal da empresa, alinhando custos, margens e estrutura operacional a metas de rentabilidade sustentável.',
+        'Com ele vamos melhorar o lucro mensal da empresa, alinhando receitas, custos e despesas operacionais a parâmetros consistentes de rentabilidade.',
       benefits: [
-        'Melhoria consistente do lucro mensal da empresa',
-        'Otimização da margem de contribuição por produto ou serviço',
-        'Análise da eficiência operacional e custos fixos/variáveis',
-        'Equilíbrio e sustentabilidade dos resultados econômicos',
+        'Melhoria contínua e expressiva do lucro mensal da empresa',
+        'Otimização da margem de contribuição por linha de produto e serviço',
+        'Racionalização criteriosa da estrutura de custos fixos e variáveis',
+        'Equilíbrio e sustentabilidade dos resultados econômico-financeiros',
       ],
     },
     {
       number: '03',
       title: 'Balanced Scorecard',
       icon: Target,
-      highlight: 'Competitividade & Execução Estratégica',
+      highlight: 'Competitividade Estratégica e Eficiência de Mercado',
       description:
         'Com essa ferramenta a empresa vai ficar muito mais competitiva no mercado, ou seja, nenhum negócio será perdido com a implantação do Balanced Scorecard.',
       benefits: [
-        'Aumento expressivo da competitividade no mercado',
-        'Nenhum negócio perdido após a implantação da ferramenta',
-        'Alinhamento total entre visão de negócios e operações cotidianas',
-        'Monitoramento contínuo de metas financeiras, clientes, processos e pessoas',
+        'Elevação substancial da competitividade corporativa perante o mercado',
+        'Garantia de que nenhum negócio será perdido após a implantação da metodologia',
+        'Alinhamento integral entre as diretrizes estratégicas e a rotina operacional',
+        'Acompanhamento integrado de metas financeiras, processos, clientes e pessoas',
       ],
     },
   ]
@@ -89,19 +84,19 @@ export default function Sobre() {
   const differentials = [
     {
       title: 'Diagnóstico Completo com 48 Indicadores',
-      desc: 'Mapeamento profundo de todas as variáveis financeiras para evidenciar forças e vulnerabilidades.',
+      desc: 'Mapeamento exaustivo de variáveis financeiras para evidenciar com clareza os pontos fortes e as vulnerabilidades do negócio.',
     },
     {
-      title: 'Prevenção de Insolvência (Imediata e 12 Meses)',
-      desc: 'Sistemas preditivos para alertar e conter riscos de liquidez antes que afetem a operação.',
+      title: 'Prevenção de Insolvência (Imediata e em 12 Meses)',
+      desc: 'Modelagem preventiva voltada a antecipar e mitigar ameaças à solvência e à liquidez da empresa.',
     },
     {
       title: 'Avaliação Segura de Ativos',
-      desc: 'Métricas robustas e fundamentadas para precificação patrimonial em transações de M&A ou venda.',
+      desc: 'Emprego de metodologia criteriosa e indicadores sólidos para precificação patrimonial em processos de venda ou reestruturação.',
     },
     {
-      title: 'Três Tipos Estratégicos de Planejamento',
-      desc: 'Integração de Planejamento Financeiro, Econômico e Balanced Scorecard sob medida.',
+      title: 'Três Tipos Estratégicos de Planejamentos',
+      desc: 'Soluções integradas de Planejamento Financeiro, Planejamento Econômico e Balanced Scorecard sob medida para a sua operação.',
     },
   ]
 
@@ -126,8 +121,9 @@ export default function Sobre() {
             <p className="text-base sm:text-lg text-slate-300 mt-5 leading-relaxed font-sans">
               A <strong>Borlim Consultoria</strong> é especializada em diagnosticar e planejar o
               sistema financeiro da sua empresa. Demonstramos os pontos fortes e fracos com quarenta
-              e oito indicadores de desempenho e estabelecemos planejamentos estratégicos focados no
-              aumento real da lucratividade e competitividade.
+              e oito indicadores de desempenho e estabelecemos planejamentos estratégicos orientados
+              ao fortalecimento do capital de giro, à ampliação do lucro mensal e à excelência
+              competitiva.
             </p>
           </div>
         </div>
@@ -140,11 +136,12 @@ export default function Sobre() {
           <div className="lg:col-span-7 space-y-6 text-slate-800 leading-relaxed font-serif text-base sm:text-lg">
             <div className="inline-block border-b-2 border-[#B8892F] pb-1">
               <span className="text-xs font-mono uppercase tracking-widest text-[#B8892F] font-bold">
-                O que fazemos & Diagnóstico
+                Atuação Institucional & Diagnóstico
               </span>
             </div>
             <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#0B1F3A] leading-snug">
-              Diagnóstico preciso, prevenção de insolvência e valorização patrimonial.
+              Diagnóstico preciso, prevenção rigorosa de insolvência e avaliação patrimonial de
+              ativos.
             </h2>
 
             <div className="p-6 bg-white rounded-xl border-l-4 border-l-[#B8892F] border border-[#E5E0D6] shadow-xs space-y-4 font-sans text-sm sm:text-base text-slate-700">
@@ -157,7 +154,7 @@ export default function Sobre() {
                 <strong>quarenta e oito indicadores de desempenho</strong>.
               </p>
               <p className="leading-relaxed">
-                Além dos indicadores, vamos demonstrar se a empresa tem{' '}
+                Além dos indicadores vamos demonstrar se a empresa tem{' '}
                 <strong>problemas de insolvência imediata ou no período de doze meses</strong>.
               </p>
               <p className="leading-relaxed">
@@ -167,9 +164,9 @@ export default function Sobre() {
             </div>
 
             <p className="text-sm sm:text-base text-slate-600 font-sans leading-relaxed">
-              Com base nesse diagnóstico aprofundado, nossa equipe técnica desenvolve soluções
-              customizadas que blindam a saúde financeira do seu negócio e apontam caminhos claros
-              para maximizar os resultados operacionais.
+              Com base nesse diagnóstico técnico aprofundado, estruturamos soluções corporativas que
+              blindam a saúde financeira do negócio, conferem total previsibilidade de fluxo de
+              caixa e pavimentam decisões estratégicas de alto impacto.
             </p>
           </div>
 
@@ -203,8 +200,9 @@ export default function Sobre() {
                 Atuação Personalizada
               </span>
               <p className="text-xs text-slate-700 font-sans leading-relaxed">
-                Empresas de Pequeno, Médio e Grande Porte que buscam segurança no fluxo de caixa,
-                aumento do lucro e crescimento estruturado.
+                Atendimento consultivo e técnico a empresas de pequeno, médio e grande porte que
+                priorizam solidez de liquidez, incremento real de lucratividade e crescimento
+                corporativo sustentável.
               </p>
             </div>
           </div>
@@ -217,11 +215,11 @@ export default function Sobre() {
               Metodologia de Diagnóstico
             </span>
             <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#0B1F3A] mt-1">
-              Como Diagnosticamos a Saúde da Sua Empresa
+              Como Diagnosticamos a Saúde Financeira da Sua Empresa
             </h2>
             <p className="text-xs sm:text-sm text-slate-600 mt-2 font-sans">
-              Estrutura analítica em três frentes complementares para identificar riscos e
-              oportunidades no sistema financeiro.
+              Estrutura analítica em três dimensões integradas para mapear riscos, oportunidades e
+              valor patrimonial.
             </p>
           </div>
 
@@ -265,8 +263,7 @@ export default function Sobre() {
             </h2>
             <p className="text-sm sm:text-base text-slate-600 mt-3 font-sans leading-relaxed">
               Com base nos indicadores estabeleceremos{' '}
-              <strong>três tipos estratégicos de planejamentos</strong> para fortalecer as finanças,
-              elevar o lucro mensal e garantir máxima competitividade no mercado:
+              <strong>três tipos estratégicos de planejamentos</strong>:
             </p>
           </div>
 
@@ -322,15 +319,15 @@ export default function Sobre() {
           <div className="grid grid-cols-1 md:grid-cols-12 gap-10 items-center">
             <div className="md:col-span-7">
               <span className="text-xs font-mono uppercase tracking-widest text-[#D4A853] font-bold">
-                Contato Institucional & Atendimento
+                Contato Institucional & Atendimento Consultivo
               </span>
               <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#F6F4EE] mt-2 mb-4 leading-tight">
                 Inicie o diagnóstico financeiro da sua empresa com a BORLIM.
               </h2>
               <p className="text-sm text-slate-300 leading-relaxed mb-6 font-sans">
-                Descubra os pontos fortes e fracos do seu negócio, previna riscos de insolvência e
-                implante os três tipos estratégicos de planejamento com a nossa equipe
-                especializada:
+                Conheça em detalhes os pontos fortes e os pontos fracos do seu sistema financeiro,
+                previna riscos de insolvência e implante planejamentos estratégicos sob medida com a
+                nossa equipe:
               </p>
 
               <div className="space-y-3 font-mono text-xs">
