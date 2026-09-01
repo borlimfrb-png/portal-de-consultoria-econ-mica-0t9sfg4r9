@@ -43,11 +43,11 @@ export default function Navbar() {
           className="flex items-center gap-3 group"
           aria-label="BORLIM Consultoria Empresarial - Início"
         >
-          <div className="bg-white px-2.5 py-1.5 rounded border border-[#E5E0D6] shadow-xs flex items-center justify-center transition-transform duration-200 group-hover:scale-102">
+          <div className="bg-white px-3 py-1.5 rounded border border-[#E5E0D6] shadow-xs flex items-center justify-center transition-transform duration-200 group-hover:scale-102">
             <img
-              src="/src/assets/logotipo-borlim-73de3.jpg"
+              src="https://dagtlwojkqyivnjgveda.supabase.co/storage/v1/object/public/message-attachments/d4ee3ea1-6f11-4694-81f4-064bcd12d76e/logotipo-borlim-73de3.jpg"
               alt="BORLIM Consultoria Empresarial"
-              className="h-9 sm:h-11 w-auto max-w-[210px] object-contain mix-blend-multiply"
+              className="h-10 sm:h-12 w-auto max-w-[220px] object-contain"
             />
           </div>
         </Link>

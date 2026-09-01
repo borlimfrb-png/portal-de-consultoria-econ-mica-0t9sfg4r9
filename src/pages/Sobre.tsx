@@ -367,11 +367,11 @@ export default function Sobre() {
 
             <div className="md:col-span-5 flex flex-col items-center justify-center bg-[#102A4E] p-8 rounded-xl border border-[#1E4377] text-center shadow-inner">
               {/* Official Brand Logo */}
-              <div className="bg-white p-3.5 rounded-lg border border-[#B8892F]/60 shadow-md mb-4 max-w-[220px]">
+              <div className="bg-white p-4 rounded-lg border border-[#B8892F]/60 shadow-md mb-4 w-full max-w-[240px] flex items-center justify-center">
                 <img
-                  src="/src/assets/logotipo-borlim-73de3.jpg"
+                  src="https://dagtlwojkqyivnjgveda.supabase.co/storage/v1/object/public/message-attachments/d4ee3ea1-6f11-4694-81f4-064bcd12d76e/logotipo-borlim-73de3.jpg"
                   alt="BORLIM Consultoria Empresarial"
-                  className="w-full h-auto max-h-12 object-contain mix-blend-multiply"
+                  className="h-12 w-auto max-w-full object-contain"
                 />
               </div>
               <h3 className="font-serif text-lg font-bold text-[#F6F4EE]">Assessoria Financeira</h3>
