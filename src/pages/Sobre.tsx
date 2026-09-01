@@ -1,6 +1,5 @@
 import {
   TrendingUp,
-  Scale,
   Building2,
   Mail,
   Phone,
@@ -8,72 +7,101 @@ import {
   CheckCircle2,
   BarChart3,
   ShieldCheck,
-  Briefcase,
-  Layers,
   ArrowRight,
-  Database,
   Calculator,
-  Compass,
-  FileSpreadsheet,
+  Target,
+  LineChart,
+  PieChart,
+  Layers,
+  AlertTriangle,
+  BadgePercent,
+  Check,
 } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
 export default function Sobre() {
-  const pillars = [
+  const coreFeatures = [
     {
-      title: 'Inteligência e Transição da Reforma Tributária',
-      icon: Scale,
-      tag: 'EC 132/2023 & Leis Complementares',
-      desc: 'Assessoria estratégica no diagnóstico de impactos da transição para a CBS (federal) e o IBS (estadual/municipal), além do Imposto Seletivo. Modelagem e simulação da nova dinâmica de não cumulatividade plena, regras de Split Payment nos fluxos financeiros e reestruturação da governança de compras e contratos comerciais.',
-    },
-    {
-      title: 'Análise Macroeconômica & Indicadores em Tempo Real',
-      icon: TrendingUp,
-      tag: 'BCB, IBGE & FGV',
-      desc: 'Acompanhamento sistemático e modelagem das trajetórias de taxas de juros (Selic, CDI), inflação (IPCA, IGP-M), câmbio oficial (Dólar, Euro) e índices de atividade (IBC-Br e Desemprego). Projeções fundamentadas para suportar o planejamento orçamentário anual e a gestão de passivos financeiros corporativos.',
-    },
-    {
-      title: 'Consultoria Estratégica para Decisão Corporativa',
       icon: BarChart3,
-      tag: 'C-Level & Conselhos de Administração',
-      desc: 'Construção de cenários econômicos de estresse, análise de sensibilidade de margens de contribuição e suporte analítico para comitês executivos. Convertemos complexidade regulatória e volatilidade macroeconômica em diretrizes claras de alocação de capital e precificação sustentável.',
+      badge: '48 Indicadores',
+      title: 'Diagnóstico por 48 Indicadores de Desempenho',
+      desc: 'Demonstramos com precisão matemática os pontos fortes e fracos da sua estrutura financeira através de 48 métricas e indicadores de desempenho rigorosos.',
+    },
+    {
+      icon: AlertTriangle,
+      badge: 'Prevenção e Solvência',
+      title: 'Análise de Insolvência Imediata e em 12 Meses',
+      desc: 'Demonstramos antecipadamente se a sua empresa apresenta riscos de insolvência imediata ou no período de doze meses, permitindo ações corretivas em tempo hábil.',
+    },
+    {
+      icon: ShieldCheck,
+      badge: 'Valuation & Ativos',
+      title: 'Avaliação Segura de Ativos para Venda do Negócio',
+      desc: 'Numa possível venda do seu negócio, utilizamos indicadores seguros e fundamentados para avaliar com precisão o valor real dos seus Ativos.',
+    },
+  ]
+
+  const strategicPlans = [
+    {
+      number: '01',
+      title: 'Planejamento Financeiro',
+      icon: Calculator,
+      highlight: 'Gestão de Capital de Giro & Investimento de Lucros',
+      description:
+        'Com essa ferramenta vamos planejar de forma eficiente o fluxo de entrada e saída do capital de giro e demonstrar sugestões possíveis para a empresa investir os lucros no seu próprio negócio.',
+      benefits: [
+        'Planejamento eficiente do fluxo de entrada e saída de caixa',
+        'Gestão estratégica e otimizada do capital de giro',
+        'Sugestões estruturadas para reinvestir os lucros no próprio negócio',
+        'Proteção da liquidez operacional da empresa',
+      ],
+    },
+    {
+      number: '02',
+      title: 'Planejamento Econômico',
+      icon: TrendingUp,
+      highlight: 'Maximização do Lucro Mensal',
+      description:
+        'Com ele vamos melhorar o lucro mensal da empresa, alinhando custos, margens e estrutura operacional a metas de rentabilidade sustentável.',
+      benefits: [
+        'Melhoria consistente do lucro mensal da empresa',
+        'Otimização da margem de contribuição por produto ou serviço',
+        'Análise da eficiência operacional e custos fixos/variáveis',
+        'Equilíbrio e sustentabilidade dos resultados econômicos',
+      ],
+    },
+    {
+      number: '03',
+      title: 'Balanced Scorecard',
+      icon: Target,
+      highlight: 'Competitividade & Execução Estratégica',
+      description:
+        'Com essa ferramenta a empresa vai ficar muito mais competitiva no mercado, ou seja, nenhum negócio será perdido com a implantação do Balanced Scorecard.',
+      benefits: [
+        'Aumento expressivo da competitividade no mercado',
+        'Nenhum negócio perdido após a implantação da ferramenta',
+        'Alinhamento total entre visão de negócios e operações cotidianas',
+        'Monitoramento contínuo de metas financeiras, clientes, processos e pessoas',
+      ],
     },
   ]
 
   const differentials = [
     {
-      title: 'Dados Oficiais e Atualização Frequente',
-      desc: 'Integração contínua e automatizada com o Sistema Gerenciador de Séries Temporais (SGS) do Banco Central do Brasil, IBGE e publicações oficiais da Câmara e do Senado.',
+      title: 'Diagnóstico Completo com 48 Indicadores',
+      desc: 'Mapeamento profundo de todas as variáveis financeiras para evidenciar forças e vulnerabilidades.',
     },
     {
-      title: 'Especialização Focada na Reforma Tributária',
-      desc: 'Compreensão técnica profunda dos efeitos do IBS, CBS, Split Payment e alíquotas de referência sobre o fluxo de caixa das empresas de médio e grande porte.',
+      title: 'Prevenção de Insolvência (Imediata e 12 Meses)',
+      desc: 'Sistemas preditivos para alertar e conter riscos de liquidez antes que afetem a operação.',
     },
     {
-      title: 'Síntese Executiva Rigorosa',
-      desc: 'Comunicação editorial sóbria, objetiva e orientada à tomada de decisão para CEOs, CFOs, diretores jurídicos e conselheiros.',
+      title: 'Avaliação Segura de Ativos',
+      desc: 'Métricas robustas e fundamentadas para precificação patrimonial em transações de M&A ou venda.',
     },
     {
-      title: 'Sede no Coração Financeiro do País',
-      desc: 'Atuação a partir de São Paulo com alcance nacional, conectando o pulso dos mercados às diretrizes regulatórias de Brasília.',
-    },
-  ]
-
-  const portalValueProps = [
-    {
-      icon: Database,
-      title: 'Monitoramento Contínuo',
-      desc: 'Indicadores macroeconômicos fundamentais atualizados a cada 6 horas com histórico temporal e cálculo de variação.',
-    },
-    {
-      icon: Calculator,
-      title: 'Curadoria Editorial Especializada',
-      desc: 'Seleção analítica das deliberações legislativas e decisões de política monetária mais relevantes para o meio empresarial.',
-    },
-    {
-      icon: ShieldCheck,
-      title: 'Inteligência Aplicada',
-      desc: 'Resumos analíticos e perspectivas práticas sobre os reflexos de cada acontecimento nas margens e operações dos negócios.',
+      title: 'Três Tipos Estratégicos de Planejamento',
+      desc: 'Integração de Planejamento Financeiro, Econômico e Balanced Scorecard sob medida.',
     },
   ]
 
@@ -93,53 +121,59 @@ export default function Sobre() {
               </span>
             </div>
             <h1 className="font-serif text-3xl sm:text-5xl font-bold text-[#F6F4EE] leading-tight">
-              Rigor analítico e inteligência econômica para decisões empresariais estratégicas.
+              Especialistas em diagnosticar e planejar o sistema financeiro da sua empresa.
             </h1>
             <p className="text-base sm:text-lg text-slate-300 mt-5 leading-relaxed font-sans">
-              Com sede em <strong>São Paulo</strong>, a{' '}
-              <strong>BORLIM Consultoria Empresarial</strong> assessora lideranças executivas,
-              diretorias financeiras e conselhos de administração na interpretação de dados
-              macroeconômicos, monitoramento da volatilidade de mercado e planejamento da transição
-              da <strong>Reforma Tributária Brasileira</strong>.
+              A <strong>Borlim Consultoria</strong> é especializada em diagnosticar e planejar o
+              sistema financeiro da sua empresa. Demonstramos os pontos fortes e fracos com quarenta
+              e oito indicadores de desempenho e estabelecemos planejamentos estratégicos focados no
+              aumento real da lucratividade e competitividade.
             </p>
           </div>
         </div>
       </section>
 
-      {/* 2. Main Narrative: Nossa História e Posicionamento */}
+      {/* 2. Main Narrative: O que fazemos */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start mb-20">
+          {/* Main Statement Box */}
           <div className="lg:col-span-7 space-y-6 text-slate-800 leading-relaxed font-serif text-base sm:text-lg">
             <div className="inline-block border-b-2 border-[#B8892F] pb-1">
               <span className="text-xs font-mono uppercase tracking-widest text-[#B8892F] font-bold">
-                Nossa História & Propósito
+                O que fazemos & Diagnóstico
               </span>
             </div>
             <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#0B1F3A] leading-snug">
-              Fundada para suprir a necessidade de análise econômica aplicada aos negócios.
+              Diagnóstico preciso, prevenção de insolvência e valorização patrimonial.
             </h2>
-            <p>
-              A <strong>BORLIM Consultoria Empresarial</strong> foi concebida no polo financeiro de
-              São Paulo com uma diretriz clara: eliminar o distanciamento entre a teoria
-              macroeconômica, a complexa legislação fiscal brasileira e a tomada de decisão
-              cotidiana nas empresas.
-            </p>
-            <p>
-              Em um ecossistema caracterizado por frequentes oscilações na política de juros do
-              Banco Central, metas fiscais sob escrutínio constante e a maior reestruturação do
-              sistema tributário em quase seis décadas (a{' '}
-              <strong>Emenda Constitucional 132/2023</strong>), a intuição tornou-se insuficiente
-              para proteger margens e garantir solidez financeira no médio e longo prazo.
-            </p>
-            <p>
-              Nossa atuação combina o rigor técnico de modelos econométricos e monitoramento
-              legislativo a uma visão pragmática voltada a resultados corporativos. Auxiliamos
-              empresas na adaptação de seus modelos de negócios, na mitigação de riscos de capital e
-              no aproveitamento das novas oportunidades trazidas pelo novo arcabouço fiscal e
-              regulatório do país.
+
+            <div className="p-6 bg-white rounded-xl border-l-4 border-l-[#B8892F] border border-[#E5E0D6] shadow-xs space-y-4 font-sans text-sm sm:text-base text-slate-700">
+              <p className="leading-relaxed">
+                <strong className="text-[#0B1F3A] font-serif text-base sm:text-lg block mb-1">
+                  A Borlim Consultoria é especializada em diagnosticar e planejar o sistema
+                  financeiro da sua empresa.
+                </strong>
+                Demonstramos os pontos fortes e fracos com{' '}
+                <strong>quarenta e oito indicadores de desempenho</strong>.
+              </p>
+              <p className="leading-relaxed">
+                Além dos indicadores, vamos demonstrar se a empresa tem{' '}
+                <strong>problemas de insolvência imediata ou no período de doze meses</strong>.
+              </p>
+              <p className="leading-relaxed">
+                Numa possível venda do seu negócio, com a utilização de um indicador seguro{' '}
+                <strong>avaliaremos o valor dos seus Ativos</strong>.
+              </p>
+            </div>
+
+            <p className="text-sm sm:text-base text-slate-600 font-sans leading-relaxed">
+              Com base nesse diagnóstico aprofundado, nossa equipe técnica desenvolve soluções
+              customizadas que blindam a saúde financeira do seu negócio e apontam caminhos claros
+              para maximizar os resultados operacionais.
             </p>
           </div>
 
+          {/* Quick Summary / Diferenciais */}
           <div className="lg:col-span-5 bg-[#EDE9DE] p-8 rounded-xl border border-[#E5E0D6] space-y-6 shadow-xs">
             <div>
               <span className="text-[11px] font-mono uppercase tracking-wider text-[#B8892F] font-bold block mb-1">
@@ -166,49 +200,52 @@ export default function Sobre() {
 
             <div className="pt-6 border-t border-[#E0DBCF] space-y-2">
               <span className="text-[11px] font-mono uppercase tracking-wider text-slate-500 font-bold block">
-                Setores de Atuação
+                Atuação Personalizada
               </span>
               <p className="text-xs text-slate-700 font-sans leading-relaxed">
-                Indústria de Transformação, Varejo e Distribuição, Agronegócio, Setor Financeiro,
-                Tecnologia e Serviços Corporativos.
+                Empresas de Pequeno, Médio e Grande Porte que buscam segurança no fluxo de caixa,
+                aumento do lucro e crescimento estruturado.
               </p>
             </div>
           </div>
         </div>
 
-        {/* 3. Proposta de Valor do Portal */}
-        <div className="mb-20 bg-white rounded-2xl p-8 sm:p-12 border border-[#E5E0D6] shadow-sm">
-          <div className="max-w-3xl mb-10">
+        {/* 3. Diagnóstico e Avaliação - 3 Pilares Visuais */}
+        <div className="mb-20">
+          <div className="text-center max-w-3xl mx-auto mb-12">
             <span className="text-xs font-mono uppercase tracking-widest text-[#B8892F] font-bold">
-              Plataforma Digital
+              Metodologia de Diagnóstico
             </span>
             <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#0B1F3A] mt-1">
-              A Proposta de Valor do Nosso Portal Econômico
+              Como Diagnosticamos a Saúde da Sua Empresa
             </h2>
-            <p className="text-sm sm:text-base text-slate-600 mt-3 font-sans leading-relaxed">
-              O Portal da BORLIM Consultoria Empresarial foi desenvolvido para ser um instrumento
-              diário de inteligência para gestores e profissionais de finanças, reunindo três
-              pilares essenciais:
+            <p className="text-xs sm:text-sm text-slate-600 mt-2 font-sans">
+              Estrutura analítica em três frentes complementares para identificar riscos e
+              oportunidades no sistema financeiro.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {portalValueProps.map((prop, idx) => {
-              const Icon = prop.icon
+            {coreFeatures.map((feat, idx) => {
+              const Icon = feat.icon
               return (
                 <div
                   key={idx}
-                  className="bg-[#F6F4EE] p-6 rounded-xl border border-[#E5E0D6] flex flex-col justify-between"
+                  className="bg-white p-8 rounded-xl border border-[#E5E0D6] shadow-xs hover:border-[#B8892F] transition-all flex flex-col justify-between group relative overflow-hidden"
                 >
+                  <div className="absolute top-0 right-0 w-24 h-24 bg-[#B8892F]/5 rounded-bl-full pointer-events-none" />
                   <div>
-                    <div className="w-10 h-10 rounded-lg bg-[#0B1F3A] text-[#B8892F] flex items-center justify-center mb-4">
-                      <Icon className="w-5 h-5" />
+                    <div className="w-12 h-12 rounded-lg bg-[#0B1F3A] text-[#B8892F] flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
+                      <Icon className="w-6 h-6" />
                     </div>
-                    <h3 className="font-serif text-lg font-bold text-[#0B1F3A] mb-2">
-                      {prop.title}
+                    <span className="inline-block px-2.5 py-1 rounded text-[10px] font-mono font-bold uppercase tracking-wider bg-[#EDE9DE] text-[#0B1F3A] mb-3 border border-[#D5CFBF]">
+                      {feat.badge}
+                    </span>
+                    <h3 className="font-serif text-lg sm:text-xl font-bold text-[#0B1F3A] mb-3 leading-snug">
+                      {feat.title}
                     </h3>
                     <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-sans">
-                      {prop.desc}
+                      {feat.desc}
                     </p>
                   </div>
                 </div>
@@ -217,42 +254,62 @@ export default function Sobre() {
           </div>
         </div>
 
-        {/* 4. Áreas de Atuação de Consultoria (Pillars Grid) */}
-        <div className="mb-20">
-          <div className="text-center max-w-2xl mx-auto mb-12">
+        {/* 4. Planejamentos Estratégicos (Os 3 Tipos) */}
+        <div className="mb-20 bg-white rounded-2xl p-8 sm:p-12 border border-[#E5E0D6] shadow-sm">
+          <div className="max-w-3xl mb-10">
             <span className="text-xs font-mono uppercase tracking-widest text-[#B8892F] font-bold">
-              Serviços de Consultoria
+              Soluções Estratégicas
             </span>
-            <h2 className="font-serif text-3xl font-bold text-[#0B1F3A] mt-1">
-              Frentes de Atuação Técnica
+            <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#0B1F3A] mt-1">
+              Três Tipos Estratégicos de Planejamentos
             </h2>
-            <p className="text-xs sm:text-sm text-slate-600 mt-2 font-sans">
-              Soluções personalizadas desenhadas para atender às demandas de conselhos executivos e
-              diretorias financeiras.
+            <p className="text-sm sm:text-base text-slate-600 mt-3 font-sans leading-relaxed">
+              Com base nos indicadores estabeleceremos{' '}
+              <strong>três tipos estratégicos de planejamentos</strong> para fortalecer as finanças,
+              elevar o lucro mensal e garantir máxima competitividade no mercado:
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {pillars.map((pillar, idx) => {
-              const Icon = pillar.icon
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {strategicPlans.map((plan, idx) => {
+              const Icon = plan.icon
               return (
                 <div
                   key={idx}
-                  className="bg-white p-8 rounded-xl border border-[#E5E0D6] shadow-xs hover:border-[#B8892F] transition-all flex flex-col justify-between group"
+                  className="bg-[#F6F4EE] p-6 sm:p-8 rounded-xl border border-[#E5E0D6] hover:border-[#B8892F] transition-all flex flex-col justify-between"
                 >
                   <div>
-                    <div className="w-12 h-12 rounded bg-[#0B1F3A] text-[#B8892F] flex items-center justify-center mb-6 group-hover:scale-105 transition-transform">
-                      <Icon className="w-6 h-6" />
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="w-12 h-12 rounded-lg bg-[#0B1F3A] text-[#B8892F] flex items-center justify-center">
+                        <Icon className="w-6 h-6" />
+                      </div>
+                      <span className="font-mono text-2xl font-bold text-[#B8892F]">
+                        {plan.number}
+                      </span>
                     </div>
-                    <span className="inline-block px-2.5 py-1 rounded text-[10px] font-mono font-semibold uppercase tracking-wider bg-[#EDE9DE] text-[#0B1F3A] mb-3">
-                      {pillar.tag}
-                    </span>
-                    <h3 className="font-serif text-xl font-bold text-[#0B1F3A] mb-3 leading-snug">
-                      {pillar.title}
+
+                    <h3 className="font-serif text-xl font-bold text-[#0B1F3A] mb-1">
+                      {plan.title}
                     </h3>
-                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-sans">
-                      {pillar.desc}
+                    <p className="text-xs font-mono font-semibold text-[#B8892F] uppercase tracking-wider mb-3">
+                      {plan.highlight}
                     </p>
+
+                    <p className="text-xs sm:text-sm text-slate-700 leading-relaxed font-sans mb-6">
+                      {plan.description}
+                    </p>
+
+                    <div className="pt-4 border-t border-[#E0DBCF] space-y-2.5">
+                      <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500 font-bold block">
+                        Principais Entregas:
+                      </span>
+                      {plan.benefits.map((benefit, bIdx) => (
+                        <div key={bIdx} className="flex items-start gap-2 text-xs text-slate-700">
+                          <Check className="w-4 h-4 text-[#B8892F] shrink-0 mt-0.5" />
+                          <span>{benefit}</span>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
               )
@@ -265,15 +322,15 @@ export default function Sobre() {
           <div className="grid grid-cols-1 md:grid-cols-12 gap-10 items-center">
             <div className="md:col-span-7">
               <span className="text-xs font-mono uppercase tracking-widest text-[#D4A853] font-bold">
-                Contato Institucional & Parcerias
+                Contato Institucional & Atendimento
               </span>
               <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#F6F4EE] mt-2 mb-4 leading-tight">
-                Inicie um diálogo consultivo com a BORLIM.
+                Inicie o diagnóstico financeiro da sua empresa com a BORLIM.
               </h2>
               <p className="text-sm text-slate-300 leading-relaxed mb-6 font-sans">
-                Para solicitar diagnósticos setoriais, apresentações sobre os impactos da Reforma
-                Tributária ou assessoramento macroeconômico customizado para a sua organização,
-                entre em contato com nossa equipe técnica:
+                Descubra os pontos fortes e fracos do seu negócio, previna riscos de insolvência e
+                implante os três tipos estratégicos de planejamento com a nossa equipe
+                especializada:
               </p>
 
               <div className="space-y-3 font-mono text-xs">
@@ -320,15 +377,17 @@ export default function Sobre() {
                   className="w-full h-auto max-h-12 object-contain mix-blend-multiply"
                 />
               </div>
-              <h3 className="font-serif text-lg font-bold text-[#F6F4EE]">Assessoria Executiva</h3>
+              <h3 className="font-serif text-lg font-bold text-[#F6F4EE]">Assessoria Financeira</h3>
               <p className="text-xs text-slate-300 mt-1 mb-6 font-sans">
-                Atendimento personalizado para diretorias e conselhos corporativos.
+                Atendimento consultivo e personalizado para empresários e diretorias.
               </p>
               <a
-                href="mailto:flavio@borlim.com.br?subject=Solicitação%20de%20Reunião%20de%20Consultoria%20-%20BORLIM"
+                href="https://wa.me/5517997650672?text=Ol%C3%A1%2C%20gostaria%20de%20solicitar%20um%20diagn%C3%B3stico%20financeiro%20para%20minha%20empresa."
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#B8892F] hover:bg-[#D4A853] text-[#0B1F3A] text-xs font-mono font-bold uppercase tracking-wider rounded transition-all shadow"
               >
-                <span>Solicitar Reunião Técnica</span>
+                <span>Solicitar Diagnóstico Financeiro</span>
                 <ArrowRight className="w-4 h-4" />
               </a>
             </div>
