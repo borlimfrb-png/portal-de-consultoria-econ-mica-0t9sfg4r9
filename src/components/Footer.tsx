@@ -138,13 +138,18 @@ export default function Footer() {
                 </div>
               </a>
 
-              <div className="flex items-start gap-2.5">
-                <Phone className="w-4 h-4 text-[#B8892F] mt-0.5 shrink-0" />
+              <a
+                href="https://wa.me/5517997650672"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-start gap-2.5 hover:text-[#B8892F] transition-colors group"
+              >
+                <Phone className="w-4 h-4 text-[#B8892F] mt-0.5 shrink-0 group-hover:scale-110 transition-transform" />
                 <div className="flex flex-col">
-                  <span className="text-xs text-slate-500">Telefone:</span>
-                  <span className="font-mono text-xs">+55 (11) 0000-0000</span>
+                  <span className="text-xs text-slate-500">Telefone / WhatsApp:</span>
+                  <span className="font-mono text-xs font-semibold">(17) 99765-0672</span>
                 </div>
-              </div>
+              </a>
 
               <div className="flex items-start gap-2.5">
                 <MapPin className="w-4 h-4 text-[#B8892F] mt-0.5 shrink-0" />

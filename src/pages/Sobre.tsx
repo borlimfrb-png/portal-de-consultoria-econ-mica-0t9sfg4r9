@@ -3,6 +3,7 @@ import {
   Scale,
   Building2,
   Mail,
+  Phone,
   MapPin,
   CheckCircle2,
   BarChart3,
@@ -283,6 +284,20 @@ export default function Sobre() {
                   <Mail className="w-4 h-4 text-[#B8892F] shrink-0 group-hover:scale-110 transition-transform" />
                   <span className="font-bold underline underline-offset-4 decoration-[#B8892F]/60">
                     flavio@borlim.com.br
+                  </span>
+                </a>
+                <a
+                  href="https://wa.me/5517997650672"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 text-slate-200 hover:text-[#D4A853] transition-colors group"
+                >
+                  <Phone className="w-4 h-4 text-[#B8892F] shrink-0 group-hover:scale-110 transition-transform" />
+                  <span className="font-bold underline underline-offset-4 decoration-[#B8892F]/60">
+                    (17) 99765-0672
+                  </span>
+                  <span className="text-[10px] text-slate-400 font-sans font-normal">
+                    (WhatsApp)
                   </span>
                 </a>
                 <div className="flex items-center gap-3 text-slate-200">
