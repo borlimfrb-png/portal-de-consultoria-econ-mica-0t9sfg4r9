@@ -1,6 +1,6 @@
 // Scheduled job to fetch indicators from BCB SGS API and update PocketBase
-// Runs daily at 08:00 UTC and 18:00 UTC (0 8,18 * * *)
-cronAdd('update_economic_indicators', '0 8,18 * * *', () => {
+// Runs every 6 hours (0 */6 * * *)
+cronAdd('update_economic_indicators', '0 */6 * * *', () => {
   const seriesMap = [
     {
       code: 'selic',
@@ -84,10 +84,12 @@ cronAdd('update_economic_indicators', '0 8,18 * * *', () => {
     },
   ]
 
+  let updatedCount = 0
+
   for (let i = 0; i < seriesMap.length; i++) {
     const item = seriesMap[i]
     try {
-      // BCB SGS API endpoint for last 30 observations
+      // BCB SGS API endpoint for last 30 observations (Public, no API key needed)
       const url =
         'https://api.bcb.gov.br/dados/serie/bcdata.sgs.' +
         item.sgsCode +
@@ -136,7 +138,8 @@ cronAdd('update_economic_indicators', '0 8,18 * * *', () => {
             record.set('reference_date', latest.date)
             record.set('history', history)
             $app.save(record)
-            console.log('Updated indicator:', item.code, 'value:', latest.value)
+            updatedCount++
+            console.log('[BORLIM Indicators] Updated indicator:', item.code, 'value:', latest.value)
           }
         }
       }
@@ -144,4 +147,6 @@ cronAdd('update_economic_indicators', '0 8,18 * * *', () => {
       console.log('Failed to update indicator ' + item.code + ':', err.message)
     }
   }
+
+  console.log('[BORLIM Indicators] 6-hour cron update completed. Total updated:', updatedCount)
 })
