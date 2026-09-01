@@ -52,15 +52,16 @@ export default function Sobre() {
             <div className="inline-flex items-center gap-2 mb-3">
               <span className="w-2 h-2 rounded-full bg-[#B8892F]" />
               <span className="text-[11px] font-mono uppercase tracking-[0.2em] text-[#D4A853] font-bold">
-                Sobre o Portal & Consultoria
+                Sobre a BORLIM Consultoria
               </span>
             </div>
             <h1 className="font-serif text-3xl sm:text-5xl font-bold text-[#F6F4EE] leading-tight">
               Inteligência econômica para antecipar transformações de mercado.
             </h1>
             <p className="text-base sm:text-lg text-slate-300 mt-4 leading-relaxed font-sans">
-              Somos uma consultoria empresarial especializada em traduzir a complexidade
-              macroeconômica e regulatória brasileira em decisões financeiras seguras e rentáveis.
+              A <strong>BORLIM Consultoria Empresarial</strong> é especializada em traduzir a
+              complexidade macroeconômica e regulatória brasileira em decisões financeiras seguras e
+              rentáveis.
             </p>
           </div>
         </div>
@@ -80,7 +81,7 @@ export default function Sobre() {
               crescimento.
             </p>
             <p>
-              O <strong>Portal de Consultoria Econômica</strong> nasceu com a missão de fornecer às
+              A <strong>BORLIM Consultoria Empresarial</strong> nasceu com a missão de fornecer às
               lideranças empresariais um canal direto, confiável e automatizado com os dados
               fundamentais da economia brasileira, complementado por análises estratégicas sobre a{' '}
               <strong>Reforma Tributária (EC 132/2023)</strong>.
@@ -185,11 +186,15 @@ export default function Sobre() {
             </div>
 
             <div className="flex flex-col items-center justify-center bg-[#102A4E] p-8 rounded-xl border border-[#1E4377] text-center">
-              <div className="w-16 h-16 rounded-full bg-[#0B1F3A] border-2 border-[#B8892F] flex items-center justify-center text-[#B8892F] font-serif text-2xl font-bold mb-4">
-                P
+              <div className="bg-white p-3 rounded-lg border border-[#B8892F]/60 shadow-md mb-4 max-w-[200px]">
+                <img
+                  src="/src/assets/logotipo-borlim-73de3.jpg"
+                  alt="BORLIM Consultoria Empresarial"
+                  className="w-full h-auto max-h-12 object-contain mix-blend-multiply"
+                />
               </div>
               <h3 className="font-serif text-lg font-bold text-[#F6F4EE]">Atendimento Executivo</h3>
-              <p className="text-xs text-slate-400 mt-1 mb-6">Consultoria Econômica & Tributária</p>
+              <p className="text-xs text-slate-400 mt-1 mb-6">BORLIM Consultoria Empresarial</p>
               <a
                 href="mailto:flavio@borlim.com.br?subject=Agendamento%20de%20Reunião%20de%20Consultoria"
                 className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#B8892F] hover:bg-[#D4A853] text-[#0B1F3A] text-xs font-mono font-bold uppercase tracking-wider rounded transition-all"

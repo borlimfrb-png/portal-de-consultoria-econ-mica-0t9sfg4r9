@@ -38,17 +38,17 @@ export default function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
         {/* Brand */}
-        <Link to="/" className="flex items-center gap-3 group">
-          <div className="w-10 h-10 bg-[#0B1F3A] rounded flex items-center justify-center text-[#B8892F] font-serif text-2xl font-bold shadow-sm transition-transform duration-200 group-hover:scale-105">
-            P
-          </div>
-          <div className="flex flex-col">
-            <span className="font-serif text-lg font-bold tracking-tight text-[#0B1F3A] leading-tight">
-              Portal de Consultoria
-            </span>
-            <span className="text-[11px] font-mono tracking-widest text-[#B8892F] uppercase font-semibold">
-              Econômica & Negócios
-            </span>
+        <Link
+          to="/"
+          className="flex items-center gap-3 group"
+          aria-label="BORLIM Consultoria Empresarial - Início"
+        >
+          <div className="bg-white px-2.5 py-1.5 rounded border border-[#E5E0D6] shadow-xs flex items-center justify-center transition-transform duration-200 group-hover:scale-102">
+            <img
+              src="/src/assets/logotipo-borlim-73de3.jpg"
+              alt="BORLIM Consultoria Empresarial"
+              className="h-9 sm:h-11 w-auto max-w-[210px] object-contain mix-blend-multiply"
+            />
           </div>
         </Link>
 

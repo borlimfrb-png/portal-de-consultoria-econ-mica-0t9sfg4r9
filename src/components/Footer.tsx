@@ -49,17 +49,17 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
           {/* Column 1: Brand & Disclaimer */}
           <div className="flex flex-col space-y-4">
-            <Link to="/" className="flex items-center gap-3 group">
-              <div className="w-9 h-9 bg-[#0B1F3A] rounded flex items-center justify-center text-[#B8892F] font-serif text-xl font-bold shadow-sm">
-                P
-              </div>
-              <div className="flex flex-col">
-                <span className="font-serif text-base font-bold text-[#0B1F3A] leading-tight">
-                  Portal de Consultoria
-                </span>
-                <span className="text-[10px] font-mono tracking-widest text-[#B8892F] uppercase font-semibold">
-                  Econômica & Negócios
-                </span>
+            <Link
+              to="/"
+              className="flex items-center gap-3 group"
+              aria-label="BORLIM Consultoria Empresarial - Início"
+            >
+              <div className="bg-white px-2.5 py-1.5 rounded border border-[#D5CFBF] shadow-xs inline-flex items-center justify-center transition-transform duration-200 group-hover:scale-102">
+                <img
+                  src="/src/assets/logotipo-borlim-73de3.jpg"
+                  alt="BORLIM Consultoria Empresarial"
+                  className="h-10 sm:h-11 w-auto max-w-[200px] object-contain mix-blend-multiply"
+                />
               </div>
             </Link>
             <p className="text-xs text-slate-600 leading-relaxed">
@@ -195,7 +195,7 @@ export default function Footer() {
 
         {/* Bottom Bar */}
         <div className="pt-8 border-t border-[#DED7C8] flex flex-col md:flex-row items-center justify-between gap-4 text-[11px] text-slate-600">
-          <div>© {currentYear} Portal de Consultoria Econômica. Todos os direitos reservados.</div>
+          <div>© {currentYear} BORLIM Consultoria Empresarial. Todos os direitos reservados.</div>
           <div className="text-center md:text-right italic">
             Este portal tem caráter informativo e não constitui recomendação direta de investimento
             ou consultoria jurídica individualizada.
