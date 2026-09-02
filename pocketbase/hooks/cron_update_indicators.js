@@ -85,68 +85,119 @@ cronAdd('update_economic_indicators', '0 */6 * * *', () => {
   ]
 
   let updatedCount = 0
+  const failedIndicators = []
 
   for (let i = 0; i < seriesMap.length; i++) {
     const item = seriesMap[i]
-    try {
-      // BCB SGS API endpoint for last 30 observations (Public, no API key needed)
-      const url =
-        'https://api.bcb.gov.br/dados/serie/bcdata.sgs.' +
-        item.sgsCode +
-        '/dados/ultimos/30?formato=json'
-      const res = $http.send({
-        url: url,
-        method: 'GET',
-        headers: { Accept: 'application/json', 'User-Agent': 'PortalConsultoriaEconomica/1.0' },
-        timeout: 10,
-      })
+    let success = false
+    const maxRetries = 3
+    const url =
+      'https://api.bcb.gov.br/dados/serie/bcdata.sgs.' +
+      item.sgsCode +
+      '/dados/ultimos/30?formato=json'
 
-      if (res.statusCode === 200 && Array.isArray(res.json) && res.json.length > 0) {
-        const rawData = res.json
-        const history = []
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+      try {
+        const res = $http.send({
+          url: url,
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+            'User-Agent': 'PortalConsultoriaEconomica/1.0',
+          },
+          timeout: 35,
+        })
 
-        for (let j = 0; j < rawData.length; j++) {
-          const pt = rawData[j]
-          // date comes as dd/MM/yyyy
-          let dateStr = pt.data
-          if (dateStr && dateStr.includes('/')) {
-            const parts = dateStr.split('/')
-            if (parts.length === 3) {
-              dateStr = parts[2] + '-' + parts[1] + '-' + parts[0]
+        if (res.statusCode === 200 && Array.isArray(res.json) && res.json.length > 0) {
+          const rawData = res.json
+          const history = []
+
+          for (let j = 0; j < rawData.length; j++) {
+            const pt = rawData[j]
+            // date comes as dd/MM/yyyy
+            let dateStr = pt.data
+            if (dateStr && dateStr.includes('/')) {
+              const parts = dateStr.split('/')
+              if (parts.length === 3) {
+                dateStr = parts[2] + '-' + parts[1] + '-' + parts[0]
+              }
+            }
+            const val = parseFloat(String(pt.valor).replace(',', '.'))
+            if (!isNaN(val)) {
+              history.push({ date: dateStr, value: val })
             }
           }
-          const val = parseFloat(String(pt.valor).replace(',', '.'))
-          if (!isNaN(val)) {
-            history.push({ date: dateStr, value: val })
+
+          if (history.length > 0) {
+            const latest = history[history.length - 1]
+            const previous = history.length > 1 ? history[history.length - 2] : latest
+            const variation = +(latest.value - previous.value).toFixed(2)
+
+            let record = null
+            try {
+              record = $app.findFirstRecordByData('economic_indicators', 'code', item.code)
+            } catch (_) {}
+
+            if (record) {
+              record.set('current_value', latest.value)
+              record.set('previous_value', previous.value)
+              record.set('variation', variation)
+              record.set('reference_date', latest.date)
+              record.set('history', history)
+              $app.save(record)
+              updatedCount++
+              success = true
+              console.log(
+                '[BORLIM Indicators] Updated indicator: ' +
+                  item.code +
+                  ' (ref: ' +
+                  latest.date +
+                  ', val: ' +
+                  latest.value +
+                  ')',
+              )
+              break
+            }
           }
+        } else {
+          console.log(
+            '[BORLIM Indicators] Attempt ' +
+              attempt +
+              ' for ' +
+              item.code +
+              ' returned status ' +
+              res.statusCode +
+              ' or empty payload',
+          )
         }
-
-        if (history.length > 0) {
-          const latest = history[history.length - 1]
-          const previous = history.length > 1 ? history[history.length - 2] : latest
-          const variation = +(latest.value - previous.value).toFixed(2)
-
-          let record = null
-          try {
-            record = $app.findFirstRecordByData('economic_indicators', 'code', item.code)
-          } catch (_) {}
-
-          if (record) {
-            record.set('current_value', latest.value)
-            record.set('previous_value', previous.value)
-            record.set('variation', variation)
-            record.set('reference_date', latest.date)
-            record.set('history', history)
-            $app.save(record)
-            updatedCount++
-            console.log('[BORLIM Indicators] Updated indicator:', item.code, 'value:', latest.value)
-          }
-        }
+      } catch (err) {
+        console.log(
+          '[BORLIM Indicators] Attempt ' +
+            attempt +
+            ' failed for ' +
+            item.code +
+            ': ' +
+            err.message,
+        )
       }
-    } catch (err) {
-      console.log('Failed to update indicator ' + item.code + ':', err.message)
+
+      if (attempt < maxRetries) {
+        sleep(2000)
+      }
+    }
+
+    if (!success) {
+      failedIndicators.push(item.code)
     }
   }
 
-  console.log('[BORLIM Indicators] 6-hour cron update completed. Total updated:', updatedCount)
+  console.log(
+    '[BORLIM Indicators] 6-hour cron update completed. Total updated: ' +
+      updatedCount +
+      '/' +
+      seriesMap.length +
+      (failedIndicators.length > 0
+        ? '. Failed: ' + failedIndicators.join(', ')
+        : '. All succeeded.'),
+  )
 })
