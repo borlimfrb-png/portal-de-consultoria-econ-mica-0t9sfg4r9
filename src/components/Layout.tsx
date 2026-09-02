@@ -5,7 +5,7 @@ import Footer from './Footer'
 
 export default function Layout() {
   return (
-    <div className="flex flex-col min-h-screen bg-[#F6F4EE] text-[#0B1F3A] antialiased selection:bg-[#B8892F]/20 selection:text-[#0B1F3A]">
+    <div className="flex flex-col min-h-screen bg-[#F8FAFC] text-[#082852] antialiased selection:bg-[#16A34A]/20 selection:text-[#082852]">
       {/* 1. Global Top Marquee Ticker */}
       <TopTicker />
 

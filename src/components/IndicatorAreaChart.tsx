@@ -21,7 +21,7 @@ interface IndicatorChartProps {
 export default function IndicatorAreaChart({
   history = [],
   unit,
-  color = '#B8892F',
+  color = '#16A34A',
   height = 240,
   name,
 }: IndicatorChartProps) {
@@ -66,9 +66,9 @@ export default function IndicatorAreaChart({
         formattedFullDate = `${d}/${m}/${y}`
       }
       return (
-        <div className="bg-[#0B1F3A] text-white p-3 rounded shadow-xl border border-[#B8892F]/40 text-xs font-mono">
+        <div className="bg-[#082852] text-white p-3 rounded shadow-xl border border-[#16A34A]/50 text-xs font-mono">
           <p className="text-slate-300 mb-1">{formattedFullDate}</p>
-          <p className="font-bold text-[#D4A853] text-sm">
+          <p className="font-bold text-[#22C55E] text-sm">
             {payload[0].value.toLocaleString('pt-BR', {
               minimumFractionDigits: 2,
               maximumFractionDigits: 2,
@@ -92,8 +92,8 @@ export default function IndicatorAreaChart({
             onClick={() => setRange('30')}
             className={`px-2.5 py-1 text-[11px] font-mono rounded transition-colors ${
               range === '30'
-                ? 'bg-[#0B1F3A] text-white font-bold shadow-xs'
-                : 'text-slate-600 hover:text-[#0B1F3A]'
+                ? 'bg-[#0B3B7A] text-white font-bold shadow-xs'
+                : 'text-slate-600 hover:text-[#0B3B7A]'
             }`}
           >
             30 dias
@@ -103,8 +103,8 @@ export default function IndicatorAreaChart({
             onClick={() => setRange('90')}
             className={`px-2.5 py-1 text-[11px] font-mono rounded transition-colors ${
               range === '90'
-                ? 'bg-[#0B1F3A] text-white font-bold shadow-xs'
-                : 'text-slate-600 hover:text-[#0B1F3A]'
+                ? 'bg-[#0B3B7A] text-white font-bold shadow-xs'
+                : 'text-slate-600 hover:text-[#0B3B7A]'
             }`}
           >
             90 dias
@@ -114,8 +114,8 @@ export default function IndicatorAreaChart({
             onClick={() => setRange('12m')}
             className={`px-2.5 py-1 text-[11px] font-mono rounded transition-colors ${
               range === '12m'
-                ? 'bg-[#0B1F3A] text-white font-bold shadow-xs'
-                : 'text-slate-600 hover:text-[#0B1F3A]'
+                ? 'bg-[#0B3B7A] text-white font-bold shadow-xs'
+                : 'text-slate-600 hover:text-[#0B3B7A]'
             }`}
           >
             12 meses

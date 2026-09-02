@@ -121,18 +121,18 @@ export default function Indicadores() {
 
   return (
     <div className="flex flex-col min-h-screen">
-      {/* 1. Header Band (Navy) */}
-      <section className="bg-[#0B1F3A] text-white py-12 border-b border-[#1A365D]">
+      {/* 1. Header Band (Navy/Blue) */}
+      <section className="bg-[#082852] text-white py-12 border-b border-[#0B3B7A]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
             <div>
               <div className="inline-flex items-center gap-2 mb-2">
-                <span className="w-2 h-2 rounded-full bg-[#B8892F]" />
-                <span className="text-[11px] font-mono uppercase tracking-[0.2em] text-[#D4A853] font-bold">
+                <span className="w-2 h-2 rounded-full bg-[#16A34A]" />
+                <span className="text-[11px] font-mono uppercase tracking-[0.2em] text-[#22C55E] font-bold">
                   Sistema Gerenciador de Séries Temporais (SGS / BCB)
                 </span>
               </div>
-              <h1 className="font-serif text-3xl sm:text-4xl font-bold text-[#F6F4EE]">
+              <h1 className="font-serif text-3xl sm:text-4xl font-bold text-white">
                 Indicadores Econômicos
               </h1>
               <p className="text-sm text-slate-300 mt-2 max-w-2xl leading-relaxed">
@@ -143,10 +143,10 @@ export default function Indicadores() {
 
             <div className="flex flex-wrap items-center gap-3">
               {lastUpdatedTime && (
-                <div className="bg-[#102A4E] border border-[#1E4377] px-3 py-2 rounded text-xs font-mono text-slate-300 flex items-center gap-2">
+                <div className="bg-[#0B3B7A] border border-slate-700 px-3 py-2 rounded-lg text-xs font-mono text-slate-300 flex items-center gap-2">
                   <span className="relative flex h-2 w-2">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-[#22C55E]"></span>
                   </span>
                   <span>Última checagem: {lastUpdatedTime}</span>
                 </div>
@@ -156,7 +156,7 @@ export default function Indicadores() {
                 type="button"
                 onClick={handleManualSync}
                 disabled={syncing}
-                className="inline-flex items-center gap-2 px-4 py-2 bg-[#B8892F] hover:bg-[#D4A853] text-[#0B1F3A] text-xs font-mono font-bold uppercase tracking-wider rounded transition-colors disabled:opacity-50"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-[#16A34A] hover:bg-[#15803D] text-white text-xs font-mono font-bold uppercase tracking-wider rounded-lg transition-colors disabled:opacity-50"
               >
                 <RefreshCw className={`w-3.5 h-3.5 ${syncing ? 'animate-spin' : ''}`} />
                 <span>{syncing ? 'Atualizando...' : 'Sincronizar BCB'}</span>
@@ -167,7 +167,7 @@ export default function Indicadores() {
       </section>
 
       {/* 2. Category Filter Bar */}
-      <section className="bg-white border-b border-[#E5E0D6] sticky top-[73px] z-30 shadow-xs">
+      <section className="bg-white border-b border-slate-200 sticky top-[73px] z-30 shadow-xs">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
           <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-1">
             <span className="text-xs font-mono text-slate-500 uppercase font-semibold flex items-center gap-1 mr-2 shrink-0">
@@ -179,9 +179,9 @@ export default function Indicadores() {
                 <button
                   key={chip.id}
                   onClick={() => setSelectedCategory(chip.id)}
-                  className={`px-3.5 py-1.5 rounded text-xs font-mono transition-all shrink-0 ${
+                  className={`px-3.5 py-1.5 rounded-lg text-xs font-mono transition-all shrink-0 ${
                     isActive
-                      ? 'bg-[#B8892F] text-[#0B1F3A] font-bold shadow-xs'
+                      ? 'bg-[#16A34A] text-white font-bold shadow-xs'
                       : 'bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium'
                   }`}
                 >
@@ -209,9 +209,9 @@ export default function Indicadores() {
             ))}
           </div>
         ) : filteredIndicators.length === 0 ? (
-          <div className="text-center py-16 bg-white rounded-lg border border-dashed border-slate-300 p-8">
+          <div className="text-center py-16 bg-white rounded-xl border border-dashed border-slate-300 p-8">
             <Database className="w-12 h-12 text-slate-400 mx-auto mb-4" />
-            <h3 className="font-serif text-lg font-bold text-[#0B1F3A] mb-2">
+            <h3 className="font-serif text-lg font-bold text-[#082852] mb-2">
               Nenhum indicador encontrado para esta categoria
             </h3>
             <p className="text-sm text-slate-500 mb-6">
@@ -219,7 +219,7 @@ export default function Indicadores() {
             </p>
             <button
               onClick={() => setSelectedCategory('all')}
-              className="px-4 py-2 bg-[#0B1F3A] text-white text-xs font-mono font-bold uppercase tracking-wider rounded"
+              className="px-4 py-2 bg-[#0B3B7A] text-white text-xs font-mono font-bold uppercase tracking-wider rounded-lg"
             >
               Ver todos os indicadores
             </button>
@@ -240,22 +240,22 @@ export default function Indicadores() {
               // Color scheme by category
               const chartColor =
                 indicator.category === 'juros'
-                  ? '#0B1F3A'
+                  ? '#0B3B7A'
                   : indicator.category === 'inflacao'
-                    ? '#B8892F'
+                    ? '#16A34A'
                     : indicator.category === 'cambio'
-                      ? '#1F7A4D'
-                      : '#4F46E5'
+                      ? '#15803D'
+                      : '#1557A6'
 
               return (
                 <div
                   key={indicator.id}
-                  className="bg-white rounded-xl p-6 border border-[#E5E0D6] card-subtle-shadow flex flex-col justify-between"
+                  className="bg-white rounded-xl p-6 border border-slate-200 card-subtle-shadow flex flex-col justify-between"
                 >
                   {/* Top Row: Details & Main Value */}
                   <div>
                     <div className="flex items-center justify-between mb-2">
-                      <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-[#B8892F]">
+                      <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-[#15803D]">
                         {indicator.category.toUpperCase()} • CÓDIGO SGS:{' '}
                         {indicator.source_code || indicator.code}
                       </span>
@@ -264,7 +264,7 @@ export default function Indicadores() {
                       </span>
                     </div>
 
-                    <h2 className="font-serif text-2xl font-bold text-[#0B1F3A] mb-2">
+                    <h2 className="font-serif text-2xl font-bold text-[#082852] mb-2">
                       {indicator.name}
                     </h2>
 
@@ -272,9 +272,9 @@ export default function Indicadores() {
                       {indicator.description}
                     </p>
 
-                    <div className="flex flex-wrap items-baseline justify-between gap-4 p-4 bg-[#F6F4EE] rounded-lg border border-[#EDE9DE] mb-6">
+                    <div className="flex flex-wrap items-baseline justify-between gap-4 p-4 bg-[#F8FAFC] rounded-lg border border-slate-200 mb-6">
                       <div className="flex items-baseline gap-2">
-                        <span className="font-mono text-4xl font-extrabold text-[#0B1F3A] tracking-tight">
+                        <span className="font-mono text-4xl font-extrabold text-[#082852] tracking-tight">
                           {indicator.current_value.toLocaleString('pt-BR', {
                             minimumFractionDigits: 2,
                             maximumFractionDigits: 2,
@@ -289,9 +289,9 @@ export default function Indicadores() {
                         <span
                           className={`inline-flex items-center gap-1 font-bold px-2.5 py-1 rounded ${
                             isPositive
-                              ? 'text-[#1F7A4D] bg-[#1F7A4D]/15'
+                              ? 'text-[#15803D] bg-emerald-50'
                               : isNegative
-                                ? 'text-[#C0392B] bg-[#C0392B]/15'
+                                ? 'text-[#DC2626] bg-red-50'
                                 : 'text-slate-600 bg-slate-200'
                           }`}
                         >
@@ -342,7 +342,7 @@ export default function Indicadores() {
                                   className="p-2 bg-slate-50 rounded border border-slate-200/80 flex flex-col"
                                 >
                                   <span className="text-[10px] text-slate-500">{dLabel}</span>
-                                  <span className="font-bold text-[#0B1F3A] tabular-nums">
+                                  <span className="font-bold text-[#082852] tabular-nums">
                                     {obs.value.toLocaleString('pt-BR', {
                                       minimumFractionDigits: 2,
                                       maximumFractionDigits: 2,
@@ -370,13 +370,13 @@ export default function Indicadores() {
 
         {/* 4. COMPARATIVO SECTION (IPCA 12m vs IGP-M) */}
         {comparisonChartData.length > 0 && (
-          <section className="mt-16 bg-white rounded-xl p-8 border border-[#E5E0D6] card-subtle-shadow">
+          <section className="mt-16 bg-white rounded-xl p-8 border border-slate-200 card-subtle-shadow">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 border-b border-slate-100 pb-4">
               <div>
-                <span className="text-xs font-mono uppercase tracking-widest text-[#B8892F] font-bold">
+                <span className="text-xs font-mono uppercase tracking-widest text-[#15803D] font-bold">
                   Análise Comparativa
                 </span>
-                <h2 className="font-serif text-2xl font-bold text-[#0B1F3A] mt-1">
+                <h2 className="font-serif text-2xl font-bold text-[#082852] mt-1">
                   Dispersão de Inflação: IPCA 12m vs IGP-M 12m
                 </h2>
                 <p className="text-xs text-slate-600 mt-1">
@@ -386,11 +386,11 @@ export default function Indicadores() {
               </div>
 
               <div className="flex items-center gap-4 text-xs font-mono">
-                <span className="flex items-center gap-1.5 text-[#0B1F3A] font-bold">
-                  <span className="w-3 h-3 rounded bg-[#0B1F3A]" /> IPCA 12m (Consumo)
+                <span className="flex items-center gap-1.5 text-[#0B3B7A] font-bold">
+                  <span className="w-3 h-3 rounded bg-[#0B3B7A]" /> IPCA 12m (Consumo)
                 </span>
-                <span className="flex items-center gap-1.5 text-[#B8892F] font-bold">
-                  <span className="w-3 h-3 rounded bg-[#B8892F]" /> IGP-M 12m (Contratos/Atacado)
+                <span className="flex items-center gap-1.5 text-[#16A34A] font-bold">
+                  <span className="w-3 h-3 rounded bg-[#16A34A]" /> IGP-M 12m (Contratos/Atacado)
                 </span>
               </div>
             </div>
@@ -420,12 +420,12 @@ export default function Indicadores() {
                       if (active && payload && payload.length) {
                         const row = payload[0].payload
                         return (
-                          <div className="bg-[#0B1F3A] text-white p-3 rounded shadow-xl border border-[#B8892F] text-xs font-mono">
+                          <div className="bg-[#082852] text-white p-3 rounded shadow-xl border border-[#16A34A] text-xs font-mono">
                             <p className="text-slate-300 mb-1">{row.date}</p>
                             <p className="font-bold text-slate-100">
                               IPCA 12m: {row.ipca?.toFixed(2)}%
                             </p>
-                            <p className="font-bold text-[#D4A853]">
+                            <p className="font-bold text-[#22C55E]">
                               IGP-M 12m: {row.igpm?.toFixed(2)}%
                             </p>
                             <p className="text-[10px] text-slate-400 mt-1 pt-1 border-t border-slate-700">
@@ -441,18 +441,18 @@ export default function Indicadores() {
                     type="monotone"
                     dataKey="ipca"
                     name="IPCA 12m"
-                    stroke="#0B1F3A"
+                    stroke="#0B3B7A"
                     strokeWidth={3}
-                    dot={{ r: 3, fill: '#0B1F3A' }}
+                    dot={{ r: 3, fill: '#0B3B7A' }}
                     activeDot={{ r: 5 }}
                   />
                   <Line
                     type="monotone"
                     dataKey="igpm"
                     name="IGP-M 12m"
-                    stroke="#B8892F"
+                    stroke="#16A34A"
                     strokeWidth={3}
-                    dot={{ r: 3, fill: '#B8892F' }}
+                    dot={{ r: 3, fill: '#16A34A' }}
                     activeDot={{ r: 5 }}
                   />
                 </LineChart>

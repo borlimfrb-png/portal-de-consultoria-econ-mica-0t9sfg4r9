@@ -38,24 +38,24 @@ export default function IndicatorCard({
   return (
     <Link
       to="/indicadores"
-      className={`group block bg-white rounded-lg p-5 border border-[#E5E0D6] card-subtle-shadow card-hover-lift hover:border-[#B8892F] relative transition-all ${className}`}
+      className={`group block bg-white rounded-xl p-5 border border-slate-200 card-subtle-shadow card-hover-lift hover:border-[#16A34A] relative transition-all ${className}`}
     >
       {/* Category Eyebrow & Link Icon */}
       <div className="flex items-center justify-between mb-3">
-        <span className="text-[10px] font-mono font-bold tracking-widest text-[#B8892F] uppercase">
+        <span className="text-[10px] font-mono font-bold tracking-widest text-[#15803D] uppercase">
           {categoryEyebrow}
         </span>
-        <ArrowUpRight className="w-4 h-4 text-slate-400 group-hover:text-[#B8892F] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+        <ArrowUpRight className="w-4 h-4 text-slate-400 group-hover:text-[#16A34A] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
       </div>
 
       {/* Indicator Name */}
-      <h3 className="font-serif text-lg font-bold text-[#0B1F3A] mb-2 leading-snug group-hover:text-[#B8892F] transition-colors">
+      <h3 className="font-serif text-lg font-bold text-[#082852] mb-2 leading-snug group-hover:text-[#0B3B7A] transition-colors">
         {indicator.name}
       </h3>
 
       {/* Main Value & Unit */}
       <div className="flex items-baseline gap-2 mb-3">
-        <span className="font-mono text-3xl font-extrabold text-[#0B1F3A] tracking-tight">
+        <span className="font-mono text-3xl font-extrabold text-[#082852] tracking-tight">
           {indicator.current_value.toLocaleString('pt-BR', {
             minimumFractionDigits: 2,
             maximumFractionDigits: 2,
@@ -71,9 +71,9 @@ export default function IndicatorCard({
           <span
             className={`inline-flex items-center gap-1 text-xs font-mono font-bold px-2 py-0.5 rounded ${
               isPositive
-                ? 'text-[#1F7A4D] bg-[#1F7A4D]/10'
+                ? 'text-[#15803D] bg-emerald-50'
                 : isNegative
-                  ? 'text-[#C0392B] bg-[#C0392B]/10'
+                  ? 'text-[#DC2626] bg-red-50'
                   : 'text-slate-600 bg-slate-100'
             }`}
           >
@@ -98,7 +98,7 @@ export default function IndicatorCard({
               data={indicator.history}
               width={90}
               height={26}
-              color={isPositive ? '#1F7A4D' : isNegative ? '#C0392B' : '#B8892F'}
+              color={isPositive ? '#16A34A' : isNegative ? '#DC2626' : '#0B3B7A'}
             />
           </div>
         )}

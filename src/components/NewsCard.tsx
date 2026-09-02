@@ -15,14 +15,14 @@ export default function NewsCard({ article, isNew = false, className = '' }: New
   > = {
     reforma_tributaria: {
       label: 'Reforma Tributária',
-      bg: 'bg-[#B8892F]/15',
-      text: 'text-[#8A631B]',
+      bg: 'bg-emerald-50',
+      text: 'text-[#15803D]',
       initial: 'RT',
     },
     economia: {
       label: 'Economia',
-      bg: 'bg-[#0B1F3A]/10',
-      text: 'text-[#0B1F3A]',
+      bg: 'bg-blue-50',
+      text: 'text-[#0B3B7A]',
       initial: 'EC',
     },
     mercados: {
@@ -33,8 +33,8 @@ export default function NewsCard({ article, isNew = false, className = '' }: New
     },
     politica_fiscal: {
       label: 'Política Fiscal',
-      bg: 'bg-indigo-100',
-      text: 'text-indigo-900',
+      bg: 'bg-slate-100',
+      text: 'text-[#082852]',
       initial: 'PF',
     },
   }
@@ -63,14 +63,14 @@ export default function NewsCard({ article, isNew = false, className = '' }: New
 
   return (
     <article
-      className={`group flex flex-col bg-white rounded-lg border border-[#E5E0D6] overflow-hidden card-subtle-shadow card-hover-lift hover:border-[#B8892F] relative transition-all duration-300 ${
-        isNew ? 'ring-2 ring-[#B8892F] animate-pulse' : ''
+      className={`group flex flex-col bg-white rounded-xl border border-slate-200 overflow-hidden card-subtle-shadow card-hover-lift hover:border-[#16A34A] relative transition-all duration-300 ${
+        isNew ? 'ring-2 ring-[#16A34A] animate-pulse' : ''
       } ${className}`}
     >
       {/* Image or Gradient Placeholder */}
       <Link
         to={`/noticias/${article.slug || article.id}`}
-        className="block relative aspect-[16/9] overflow-hidden bg-[#0B1F3A]"
+        className="block relative aspect-[16/9] overflow-hidden bg-[#082852]"
       >
         {article.image_url ? (
           <img
@@ -80,8 +80,8 @@ export default function NewsCard({ article, isNew = false, className = '' }: New
             className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
           />
         ) : (
-          <div className="w-full h-full bg-gradient-to-br from-[#0B1F3A] to-[#183863] flex items-center justify-center">
-            <span className="font-serif text-4xl font-bold text-[#B8892F]/60 tracking-wider">
+          <div className="w-full h-full bg-gradient-to-br from-[#082852] to-[#0B3B7A] flex items-center justify-center">
+            <span className="font-serif text-4xl font-bold text-[#22C55E]/80 tracking-wider">
               {cat.initial}
             </span>
           </div>
@@ -90,15 +90,15 @@ export default function NewsCard({ article, isNew = false, className = '' }: New
         {/* Category Badge Floating on Image */}
         <div className="absolute top-3 left-3">
           <span
-            className={`inline-flex items-center px-2.5 py-1 rounded text-[10px] font-mono font-bold uppercase tracking-wider backdrop-blur-md bg-white/90 shadow-sm ${cat.text}`}
+            className={`inline-flex items-center px-2.5 py-1 rounded text-[10px] font-mono font-bold uppercase tracking-wider backdrop-blur-md bg-white/95 shadow-sm ${cat.text}`}
           >
             {cat.label}
           </span>
         </div>
 
         {article.ai_analysis && (
-          <div className="absolute top-3 right-3 bg-[#0B1F3A]/90 text-[#D4A853] px-2 py-0.5 rounded text-[10px] font-mono flex items-center gap-1 shadow">
-            <Sparkles className="w-3 h-3 text-[#B8892F]" />
+          <div className="absolute top-3 right-3 bg-[#082852]/90 text-[#22C55E] px-2 py-0.5 rounded text-[10px] font-mono flex items-center gap-1 shadow">
+            <Sparkles className="w-3 h-3 text-[#22C55E]" />
             <span>Síntese IA</span>
           </div>
         )}
@@ -108,7 +108,7 @@ export default function NewsCard({ article, isNew = false, className = '' }: New
       <div className="p-5 flex-1 flex flex-col justify-between">
         <div>
           {/* Title */}
-          <h3 className="font-serif text-base font-bold text-[#0B1F3A] mb-2 leading-snug line-clamp-2 group-hover:text-[#B8892F] transition-colors">
+          <h3 className="font-serif text-base font-bold text-[#082852] mb-2 leading-snug line-clamp-2 group-hover:text-[#0B3B7A] transition-colors">
             <Link to={`/noticias/${article.slug || article.id}`}>{article.title}</Link>
           </h3>
 

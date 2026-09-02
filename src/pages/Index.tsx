@@ -145,11 +145,11 @@ export default function Index() {
 
   return (
     <div className="flex flex-col">
-      {/* 1. HERO SECTION (Dark Navy with Brass Glow) */}
-      <section className="relative bg-[#0B1F3A] text-white overflow-hidden pt-12 pb-20 border-b border-[#1A365D]">
-        {/* Subtle Radial Brass Glow top-right */}
-        <div className="absolute -top-32 -right-32 w-96 h-96 bg-[#B8892F]/15 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-1/4 w-80 h-80 bg-[#183863]/40 rounded-full blur-3xl pointer-events-none" />
+      {/* 1. HERO SECTION (Dark Blue with Green Glow) */}
+      <section className="relative bg-[#082852] text-white overflow-hidden pt-12 pb-20 border-b border-[#0B3B7A]">
+        {/* Subtle Radial Green Glow top-right */}
+        <div className="absolute -top-32 -right-32 w-96 h-96 bg-[#16A34A]/20 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 left-1/4 w-80 h-80 bg-[#0B3B7A]/40 rounded-full blur-3xl pointer-events-none" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
@@ -157,14 +157,14 @@ export default function Index() {
             <div className="lg:col-span-6 flex flex-col space-y-6">
               {/* Eyebrow */}
               <div className="inline-flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-[#B8892F]" />
-                <span className="text-[11px] font-mono uppercase tracking-[0.2em] text-[#D4A853] font-bold">
+                <span className="w-2 h-2 rounded-full bg-[#16A34A]" />
+                <span className="text-[11px] font-mono uppercase tracking-[0.2em] text-[#22C55E] font-bold">
                   Inteligência Econômica para Decisões de Negócio
                 </span>
               </div>
 
               {/* Headline */}
-              <h1 className="font-serif text-4xl sm:text-5xl lg:text-5xl font-bold text-[#F6F4EE] leading-[1.15] tracking-tight">
+              <h1 className="font-serif text-4xl sm:text-5xl lg:text-5xl font-bold text-white leading-[1.15] tracking-tight">
                 A economia brasileira, explicada com dados e contexto.
               </h1>
 
@@ -178,25 +178,25 @@ export default function Index() {
               <div className="flex flex-wrap items-center gap-4 pt-2">
                 <Link
                   to="/indicadores"
-                  className="inline-flex items-center gap-2 px-6 py-3.5 bg-[#B8892F] hover:bg-[#D4A853] text-[#0B1F3A] font-semibold text-xs uppercase tracking-wider rounded transition-all shadow-md hover:shadow-lg font-mono"
+                  className="inline-flex items-center gap-2 px-6 py-3.5 bg-[#16A34A] hover:bg-[#15803D] text-white font-semibold text-xs uppercase tracking-wider rounded-lg transition-all shadow-md hover:shadow-lg font-mono"
                 >
                   <span>Ver indicadores</span>
-                  <TrendingUp className="w-4 h-4 text-[#0B1F3A]" />
+                  <TrendingUp className="w-4 h-4 text-white" />
                 </Link>
 
                 <Link
                   to="/noticias"
-                  className="inline-flex items-center gap-2 px-6 py-3.5 bg-transparent hover:bg-white/10 text-[#F6F4EE] border border-slate-500 hover:border-[#D4A853] font-medium text-xs uppercase tracking-wider rounded transition-colors font-mono"
+                  className="inline-flex items-center gap-2 px-6 py-3.5 bg-white/10 hover:bg-white/20 text-white border border-slate-600 hover:border-[#16A34A] font-medium text-xs uppercase tracking-wider rounded-lg transition-colors font-mono"
                 >
                   <span>Explorar notícias</span>
-                  <ArrowRight className="w-4 h-4 text-[#D4A853]" />
+                  <ArrowRight className="w-4 h-4 text-[#22C55E]" />
                 </Link>
               </div>
 
               {/* Live sync footnote */}
               <div className="pt-2 flex items-center gap-3 text-[11px] font-mono text-slate-400">
-                <span className="inline-flex items-center gap-1 text-emerald-400">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                <span className="inline-flex items-center gap-1 text-[#22C55E]">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#22C55E] animate-pulse" />
                   Alimentação Automática BCB
                 </span>
                 <span>•</span>
@@ -204,10 +204,10 @@ export default function Index() {
                   type="button"
                   onClick={handleManualSync}
                   disabled={syncing}
-                  className="hover:text-[#D4A853] transition-colors flex items-center gap-1 underline underline-offset-2"
+                  className="hover:text-[#22C55E] transition-colors flex items-center gap-1 underline underline-offset-2"
                 >
                   <RefreshCw
-                    className={`w-3 h-3 ${syncing ? 'animate-spin text-[#D4A853]' : ''}`}
+                    className={`w-3 h-3 ${syncing ? 'animate-spin text-[#22C55E]' : ''}`}
                   />
                   {syncing ? 'Atualizando...' : 'Atualizar agora'}
                 </button>
@@ -215,19 +215,19 @@ export default function Index() {
             </div>
 
             {/* Right Column: Hero Interactive Area Chart */}
-            <div className="lg:col-span-6 bg-[#102A4E]/80 backdrop-blur-md rounded-xl p-6 border border-[#1E4377] shadow-2xl">
-              <div className="flex items-center justify-between mb-4 border-b border-[#1E4377] pb-3">
+            <div className="lg:col-span-6 bg-[#0B3B7A]/80 backdrop-blur-md rounded-2xl p-6 border border-slate-700 shadow-2xl">
+              <div className="flex items-center justify-between mb-4 border-b border-slate-700/80 pb-3">
                 <div className="flex flex-col">
-                  <span className="text-xs font-mono uppercase tracking-wider text-[#D4A853] font-bold">
+                  <span className="text-xs font-mono uppercase tracking-wider text-[#22C55E] font-bold">
                     Dinâmica Macroeconômica (Últimos 90 dias)
                   </span>
-                  <span className="font-serif text-sm text-slate-200">
+                  <span className="font-serif text-sm text-white">
                     Taxa Selic (% a.a.) vs IPCA 12m (%)
                   </span>
                 </div>
                 <div className="flex items-center gap-3 text-[11px] font-mono">
-                  <span className="flex items-center gap-1 text-[#D4A853]">
-                    <span className="w-2.5 h-2.5 rounded bg-[#D4A853]" /> Selic
+                  <span className="flex items-center gap-1 text-[#22C55E]">
+                    <span className="w-2.5 h-2.5 rounded bg-[#16A34A]" /> Selic
                   </span>
                   <span className="flex items-center gap-1 text-[#60A5FA]">
                     <span className="w-2.5 h-2.5 rounded bg-[#60A5FA]" /> IPCA 12m
@@ -243,19 +243,19 @@ export default function Index() {
                   >
                     <defs>
                       <linearGradient id="heroSelic" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#B8892F" stopOpacity={0.4} />
-                        <stop offset="95%" stopColor="#B8892F" stopOpacity={0.0} />
+                        <stop offset="5%" stopColor="#16A34A" stopOpacity={0.4} />
+                        <stop offset="95%" stopColor="#16A34A" stopOpacity={0.0} />
                       </linearGradient>
                       <linearGradient id="heroIpca" x1="0" y1="0" x2="0" y2="1">
                         <stop offset="5%" stopColor="#60A5FA" stopOpacity={0.3} />
                         <stop offset="95%" stopColor="#60A5FA" stopOpacity={0.0} />
                       </linearGradient>
                     </defs>
-                    <CartesianGrid strokeDasharray="2 2" stroke="#1E4377" vertical={false} />
+                    <CartesianGrid strokeDasharray="2 2" stroke="#1E4B8A" vertical={false} />
                     <XAxis
                       dataKey="displayDate"
                       tick={{ fill: '#94A3B8', fontSize: 10, fontFamily: 'JetBrains Mono' }}
-                      axisLine={{ stroke: '#1E4377' }}
+                      axisLine={{ stroke: '#1E4B8A' }}
                       tickLine={false}
                     />
                     <YAxis
@@ -269,9 +269,9 @@ export default function Index() {
                         if (active && payload && payload.length) {
                           const item = payload[0].payload
                           return (
-                            <div className="bg-[#0B1F3A] border border-[#B8892F] p-3 rounded shadow-xl text-xs font-mono">
+                            <div className="bg-[#082852] border border-[#16A34A] p-3 rounded-lg shadow-xl text-xs font-mono">
                               <p className="text-slate-400 mb-1">{item.date}</p>
-                              <p className="text-[#D4A853] font-bold">
+                              <p className="text-[#22C55E] font-bold">
                                 Selic: {item.selic?.toFixed(2)}% a.a.
                               </p>
                               <p className="text-[#60A5FA] font-bold">
@@ -286,7 +286,7 @@ export default function Index() {
                     <Area
                       type="monotone"
                       dataKey="selic"
-                      stroke="#B8892F"
+                      stroke="#16A34A"
                       strokeWidth={2.5}
                       fillOpacity={1}
                       fill="url(#heroSelic)"
@@ -303,9 +303,9 @@ export default function Index() {
                 </ResponsiveContainer>
               </div>
 
-              <div className="mt-3 pt-3 border-t border-[#1E4377] flex items-center justify-between text-[10px] font-mono text-slate-400">
+              <div className="mt-3 pt-3 border-t border-slate-700/80 flex items-center justify-between text-[10px] font-mono text-slate-400">
                 <span>Fonte: Banco Central do Brasil — SGS</span>
-                <span className="text-[#D4A853]">
+                <span className="text-[#22C55E]">
                   Taxa real calculada: +{(13.25 - 4.56).toFixed(2)}% a.a.
                 </span>
               </div>
@@ -315,23 +315,23 @@ export default function Index() {
       </section>
 
       {/* 2. INDICADORES EM DESTAQUE */}
-      <section className="py-16 bg-white border-b border-[#E5E0D6]">
+      <section className="py-16 bg-white border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
             <div>
-              <span className="text-xs font-mono uppercase tracking-widest text-[#B8892F] font-bold">
+              <span className="text-xs font-mono uppercase tracking-widest text-[#15803D] font-bold">
                 Panorama em Tempo Real
               </span>
-              <h2 className="font-serif text-3xl font-bold text-[#0B1F3A] mt-1">
+              <h2 className="font-serif text-3xl font-bold text-[#082852] mt-1">
                 Indicadores em destaque
               </h2>
             </div>
             <Link
               to="/indicadores"
-              className="inline-flex items-center gap-1.5 text-xs font-mono font-bold uppercase tracking-wider text-[#0B1F3A] hover:text-[#B8892F] transition-colors"
+              className="inline-flex items-center gap-1.5 text-xs font-mono font-bold uppercase tracking-wider text-[#0B3B7A] hover:text-[#16A34A] transition-colors"
             >
               <span>Ver painel completo de indicadores</span>
-              <ArrowRight className="w-4 h-4 text-[#B8892F]" />
+              <ArrowRight className="w-4 h-4 text-[#16A34A]" />
             </Link>
           </div>
 
@@ -343,19 +343,19 @@ export default function Index() {
         </div>
       </section>
 
-      {/* 3. REFORMA TRIBUTÁRIA EM FOCO (Dark Editorial Band) */}
-      <section className="py-16 bg-[#0B1F3A] text-white border-b border-[#1A365D]">
+      {/* 3. REFORMA TRIBUTÁRIA EM FOCO (Dark Blue Band) */}
+      <section className="py-16 bg-[#082852] text-white border-b border-[#0B3B7A]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between mb-10 border-b border-[#1A365D] pb-4">
+          <div className="flex items-center justify-between mb-10 border-b border-slate-700/80 pb-4">
             <div className="flex items-center gap-3">
-              <span className="p-2 bg-[#B8892F]/20 text-[#D4A853] rounded">
+              <span className="p-2 bg-[#16A34A]/20 text-[#22C55E] rounded-lg">
                 <Scale className="w-5 h-5" />
               </span>
               <div>
-                <span className="text-[10px] font-mono uppercase tracking-widest text-[#D4A853] font-bold">
+                <span className="text-[10px] font-mono uppercase tracking-widest text-[#22C55E] font-bold">
                   Especial Regulatório
                 </span>
-                <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#F6F4EE]">
+                <h2 className="font-serif text-2xl sm:text-3xl font-bold text-white">
                   Reforma Tributária em foco
                 </h2>
               </div>
@@ -363,7 +363,7 @@ export default function Index() {
 
             <Link
               to="/noticias?categoria=reforma_tributaria"
-              className="hidden sm:inline-flex items-center gap-1 text-xs font-mono font-bold text-[#D4A853] hover:text-white uppercase tracking-wider"
+              className="hidden sm:inline-flex items-center gap-1 text-xs font-mono font-bold text-[#22C55E] hover:text-white uppercase tracking-wider"
             >
               <span>Todas sobre Reforma</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -373,28 +373,28 @@ export default function Index() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             {/* Left: Lead Story */}
             {leadReformaStory && (
-              <div className="lg:col-span-7 bg-[#102A4E] rounded-lg p-6 sm:p-8 border border-[#1E4377] flex flex-col justify-between h-full">
+              <div className="lg:col-span-7 bg-[#0B3B7A]/90 rounded-xl p-6 sm:p-8 border border-slate-700 flex flex-col justify-between h-full">
                 <div>
                   <div className="flex items-center gap-2 mb-4">
-                    <span className="px-2.5 py-0.5 rounded text-[10px] font-mono font-bold uppercase tracking-wider bg-[#B8892F] text-[#0B1F3A]">
+                    <span className="px-2.5 py-0.5 rounded text-[10px] font-mono font-bold uppercase tracking-wider bg-[#16A34A] text-white">
                       Matéria Principal
                     </span>
-                    <span className="text-xs font-mono text-slate-400">
+                    <span className="text-xs font-mono text-slate-300">
                       {leadReformaStory.published_at?.slice(0, 10)}
                     </span>
                   </div>
 
-                  <h3 className="font-serif text-2xl sm:text-3xl font-bold text-[#F6F4EE] mb-4 leading-tight">
+                  <h3 className="font-serif text-2xl sm:text-3xl font-bold text-white mb-4 leading-tight">
                     {leadReformaStory.title}
                   </h3>
 
-                  <p className="text-slate-300 text-sm sm:text-base leading-relaxed mb-6 font-serif">
+                  <p className="text-slate-200 text-sm sm:text-base leading-relaxed mb-6 font-serif">
                     {leadReformaStory.summary}
                   </p>
 
                   {leadReformaStory.ai_analysis && (
-                    <div className="bg-[#0B1F3A] border-l-4 border-[#B8892F] p-4 rounded-r mb-6">
-                      <div className="flex items-center gap-1.5 text-[11px] font-mono text-[#D4A853] font-bold mb-1">
+                    <div className="bg-[#082852] border-l-4 border-[#16A34A] p-4 rounded-r mb-6">
+                      <div className="flex items-center gap-1.5 text-[11px] font-mono text-[#22C55E] font-bold mb-1">
                         <Sparkles className="w-3.5 h-3.5" />
                         <span>Visão da Consultoria</span>
                       </div>
@@ -407,7 +407,7 @@ export default function Index() {
 
                 <Link
                   to={`/noticias/${leadReformaStory.slug || leadReformaStory.id}`}
-                  className="inline-flex items-center gap-2 text-xs font-mono font-bold text-[#D4A853] hover:text-white uppercase tracking-wider mt-2 group"
+                  className="inline-flex items-center gap-2 text-xs font-mono font-bold text-[#22C55E] hover:text-white uppercase tracking-wider mt-2 group"
                 >
                   <span>Ler matéria completa</span>
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -421,16 +421,16 @@ export default function Index() {
                 <Link
                   key={story.id}
                   to={`/noticias/${story.slug || story.id}`}
-                  className="group block bg-[#102A4E]/60 hover:bg-[#102A4E] rounded-lg p-5 border border-[#1E4377] transition-all"
+                  className="group block bg-[#0B3B7A]/60 hover:bg-[#0B3B7A] rounded-xl p-5 border border-slate-700 transition-all"
                 >
                   <div className="flex items-center justify-between text-[11px] font-mono text-slate-400 mb-2">
-                    <span className="text-[#D4A853] font-semibold">{story.source}</span>
+                    <span className="text-[#22C55E] font-semibold">{story.source}</span>
                     <span>{story.published_at?.slice(0, 10)}</span>
                   </div>
-                  <h4 className="font-serif text-base font-bold text-slate-100 group-hover:text-[#D4A853] transition-colors line-clamp-2 mb-2 leading-snug">
+                  <h4 className="font-serif text-base font-bold text-white group-hover:text-[#22C55E] transition-colors line-clamp-2 mb-2 leading-snug">
                     {story.title}
                   </h4>
-                  <p className="text-xs text-slate-400 line-clamp-2 leading-relaxed">
+                  <p className="text-xs text-slate-300 line-clamp-2 leading-relaxed">
                     {story.summary}
                   </p>
                 </Link>
@@ -438,7 +438,7 @@ export default function Index() {
 
               <Link
                 to="/noticias?categoria=reforma_tributaria"
-                className="sm:hidden w-full text-center py-3 bg-[#102A4E] text-[#D4A853] rounded text-xs font-mono uppercase font-bold"
+                className="sm:hidden w-full text-center py-3 bg-[#0B3B7A] text-[#22C55E] rounded-lg text-xs font-mono uppercase font-bold"
               >
                 Ver todas as notícias sobre Reforma
               </Link>
@@ -447,24 +447,24 @@ export default function Index() {
         </div>
       </section>
 
-      {/* 4. ÚLTIMAS DO PORTAL (Ivory Background) */}
-      <section className="py-16 bg-[#F6F4EE] border-b border-[#E5E0D6]">
+      {/* 4. ÚLTIMAS DO PORTAL (Clean Slate/White Background) */}
+      <section className="py-16 bg-[#F8FAFC] border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
             <div>
-              <span className="text-xs font-mono uppercase tracking-widest text-[#B8892F] font-bold">
+              <span className="text-xs font-mono uppercase tracking-widest text-[#15803D] font-bold">
                 Fluxo Noticioso
               </span>
-              <h2 className="font-serif text-3xl font-bold text-[#0B1F3A] mt-1">
+              <h2 className="font-serif text-3xl font-bold text-[#082852] mt-1">
                 Últimas do portal
               </h2>
             </div>
             <Link
               to="/noticias"
-              className="inline-flex items-center gap-1.5 text-xs font-mono font-bold uppercase tracking-wider text-[#0B1F3A] hover:text-[#B8892F] transition-colors"
+              className="inline-flex items-center gap-1.5 text-xs font-mono font-bold uppercase tracking-wider text-[#0B3B7A] hover:text-[#16A34A] transition-colors"
             >
               <span>Ver todas as notícias</span>
-              <ArrowRight className="w-4 h-4 text-[#B8892F]" />
+              <ArrowRight className="w-4 h-4 text-[#16A34A]" />
             </Link>
           </div>
 
@@ -477,13 +477,13 @@ export default function Index() {
       </section>
 
       {/* 5. SOBRE A CONSULTORIA (White Background) */}
-      <section className="py-20 bg-white border-b border-[#E5E0D6]">
+      <section className="py-20 bg-white border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <span className="text-xs font-mono uppercase tracking-widest text-[#B8892F] font-bold">
+            <span className="text-xs font-mono uppercase tracking-widest text-[#15803D] font-bold">
               Soluções Estratégicas
             </span>
-            <h2 className="font-serif text-3xl sm:text-4xl font-bold text-[#0B1F3A] mt-2 mb-4">
+            <h2 className="font-serif text-3xl sm:text-4xl font-bold text-[#082852] mt-2 mb-4">
               Assessoria Econômica & Planejamento Tributário
             </h2>
             <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
@@ -494,12 +494,12 @@ export default function Index() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Card 1 */}
-            <div className="bg-[#F6F4EE] p-8 rounded-lg border border-[#E5E0D6] flex flex-col justify-between hover:border-[#B8892F] transition-colors">
+            <div className="bg-[#F8FAFC] p-8 rounded-xl border border-slate-200 flex flex-col justify-between hover:border-[#16A34A] transition-colors shadow-xs">
               <div>
-                <div className="w-12 h-12 rounded bg-[#0B1F3A] flex items-center justify-center text-[#B8892F] mb-6">
+                <div className="w-12 h-12 rounded-lg bg-[#0B3B7A] flex items-center justify-center text-[#22C55E] mb-6">
                   <LineChartIcon className="w-6 h-6" />
                 </div>
-                <h3 className="font-serif text-xl font-bold text-[#0B1F3A] mb-3">
+                <h3 className="font-serif text-xl font-bold text-[#082852] mb-3">
                   Análise Macroeconômica
                 </h3>
                 <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
@@ -507,18 +507,18 @@ export default function Index() {
                   risco de crédito para orientar decisões de investimento e dívida.
                 </p>
               </div>
-              <div className="pt-6 mt-6 border-t border-[#E0DBCF] text-[11px] font-mono text-[#B8892F] font-semibold">
+              <div className="pt-6 mt-6 border-t border-slate-200 text-[11px] font-mono text-[#15803D] font-semibold">
                 Cenários Preditivos & Modelos
               </div>
             </div>
 
             {/* Card 2 */}
-            <div className="bg-[#F6F4EE] p-8 rounded-lg border border-[#E5E0D6] flex flex-col justify-between hover:border-[#B8892F] transition-colors">
+            <div className="bg-[#F8FAFC] p-8 rounded-xl border border-slate-200 flex flex-col justify-between hover:border-[#16A34A] transition-colors shadow-xs">
               <div>
-                <div className="w-12 h-12 rounded bg-[#0B1F3A] flex items-center justify-center text-[#B8892F] mb-6">
+                <div className="w-12 h-12 rounded-lg bg-[#0B3B7A] flex items-center justify-center text-[#22C55E] mb-6">
                   <Scale className="w-6 h-6" />
                 </div>
-                <h3 className="font-serif text-xl font-bold text-[#0B1F3A] mb-3">
+                <h3 className="font-serif text-xl font-bold text-[#082852] mb-3">
                   Reforma Tributária (IVA Dual)
                 </h3>
                 <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
@@ -526,18 +526,18 @@ export default function Index() {
                   cadeia produtiva e preparação técnica para o Split Payment.
                 </p>
               </div>
-              <div className="pt-6 mt-6 border-t border-[#E0DBCF] text-[11px] font-mono text-[#B8892F] font-semibold">
+              <div className="pt-6 mt-6 border-t border-slate-200 text-[11px] font-mono text-[#15803D] font-semibold">
                 Transição Segura 2026-2033
               </div>
             </div>
 
             {/* Card 3 */}
-            <div className="bg-[#F6F4EE] p-8 rounded-lg border border-[#E5E0D6] flex flex-col justify-between hover:border-[#B8892F] transition-colors">
+            <div className="bg-[#F8FAFC] p-8 rounded-xl border border-slate-200 flex flex-col justify-between hover:border-[#16A34A] transition-colors shadow-xs">
               <div>
-                <div className="w-12 h-12 rounded bg-[#0B1F3A] flex items-center justify-center text-[#B8892F] mb-6">
+                <div className="w-12 h-12 rounded-lg bg-[#0B3B7A] flex items-center justify-center text-[#22C55E] mb-6">
                   <Wallet className="w-6 h-6" />
                 </div>
-                <h3 className="font-serif text-xl font-bold text-[#0B1F3A] mb-3">
+                <h3 className="font-serif text-xl font-bold text-[#082852] mb-3">
                   Planejamento Financeiro
                 </h3>
                 <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
@@ -545,7 +545,7 @@ export default function Index() {
                   e renegociação de passivos indexados a CDI e IPCA.
                 </p>
               </div>
-              <div className="pt-6 mt-6 border-t border-[#E0DBCF] text-[11px] font-mono text-[#B8892F] font-semibold">
+              <div className="pt-6 mt-6 border-t border-slate-200 text-[11px] font-mono text-[#15803D] font-semibold">
                 Eficiência de Capital Corporativo
               </div>
             </div>
@@ -553,15 +553,15 @@ export default function Index() {
         </div>
       </section>
 
-      {/* 6. CTA FINAL (Brass Tinted Panel) */}
-      <section className="py-16 bg-[#0B1F3A] text-white">
+      {/* 6. CTA FINAL (Blue/Green Brand Panel) */}
+      <section className="py-16 bg-[#082852] text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-gradient-to-r from-[#102A4E] to-[#183863] rounded-2xl p-8 sm:p-12 border border-[#B8892F]/30 shadow-2xl flex flex-col lg:flex-row items-center justify-between gap-8">
+          <div className="bg-gradient-to-r from-[#0B3B7A] to-[#082852] rounded-2xl p-8 sm:p-12 border border-[#16A34A]/40 shadow-2xl flex flex-col lg:flex-row items-center justify-between gap-8">
             <div className="max-w-2xl">
-              <span className="text-xs font-mono uppercase tracking-widest text-[#D4A853] font-bold">
+              <span className="text-xs font-mono uppercase tracking-widest text-[#22C55E] font-bold">
                 Atendimento Consultivo Direto
               </span>
-              <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#F6F4EE] mt-1 mb-3">
+              <h2 className="font-serif text-2xl sm:text-3xl font-bold text-white mt-1 mb-3">
                 Quer uma análise personalizada aplicada ao seu negócio?
               </h2>
               <p className="text-sm text-slate-300 leading-relaxed">
@@ -573,15 +573,15 @@ export default function Index() {
             <div className="flex flex-col sm:flex-row items-center gap-4 shrink-0 w-full lg:w-auto">
               <a
                 href="mailto:flavio@borlim.com.br?subject=Solicitação%20de%20Consultoria%20Econômica"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-[#B8892F] hover:bg-[#D4A853] text-[#0B1F3A] text-xs font-mono font-bold uppercase tracking-wider rounded transition-all shadow-md"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-[#16A34A] hover:bg-[#15803D] text-white text-xs font-mono font-bold uppercase tracking-wider rounded-lg transition-all shadow-md"
               >
-                <Mail className="w-4 h-4 text-[#0B1F3A]" />
+                <Mail className="w-4 h-4 text-white" />
                 <span>Fale com um especialista</span>
               </a>
 
               <Link
                 to="/sobre"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-white/10 hover:bg-white/20 text-[#F6F4EE] text-xs font-mono font-bold uppercase tracking-wider rounded border border-slate-600 transition-colors"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-white/10 hover:bg-white/20 text-white text-xs font-mono font-bold uppercase tracking-wider rounded-lg border border-slate-600 transition-colors"
               >
                 <span>Conheça nossos serviços</span>
               </Link>

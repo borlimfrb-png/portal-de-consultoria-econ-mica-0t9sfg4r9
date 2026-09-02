@@ -44,7 +44,7 @@ export default function Sparkline({
 
   // Default stroke color according to trend if not provided
   const isUp = values[values.length - 1] >= values[0]
-  const strokeColor = color || (isUp ? '#1F7A4D' : '#C0392B')
+  const strokeColor = color || (isUp ? '#16A34A' : '#DC2626')
 
   return (
     <svg

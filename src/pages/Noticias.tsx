@@ -116,20 +116,20 @@ export default function Noticias() {
 
   return (
     <div className="flex flex-col min-h-screen">
-      {/* 1. Header Band (Ivory) */}
-      <section className="bg-[#EDE9DE] border-b border-[#E5E0D6] py-12">
+      {/* 1. Header Band (Clean Blue/White) */}
+      <section className="bg-gradient-to-r from-[#082852] to-[#0B3B7A] text-white border-b border-slate-200 py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
             <div className="inline-flex items-center gap-2 mb-2">
-              <span className="w-2 h-2 rounded-full bg-[#B8892F]" />
-              <span className="text-[11px] font-mono uppercase tracking-[0.2em] text-[#B8892F] font-bold">
+              <span className="w-2 h-2 rounded-full bg-[#22C55E]" />
+              <span className="text-[11px] font-mono uppercase tracking-[0.2em] text-[#22C55E] font-bold">
                 Cobertura Editorial & Feeds Automatizados
               </span>
             </div>
-            <h1 className="font-serif text-3xl sm:text-4xl font-bold text-[#0B1F3A]">
+            <h1 className="font-serif text-3xl sm:text-4xl font-bold text-white">
               Notícias & Reforma Tributária
             </h1>
-            <p className="text-sm sm:text-base text-slate-600 mt-2 leading-relaxed">
+            <p className="text-sm sm:text-base text-slate-200 mt-2 leading-relaxed">
               Acompanhamento detalhado da regulamentação do IBS, CBS e Imposto Seletivo, além dos
               principais acontecimentos macroeconômicos do país, com síntese orientada à tomada de
               decisão.
@@ -139,7 +139,7 @@ export default function Noticias() {
       </section>
 
       {/* 2. Toolbar: Search + Category Chips */}
-      <section className="bg-white border-b border-[#E5E0D6] py-4 sticky top-[73px] z-30 shadow-xs">
+      <section className="bg-white border-b border-slate-200 py-4 sticky top-[73px] z-30 shadow-xs">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             {/* Category Chips */}
@@ -151,9 +151,9 @@ export default function Noticias() {
                   <button
                     key={cat.id}
                     onClick={() => handleCategoryChange(cat.id)}
-                    className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded text-xs font-mono transition-all shrink-0 ${
+                    className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-mono transition-all shrink-0 ${
                       isActive
-                        ? 'bg-[#B8892F] text-[#0B1F3A] font-bold shadow-xs'
+                        ? 'bg-[#16A34A] text-white font-bold shadow-xs'
                         : 'bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium'
                     }`}
                   >
@@ -171,7 +171,7 @@ export default function Noticias() {
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 placeholder="Buscar notícias..."
-                className="w-full pl-9 pr-4 py-1.5 text-xs bg-[#F6F4EE] border border-[#D5CFBF] rounded focus:outline-none focus:border-[#B8892F] text-[#0B1F3A] placeholder:text-slate-400 font-sans"
+                className="w-full pl-9 pr-4 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-[#16A34A] text-[#082852] placeholder:text-slate-400 font-sans"
               />
               <Search className="w-4 h-4 text-slate-400 absolute left-3 top-2" />
             </form>
@@ -205,7 +205,7 @@ export default function Noticias() {
         ) : articles.length === 0 ? (
           <div className="text-center py-20 bg-white rounded-xl border border-dashed border-slate-300 p-8">
             <Newspaper className="w-12 h-12 text-slate-300 mx-auto mb-4" />
-            <h3 className="font-serif text-xl font-bold text-[#0B1F3A] mb-2">
+            <h3 className="font-serif text-xl font-bold text-[#082852] mb-2">
               Nenhuma matéria encontrada
             </h3>
             <p className="text-sm text-slate-500 max-w-md mx-auto mb-6">
@@ -219,7 +219,7 @@ export default function Noticias() {
                 setSearchParams({})
                 loadArticles(1, 'all', '')
               }}
-              className="px-5 py-2.5 bg-[#0B1F3A] text-white text-xs font-mono font-bold uppercase tracking-wider rounded"
+              className="px-5 py-2.5 bg-[#0B3B7A] text-white text-xs font-mono font-bold uppercase tracking-wider rounded-lg"
             >
               Limpar filtros
             </button>
@@ -259,9 +259,9 @@ export default function Noticias() {
                     key={pNum}
                     type="button"
                     onClick={() => handlePageChange(pNum)}
-                    className={`w-9 h-9 flex items-center justify-center text-xs font-mono font-bold rounded transition-colors ${
+                    className={`w-9 h-9 flex items-center justify-center text-xs font-mono font-bold rounded-lg transition-colors ${
                       pNum === page
-                        ? 'bg-[#0B1F3A] text-white shadow-xs'
+                        ? 'bg-[#0B3B7A] text-white shadow-xs'
                         : 'bg-white border border-slate-300 hover:bg-slate-50 text-slate-700'
                     }`}
                   >

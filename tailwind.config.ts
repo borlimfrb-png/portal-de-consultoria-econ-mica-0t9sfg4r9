@@ -31,6 +31,22 @@ export default {
         display: ['SF Pro Display', 'Inter var', 'system-ui', 'sans-serif'],
       },
       colors: {
+        borlim: {
+          blue: {
+            deep: '#082852',
+            DEFAULT: '#0B3B7A',
+            light: '#1557A6',
+            surface: '#0E468F',
+          },
+          green: {
+            deep: '#14532D',
+            dark: '#15803D',
+            DEFAULT: '#16A34A',
+            light: '#22C55E',
+            subtle: '#DCFCE7',
+          },
+          white: '#FFFFFF',
+        },
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',

@@ -40,13 +40,13 @@ export default function TopTicker() {
   const displayList = [...tickerItems, ...tickerItems]
 
   return (
-    <div className="w-full bg-[#0B1F3A] text-slate-200 border-b border-[#1A365D] overflow-hidden py-2 select-none relative z-50 text-xs font-mono">
+    <div className="w-full bg-[#082852] text-slate-200 border-b border-[#0B3B7A] overflow-hidden py-2 select-none relative z-50 text-xs font-mono">
       <div className="flex items-center">
         {/* Market status badge fixed on the left */}
-        <div className="hidden md:flex items-center gap-2 pl-4 pr-3 border-r border-slate-700/60 bg-[#0B1F3A] shrink-0 z-10">
+        <div className="hidden md:flex items-center gap-2 pl-4 pr-3 border-r border-slate-700/60 bg-[#082852] shrink-0 z-10">
           <span className="relative flex h-2 w-2">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-[#16A34A]"></span>
           </span>
           <span className="text-[10px] uppercase tracking-wider text-slate-300 font-semibold">
             Mercados
@@ -65,12 +65,12 @@ export default function TopTicker() {
                 <Link
                   key={`${item.id}-${index}`}
                   to="/indicadores"
-                  className="inline-flex items-center gap-2 px-4 hover:text-[#D4A853] transition-colors"
+                  className="inline-flex items-center gap-2 px-4 hover:text-[#22C55E] transition-colors"
                 >
-                  <span className="font-semibold text-slate-100 uppercase tracking-wider">
+                  <span className="font-semibold text-white uppercase tracking-wider">
                     {item.short_name}
                   </span>
-                  <span className="text-slate-300 tabular-nums font-bold">
+                  <span className="text-slate-200 tabular-nums font-bold">
                     {item.current_value.toLocaleString('pt-BR', {
                       minimumFractionDigits: 2,
                       maximumFractionDigits: 2,
@@ -80,10 +80,10 @@ export default function TopTicker() {
 
                   {!isZero && (
                     <span
-                      className={`inline-flex items-center gap-0.5 text-[10px] font-bold px-1 py-0.2 rounded ${
+                      className={`inline-flex items-center gap-0.5 text-[10px] font-bold px-1.5 py-0.5 rounded ${
                         isPositive
-                          ? 'text-[#1F7A4D] bg-[#1F7A4D]/15'
-                          : 'text-[#C0392B] bg-[#C0392B]/15'
+                          ? 'text-[#22C55E] bg-[#16A34A]/20'
+                          : 'text-[#F87171] bg-red-950/40'
                       }`}
                     >
                       {isPositive ? '▲ +' : '▼ '}
@@ -94,7 +94,7 @@ export default function TopTicker() {
                     </span>
                   )}
 
-                  <span className="text-[#B8892F] opacity-70 ml-2">◆</span>
+                  <span className="text-[#16A34A] opacity-70 ml-2">◆</span>
                 </Link>
               )
             })}
