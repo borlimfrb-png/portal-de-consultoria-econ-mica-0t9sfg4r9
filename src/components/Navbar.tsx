@@ -89,38 +89,26 @@ export default function Navbar() {
               </Link>
             )
           })}
-
-          {/* Direct Link to Análise de Balanço App in Nav */}
-          <a
-            href={balanceAnalysisUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group relative inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-semibold text-[#15803D] hover:text-[#0F5A29] bg-emerald-50 hover:bg-emerald-100 border border-emerald-300 rounded-md transition-all shadow-xs"
-            title="Acessar o Sistema de Análise de Balanço (abre em nova aba)"
-          >
-            <FileSpreadsheet className="w-4 h-4 text-[#16A34A]" />
-            <span>Análise de Balanço</span>
-            <ExternalLink className="w-3 h-3 text-slate-400 group-hover:text-[#16A34A] transition-colors" />
-          </a>
         </nav>
 
         {/* CTA Buttons (Desktop & Tablet) */}
         <div className="hidden sm:flex items-center gap-2 lg:gap-3">
-          {/* Análise de Balanço shortcut for tablet (when nav is hidden on md) */}
+          {/* Main Brand CTA: Análise de Balanço */}
           <a
             href={balanceAnalysisUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="lg:hidden inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-[#15803D] bg-emerald-50 hover:bg-emerald-100 border border-emerald-300 rounded shadow-xs transition-colors"
+            className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm font-bold uppercase tracking-wider bg-[#16A34A] hover:bg-[#15803D] text-white rounded-lg shadow-md hover:shadow-lg transition-all border border-[#15803D] hover:scale-[1.02] active:scale-[0.99] shrink-0 font-mono group"
+            title="Acessar o Sistema de Análise de Balanço da Borlim (abre em nova aba)"
           >
-            <FileSpreadsheet className="w-3.5 h-3.5 text-[#16A34A]" />
+            <FileSpreadsheet className="w-4 h-4 text-white group-hover:scale-110 transition-transform" />
             <span>Análise de Balanço</span>
-            <ExternalLink className="w-3 h-3 text-slate-400" />
+            <ExternalLink className="w-3.5 h-3.5 text-emerald-100" />
           </a>
 
           <a
             href="mailto:flavio@borlim.com.br?subject=Consulta%20Econômica%20-%20Contato"
-            className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-2 sm:py-2.5 text-xs font-semibold uppercase tracking-wider bg-[#0B3B7A] text-white hover:bg-[#1557A6] transition-colors rounded shadow-sm border border-[#0B3B7A] hover:border-[#16A34A] shrink-0"
+            className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-2 sm:py-2.5 text-xs font-semibold uppercase tracking-wider bg-[#0B3B7A] text-white hover:bg-[#1557A6] transition-colors rounded-lg shadow-sm border border-[#0B3B7A] hover:border-[#16A34A] shrink-0"
           >
             <span>Fale com especialista</span>
             <ArrowUpRight className="w-3.5 h-3.5 text-[#22C55E]" />
@@ -163,41 +151,41 @@ export default function Navbar() {
                 )
               })}
 
-              {/* Mobile Shortcut to Análise de Balanço */}
+              {/* Mobile Highlighted Link to Análise de Balanço */}
               <a
                 href={balanceAnalysisUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-between py-3.5 text-base font-serif font-bold text-[#15803D] hover:text-[#0F5A29]"
+                className="flex items-center justify-between py-3 px-3 bg-emerald-50/80 hover:bg-emerald-100 border border-emerald-200 rounded-lg text-base font-bold text-[#15803D] my-1"
               >
                 <div className="flex items-center gap-3">
-                  <div className="p-1.5 bg-emerald-100 text-[#16A34A] rounded">
+                  <div className="p-2 bg-[#16A34A] text-white rounded-md shadow-xs">
                     <FileSpreadsheet className="w-5 h-5" />
                   </div>
                   <span>Análise de Balanço</span>
                 </div>
-                <div className="flex items-center gap-1 text-xs font-mono font-normal text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+                <div className="flex items-center gap-1 text-xs font-mono font-bold text-white bg-[#16A34A] px-2.5 py-1 rounded shadow-xs">
                   <span>Acessar</span>
                   <ExternalLink className="w-3 h-3" />
                 </div>
               </a>
             </div>
 
-            <div className="pt-4 border-t border-slate-100 space-y-2">
+            <div className="pt-4 border-t border-slate-100 space-y-2.5">
               <a
                 href={balanceAnalysisUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full flex items-center justify-center gap-2 px-5 py-3 text-sm font-semibold uppercase tracking-wider bg-[#16A34A] hover:bg-[#15803D] text-white rounded shadow transition-colors"
+                className="w-full flex items-center justify-center gap-2 px-5 py-3.5 text-sm font-bold uppercase tracking-wider bg-[#16A34A] hover:bg-[#15803D] text-white rounded-lg shadow-md font-mono transition-all border border-[#15803D]"
               >
                 <FileSpreadsheet className="w-4 h-4 text-white" />
-                <span>Abrir Análise de Balanço</span>
-                <ExternalLink className="w-3.5 h-3.5 text-emerald-100" />
+                <span>Análise de Balanço</span>
+                <ExternalLink className="w-4 h-4 text-emerald-100" />
               </a>
 
               <a
                 href="mailto:flavio@borlim.com.br?subject=Consulta%20Econômica%20-%20Contato"
-                className="w-full flex items-center justify-center gap-2 px-5 py-3 text-sm font-semibold uppercase tracking-wider bg-[#0B3B7A] hover:bg-[#1557A6] text-white rounded shadow transition-colors"
+                className="w-full flex items-center justify-center gap-2 px-5 py-3 text-sm font-semibold uppercase tracking-wider bg-[#0B3B7A] hover:bg-[#1557A6] text-white rounded-lg shadow-sm transition-colors"
               >
                 <Mail className="w-4 h-4 text-[#22C55E]" />
                 <span>Fale com um especialista</span>

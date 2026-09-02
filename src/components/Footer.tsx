@@ -133,12 +133,12 @@ export default function Footer() {
                   href="https://analise-de-balanco-6514f.goskip.app"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#0B3B7A] hover:bg-[#1557A6] text-[#22C55E] hover:text-white rounded border border-[#16A34A]/50 text-xs font-mono font-semibold transition-all group"
+                  className="inline-flex items-center gap-2 px-3.5 py-2 bg-[#16A34A] hover:bg-[#15803D] text-white rounded-lg border border-[#22C55E] text-xs font-mono font-bold uppercase tracking-wider transition-all shadow-md group"
                   title="Acessar o Sistema de Análise de Balanço da Borlim (abre em nova aba)"
                 >
-                  <FileSpreadsheet className="w-3.5 h-3.5 text-[#22C55E]" />
+                  <FileSpreadsheet className="w-4 h-4 text-white group-hover:scale-110 transition-transform" />
                   <span>Análise de Balanço</span>
-                  <ExternalLink className="w-3 h-3 text-slate-300 group-hover:text-white" />
+                  <ExternalLink className="w-3 h-3 text-emerald-100 group-hover:translate-x-0.5 transition-transform" />
                 </a>
               </li>
             </ul>
