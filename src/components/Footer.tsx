@@ -1,6 +1,15 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Mail, Phone, MapPin, ArrowRight, CheckCircle2, Linkedin } from 'lucide-react'
+import {
+  Mail,
+  Phone,
+  MapPin,
+  ArrowRight,
+  CheckCircle2,
+  Linkedin,
+  ExternalLink,
+  FileSpreadsheet,
+} from 'lucide-react'
 import logoBorlim from '@/assets/logo-borlim-debb0.png'
 import { subscribeNewsletter } from '@/services/news'
 import { toast } from '@/hooks/use-toast'
@@ -118,6 +127,19 @@ export default function Footer() {
                 >
                   <span className="text-[#16A34A] text-xs">›</span> Sobre a Consultoria
                 </Link>
+              </li>
+              <li className="pt-2">
+                <a
+                  href="https://analise-de-balanco-6514f.goskip.app"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#0B3B7A] hover:bg-[#1557A6] text-[#22C55E] hover:text-white rounded border border-[#16A34A]/50 text-xs font-mono font-semibold transition-all group"
+                  title="Acessar o Sistema de Análise de Balanço da Borlim (abre em nova aba)"
+                >
+                  <FileSpreadsheet className="w-3.5 h-3.5 text-[#22C55E]" />
+                  <span>Análise de Balanço</span>
+                  <ExternalLink className="w-3 h-3 text-slate-300 group-hover:text-white" />
+                </a>
               </li>
             </ul>
           </div>

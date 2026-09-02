@@ -11,6 +11,7 @@ import {
   RefreshCw,
   ExternalLink,
   Mail,
+  FileSpreadsheet,
 } from 'lucide-react'
 import {
   ResponsiveContainer,
@@ -175,20 +176,32 @@ export default function Index() {
               </p>
 
               {/* CTAs */}
-              <div className="flex flex-wrap items-center gap-4 pt-2">
+              <div className="flex flex-wrap items-center gap-3 pt-2">
                 <Link
                   to="/indicadores"
-                  className="inline-flex items-center gap-2 px-6 py-3.5 bg-[#16A34A] hover:bg-[#15803D] text-white font-semibold text-xs uppercase tracking-wider rounded-lg transition-all shadow-md hover:shadow-lg font-mono"
+                  className="inline-flex items-center gap-2 px-5 py-3.5 bg-[#16A34A] hover:bg-[#15803D] text-white font-semibold text-xs uppercase tracking-wider rounded-lg transition-all shadow-md hover:shadow-lg font-mono"
                 >
                   <span>Ver indicadores</span>
                   <TrendingUp className="w-4 h-4 text-white" />
                 </Link>
 
+                <a
+                  href="https://analise-de-balanco-6514f.goskip.app"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-5 py-3.5 bg-[#0B3B7A] hover:bg-[#1557A6] text-white border border-[#22C55E]/60 hover:border-[#22C55E] font-semibold text-xs uppercase tracking-wider rounded-lg transition-all shadow-md font-mono group"
+                  title="Acessar o Sistema de Análise de Balanço da Borlim (abre em nova aba)"
+                >
+                  <FileSpreadsheet className="w-4 h-4 text-[#22C55E]" />
+                  <span>Análise de Balanço</span>
+                  <ExternalLink className="w-3.5 h-3.5 text-slate-300 group-hover:text-white" />
+                </a>
+
                 <Link
                   to="/noticias"
-                  className="inline-flex items-center gap-2 px-6 py-3.5 bg-white/10 hover:bg-white/20 text-white border border-slate-600 hover:border-[#16A34A] font-medium text-xs uppercase tracking-wider rounded-lg transition-colors font-mono"
+                  className="inline-flex items-center gap-2 px-5 py-3.5 bg-white/10 hover:bg-white/20 text-white border border-slate-600 hover:border-[#16A34A] font-medium text-xs uppercase tracking-wider rounded-lg transition-colors font-mono"
                 >
-                  <span>Explorar notícias</span>
+                  <span>Notícias</span>
                   <ArrowRight className="w-4 h-4 text-[#22C55E]" />
                 </Link>
               </div>
@@ -570,20 +583,31 @@ export default function Index() {
               </p>
             </div>
 
-            <div className="flex flex-col sm:flex-row items-center gap-4 shrink-0 w-full lg:w-auto">
+            <div className="flex flex-col sm:flex-row items-center gap-3 shrink-0 w-full lg:w-auto">
+              <a
+                href="https://analise-de-balanco-6514f.goskip.app"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3.5 bg-white text-[#082852] hover:bg-emerald-50 text-xs font-mono font-bold uppercase tracking-wider rounded-lg transition-all shadow-md border border-emerald-400 group"
+              >
+                <FileSpreadsheet className="w-4 h-4 text-[#16A34A]" />
+                <span>Análise de Balanço</span>
+                <ExternalLink className="w-3.5 h-3.5 text-slate-500 group-hover:text-[#16A34A]" />
+              </a>
+
               <a
                 href="mailto:flavio@borlim.com.br?subject=Solicitação%20de%20Consultoria%20Econômica"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-[#16A34A] hover:bg-[#15803D] text-white text-xs font-mono font-bold uppercase tracking-wider rounded-lg transition-all shadow-md"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3.5 bg-[#16A34A] hover:bg-[#15803D] text-white text-xs font-mono font-bold uppercase tracking-wider rounded-lg transition-all shadow-md"
               >
                 <Mail className="w-4 h-4 text-white" />
-                <span>Fale com um especialista</span>
+                <span>Fale com especialista</span>
               </a>
 
               <Link
                 to="/sobre"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-white/10 hover:bg-white/20 text-white text-xs font-mono font-bold uppercase tracking-wider rounded-lg border border-slate-600 transition-colors"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3.5 bg-white/10 hover:bg-white/20 text-white text-xs font-mono font-bold uppercase tracking-wider rounded-lg border border-slate-600 transition-colors"
               >
-                <span>Conheça nossos serviços</span>
+                <span>Nossos serviços</span>
               </Link>
             </div>
           </div>

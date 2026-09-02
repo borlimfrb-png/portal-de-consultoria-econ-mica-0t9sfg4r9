@@ -13,6 +13,8 @@ import {
   AlertTriangle,
   Check,
   Linkedin,
+  FileSpreadsheet,
+  ExternalLink,
 } from 'lucide-react'
 import logoBorlim from '@/assets/logo-borlim-debb0.png'
 
@@ -392,15 +394,29 @@ export default function Sobre() {
               <p className="text-xs text-slate-300 mt-1 mb-6 font-sans">
                 Atendimento consultivo e personalizado para empresários e diretorias.
               </p>
-              <a
-                href="https://wa.me/5517997650672?text=Ol%C3%A1%2C%20gostaria%20de%20solicitar%20um%20diagn%C3%B3stico%20financeiro%20para%20minha%20empresa."
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#16A34A] hover:bg-[#15803D] text-white text-xs font-mono font-bold uppercase tracking-wider rounded-lg transition-all shadow"
-              >
-                <span>Solicitar Diagnóstico Financeiro</span>
-                <ArrowRight className="w-4 h-4" />
-              </a>
+              <div className="w-full space-y-2">
+                <a
+                  href="https://analise-de-balanco-6514f.goskip.app"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 bg-white hover:bg-emerald-50 text-[#082852] text-xs font-mono font-bold uppercase tracking-wider rounded-lg transition-all shadow border border-emerald-400 group"
+                  title="Acessar o Sistema de Análise de Balanço da Borlim (abre em nova aba)"
+                >
+                  <FileSpreadsheet className="w-4 h-4 text-[#16A34A]" />
+                  <span>Acessar Análise de Balanço</span>
+                  <ExternalLink className="w-3.5 h-3.5 text-slate-500 group-hover:text-[#16A34A]" />
+                </a>
+
+                <a
+                  href="https://wa.me/5517997650672?text=Ol%C3%A1%2C%20gostaria%20de%20solicitar%20um%20diagn%C3%B3stico%20financeiro%20para%20minha%20empresa."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#16A34A] hover:bg-[#15803D] text-white text-xs font-mono font-bold uppercase tracking-wider rounded-lg transition-all shadow"
+                >
+                  <span>Solicitar Diagnóstico Financeiro</span>
+                  <ArrowRight className="w-4 h-4" />
+                </a>
+              </div>
             </div>
           </div>
         </div>
