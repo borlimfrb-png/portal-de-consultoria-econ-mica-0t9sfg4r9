@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Mail, Phone, MapPin, ArrowRight, CheckCircle2 } from 'lucide-react'
+import { Mail, Phone, MapPin, ArrowRight, CheckCircle2, Linkedin } from 'lucide-react'
 import { subscribeNewsletter } from '@/services/news'
 import { toast } from '@/hooks/use-toast'
 
@@ -151,6 +151,22 @@ export default function Footer() {
                   <span className="text-xs text-slate-400">Telefone / WhatsApp:</span>
                   <span className="font-mono text-xs font-semibold text-white">
                     (17) 99765-0672
+                  </span>
+                </div>
+              </a>
+
+              <a
+                href="https://www.linkedin.com/in/flavio-bordignon-bordignon-8b1a63b9/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-start gap-2.5 hover:text-[#22C55E] transition-colors group"
+                aria-label="LinkedIn - Flávio Bordignon"
+              >
+                <Linkedin className="w-4 h-4 text-[#16A34A] mt-0.5 shrink-0 group-hover:scale-110 transition-transform" />
+                <div className="flex flex-col">
+                  <span className="text-xs text-slate-400">Rede Profissional:</span>
+                  <span className="font-mono text-xs font-semibold text-white group-hover:underline">
+                    LinkedIn
                   </span>
                 </div>
               </a>

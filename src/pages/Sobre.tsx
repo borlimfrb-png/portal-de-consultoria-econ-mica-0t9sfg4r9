@@ -12,6 +12,7 @@ import {
   Target,
   AlertTriangle,
   Check,
+  Linkedin,
 } from 'lucide-react'
 
 export default function Sobre() {
@@ -352,6 +353,18 @@ export default function Sobre() {
                   </span>
                   <span className="text-[10px] text-slate-400 font-sans font-normal">
                     (WhatsApp)
+                  </span>
+                </a>
+                <a
+                  href="https://www.linkedin.com/in/flavio-bordignon-bordignon-8b1a63b9/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 text-slate-200 hover:text-[#22C55E] transition-colors group"
+                  aria-label="LinkedIn - Flávio Bordignon"
+                >
+                  <Linkedin className="w-4 h-4 text-[#16A34A] shrink-0 group-hover:scale-110 transition-transform" />
+                  <span className="font-bold underline underline-offset-4 decoration-[#16A34A]/60">
+                    LinkedIn
                   </span>
                 </a>
                 <div className="flex items-center gap-3 text-slate-200">

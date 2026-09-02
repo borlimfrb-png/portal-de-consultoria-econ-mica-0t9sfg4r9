@@ -17,10 +17,10 @@
     --popover: 0 0% 100%;
     --popover-foreground: 214 84% 18%;
 
-    --primary: 214 84% 26%; /* #0B3B7A */
+    --primary: 214 83% 26%; /* #0B3B7A Borlim Corporate Deep Blue */
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 142 45% 92%; /* Borlim light green tint */
+    --secondary: 142 45% 92%; /* Borlim subtle green tint */
     --secondary-foreground: 142 76% 22%;
 
     --muted: 210 25% 95%;
@@ -29,12 +29,18 @@
     --accent: 142 76% 36%; /* #16A34A Borlim Emerald Green */
     --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 72% 51%; /* Red variation */
+    --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 214 32% 91%; /* Clean cool border #E2E8F0 */
+    --border: 214 32% 91%; /* #E2E8F0 */
     --input: 214 32% 91%;
     --ring: 142 76% 36%;
+
+    --chart-1: 214 83% 26%; /* #0B3B7A */
+    --chart-2: 142 76% 36%; /* #16A34A */
+    --chart-3: 142 71% 45%; /* #22C55E */
+    --chart-4: 214 77% 37%; /* #1557A6 */
+    --chart-5: 214 82% 18%; /* #082852 */
 
     --radius: 0.375rem;
 
