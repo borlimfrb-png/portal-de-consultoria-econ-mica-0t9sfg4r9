@@ -93,16 +93,16 @@ export default function Navbar() {
 
         {/* CTA Buttons (Desktop & Tablet) */}
         <div className="hidden sm:flex items-center gap-2 lg:gap-3">
-          {/* Main Brand CTA: Análise de Balanço */}
+          {/* Main Brand CTA: GESTÃO EMPRESARIAL */}
           <a
             href={balanceAnalysisUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm font-bold uppercase tracking-wider bg-[#16A34A] hover:bg-[#15803D] text-white rounded-lg shadow-md hover:shadow-lg transition-all border border-[#15803D] hover:scale-[1.02] active:scale-[0.99] shrink-0 font-mono group"
-            title="Acessar o Sistema de Análise de Balanço da Borlim (abre em nova aba)"
+            title="Acessar o Sistema de Gestão Empresarial da Borlim (abre em nova aba)"
           >
             <FileSpreadsheet className="w-4 h-4 text-white group-hover:scale-110 transition-transform" />
-            <span>Análise de Balanço</span>
+            <span>GESTÃO EMPRESARIAL</span>
             <ExternalLink className="w-3.5 h-3.5 text-emerald-100" />
           </a>
 
@@ -151,7 +151,7 @@ export default function Navbar() {
                 )
               })}
 
-              {/* Mobile Highlighted Link to Análise de Balanço */}
+              {/* Mobile Highlighted Link to GESTÃO EMPRESARIAL */}
               <a
                 href={balanceAnalysisUrl}
                 target="_blank"
@@ -162,7 +162,7 @@ export default function Navbar() {
                   <div className="p-2 bg-[#16A34A] text-white rounded-md shadow-xs">
                     <FileSpreadsheet className="w-5 h-5" />
                   </div>
-                  <span>Análise de Balanço</span>
+                  <span>GESTÃO EMPRESARIAL</span>
                 </div>
                 <div className="flex items-center gap-1 text-xs font-mono font-bold text-white bg-[#16A34A] px-2.5 py-1 rounded shadow-xs">
                   <span>Acessar</span>
@@ -179,7 +179,7 @@ export default function Navbar() {
                 className="w-full flex items-center justify-center gap-2 px-5 py-3.5 text-sm font-bold uppercase tracking-wider bg-[#16A34A] hover:bg-[#15803D] text-white rounded-lg shadow-md font-mono transition-all border border-[#15803D]"
               >
                 <FileSpreadsheet className="w-4 h-4 text-white" />
-                <span>Análise de Balanço</span>
+                <span>GESTÃO EMPRESARIAL</span>
                 <ExternalLink className="w-4 h-4 text-emerald-100" />
               </a>
 

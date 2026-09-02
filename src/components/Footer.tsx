@@ -134,10 +134,10 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-3.5 py-2 bg-[#16A34A] hover:bg-[#15803D] text-white rounded-lg border border-[#22C55E] text-xs font-mono font-bold uppercase tracking-wider transition-all shadow-md group"
-                  title="Acessar o Sistema de Análise de Balanço da Borlim (abre em nova aba)"
+                  title="Acessar o Sistema de Gestão Empresarial da Borlim (abre em nova aba)"
                 >
                   <FileSpreadsheet className="w-4 h-4 text-white group-hover:scale-110 transition-transform" />
-                  <span>Análise de Balanço</span>
+                  <span>GESTÃO EMPRESARIAL</span>
                   <ExternalLink className="w-3 h-3 text-emerald-100 group-hover:translate-x-0.5 transition-transform" />
                 </a>
               </li>

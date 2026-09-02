@@ -177,16 +177,16 @@ export default function Index() {
 
               {/* CTAs */}
               <div className="flex flex-wrap items-center gap-3 pt-2">
-                {/* Main Featured Brand CTA: Análise de Balanço */}
+                {/* Main Featured Brand CTA: GESTÃO EMPRESARIAL */}
                 <a
                   href="https://analise-de-balanco-6514f.goskip.app"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-6 py-3.5 bg-[#16A34A] hover:bg-[#15803D] text-white font-bold text-xs sm:text-sm uppercase tracking-wider rounded-lg transition-all shadow-lg hover:shadow-xl font-mono border-2 border-[#22C55E] hover:scale-102 group"
-                  title="Acessar o Sistema de Análise de Balanço da Borlim (abre em nova aba)"
+                  title="Acessar o Sistema de Gestão Empresarial da Borlim (abre em nova aba)"
                 >
                   <FileSpreadsheet className="w-4 h-4 sm:w-5 sm:h-5 text-white group-hover:scale-110 transition-transform" />
-                  <span>Análise de Balanço</span>
+                  <span>GESTÃO EMPRESARIAL</span>
                   <ExternalLink className="w-4 h-4 text-emerald-100 group-hover:translate-x-0.5 transition-transform" />
                 </a>
 
@@ -585,16 +585,16 @@ export default function Index() {
             </div>
 
             <div className="flex flex-col sm:flex-row items-center gap-3 shrink-0 w-full lg:w-auto">
-              {/* Main Green CTA: Análise de Balanço */}
+              {/* Main Green CTA: GESTÃO EMPRESARIAL */}
               <a
                 href="https://analise-de-balanco-6514f.goskip.app"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-[#16A34A] hover:bg-[#15803D] text-white text-xs sm:text-sm font-mono font-bold uppercase tracking-wider rounded-lg transition-all shadow-lg hover:shadow-xl border-2 border-[#22C55E] group"
-                title="Acessar o Sistema de Análise de Balanço da Borlim (abre em nova aba)"
+                title="Acessar o Sistema de Gestão Empresarial da Borlim (abre em nova aba)"
               >
                 <FileSpreadsheet className="w-4 h-4 sm:w-5 sm:h-5 text-white group-hover:scale-110 transition-transform" />
-                <span>Análise de Balanço</span>
+                <span>GESTÃO EMPRESARIAL</span>
                 <ExternalLink className="w-4 h-4 text-emerald-100 group-hover:translate-x-0.5 transition-transform" />
               </a>
 
