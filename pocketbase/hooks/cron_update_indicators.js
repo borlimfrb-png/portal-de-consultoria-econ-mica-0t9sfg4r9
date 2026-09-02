@@ -84,6 +84,15 @@ cronAdd('update_economic_indicators', '0 */6 * * *', () => {
     },
   ]
 
+  // Calculate 12-month date range: dataInicial = today - 12 months, dataFinal = today (formatted dd/MM/yyyy)
+  const now = new Date()
+  const past = new Date(now.getFullYear() - 1, now.getMonth(), now.getDate())
+
+  const pad = (n) => (n < 10 ? '0' + n : '' + n)
+  const dataInicial =
+    pad(past.getDate()) + '/' + pad(past.getMonth() + 1) + '/' + past.getFullYear()
+  const dataFinal = pad(now.getDate()) + '/' + pad(now.getMonth() + 1) + '/' + now.getFullYear()
+
   let updatedCount = 0
   const failedIndicators = []
 
@@ -94,7 +103,10 @@ cronAdd('update_economic_indicators', '0 */6 * * *', () => {
     const url =
       'https://api.bcb.gov.br/dados/serie/bcdata.sgs.' +
       item.sgsCode +
-      '/dados/ultimos/30?formato=json'
+      '/dados?formato=json&dataInicial=' +
+      dataInicial +
+      '&dataFinal=' +
+      dataFinal
 
     for (let attempt = 1; attempt <= maxRetries; attempt++) {
       try {
