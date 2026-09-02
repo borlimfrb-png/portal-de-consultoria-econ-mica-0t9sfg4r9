@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Mail, Phone, MapPin, ArrowRight, CheckCircle2, Linkedin } from 'lucide-react'
+import logoBorlim from '@/assets/logo-borlim-debb0.png'
 import { subscribeNewsletter } from '@/services/news'
 import { toast } from '@/hooks/use-toast'
 
@@ -56,7 +57,7 @@ export default function Footer() {
             >
               <div className="bg-white px-4 py-2 rounded-lg border border-slate-200 shadow-sm inline-flex items-center justify-center transition-transform duration-200 group-hover:scale-102">
                 <img
-                  src="https://dagtlwojkqyivnjgveda.supabase.co/storage/v1/object/public/message-attachments/d4ee3ea1-6f11-4694-81f4-064bcd12d76e/logotipo-borlim-73de3.jpg"
+                  src={logoBorlim}
                   alt="BORLIM Consultoria Empresarial"
                   className="h-12 sm:h-16 w-auto max-w-[280px] sm:max-w-[320px] object-contain"
                 />

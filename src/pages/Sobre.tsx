@@ -14,6 +14,7 @@ import {
   Check,
   Linkedin,
 } from 'lucide-react'
+import logoBorlim from '@/assets/logo-borlim-debb0.png'
 
 export default function Sobre() {
   const coreFeatures = [
@@ -382,7 +383,7 @@ export default function Sobre() {
               {/* Official Brand Logo */}
               <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-md mb-4 w-full max-w-[260px] flex items-center justify-center">
                 <img
-                  src="https://dagtlwojkqyivnjgveda.supabase.co/storage/v1/object/public/message-attachments/d4ee3ea1-6f11-4694-81f4-064bcd12d76e/logotipo-borlim-73de3.jpg"
+                  src={logoBorlim}
                   alt="BORLIM Consultoria Empresarial"
                   className="h-14 w-auto max-w-full object-contain"
                 />

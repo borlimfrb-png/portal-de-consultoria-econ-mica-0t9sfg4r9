@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { Menu, X, ArrowUpRight, TrendingUp, Newspaper, Info, Home, Mail } from 'lucide-react'
+import logoBorlim from '@/assets/logo-borlim-debb0.png'
 import { Button } from '@/components/ui/button'
 
 export default function Navbar() {
@@ -45,7 +46,7 @@ export default function Navbar() {
         >
           <div className="bg-white px-3.5 py-2 rounded-lg border border-slate-200 shadow-xs flex items-center justify-center transition-transform duration-200 group-hover:scale-102 hover:border-[#16A34A]/50">
             <img
-              src="https://dagtlwojkqyivnjgveda.supabase.co/storage/v1/object/public/message-attachments/d4ee3ea1-6f11-4694-81f4-064bcd12d76e/logotipo-borlim-73de3.jpg"
+              src={logoBorlim}
               alt="BORLIM Consultoria Empresarial"
               className="h-12 sm:h-16 w-auto max-w-[280px] sm:max-w-[340px] object-contain transition-all"
             />
