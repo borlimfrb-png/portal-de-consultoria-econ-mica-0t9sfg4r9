@@ -44,21 +44,21 @@ export default function Planejamento() {
   const diagnosticPillars = [
     {
       icon: BarChart3,
-      badge: 'Raio-X de 48 Indicadores',
-      title: 'Diagnóstico dos 48 Indicadores de Desempenho',
-      desc: 'Mapeamento minucioso do sistema financeiro da empresa: prazos médios, liquidez corrente e seca, capital de giro, margens operacionais, endividamento e rentabilidade sobre o patrimônio. Demonstramos claramente onde estão os pontos fortes e as vulnerabilidades antes de qualquer decisão.',
+      badge: 'Diagnóstico 360°',
+      title: '48 Indicadores de Desempenho Financeiro',
+      desc: 'Raio-X completo do sistema financeiro da sua empresa: prazos médios de recebimento e pagamento, liquidez imediata e corrente, fôlego de capital de giro (o dinheiro necessário para manter as portas abertas no dia a dia), margens de lucro, endividamento bancário e giro de estoques. Demonstramos com clareza os pontos fortes e os pontos fracos antes de qualquer tomada de decisão.',
     },
     {
       icon: AlertTriangle,
-      badge: 'Prevenção & Solvência',
+      badge: 'Prevenção de Crise',
       title: 'Teste de Insolvência Imediata e em 12 Meses',
-      desc: 'Demonstramos com antecedência se a sua empresa apresenta risco de insolvência imediata ou nos próximos 12 meses. Separamos faturamento contábil de caixa real para que o negócio nunca seja pego de surpresa por descasamentos de datas ou falta de fôlego.',
+      desc: 'Demonstramos com antecedência se a sua empresa apresenta risco de insolvência imediata ou no período de 12 meses. Separamos o que é faturamento contábil no papel do que é dinheiro real no banco, protegendo o negócio contra surpresas com descasamentos de datas, impostos represados ou falta de fôlego.',
     },
     {
       icon: ShieldCheck,
-      badge: 'Solidez & Continuidade',
-      title: 'Decisões Baseadas no Patrimônio Real e Lucro Líquido',
-      desc: 'Integração direta com o valor real dos seus ativos e estrutura de custos. Cada recomendação de corte, investimento ou precificação é calibrada para proteger o patrimônio construído e garantir sustentabilidade de longo prazo.',
+      badge: 'Segurança Patrimonial',
+      title: 'Decisões Apoiadas em Ativos Seguros e Lucro Real',
+      desc: 'Conexão direta com a avaliação de ativos com indicador seguro e a estrutura de custos da sua operação. Cada recomendação de investimento, corte ou precificação é calibrada para proteger o patrimônio que você construiu e valorizar a empresa no mercado.',
     },
   ]
 
@@ -70,31 +70,31 @@ export default function Planejamento() {
       title: 'Planejamento Financeiro',
       subtitle: 'Fluxo de Caixa, Capital de Giro e Reinvestimento dos Lucros',
       icon: Calculator,
-      highlight: 'Entrada e saída do capital de giro + onde reinvestir',
+      highlight: 'Entrada e saída do capital de giro + onde reinvestir os lucros',
       phrase:
-        'Planejar de forma eficiente o fluxo de entrada e saída do capital de giro e demonstrar sugestões para a empresa investir os lucros no próprio negócio.',
+        'Planejar de forma eficiente o fluxo de entrada e saída do capital de giro e demonstrar sugestões para a empresa investir os lucros no seu próprio negócio.',
       actionCta: 'Ver detalhes do Planejamento Financeiro',
     },
     {
       id: 'economico',
       number: '02',
       title: 'Planejamento Econômico',
-      subtitle: 'Maximização e Sustentabilidade do Lucro Mensal',
+      subtitle: 'Melhoria e Sustentabilidade do Lucro Mensal',
       icon: TrendingUp,
-      highlight: 'Aumentar o lucro mensal da empresa',
+      highlight: 'Melhorar o lucro mensal da empresa',
       phrase:
-        'Melhorar o lucro mensal da empresa, alinhando receitas, margem de contribuição, custos e despesas operacionais a parâmetros reais de rentabilidade.',
+        'Melhorar o lucro mensal da empresa, alinhando receitas, margem de contribuição (o valor que sobra de cada venda após pagar custos variáveis), custos e despesas operacionais a parâmetros reais de rentabilidade.',
       actionCta: 'Ver detalhes do Planejamento Econômico',
     },
     {
       id: 'bsc',
       number: '03',
       title: 'Balanced Scorecard (BSC)',
-      subtitle: 'Competitividade Estratégica e Retenção Absoluta de Negócios',
+      subtitle: 'Competitividade no Mercado e Retenção de Clientes',
       icon: Target,
       highlight: 'Nenhum negócio será perdido no mercado',
       phrase:
-        'Deixar a empresa muito mais competitiva no mercado — nenhum negócio será perdido com a implantação do Balanced Scorecard.',
+        'A empresa fica muito mais competitiva no mercado — nenhum negócio será perdido com a implantação do Balanced Scorecard.',
       actionCta: 'Ver detalhes do Balanced Scorecard',
     },
   ]
@@ -103,91 +103,95 @@ export default function Planejamento() {
   const planningSteps = [
     {
       step: '01',
-      title: 'Coleta Documental & Diagnóstico dos 48 Indicadores',
-      desc: 'Análise aprofundada de balanços, DREs, extratos, relatórios de faturamento, controles de contas a pagar e a receber para calcular os 48 indicadores da Borlim.',
+      title: 'Diagnóstico dos 48 Indicadores & Coleta de Dados',
+      desc: 'Análise minuciosa de balanços, demonstrativos contábeis (DRE), relatórios de faturamento, controles de contas a pagar e a receber para apurar os 48 indicadores da metodologia Borlim.',
     },
     {
       step: '02',
-      title: 'Auditoria de Insolvência (Imediata e em 12 Meses)',
-      desc: 'Projeção rigorosa do fôlego financeiro para hoje e para os próximos 12 meses. Identificamos previamente gargalos de liquidez e riscos de descasamento de capital de giro.',
+      title: 'Teste de Insolvência (Imediata e em 12 Meses)',
+      desc: 'Checagem rigorosa do fôlego de caixa imediato e projeção da saúde financeira para os próximos 12 meses, identificando antecipadamente gargalos de liquidez e riscos de descasamento no capital de giro.',
     },
     {
       step: '03',
-      title: 'Modelagem dos Três Planejamentos Estratégicos',
-      desc: 'Construção personalizada do Planejamento Financeiro (fluxo e giro), Planejamento Econômico (lucro mensal) e Balanced Scorecard (competitividade e clientes).',
+      title: 'Estruturação dos Três Planejamentos Estratégicos',
+      desc: 'Construção sob medida do Planejamento Financeiro (fluxo e giro), Planejamento Econômico (lucro mensal) e Balanced Scorecard (competitividade para não perder negócios).',
     },
     {
       step: '04',
       title: 'Apresentação Executiva, Metas e Acompanhamento',
-      desc: 'Reunião de entrega com os sócios e diretoria: plano de ação prático, sugestões de reinvestimento dos lucros, painel de bordo e suporte consultivo contínuo.',
+      desc: 'Reunião de entrega com os sócios e diretoria: memorial explicativo, metas por setor, sugestões para investir os lucros no próprio negócio e suporte direto dos nossos economistas.',
     },
   ]
 
   // Benefícios para o Empresário
   const planningBenefits = [
     {
-      title: 'Controle Absoluto do Fluxo de Caixa e Capital de Giro',
-      desc: 'Você para de apagar incêndios bancários diários e passa a antecipar com precisão as entradas e saídas de recursos mês a mês.',
+      title: 'Controle Firme do Fluxo de Caixa e Capital de Giro',
+      desc: 'Você encerra a rotina de apagar incêndios bancários no dia a dia e passa a antecipar com precisão cada entrada e saída de recursos mês a mês.',
     },
     {
-      title: 'Lucro Mensal Concreto e Mensurável',
-      desc: 'Identificação cirúrgica de linhas deficitárias, renegociação de custos e aumento real da margem de lucro líquido depositada na conta.',
+      title: 'Aumento Concreto e Real do Lucro Mensal',
+      desc: 'Mapeamento cirúrgico de contratos e produtos que causam prejuízo disfarçado, readequação de despesas e mais dinheiro limpo no caixa.',
     },
     {
-      title: 'Sugestões Práticas de Onde Reinvestir os Lucros',
-      desc: 'Demonstramos tecnicamente quais investimentos no próprio negócio trazem maior retorno sobre o capital próprio, acelerando o crescimento sem endividamento tóxico.',
+      title: 'Sugestões Seguras de Onde Investir os Lucros',
+      desc: 'Demonstramos tecnicamente quais investimentos no próprio negócio trazem maior retorno sobre o capital, multiplicando o patrimônio com segurança.',
     },
     {
-      title: 'Prevenção Antecipada de Insolvência a 12 Meses',
-      desc: 'Blindagem da solvência: você sabe com 1 ano de antecedência se haverá pressão de caixa e quais ajustes contratuais ou operacionais devem ser feitos.',
+      title: 'Blindagem Contra Insolvência com 12 Meses de Antecedência',
+      desc: 'Você sabe com até um ano de antecedência se haverá pressão de caixa sazonal ou tributária, permitindo negociar prazos com total tranquilidade.',
     },
     {
-      title: 'Competitividade Implacável com o Balanced Scorecard',
-      desc: 'Alinhamento de metas comerciais, operacionais e de equipe para assegurar que nenhum cliente ou oportunidade de venda seja perdida.',
+      title: 'Empresa Muito Mais Competitiva no Mercado',
+      desc: 'A implantação do Balanced Scorecard integra comercial, operação e finanças para assegurar que nenhum negócio ou proposta seja perdida para a concorrência.',
     },
     {
-      title: 'Sinergia Direta com o Valuation da Empresa',
-      desc: 'Uma empresa com fluxo de caixa previsível, lucro mensal consistente e BSC implantado vale muito mais na hora de negociar cotas com investidores ou sócios.',
+      title: 'Valorização Direta do Negócio (Valuation)',
+      desc: 'Uma empresa com fluxo de caixa previsível, lucro mensal crescente e Balanced Scorecard ativo atinge múltiplos muito maiores na avaliação para sócios ou investidores.',
     },
   ]
 
   // Perguntas Frequentes (FAQ de empresários reais)
   const faqs = [
     {
-      q: 'Qual é a diferença real entre Planejamento Financeiro e Planejamento Econômico?',
-      a: 'É uma distinção vital que confunde muitos empresários. O Planejamento Econômico cuida do Lucro (Regime de Competência): ele analisa suas vendas, custos dos produtos/serviços, margem de contribuição e despesas fixas para garantir que sua operação seja lucrativa no papel e no resultado final. Já o Planejamento Financeiro cuida do Caixa (Regime de Caixa): ele organiza o fluxo de entrada e saída de dinheiro no tempo, gerencia os prazos de recebimento e pagamento (capital de giro) e aponta onde reinvestir os lucros. Uma empresa pode ter lucro econômico alto no mês, mas quebrar por falta de planejamento financeiro se o dinheiro estiver todo preso em estoque ou a receber a 90 dias.',
+      q: 'Qual é a diferença na prática entre Planejamento Financeiro e Planejamento Econômico?',
+      a: 'É uma distinção vital que confunde muitos donos de empresas. O Planejamento Econômico cuida do Lucro (Regime de Competência): ele analisa suas receitas de vendas, os custos dos produtos ou serviços prestados, a margem de contribuição (o dinheiro que sobra de cada venda para pagar a estrutura fixa) e as despesas operacionais para garantir que a sua operação melhore o lucro mensal da empresa. Já o Planejamento Financeiro cuida do Caixa (Regime de Caixa): ele organiza de forma eficiente o fluxo de entrada e saída do capital de giro (o fôlego financeiro para bancar compras, contas e estoques antes de receber dos clientes) e demonstra sugestões para investir os lucros no seu próprio negócio. Uma empresa pode apresentar lucro contábil alto no fechamento do mês e, mesmo assim, quebrar por falta de dinheiro no caixa se as contas a receber vencerem a 90 dias e os fornecedores cobrarem em 30.',
     },
     {
-      q: 'O que são os 48 indicadores e por que eles são o ponto de partida?',
-      a: 'Os 48 indicadores da Borlim são um conjunto completo de métricas que medem a saúde de toda a cadeia da sua empresa: liquidez (imediata, seca, corrente e geral), estrutura de capital e endividamento bancário/fiscal, prazos médios de estocagem, compras e recebimentos (ciclo financeiro e operacional), margens bruta, operacional e líquida, giro de ativos e retorno sobre o patrimônio líquido (ROE/ROIC). Sem esses 48 indicadores, qualquer planejamento seria apenas um palpite. Com eles, nós sabemos com exatidão onde o negócio sangra dinheiro e onde estão as maiores oportunidades.',
+      q: 'O que são os 48 indicadores de desempenho e por que eles são o ponto de partida?',
+      a: 'Os 48 indicadores da Borlim formam um diagnóstico 360° que examina todas as engrenagens da sua empresa: liquidez (imediata, seca, corrente e geral — capacidade de pagar dívidas sem depender de novos empréstimos), estrutura de capital e endividamento perante bancos e fisco, prazos médios de rotação de estoques, pagamentos e recebimentos (ciclo financeiro e operacional), margens bruta, operacional e líquida, giro dos ativos e retorno sobre o patrimônio líquido. Sem esses 48 indicadores, qualquer decisão estratégica seria mero palpite. Com eles, nós apontamos exatamente onde a empresa perde dinheiro e onde estão as maiores oportunidades de ganho.',
     },
     {
-      q: 'Como funciona a análise de insolvência imediata e no período de 12 meses?',
-      a: 'Nós confrontamos a capacidade imediata de geração e liquidez da empresa contra todos os compromissos exigíveis no curto prazo (fornecedores, folhas, tributos e parcelas de empréstimos). Depois, modelamos o fluxo projetado para os próximos 12 meses sob cenários realistas, conservadores e de estresse. O teste revela com até um ano de antecedência se a empresa terá gargalos de caixa, permitindo renegociar prazos com tranquilidade antes que o problema se torne uma crise.',
+      q: 'Como funciona o teste de insolvência imediata e no período de 12 meses?',
+      a: 'Confrontamos a capacidade real de geração de caixa e saldo bancário da empresa contra todas as contas e compromissos exigíveis no curto prazo (folha de pagamento, fornecedores, tributos e amortização de empréstimos). Em seguida, projetamos o fluxo para os próximos 12 meses sob cenários conservadores e de estresse. O teste revela com até um ano de antecedência se o negócio terá pressões de liquidez, permitindo reprogramar prazos, renegociar contratos ou ajustar compras com total calma antes que o aperto vire crise bancária.',
     },
     {
-      q: 'O que é o Balanced Scorecard (BSC) e como ele garante que "nenhum negócio será perdido"?',
-      a: 'O Balanced Scorecard é uma metodologia consagrada mundialmente que conecta os objetivos financeiros da empresa a três outras perspectivas fundamentais: Clientes e Mercado, Processos Internos de Entrega e Aprendizado/Pessoas. Na prática da Borlim, o BSC evita que o foco excessivo no corte de custos prejudique o atendimento ao cliente ou atrase entregas. Quando a equipe de vendas, a produção e o financeiro trabalham sob o mesmo painel com metas claras de retenção, tempo de resposta e qualidade, a empresa ganha agilidade e poder comercial — por isso afirmamos que nenhum negócio será perdido para a concorrência.',
+      q: 'O que é o Balanced Scorecard (BSC) e por que "nenhum negócio será perdido com a sua implantação"?',
+      a: 'O Balanced Scorecard (BSC, ou painel balanceado de gestão) é a metodologia consagrada que alinha os objetivos financeiros da empresa a três outras perspectivas essenciais do dia a dia: Clientes e Mercado, Processos Internos de Entrega e Pessoas/Equipe. Na prática da Borlim, o BSC impede que cortes de despesas desorganizem o atendimento ou atrasem entregas aos clientes. Quando o setor comercial, a produção e o setor financeiro trabalham sob metas compartilhadas de rapidez nas propostas, precisão na entrega e satisfação do comprador, a empresa fica muito mais competitiva no mercado — por essa razão afirmamos que nenhum negócio será perdido para os concorrentes.',
     },
     {
-      q: 'Como a Borlim orienta a empresa a investir os lucros no próprio negócio?',
-      a: 'Gerar lucro é apenas metade da equação; a outra metade é saber o que fazer com ele. A Borlim demonstra tecnicamente para os sócios quais caminhos trazem a melhor rentabilidade ajustada ao risco: aumentar estoque estratégico com desconto à vista de fornecedores, modernizar máquinas para reduzir desperdício, expandir equipe comercial, constituir reserva de emergência remunerada ou amortizar dívidas bancárias caras. Cada sugestão é sustentada por cálculo de retorno sobre o capital investido.',
+      q: 'Como a Borlim demonstra sugestões para a empresa investir os lucros no seu próprio negócio?',
+      a: 'Gerar lucro é fundamental, mas saber onde reinvesti-lo é o que multiplica o patrimônio do empresário. A Borlim demonstra tecnicamente para os sócios quais caminhos trazem a maior rentabilidade com menor risco: antecipar compras com desconto à vista de fornecedores, modernizar maquinários para diminuir custos operacionais, reforçar a equipe comercial, estruturar reserva de liquidez remunerada ou abater dívidas bancárias caras. Cada sugestão é apresentada com cálculo claro de retorno sobre o capital próprio.',
     },
     {
-      q: 'Minha empresa é de médio ou pequeno porte. O planejamento estratégico se aplica?',
-      a: 'Com certeza. São justamente as pequenas e médias empresas as que mais ganham com o planejamento da Borlim, pois costumam operar com margens mais apertadas e menor fôlego bancário. Empresários de PMEs frequentemente acumulam a função de vendas, operação e finanças. Com o nosso diagnóstico e os três planejamentos estruturados, o dono ganha clareza, ganha tempo e passa a tomar decisões embasadas em números sólidos.',
+      q: 'Como a avaliação de ativos com indicador seguro entra no planejamento?',
+      a: 'Numa possível venda do seu negócio ou entrada de novos sócios, com a utilização de um indicador seguro avaliaremos o valor dos seus ativos (máquinas, galpões, frotas, estoques e marcas). Esse indicador seguro corrige as distorções fiscais da contabilidade oficial — onde bens modernos aparecem depreciados com valor zero — e define o piso patrimonial inegociável da empresa. No planejamento, ele assegura que você conheça o verdadeiro lastro do negócio antes de tomar decisões financeiras.',
+    },
+    {
+      q: 'Minha empresa é de pequeno ou médio porte (PME). O planejamento se aplica ao meu caso?',
+      a: 'Com certeza absoluta. As pequenas e médias empresas são exatamente as que mais se beneficiam do planejamento da Borlim, pois operam com margens mais justas e não têm espaço para errar com caixa preso. Muitas vezes o empresário se desdobra entre vendas, operação e cobrança. Com o diagnóstico dos 48 indicadores e os três planejamentos estruturados, o dono ganha clareza, sai do sufoco diário e passa a decidir com base em números sólidos.',
     },
     {
       q: 'Qual é a relação entre Planejamento Econômico-Financeiro e o Valuation da empresa?',
-      a: 'Eles são duas faces da mesma moeda. O Valuation calcula quanto a sua empresa vale hoje. Já o Planejamento Econômico e Financeiro é a alavanca que faz esse valor disparar nos próximos meses e anos. Quando um investidor ou comprador analisa sua empresa e encontra um fluxo de caixa previsível, lucro mensal comprovado e um Balanced Scorecard em pleno funcionamento, o risco percebido desaba e o valor da empresa aumenta substancialmente.',
+      a: 'Eles caminham de mãos dadas. O Valuation calcula com precisão quanto a sua empresa vale hoje no mercado. Já o Planejamento Econômico e Financeiro é a alavanca que faz esse valor de mercado multiplicar nos meses seguintes. Quando um comprador, investidor ou banco audita sua empresa e encontra fluxo de capital de giro previsível, lucro mensal consistente e o Balanced Scorecard funcionando, o risco diminui e a avaliação da empresa sobe expressivamente.',
     },
     {
-      q: 'Quanto tempo leva a consultoria e qual é a dedicação exigida da minha equipe?',
-      a: 'O diagnóstico inicial dos 48 indicadores e o teste de insolvência são concluídos habitualmente entre 2 e 4 semanas após o fornecimento dos dados básicos. A dedicação da sua equipe é mínima e orientada: nós enviamos uma lista objetiva de documentos (balancetes, DREs, relatórios de contas e faturamento) e conduzimos reuniões de alinhamento com a diretoria sem interromper a rotina produtiva da empresa.',
+      q: 'Quanto tempo leva o trabalho da consultoria e qual a dedicação exigida da minha equipe?',
+      a: 'O diagnóstico dos 48 indicadores e o teste de insolvência imediata e em 12 meses são entregues habitualmente entre 2 e 4 semanas após o envio dos dados básicos. A dedicação da sua equipe é orientada e objetiva: solicitamos uma lista clara de demonstrativos e conduzimos reuniões de alinhamento com a diretoria sem interromper a rotina produtiva da empresa.',
     },
     {
-      q: 'Como posso dar o primeiro passo para implantar o Planejamento na minha empresa?',
-      a: 'Basta entrar em contato com nossa equipe técnica pelo botão do WhatsApp (17) 99765-0672 ou pelo e-mail flavio@borlim.com.br. Realizamos uma primeira conversa diagnóstica, sem custo, para entender a realidade do seu negócio e apresentar uma proposta personalizada para a sua empresa.',
+      q: 'Como posso dar o primeiro passo para contratar a consultoria Borlim?',
+      a: 'Basta entrar em contato direto com o nosso economista pelo WhatsApp (17) 99765-0672 ou pelo e-mail flavio@borlim.com.br. Realizamos uma primeira conversa diagnóstica, sem qualquer custo, para entender a realidade da sua empresa e apresentar uma proposta personalizada.',
     },
   ]
 
@@ -195,23 +199,23 @@ export default function Planejamento() {
   const practicalScenarios = [
     {
       icon: DollarSign,
-      title: 'A empresa fatura bem, mas a conta bancária está sempre no limite',
-      desc: 'Cenário típico de descasamento de capital de giro: prazos concedidos a clientes são longos demais em comparação aos prazos dos fornecedores. Nosso Planejamento Financeiro estanca essa hemorragia e equilibra o fluxo.',
+      title: 'A empresa fatura alto, mas a conta bancária vive no aperto',
+      desc: 'Cenário típico de descasamento no capital de giro: os prazos concedidos aos clientes são mais longos do que os prazos cobrados pelos fornecedores. O Planejamento Financeiro da Borlim estanca esse descompasso e equilibra o fluxo de caixa.',
     },
     {
       icon: TrendingUp,
-      title: 'O faturamento cresce, mas o lucro mensal líquido não aparece',
-      desc: 'Sintoma clássico de custos ocultos, despesas que escalam acima da receita e precificação defasada. Nosso Planejamento Econômico reorganiza a margem de contribuição e eleva o resultado líquido mensal.',
+      title: 'As vendas aumentam todo mês, mas o lucro líquido não aparece',
+      desc: 'Sinal evidente de custos invisíveis, despesas que sobem mais rápido que a receita e preços calculados sem considerar a margem de contribuição. O Planejamento Econômico reestrutura a DRE gerencial e melhora o lucro mensal da empresa.',
     },
     {
       icon: Users2,
-      title: 'Perda constante de propostas e clientes para a concorrência',
-      desc: 'Falta de velocidade de resposta comercial, falhas de entrega ou falta de pós-venda estruturado. A implantação do Balanced Scorecard elimina gargalos entre setores e fecha a porta para perdas comerciais.',
+      title: 'Perda frequente de propostas comerciais e clientes para a concorrência',
+      desc: 'Demora para enviar orçamentos, gargalos na entrega ou falta de pós-venda estruturado. Com a implantação do Balanced Scorecard, a empresa fica muito mais competitiva no mercado e nenhum negócio será perdido.',
     },
     {
       icon: PieChart,
-      title: 'Incerteza sobre onde aplicar o lucro acumulado da empresa',
-      desc: 'Retirar tudo em pró-labore/dividendos ou reinvestir no escuro? A Borlim demonstra onde cada real de lucro reinvestido traz o maior ganho para acelerar a prosperidade do negócio.',
+      title: 'Dúvidas sobre como e onde aplicar o lucro acumulado da empresa',
+      desc: 'Retirar tudo em dividendos ou reinvestir no escuro? A Borlim demonstra sugestões técnicas para a empresa investir os lucros no seu próprio negócio com maior retorno sobre o patrimônio.',
     },
   ]
 
@@ -234,27 +238,36 @@ export default function Planejamento() {
             </div>
 
             <h1 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight">
-              Planejamento Econômico & Financeiro
+              Planejamento Econômico e Financeiro
             </h1>
 
             <p className="font-serif text-xl sm:text-2xl text-emerald-300 mt-4 font-normal leading-snug">
-              Para a sua empresa prosperar ainda mais, com fluxo de capital de giro eficiente, lucro
-              mensal crescente e competitividade imbatível no mercado.
+              Para a sua empresa prosperar ainda mais: fluxo de capital de giro equilibrado, lucro
+              mensal consistente e competitividade para nenhum negócio ser perdido.
             </p>
 
             <p className="text-base sm:text-lg text-slate-300 mt-6 leading-relaxed font-sans max-w-3xl">
-              A <strong>Borlim Consultoria Empresarial</strong> é especializada em diagnosticar e
-              planejar o sistema financeiro da sua empresa. Demonstramos com rigor técnico os pontos
-              fortes e fracos com <strong>48 indicadores de desempenho</strong> e apuramos se o seu
-              negócio apresenta{' '}
-              <strong>riscos de insolvência imediata ou no período de doze meses</strong>. Com base
-              nessa fundação matemática e segura, estruturamos os{' '}
-              <strong>três tipos de planejamentos estratégicos</strong>: o{' '}
-              <strong>Planejamento Financeiro</strong> (eficiência de fluxo de entrada e saída do
-              capital de giro e sugestões para reinvestir lucros), o{' '}
-              <strong>Planejamento Econômico</strong> (melhorar o lucro mensal) e o{' '}
-              <strong>Balanced Scorecard</strong> (tornar a empresa muito mais competitiva para que
-              nenhum negócio seja perdido).
+              Na <strong>Borlim Consultoria Empresarial</strong>, somos especializados em
+              diagnosticar e planejar o sistema financeiro da sua empresa com linguagem direta, de
+              empresário para empresário. Demonstramos com rigor técnico os pontos fortes e os
+              pontos fracos do seu negócio por meio de{' '}
+              <strong>48 indicadores de desempenho financeiro</strong> e apuramos com antecedência
+              se a sua operação apresenta{' '}
+              <strong>riscos de insolvência imediata ou no período de 12 meses</strong>.
+            </p>
+            <p className="text-base sm:text-lg text-slate-300 mt-4 leading-relaxed font-sans max-w-3xl">
+              A partir dessa base segura, estruturamos os{' '}
+              <strong>três planejamentos estratégicos da Borlim</strong>: (1){' '}
+              <strong>Planejamento Financeiro</strong> — planejar de forma eficiente o fluxo de
+              entrada e saída do capital de giro (o oxigênio para manter a empresa operando) e
+              demonstrar sugestões para a empresa investir os lucros no seu próprio negócio; (2){' '}
+              <strong>Planejamento Econômico</strong> — melhorar o lucro mensal da empresa,
+              organizando a margem de contribuição e a DRE gerencial; e (3){' '}
+              <strong>Balanced Scorecard</strong> — a empresa fica muito mais competitiva no
+              mercado, garantindo que nenhum negócio será perdido para a concorrência. Numa possível
+              venda do negócio, contamos ainda com a{' '}
+              <strong>avaliação de ativos com indicador seguro</strong> para proteger todo o seu
+              patrimônio.
             </p>
 
             {/* CTAs do Hero */}
@@ -310,11 +323,14 @@ export default function Planejamento() {
                 empresa, demonstrando pontos fortes e fracos com 48 indicadores de desempenho.”
               </blockquote>
               <p className="text-sm sm:text-base text-slate-700 leading-relaxed font-sans">
-                Antes de traçar qualquer plano de metas ou expansão, nós colocamos a empresa no
-                raio-X. Verificamos se há problemas de insolvência imediata ou nos próximos doze
-                meses. A partir desse diagnóstico inquestionável, desenhamos com o empresário o mapa
-                para controlar o capital de giro, aumentar o lucro mensal e posicionar o negócio de
-                forma tão competitiva que nenhuma venda ou contrato seja perdido.
+                Antes de aprovar qualquer orçamento ou meta de expansão, colocamos a empresa no
+                raio-X. Verificamos se há riscos de insolvência imediata ou no período de 12 meses.
+                A partir desse diagnóstico inquestionável, desenhamos com você o plano para
+                equilibrar o fluxo de entrada e saída do capital de giro, melhorar o lucro mensal da
+                empresa e implantar o Balanced Scorecard para que nenhum negócio seja perdido no
+                mercado. E numa eventual venda ou reorganização, a avaliação de ativos com indicador
+                seguro garante que seus bens nunca sejam negociados por menos do que realmente
+                valem.
               </p>
             </div>
 
@@ -407,11 +423,11 @@ export default function Planejamento() {
                 Por que testar a insolvência imediata e no período de 12 meses?
               </h3>
               <p className="text-xs sm:text-sm text-slate-300 font-sans leading-relaxed">
-                Mais de 70% das empresas que encerram atividades no Brasil eram lucrativas no papel,
-                mas sucumbiram à falta de liquidez no fluxo de caixa diário. Ao auditar tanto o
-                fôlego imediato quanto o horizonte de 12 meses, identificamos descompassos sazonais,
-                parcelas de financiamentos e impostos represados antes que eles se tornem uma
-                emergência bancária.
+                Grande parte das empresas que passam por crises severas no Brasil é lucrativa no
+                papel (na DRE contábil), mas sucumbe à falta de liquidez no fluxo de caixa do dia a
+                dia. Ao auditar tanto o fôlego imediato quanto o período de 12 meses, identificamos
+                descasamentos sazonais, parcelas de empréstimos e impostos acumulados antes que eles
+                virem aperto bancário ou cobrança de juros caros.
               </p>
             </div>
             <div className="lg:col-span-4 flex flex-col sm:flex-row lg:flex-col gap-3">
@@ -508,24 +524,29 @@ export default function Planejamento() {
                     </span>
                     <h3 className="font-serif text-2xl font-bold text-[#082852]">
                       Planejar de forma eficiente o fluxo de entrada e saída do capital de giro e
-                      onde reinvestir os lucros
+                      demonstrar sugestões para a empresa investir os lucros no seu próprio negócio
                     </h3>
                     <p className="text-sm sm:text-base text-slate-700 font-sans leading-relaxed">
                       O <strong>Planejamento Financeiro da Borlim</strong> cuida do oxigênio diário
-                      da sua empresa: o dinheiro no banco. Nosso foco é organizar de forma técnica e
-                      eficiente o <strong>fluxo de entrada e saída do capital de giro</strong>,
-                      eliminando a dependência crônica de limite de cheque especial, antecipação
-                      cara de recebíveis e empréstimos de curto prazo com juros corrosivos.
+                      da sua empresa: o dinheiro na conta bancária. O objetivo central é{' '}
+                      <strong>
+                        planejar de forma eficiente o fluxo de entrada e saída do capital de giro
+                      </strong>{' '}
+                      (o montante de recursos necessário para financiar clientes a prazo e girar
+                      estoques antes de receber pelas vendas). Eliminamos de vez a dependência de
+                      cheque especial caro, descontos de duplicatas apressados e empréstimos
+                      bancários que corroem o resultado da sua empresa.
                     </p>
                     <p className="text-sm sm:text-base text-slate-700 font-sans leading-relaxed">
-                      Além de equilibrar as entradas e saídas, nossa consultoria desenvolve{' '}
+                      Além de equilibrar as datas de entradas e saídas, a consultoria apresenta{' '}
                       <strong>
-                        sugestões fundamentadas para a empresa reinvestir os lucros no seu próprio
+                        demonstrações e sugestões para a empresa investir os lucros no seu próprio
                         negócio
                       </strong>
-                      . Demonstramos com cálculos exatos qual o destino do lucro que trará maior
-                      multiplicação patrimonial — seja reforço de estoques estratégicos com ganho de
-                      escala, modernização de equipamentos, tecnologia ou expansão comercial.
+                      . Demonstramos com números claros qual investimento trará a maior
+                      multiplicação de patrimônio — como compras de insumos à vista com grande
+                      desconto de fornecedores, modernização de máquinas para cortar desperdícios,
+                      tecnologia ou formação de uma reserva de emergência remunerada.
                     </p>
                   </div>
 
@@ -641,23 +662,23 @@ export default function Planejamento() {
                       2. Planejamento Econômico — Lucro Mensal & Rentabilidade Real
                     </span>
                     <h3 className="font-serif text-2xl font-bold text-[#082852]">
-                      Melhorar o lucro mensal da empresa, alinhando receitas, custos e margem
+                      Melhorar o lucro mensal da empresa, alinhando receitas, custos e margens
                     </h3>
                     <p className="text-sm sm:text-base text-slate-700 font-sans leading-relaxed">
-                      O <strong>Planejamento Econômico da Borlim</strong> tem como meta direta e
-                      inegociável: <strong>melhorar o lucro mensal da sua empresa</strong>. Muitos
-                      empresários comemoram recordes de faturamento, mas percebem no final do mês
-                      que a margem líquida é minúscula ou até negativa. Isso acontece porque a
-                      estrutura de custos fixos e despesas operacionais não acompanha a lógica da
-                      precificação.
+                      O foco inegociável do <strong>Planejamento Econômico da Borlim</strong> é{' '}
+                      <strong>melhorar o lucro mensal da empresa</strong>. Muitos empresários batem
+                      recordes de vendas mês a mês, mas no final das contas veem o lucro líquido
+                      zerar ou diminuir. Isso ocorre quando a formação de preços não cobre os custos
+                      variáveis e a estrutura de despesas fixas cresce desordenadamente.
                     </p>
                     <p className="text-sm sm:text-base text-slate-700 font-sans leading-relaxed">
-                      Trabalhamos na raiz do resultado econômico (Demonstração do Resultado do
-                      Exercício - DRE gerencial): identificamos quais produtos, serviços ou clientes
-                      geram margem de contribuição positiva e quais estão secretamente drenando os
-                      resultados da operação. A partir desse mapeamento, estabelecemos metas de
-                      rentabilidade mensal que transformam volume bruto de vendas em lucro real no
-                      bolso dos sócios.
+                      Trabalhamos diretamente na <strong>DRE gerencial</strong> (a Demonstração do
+                      Resultado do Exercício montada para decisões gerenciais): analisamos a{' '}
+                      <strong>margem de contribuição</strong> de cada produto, serviço ou filial (o
+                      valor que cada venda entrega para pagar as despesas fixas e formar o lucro) e
+                      calculamos com precisão o ponto de equilíbrio. A partir desse diagnóstico,
+                      alinhamos receitas, custos e despesas para que cada real faturado se
+                      transforme em mais lucro mensal na conta da empresa.
                     </p>
                   </div>
 
@@ -775,30 +796,29 @@ export default function Planejamento() {
                       3. Balanced Scorecard (BSC) — Competitividade & Retenção de Negócios
                     </span>
                     <h3 className="font-serif text-2xl font-bold text-[#082852]">
-                      Deixar a empresa muito mais competitiva no mercado: nenhum negócio será
-                      perdido
+                      A empresa fica muito mais competitiva no mercado: nenhum negócio será perdido
+                      com a implantação do Balanced Scorecard
                     </h3>
                     <p className="text-sm sm:text-base text-slate-700 font-sans leading-relaxed">
-                      O <strong>Balanced Scorecard (BSC)</strong> é a ferramenta definitiva para
-                      conectar a estratégia da empresa ao trabalho do dia a dia. Com essa
-                      metodologia,{' '}
+                      O <strong>Balanced Scorecard (BSC)</strong> é a metodologia definitiva para
+                      transformar as metas do empresário em rotina produtiva nos departamentos. Com
+                      a nossa condução,{' '}
                       <strong>
-                        sua empresa vai ficar muito mais competitiva no mercado — ou seja, nenhum
-                        negócio será perdido com a implantação do Balanced Scorecard
+                        a sua empresa fica muito mais competitiva no mercado e nenhum negócio será
+                        perdido com a implantação do Balanced Scorecard
                       </strong>
                       .
                     </p>
                     <p className="text-sm sm:text-base text-slate-700 font-sans leading-relaxed">
-                      Enquanto muitos empresários controlam apenas o financeiro, o BSC integra 4
-                      dimensões vitais para garantir que sua empresa vença a concorrência:{' '}
-                      <strong>1. Perspectiva Financeira</strong> (lucro e retorno);{' '}
-                      <strong>2. Perspectiva de Clientes & Mercado</strong> (satisfação, preço,
-                      prazos e retenção); <strong>3. Processos Internos</strong> (qualidade,
-                      velocidade de entrega e redução de retrabalho); e{' '}
-                      <strong>4. Aprendizado & Pessoas</strong> (equipe capacitada e engajada).
-                      Quando todas as engrenagens giram juntas, propostas comerciais não ficam
-                      paradas na gaveta, os clientes são atendidos com excelência e a empresa ganha
-                      musculatura competitiva sem precedentes.
+                      Muitos negócios perdem clientes não pelo preço, mas pela demora em enviar uma
+                      proposta, pela falta de produto em estoque ou por falhas de atendimento. O BSC
+                      conecta quatro perspectivas estratégicas: <strong>1. Financeira</strong>{' '}
+                      (lucro mensal e caixa seguro); <strong>2. Clientes e Mercado</strong>{' '}
+                      (satisfação, prazos e fidelização); <strong>3. Processos Internos</strong>{' '}
+                      (agilidade, controle de qualidade e zero retrabalho); e{' '}
+                      <strong>4. Aprendizado e Pessoas</strong> (equipe engajada e qualificada).
+                      Quando essas 4 áreas trabalham sincronizadas, as vendas fecham mais rápido e
+                      sua empresa se destaca com autoridade perante qualquer concorrente.
                     </p>
                   </div>
 
@@ -1072,12 +1092,15 @@ export default function Planejamento() {
                 Planejamento & Valuation: Duas Forças que Multiplicam o Valor do Seu Negócio
               </h3>
               <p className="text-sm text-slate-200 font-sans leading-relaxed">
-                Um bom laudo de Valuation revela quanto a sua empresa vale hoje no mercado. Porém, é
-                o <strong>Planejamento Econômico e Financeiro</strong> que eleva esse valor
-                continuamente. Ao maximizar o lucro mensal, organizar o capital de giro e blindar a
-                competitividade com o Balanced Scorecard, a geração futura de caixa (FCD) cresce, as
-                dívidas caem e a empresa passa a valer muito mais numa eventual negociação de sócios
-                ou venda total.
+                Um bom laudo de Valuation aponta quanto a sua empresa vale hoje no mercado. Porém, é
+                o <strong>Planejamento Econômico e Financeiro</strong> que faz esse valor disparar
+                nos próximos meses. Ao melhorar o lucro mensal, planejar o fluxo de entrada e saída
+                do capital de giro, reinvestir os lucros com inteligência e manter a empresa muito
+                mais competitiva com o Balanced Scorecard, a geração futura de caixa livre cresce, o
+                risco percebido cai e a empresa ganha muito mais valor de mercado. E caso você
+                planeje vender o negócio, nossa{' '}
+                <strong>avaliação de ativos com indicador seguro</strong> assegura que você receba
+                cada centavo do patrimônio real construído.
               </p>
             </div>
             <div className="lg:col-span-4 flex flex-col gap-3">
@@ -1164,9 +1187,10 @@ export default function Planejamento() {
                 Vamos fazer a sua empresa prosperar ainda mais com a BORLIM Consultoria.
               </h2>
               <p className="text-sm sm:text-base text-slate-300 leading-relaxed font-sans">
-                Converse diretamente com o nosso economista e tire dúvidas sobre os 48 indicadores
-                de desempenho, prevenção de insolvência imediata e em 12 meses, fluxo de capital de
-                giro, lucro mensal e implantação do Balanced Scorecard para a sua empresa.
+                Converse diretamente com o nosso economista e tire todas as suas dúvidas sobre o
+                diagnóstico de 48 indicadores, o teste de insolvência imediata e em 12 meses, o
+                planejamento eficiente de capital de giro, como melhorar o lucro mensal ou como
+                implantar o Balanced Scorecard para que nenhum negócio seja perdido no seu mercado.
               </p>
 
               <div className="space-y-3 font-mono text-xs pt-2">

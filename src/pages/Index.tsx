@@ -12,6 +12,9 @@ import {
   ExternalLink,
   Mail,
   FileSpreadsheet,
+  Coins,
+  Calculator,
+  CheckCircle2,
 } from 'lucide-react'
 import {
   ResponsiveContainer,
@@ -353,6 +356,141 @@ export default function Index() {
             {featuredIndicators.map((ind) => (
               <IndicatorCard key={ind.id} indicator={ind} />
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 2.5 NOSSOS SERVIÇOS — VALUATION & PLANEJAMENTO ESTRATÉGICO */}
+      <section className="py-16 sm:py-20 bg-[#F8FAFC] border-b border-slate-200 relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+            <div className="max-w-3xl">
+              <span className="text-xs font-mono uppercase tracking-widest text-[#15803D] font-bold">
+                Especialidades da BORLIM Consultoria
+              </span>
+              <h2 className="font-serif text-3xl sm:text-4xl font-bold text-[#082852] mt-1">
+                Nossos Serviços Estratégicos
+              </h2>
+              <p className="text-sm sm:text-base text-slate-600 mt-2 font-sans leading-relaxed">
+                Consultoria econômica e financeira de empresário para empresário, fundamentada em 48
+                indicadores de desempenho e auditoria preventiva de insolvência.
+              </p>
+            </div>
+            <a
+              href="https://analise-de-balanco-6514f.goskip.app"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden lg:inline-flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-wider text-[#15803D] hover:text-[#16A34A] transition-colors"
+            >
+              <FileSpreadsheet className="w-4 h-4" />
+              <span>Acessar Gestão Empresarial</span>
+              <ExternalLink className="w-3.5 h-3.5" />
+            </a>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* Card 1: Valuation */}
+            <div className="bg-white rounded-2xl border border-slate-200 p-8 sm:p-10 shadow-sm hover:shadow-xl hover:border-[#16A34A] transition-all flex flex-col justify-between group relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-[#16A34A]/5 rounded-bl-full pointer-events-none group-hover:bg-[#16A34A]/10 transition-colors" />
+
+              <div>
+                <div className="flex items-center justify-between mb-6">
+                  <div className="w-14 h-14 rounded-xl bg-[#082852] text-[#22C55E] flex items-center justify-center group-hover:scale-105 transition-transform shadow-sm">
+                    <Coins className="w-7 h-7" />
+                  </div>
+                  <span className="px-3 py-1 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider bg-emerald-50 text-[#15803D] border border-emerald-200">
+                    Avaliação Pericial
+                  </span>
+                </div>
+
+                <h3 className="font-serif text-2xl font-bold text-[#082852] mb-3 group-hover:text-[#0B3B7A] transition-colors">
+                  Valuation & Avaliação de Empresas
+                </h3>
+
+                <p className="text-sm text-slate-600 leading-relaxed font-sans mb-6">
+                  Avaliação precisa de ativos com indicador seguro para definir o piso patrimonial
+                  do negócio, diagnóstico rigoroso com 48 indicadores e análise preventiva de
+                  insolvência imediata e em 12 meses para negociações com sócios, compradores e
+                  bancos.
+                </p>
+
+                <div className="space-y-2 mb-8 pt-4 border-t border-slate-100 font-sans text-xs text-slate-600">
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-[#16A34A] shrink-0" />
+                    <span>Indicador seguro de reavaliação de ativos físicos e intangíveis</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-[#16A34A] shrink-0" />
+                    <span>Diagnóstico 360° com 48 indicadores de desempenho financeiro</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-[#16A34A] shrink-0" />
+                    <span>Teste de insolvência imediata e no período de 12 meses</span>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <Link
+                  to="/valuation"
+                  className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-[#082852] hover:bg-[#0B3B7A] text-white text-xs font-mono font-bold uppercase tracking-wider rounded-lg transition-all shadow group/btn border border-[#0B3B7A] hover:border-[#16A34A]"
+                >
+                  <span>Conhecer Valuation</span>
+                  <ArrowRight className="w-4 h-4 text-[#22C55E] group-hover/btn:translate-x-1 transition-transform" />
+                </Link>
+              </div>
+            </div>
+
+            {/* Card 2: Planejamento */}
+            <div className="bg-white rounded-2xl border border-slate-200 p-8 sm:p-10 shadow-sm hover:shadow-xl hover:border-[#16A34A] transition-all flex flex-col justify-between group relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-[#0B3B7A]/5 rounded-bl-full pointer-events-none group-hover:bg-[#0B3B7A]/10 transition-colors" />
+
+              <div>
+                <div className="flex items-center justify-between mb-6">
+                  <div className="w-14 h-14 rounded-xl bg-[#082852] text-[#22C55E] flex items-center justify-center group-hover:scale-105 transition-transform shadow-sm">
+                    <Calculator className="w-7 h-7" />
+                  </div>
+                  <span className="px-3 py-1 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider bg-blue-50 text-[#0B3B7A] border border-blue-200">
+                    Gestão & Estratégia
+                  </span>
+                </div>
+
+                <h3 className="font-serif text-2xl font-bold text-[#082852] mb-3 group-hover:text-[#0B3B7A] transition-colors">
+                  Planejamento Econômico e Financeiro
+                </h3>
+
+                <p className="text-sm text-slate-600 leading-relaxed font-sans mb-6">
+                  Estruturação dos três planejamentos estratégicos da Borlim (Financeiro, Econômico
+                  e Balanced Scorecard) com teste preventivo de insolvência em 12 meses, garantindo
+                  fluxo eficiente de capital de giro e maximização do lucro mensal da empresa.
+                </p>
+
+                <div className="space-y-2 mb-8 pt-4 border-t border-slate-100 font-sans text-xs text-slate-600">
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-[#16A34A] shrink-0" />
+                    <span>Planejamento Financeiro: fluxo de capital de giro e reinvestimento</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-[#16A34A] shrink-0" />
+                    <span>Planejamento Econômico: melhoria consistente do lucro mensal</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-[#16A34A] shrink-0" />
+                    <span>Balanced Scorecard: competitividade para nenhum negócio ser perdido</span>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <Link
+                  to="/planejamento"
+                  className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-[#082852] hover:bg-[#0B3B7A] text-white text-xs font-mono font-bold uppercase tracking-wider rounded-lg transition-all shadow group/btn border border-[#0B3B7A] hover:border-[#16A34A]"
+                >
+                  <span>Conhecer o Planejamento</span>
+                  <ArrowRight className="w-4 h-4 text-[#22C55E] group-hover/btn:translate-x-1 transition-transform" />
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </section>
