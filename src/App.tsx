@@ -10,6 +10,7 @@ import Noticias from './pages/Noticias'
 import NoticiaDetalhe from './pages/NoticiaDetalhe'
 import Sobre from './pages/Sobre'
 import Valuation from './pages/Valuation'
+import Planejamento from './pages/Planejamento'
 import NotFound from './pages/NotFound'
 
 const App = () => (
@@ -25,6 +26,8 @@ const App = () => (
           <Route path="/noticias/:id" element={<NoticiaDetalhe />} />
           <Route path="/valuation" element={<Valuation />} />
           <Route path="/avaliacao-de-empresas" element={<Valuation />} />
+          <Route path="/planejamento" element={<Planejamento />} />
+          <Route path="/planejamento-economico-financeiro" element={<Planejamento />} />
           <Route path="/sobre" element={<Sobre />} />
         </Route>
         <Route path="*" element={<NotFound />} />

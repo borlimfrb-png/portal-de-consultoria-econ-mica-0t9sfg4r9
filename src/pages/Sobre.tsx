@@ -721,6 +721,31 @@ export default function Sobre() {
               )
             })}
           </div>
+
+          {/* Banner CTA link para página dedicada de Planejamento */}
+          <div className="mt-10 p-6 bg-emerald-50/80 border border-emerald-300 rounded-xl flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="space-y-1 text-center sm:text-left">
+              <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#15803D] block">
+                Conteúdo Dedicado & Metodologia Completa
+              </span>
+              <h4 className="font-serif text-base sm:text-lg font-bold text-[#082852]">
+                Quer saber como implantar o Planejamento Financeiro, Econômico e o Balanced
+                Scorecard?
+              </h4>
+              <p className="text-xs text-slate-600 font-sans">
+                Acesse nossa página exclusiva de Planejamento com os 48 indicadores, teste de
+                insolvência, perguntas frequentes e exemplos práticos.
+              </p>
+            </div>
+
+            <Link
+              to="/planejamento"
+              className="shrink-0 inline-flex items-center gap-2 px-5 py-3 bg-[#16A34A] hover:bg-[#15803D] text-white text-xs sm:text-sm font-mono font-bold uppercase tracking-wider rounded-lg transition-all shadow-md group"
+            >
+              <span>Ver página completa de Planejamento</span>
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+            </Link>
+          </div>
         </div>
 
         {/* 6. Contact & Institutional Card (Navy/Blue) */}

@@ -12,6 +12,7 @@ import {
   FileSpreadsheet,
   ExternalLink,
   Coins,
+  Compass,
 } from 'lucide-react'
 import logoBorlim from '@/assets/logo-borlim-debb0.png'
 
@@ -38,6 +39,7 @@ export default function Navbar() {
     { label: 'Indicadores', path: '/indicadores', icon: TrendingUp },
     { label: 'Notícias', path: '/noticias', icon: Newspaper },
     { label: 'Valuation', path: '/valuation', icon: Coins },
+    { label: 'Planejamento', path: '/planejamento', icon: Compass },
     { label: 'Sobre', path: '/sobre', icon: Info },
   ]
 
@@ -68,21 +70,25 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop Navigation Links */}
-        <nav className="hidden lg:flex items-center space-x-1 xl:space-x-2">
+        <nav className="hidden lg:flex items-center space-x-0.5 xl:space-x-1.5">
           {navLinks.map((link) => {
-            const isActive = location.pathname === link.path
+            const isActive =
+              location.pathname === link.path ||
+              (link.path === '/valuation' && location.pathname === '/avaliacao-de-empresas') ||
+              (link.path === '/planejamento' &&
+                location.pathname === '/planejamento-economico-financeiro')
             return (
               <Link
                 key={link.path}
                 to={link.path}
-                className={`relative px-3 py-2 text-sm font-medium transition-colors ${
+                className={`relative px-2.5 xl:px-3 py-2 text-sm font-medium transition-colors ${
                   isActive ? 'text-[#0B3B7A] font-bold' : 'text-slate-600 hover:text-[#0B3B7A]'
                 }`}
               >
                 {link.label}
                 {/* Brand Green animated underline */}
                 <span
-                  className={`absolute bottom-0 left-3 right-3 h-[2px] bg-[#16A34A] transition-all duration-200 ${
+                  className={`absolute bottom-0 left-2.5 right-2.5 xl:left-3 xl:right-3 h-[2px] bg-[#16A34A] transition-all duration-200 ${
                     isActive
                       ? 'opacity-100 scale-x-100'
                       : 'opacity-0 scale-x-0 group-hover:opacity-100 group-hover:scale-x-100'
@@ -136,7 +142,11 @@ export default function Navbar() {
             <div className="flex flex-col divide-y divide-slate-100">
               {navLinks.map((link) => {
                 const Icon = link.icon
-                const isActive = location.pathname === link.path
+                const isActive =
+                  location.pathname === link.path ||
+                  (link.path === '/valuation' && location.pathname === '/avaliacao-de-empresas') ||
+                  (link.path === '/planejamento' &&
+                    location.pathname === '/planejamento-economico-financeiro')
                 return (
                   <Link
                     key={link.path}
@@ -147,7 +157,7 @@ export default function Navbar() {
                         : 'text-[#0B3B7A]'
                     }`}
                   >
-                    <Icon className="w-5 h-5 text-slate-500" />
+                    <Icon className={`w-5 h-5 ${isActive ? 'text-[#16A34A]' : 'text-slate-500'}`} />
                     <span>{link.label}</span>
                   </Link>
                 )
@@ -187,7 +197,7 @@ export default function Navbar() {
 
               <a
                 href="mailto:flavio@borlim.com.br?subject=Consulta%20Econômica%20-%20Contato"
-                className="w-full flex items-center justify-center gap-2 px-5 py-3 text-sm font-semibold uppercase tracking-wider bg-[#0B3B7A] hover:bg-[#1557A6] text-white rounded-lg shadow-sm transition-colors"
+                className="w-full flex items-center justify-center gap-2 px-5 py-3 text-sm font-semibold uppercase tracking-wider bg-[#0B3B7A] hover:bg-[#15803D] text-white rounded-lg shadow-sm transition-colors"
               >
                 <Mail className="w-4 h-4 text-[#22C55E]" />
                 <span>Fale com um especialista</span>
