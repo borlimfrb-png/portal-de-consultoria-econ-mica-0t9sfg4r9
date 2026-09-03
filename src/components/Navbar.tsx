@@ -11,6 +11,7 @@ import {
   Mail,
   FileSpreadsheet,
   ExternalLink,
+  Coins,
 } from 'lucide-react'
 import logoBorlim from '@/assets/logo-borlim-debb0.png'
 
@@ -36,6 +37,7 @@ export default function Navbar() {
     { label: 'Início', path: '/', icon: Home },
     { label: 'Indicadores', path: '/indicadores', icon: TrendingUp },
     { label: 'Notícias', path: '/noticias', icon: Newspaper },
+    { label: 'Valuation', path: '/valuation', icon: Coins },
     { label: 'Sobre', path: '/sobre', icon: Info },
   ]
 

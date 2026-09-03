@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import {
   TrendingUp,
   Building2,
@@ -429,16 +430,24 @@ export default function Sobre() {
                   teto e o valor justo da sua operação.
                 </p>
               </div>
-              <div className="shrink-0 w-full md:w-auto">
+              <div className="shrink-0 w-full md:w-auto flex flex-col sm:flex-row md:flex-col gap-2.5">
+                <Link
+                  to="/valuation"
+                  className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-white text-[#082852] hover:bg-slate-100 text-xs sm:text-sm font-mono font-bold uppercase tracking-wider rounded-lg transition-all shadow-md group"
+                >
+                  <Coins className="w-4 h-4 text-[#16A34A]" />
+                  <span>Ver Página Completa de Valuation</span>
+                  <ArrowRight className="w-4 h-4 text-[#16A34A] group-hover:translate-x-0.5 transition-transform" />
+                </Link>
+
                 <a
                   href="https://wa.me/5517997650672?text=Ol%C3%A1%2C%20gostaria%20de%20conversar%20sobre%20o%20Valuation%20da%20minha%20empresa."
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full md:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-[#16A34A] hover:bg-[#15803D] text-white text-xs sm:text-sm font-mono font-bold uppercase tracking-wider rounded-lg transition-all shadow-md group border border-[#22C55E]/40"
+                  className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#16A34A] hover:bg-[#15803D] text-white text-xs sm:text-sm font-mono font-bold uppercase tracking-wider rounded-lg transition-all shadow-md group border border-[#22C55E]/40"
                 >
                   <Phone className="w-4 h-4" />
-                  <span>Falar sobre Valuation</span>
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+                  <span>Falar no WhatsApp</span>
                 </a>
               </div>
             </div>
@@ -621,6 +630,30 @@ export default function Sobre() {
                   </div>
                 </div>
               ))}
+            </div>
+
+            {/* Banner CTA link para página dedicada de Valuation */}
+            <div className="mt-8 p-6 bg-emerald-50/80 border border-emerald-300 rounded-xl flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div className="space-y-1 text-center sm:text-left">
+                <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#15803D] block">
+                  Conteúdo Expandido & Engenharia Financeira
+                </span>
+                <h4 className="font-serif text-base sm:text-lg font-bold text-[#082852]">
+                  Quer entender o FCD, os Múltiplos e a Avaliação de Ativos em detalhes?
+                </h4>
+                <p className="text-xs text-slate-600 font-sans">
+                  Acesse nossa página exclusiva de Valuation com exemplos práticos, perguntas
+                  frequentes e detalhamento metodológico.
+                </p>
+              </div>
+
+              <Link
+                to="/valuation"
+                className="shrink-0 inline-flex items-center gap-2 px-5 py-3 bg-[#16A34A] hover:bg-[#15803D] text-white text-xs sm:text-sm font-mono font-bold uppercase tracking-wider rounded-lg transition-all shadow-md group"
+              >
+                <span>Ver página completa de Valuation</span>
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+              </Link>
             </div>
           </div>
         </section>

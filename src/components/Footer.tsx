@@ -122,6 +122,15 @@ export default function Footer() {
               </li>
               <li>
                 <Link
+                  to="/valuation"
+                  className="hover:text-[#22C55E] transition-colors flex items-center gap-1.5"
+                >
+                  <span className="text-[#16A34A] text-xs">›</span> Valuation & Avaliação de
+                  Empresas
+                </Link>
+              </li>
+              <li>
+                <Link
                   to="/sobre"
                   className="hover:text-[#22C55E] transition-colors flex items-center gap-1.5"
                 >
