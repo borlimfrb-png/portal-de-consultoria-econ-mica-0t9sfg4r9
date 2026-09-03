@@ -15,6 +15,17 @@ import {
   Linkedin,
   FileSpreadsheet,
   ExternalLink,
+  Coins,
+  Scale,
+  Handshake,
+  Users2,
+  PieChart,
+  Layers,
+  HelpCircle,
+  Briefcase,
+  SearchCheck,
+  DollarSign,
+  ArrowUpRight,
 } from 'lucide-react'
 import logoBorlim from '@/assets/logo-borlim-debb0.png'
 
@@ -95,12 +106,101 @@ export default function Sobre() {
       desc: 'Modelagem preventiva voltada a antecipar e mitigar ameaças à solvência e à liquidez da empresa.',
     },
     {
-      title: 'Avaliação Segura de Ativos',
-      desc: 'Emprego de metodologia criteriosa e indicadores sólidos para precificação patrimonial em processos de venda ou reestruturação.',
+      title: 'Valuation & Avaliação Segura de Ativos',
+      desc: 'Emprego de metodologia criteriosa e indicador seguro para precificação patrimonial em processos de venda ou reestruturação.',
     },
     {
       title: 'Três Tipos Estratégicos de Planejamentos',
       desc: 'Soluções integradas de Planejamento Financeiro, Planejamento Econômico e Balanced Scorecard sob medida para a sua operação.',
+    },
+  ]
+
+  const valuationMoments = [
+    {
+      icon: Handshake,
+      title: 'Venda Total ou Parcial do Negócio (M&A)',
+      desc: 'Numa possível venda, saber exatamente quanto valem a empresa e seus ativos permite negociar com firmeza, sem deixar dinheiro na mesa nem inviabilizar propostas com valores fora da realidade.',
+    },
+    {
+      icon: Users2,
+      title: 'Entrada ou Saída de Sócios',
+      desc: 'Apuração justa e transparente de haveres societários na admissão de investidores ou na dissolução parcial de quotas, prevenindo disputas judiciais desgastantes.',
+    },
+    {
+      icon: Briefcase,
+      title: 'Planejamento Sucessório e Patrimonial',
+      desc: 'Estruturação harmoniosa e documentada da transmissão patrimonial familiar, conferindo segurança jurídica e financeira para as próximas gerações.',
+    },
+    {
+      icon: DollarSign,
+      title: 'Captação de Recursos e Financiamentos',
+      desc: 'Apresentação formal a bancos, fundos e investidores com laudo consistente e fundamentado na capacidade real de geração de resultados e lastro de ativos.',
+    },
+  ]
+
+  const valuationMethods = [
+    {
+      icon: ShieldCheck,
+      tag: 'Especialidade Borlim',
+      title: 'Avaliação Patrimonial de Ativos com Indicador Seguro',
+      desc: 'Numa possível venda do seu negócio, com a utilização de um indicador seguro avaliaremos o valor real dos seus ativos (tangíveis e intangíveis), considerando depreciações, lastro operacional e solvência.',
+      highlight: 'Alinhado ao diagnóstico de 48 indicadores da Borlim',
+    },
+    {
+      icon: TrendingUp,
+      tag: 'Capacidade Futura',
+      title: 'Fluxo de Caixa Descontado (FCD)',
+      desc: 'Projeta a capacidade de geração de caixa operacional da empresa ao longo do tempo, descontada a uma taxa que reflete o risco de oportunidade e do setor.',
+      highlight: 'Determinação do valor econômico intrínseco',
+    },
+    {
+      icon: Scale,
+      tag: 'Mercado & Comparáveis',
+      title: 'Múltiplos de Mercado & Transações Similares',
+      desc: 'Compara métricas contábeis e financeiras (como EBITDA, receita e faturamento) com transações e empresas atuantes no mesmo segmento econômico.',
+      highlight: 'Parâmetro de competitividade setorial',
+    },
+  ]
+
+  const valuationSteps = [
+    {
+      step: '01',
+      title: 'Diagnóstico de 48 Indicadores',
+      desc: 'Levantamento minucioso dos 48 indicadores de desempenho econômico-financeiro para identificar pontos fortes e vulnerabilidades da empresa.',
+    },
+    {
+      step: '02',
+      title: 'Análise de Insolvência Imediata e em 12 Meses',
+      desc: 'Verificação da solidez de curto e médio prazo, eliminando riscos ocultos e assegurando premissas realistas para a precificação.',
+    },
+    {
+      step: '03',
+      title: 'Avaliação Segura de Ativos e Projeções',
+      desc: 'Aplicação de indicador seguro para quantificar o valor de ativos, contingências, capacidade de caixa e valor de liquidação ou continuidade.',
+    },
+    {
+      step: '04',
+      title: 'Laudo de Avaliação & Suporte Estratégico',
+      desc: 'Entrega de relatório executivo fundamentado, defensável e pronto para apoiar negociações com sócios, compradores ou investidores.',
+    },
+  ]
+
+  const valuationBenefits = [
+    {
+      title: 'Base Objetiva e Defensável para Negociar',
+      desc: 'Argumentação técnica e sólida frente a compradores, auditores e investidores, evitando palpites subjetivos.',
+    },
+    {
+      title: 'Valor Justo dos Ativos e do Negócio',
+      desc: 'Utilização de indicador seguro para mensurar o patrimônio real com total transparência e precisão técnica.',
+    },
+    {
+      title: 'Identificação e Mitigação de Riscos de Insolvência',
+      desc: 'Clareza antecipada sobre a saúde da liquidez imediata e no horizonte de doze meses durante a transação.',
+    },
+    {
+      title: 'Tomada de Decisão Segura e Estratégica',
+      desc: 'Segurança para o empresário decidir o melhor momento para vender, reinvestir, expandir ou reorganizar a sociedade.',
     },
   ]
 
@@ -126,9 +226,26 @@ export default function Sobre() {
               A <strong>Borlim Consultoria</strong> é especializada em diagnosticar e planejar o
               sistema financeiro da sua empresa. Demonstramos os pontos fortes e fracos com quarenta
               e oito indicadores de desempenho e estabelecemos planejamentos estratégicos orientados
-              ao fortalecimento do capital de giro, à ampliação do lucro mensal e à excelência
-              competitiva.
+              ao fortalecimento do capital de giro, à ampliação do lucro mensal, à excelência
+              competitiva e à avaliação segura de ativos em processos de Valuation.
             </p>
+
+            <div className="mt-8 flex flex-wrap gap-3">
+              <a
+                href="#valuation"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-[#16A34A] hover:bg-[#15803D] text-white text-xs sm:text-sm font-mono font-bold uppercase tracking-wider transition-all shadow-md"
+              >
+                <Coins className="w-4 h-4 text-emerald-100" />
+                <span>Conhecer o Trabalho de Valuation</span>
+                <ArrowRight className="w-4 h-4" />
+              </a>
+              <a
+                href="#planejamentos"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-white/10 hover:bg-white/15 text-white border border-white/20 text-xs sm:text-sm font-mono font-semibold transition-all"
+              >
+                <span>Planejamentos Estratégicos</span>
+              </a>
+            </div>
           </div>
         </div>
       </section>
@@ -170,7 +287,8 @@ export default function Sobre() {
             <p className="text-sm sm:text-base text-slate-600 font-sans leading-relaxed">
               Com base nesse diagnóstico técnico aprofundado, estruturamos soluções corporativas que
               blindam a saúde financeira do negócio, conferem total previsibilidade de fluxo de
-              caixa e pavimentam decisões estratégicas de alto impacto.
+              caixa e pavimentam decisões estratégicas de alto impacto — seja para reinvestir no
+              próprio negócio, seja para negociar com solidez em um processo de Valuation.
             </p>
           </div>
 
@@ -205,8 +323,8 @@ export default function Sobre() {
               </span>
               <p className="text-xs text-slate-700 font-sans leading-relaxed">
                 Atendimento consultivo e técnico a empresas de pequeno, médio e grande porte que
-                priorizam solidez de liquidez, incremento real de lucratividade e crescimento
-                corporativo sustentável.
+                priorizam solidez de liquidez, incremento real de lucratividade, avaliação segura de
+                ativos e crescimento corporativo sustentável.
               </p>
             </div>
           </div>
@@ -222,8 +340,8 @@ export default function Sobre() {
               Como Diagnosticamos a Saúde Financeira da Sua Empresa
             </h2>
             <p className="text-xs sm:text-sm text-slate-600 mt-2 font-sans">
-              Estrutura analítica em três dimensões integradas para mapear riscos, oportunidades e
-              valor patrimonial.
+              Estrutura analítica em três dimensões integradas para mapear riscos, oportunidades e o
+              valor real do patrimônio da sua empresa.
             </p>
           </div>
 
@@ -256,8 +374,262 @@ export default function Sobre() {
           </div>
         </div>
 
-        {/* 4. Planejamentos Estratégicos (Os 3 Tipos) */}
-        <div className="mb-20 bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm">
+        {/* 4. NOVA SEÇÃO DEDICADA: Valuation / Avaliação de Empresas */}
+        <section
+          id="valuation"
+          aria-labelledby="valuation-heading"
+          className="mb-20 scroll-mt-24 bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm relative overflow-hidden"
+        >
+          {/* Subtle background decoration */}
+          <div className="absolute -top-24 -right-24 w-80 h-80 bg-[#16A34A]/5 rounded-full blur-2xl pointer-events-none" />
+
+          {/* Section Header */}
+          <div className="max-w-3xl mb-12">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 mb-3">
+              <Coins className="w-3.5 h-3.5 text-[#15803D]" />
+              <span className="text-[11px] font-mono font-bold uppercase tracking-widest text-[#15803D]">
+                Serviço Especializado de Avaliação de Empresas
+              </span>
+            </div>
+            <h2
+              id="valuation-heading"
+              className="font-serif text-2xl sm:text-4xl font-bold text-[#082852] leading-tight"
+            >
+              Valuation BORLIM: Avaliação Precisa e Segura dos Ativos da Sua Empresa
+            </h2>
+            <p className="text-sm sm:text-base text-slate-600 mt-4 font-sans leading-relaxed">
+              O <strong>Valuation</strong> (avaliação de empresas) é o processo técnico e econômico
+              responsável por determinar o <strong>valor justo de um negócio</strong> e de seus
+              ativos. Na <strong>Borlim Consultoria</strong>, unimos nosso diagnóstico exclusivo de{' '}
+              <strong>48 indicadores de desempenho</strong>, a análise antecipada de{' '}
+              <strong>risco de insolvência imediata e em 12 meses</strong> e a{' '}
+              <strong>
+                utilização de um indicador seguro para avaliar o valor dos seus ativos
+              </strong>
+              , entregando uma base incontestável para transações e decisões societárias.
+            </p>
+          </div>
+
+          {/* Destaque central: Citação / Metodologia Borlim */}
+          <div className="mb-14 p-6 sm:p-8 bg-gradient-to-r from-[#082852] to-[#0B3B7A] rounded-xl text-white shadow-lg">
+            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+              <div className="space-y-3 max-w-2xl">
+                <span className="text-[11px] font-mono uppercase tracking-widest text-[#22C55E] font-bold flex items-center gap-2">
+                  <ShieldCheck className="w-4 h-4 text-[#22C55E]" />
+                  A Metodologia da Borlim Consultoria
+                </span>
+                <blockquote className="font-serif text-lg sm:text-xl font-medium leading-relaxed text-slate-100">
+                  “Numa possível venda do seu negócio, com a utilização de um indicador seguro
+                  avaliaremos o valor dos seus Ativos.”
+                </blockquote>
+                <p className="text-xs sm:text-sm text-slate-300 font-sans leading-relaxed">
+                  Não trabalhamos com estimativas subjetivas. Cruzamos a solidez dos seus ativos com
+                  o comportamento dos 48 indicadores financeiros e a blindagem contra insolvência
+                  (imediata e em 12 meses), assegurando que o empresário saiba exatamente o piso, o
+                  teto e o valor justo da sua operação.
+                </p>
+              </div>
+              <div className="shrink-0 w-full md:w-auto">
+                <a
+                  href="https://wa.me/5517997650672?text=Ol%C3%A1%2C%20gostaria%20de%20conversar%20sobre%20o%20Valuation%20da%20minha%20empresa."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full md:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-[#16A34A] hover:bg-[#15803D] text-white text-xs sm:text-sm font-mono font-bold uppercase tracking-wider rounded-lg transition-all shadow-md group border border-[#22C55E]/40"
+                >
+                  <Phone className="w-4 h-4" />
+                  <span>Falar sobre Valuation</span>
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+                </a>
+              </div>
+            </div>
+          </div>
+
+          {/* Quando é necessário o Valuation? (4 Momentos) */}
+          <div className="mb-14">
+            <div className="mb-6">
+              <span className="text-xs font-mono uppercase tracking-widest text-[#15803D] font-bold">
+                Cenários de Aplicação
+              </span>
+              <h3 className="font-serif text-xl sm:text-2xl font-bold text-[#082852] mt-1">
+                Quando a Sua Empresa Precisa de um Laudo de Valuation?
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-600 mt-1 font-sans">
+                Momentos cruciais na trajetória empresarial exigem respaldo numérico consistente e
+                independente.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {valuationMoments.map((item, idx) => {
+                const Icon = item.icon
+                return (
+                  <div
+                    key={idx}
+                    className="p-6 rounded-xl border border-slate-200 bg-[#F8FAFC] hover:border-[#16A34A] transition-all flex items-start gap-4"
+                  >
+                    <div className="w-12 h-12 rounded-lg bg-[#082852] text-[#22C55E] flex items-center justify-center shrink-0">
+                      <Icon className="w-6 h-6" />
+                    </div>
+                    <div>
+                      <h4 className="font-serif text-base sm:text-lg font-bold text-[#082852] mb-1.5">
+                        {item.title}
+                      </h4>
+                      <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-sans">
+                        {item.desc}
+                      </p>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+
+          {/* Abordagens e Metodologias Técnicas */}
+          <div className="mb-14">
+            <div className="mb-6">
+              <span className="text-xs font-mono uppercase tracking-widest text-[#15803D] font-bold">
+                Abordagens Metodológicas
+              </span>
+              <h3 className="font-serif text-xl sm:text-2xl font-bold text-[#082852] mt-1">
+                Metodologias Utilizadas na Precificação Corporativa
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-600 mt-1 font-sans">
+                Trabalhamos abordagens complementares que convergem para uma precificação precisa e
+                defensável no mercado.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              {valuationMethods.map((method, idx) => {
+                const Icon = method.icon
+                const isBorlimPillar = idx === 0
+                return (
+                  <div
+                    key={idx}
+                    className={`p-6 sm:p-7 rounded-xl border flex flex-col justify-between transition-all ${
+                      isBorlimPillar
+                        ? 'bg-emerald-50/50 border-[#16A34A] shadow-xs'
+                        : 'bg-[#F8FAFC] border-slate-200'
+                    }`}
+                  >
+                    <div>
+                      <div className="flex items-center justify-between mb-4">
+                        <div
+                          className={`w-11 h-11 rounded-lg flex items-center justify-center ${
+                            isBorlimPillar
+                              ? 'bg-[#16A34A] text-white'
+                              : 'bg-[#0B3B7A] text-[#22C55E]'
+                          }`}
+                        >
+                          <Icon className="w-5 h-5" />
+                        </div>
+                        <span
+                          className={`text-[10px] font-mono font-bold uppercase tracking-wider px-2.5 py-1 rounded border ${
+                            isBorlimPillar
+                              ? 'bg-[#16A34A]/10 text-[#15803D] border-[#16A34A]/30'
+                              : 'bg-slate-100 text-slate-600 border-slate-200'
+                          }`}
+                        >
+                          {method.tag}
+                        </span>
+                      </div>
+
+                      <h4 className="font-serif text-lg font-bold text-[#082852] mb-2 leading-snug">
+                        {method.title}
+                      </h4>
+                      <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-sans mb-4">
+                        {method.desc}
+                      </p>
+                    </div>
+
+                    <div className="pt-4 border-t border-slate-200/80 flex items-center gap-2">
+                      <CheckCircle2
+                        className={`w-4 h-4 shrink-0 ${
+                          isBorlimPillar ? 'text-[#16A34A]' : 'text-slate-400'
+                        }`}
+                      />
+                      <span className="text-xs font-sans font-semibold text-slate-700">
+                        {method.highlight}
+                      </span>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+
+          {/* O Passo a Passo da Avaliação Borlim */}
+          <div className="mb-14 bg-[#F8FAFC] p-8 rounded-xl border border-slate-200">
+            <div className="mb-8 max-w-2xl">
+              <span className="text-xs font-mono uppercase tracking-widest text-[#15803D] font-bold">
+                Fluxo Técnico
+              </span>
+              <h3 className="font-serif text-xl sm:text-2xl font-bold text-[#082852] mt-1">
+                Etapas do Processo de Valuation na BORLIM
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-600 mt-1 font-sans">
+                Rigor metodológico da coleta documental à entrega do laudo executivo final.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {valuationSteps.map((step, idx) => (
+                <div key={idx} className="relative">
+                  <div className="bg-white p-5 rounded-lg border border-slate-200 shadow-2xs h-full flex flex-col">
+                    <span className="font-mono text-xl font-bold text-[#15803D] mb-2">
+                      {step.step}
+                    </span>
+                    <h5 className="font-serif text-base font-bold text-[#082852] mb-2">
+                      {step.title}
+                    </h5>
+                    <p className="text-xs text-slate-600 font-sans leading-relaxed mt-auto">
+                      {step.desc}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Benefícios para o Empresário */}
+          <div>
+            <div className="mb-6">
+              <span className="text-xs font-mono uppercase tracking-widest text-[#15803D] font-bold">
+                Vantagens Competitivas
+              </span>
+              <h3 className="font-serif text-xl sm:text-2xl font-bold text-[#082852] mt-1">
+                Por Que Fazer a Avaliação da Sua Empresa com a BORLIM?
+              </h3>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {valuationBenefits.map((benefit, idx) => (
+                <div
+                  key={idx}
+                  className="flex items-start gap-3 p-4 rounded-lg bg-slate-50 border border-slate-200"
+                >
+                  <div className="w-8 h-8 rounded-md bg-[#16A34A]/10 text-[#16A34A] flex items-center justify-center shrink-0 mt-0.5">
+                    <Check className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <h5 className="text-xs sm:text-sm font-bold text-[#082852] font-sans">
+                      {benefit.title}
+                    </h5>
+                    <p className="text-xs text-slate-600 font-sans mt-0.5 leading-relaxed">
+                      {benefit.desc}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* 5. Planejamentos Estratégicos (Os 3 Tipos) */}
+        <div
+          id="planejamentos"
+          className="mb-20 scroll-mt-24 bg-white rounded-2xl p-8 sm:p-12 border border-slate-200 shadow-sm"
+        >
           <div className="max-w-3xl mb-10">
             <span className="text-xs font-mono uppercase tracking-widest text-[#15803D] font-bold">
               Soluções Estratégicas
@@ -318,7 +690,7 @@ export default function Sobre() {
           </div>
         </div>
 
-        {/* 5. Contact & Institutional Card (Navy/Blue) */}
+        {/* 6. Contact & Institutional Card (Navy/Blue) */}
         <div className="bg-[#082852] text-white rounded-2xl p-8 sm:p-12 border border-[#0B3B7A] shadow-xl">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-10 items-center">
             <div className="md:col-span-7">
@@ -326,12 +698,12 @@ export default function Sobre() {
                 Contato Institucional & Atendimento Consultivo
               </span>
               <h2 className="font-serif text-2xl sm:text-3xl font-bold text-white mt-2 mb-4 leading-tight">
-                Inicie o diagnóstico financeiro da sua empresa com a BORLIM.
+                Inicie o diagnóstico financeiro ou o Valuation da sua empresa com a BORLIM.
               </h2>
               <p className="text-sm text-slate-300 leading-relaxed mb-6 font-sans">
                 Conheça em detalhes os pontos fortes e os pontos fracos do seu sistema financeiro,
-                previna riscos de insolvência e implante planejamentos estratégicos sob medida com a
-                nossa equipe:
+                previna riscos de insolvência imediata ou em 12 meses, apure o valor real dos seus
+                ativos e implante planejamentos estratégicos com a nossa equipe:
               </p>
 
               <div className="space-y-3 font-mono text-xs">
@@ -392,7 +764,7 @@ export default function Sobre() {
               </div>
               <h3 className="font-serif text-lg font-bold text-white">Assessoria Financeira</h3>
               <p className="text-xs text-slate-300 mt-1 mb-6 font-sans">
-                Atendimento consultivo e personalizado para empresários e diretorias.
+                Atendimento consultivo e personalizado para empresários, diretorias e investidores.
               </p>
               <div className="w-full space-y-2.5">
                 <a
@@ -408,12 +780,12 @@ export default function Sobre() {
                 </a>
 
                 <a
-                  href="https://wa.me/5517997650672?text=Ol%C3%A1%2C%20gostaria%20de%20solicitar%20um%20diagn%C3%B3stico%20financeiro%20para%20minha%20empresa."
+                  href="https://wa.me/5517997650672?text=Ol%C3%A1%2C%20gostaria%20de%20solicitar%20um%20diagn%C3%B3stico%20financeiro%20e%20valuation%20para%20minha%20empresa."
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 bg-white hover:bg-slate-100 text-[#082852] text-xs font-mono font-bold uppercase tracking-wider rounded-lg transition-all shadow"
                 >
-                  <span>Solicitar Diagnóstico Financeiro</span>
+                  <span>Solicitar Diagnóstico / Valuation</span>
                   <ArrowRight className="w-4 h-4 text-[#16A34A]" />
                 </a>
               </div>
