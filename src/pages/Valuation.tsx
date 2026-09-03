@@ -41,33 +41,33 @@ export default function Valuation() {
       icon: Handshake,
       title: 'Venda Total ou Parcial do Negócio (M&A)',
       tag: 'Fusões & Aquisições',
-      desc: 'Numa possível venda, saber exatamente quanto valem a empresa e seus ativos permite negociar com firmeza, sem deixar dinheiro na mesa nem inviabilizar propostas por estimativas irreais perante compradores estratégicos ou financeiros.',
+      desc: 'Ao sentar para negociar com um comprador ou investidor, você precisa saber com precisão quanto a empresa e seus bens realmente valem. Sem achismos, sem deixar dinheiro na mesa e sem pedir valores fora da realidade do mercado.',
       detail:
-        'O laudo atua como dossiê formal de diligência prévia (Vendor Due Diligence), acelerando o fechamento do negócio.',
+        'O laudo funciona como dossiê formal de auditoria prévia (Due Diligence do vendedor), acelerando o fechamento do negócio.',
     },
     {
       icon: Users2,
-      title: 'Entrada, Saída ou Dissolução de Sócios',
-      tag: 'Societário',
-      desc: 'Apuração justa e transparente de haveres societários na admissão de investidores ou na dissolução de quotas, respaldando o valor contábil e econômico para prevenir disputas judiciais desgastantes.',
+      title: 'Entrada, Saída ou Acordo entre Sócios',
+      tag: 'Sociedade & Acordos',
+      desc: 'Cálculo justo e transparente da participação de cada sócio, seja para admitir um novo parceiro ou calcular a saída (apuração de haveres), evitando conflitos e disputas judiciais desgastantes.',
       detail:
-        'Evita critérios empíricos ou arbitrários, fornecendo critérios técnicos aceitos pela legislação e tribunais.',
+        'Substitui discussões subjetivas por critérios econômicos e contábeis sólidos, aceitos pela legislação e pelos tribunais.',
     },
     {
       icon: Briefcase,
-      title: 'Planejamento Sucessório e Patrimonial',
-      tag: 'Sucessão Familiar',
-      desc: 'Estruturação harmoniosa e documentada da transmissão patrimonial familiar, conferindo segurança jurídica, fiscal e de governança para as próximas gerações.',
+      title: 'Planejamento Sucessório e Patrimônio Familiar',
+      tag: 'Sucessão & Família',
+      desc: 'Organização clara e documentada da passagem do negócio para herdeiros ou criação de holding familiar, assegurando equilíbrio entre os filhos e total proteção jurídica e fiscal.',
       detail:
-        'Facilita a doação com reserva de usufruto, criação de holdings familiares e equalização de quinhões entre herdeiros.',
+        'Facilita a doação de cotas com usufruto, reorganizações societárias e a divisão justa do patrimônio construído.',
     },
     {
       icon: DollarSign,
-      title: 'Captação de Recursos, Fundos e Mútuos',
-      tag: 'Financiamento & Equity',
-      desc: 'Apresentação formal a bancos de fomento, fundos de Private Equity, Venture Capital e investidores institucionais com laudo robusto baseado em geração de caixa real e lastro patrimonial.',
+      title: 'Captação de Recursos, Empréstimos e Financiamentos',
+      tag: 'Crédito & Bancos',
+      desc: 'Apresentação formal a bancos de desenvolvimento, fundos de investimento ou parceiros de crédito com um laudo que comprova a capacidade real de pagamento e o patrimônio da empresa.',
       detail:
-        'Aumenta substancialmente o poder de barganha no custo da dívida e no percentual de equity cedido.',
+        'Dá mais força ao empresário para negociar juros menores, prazos maiores e garantias compatíveis.',
     },
   ]
 
@@ -76,92 +76,112 @@ export default function Valuation() {
       icon: BarChart3,
       badge: 'Diagnóstico 360°',
       title: '48 Indicadores de Desempenho Financeiro',
-      desc: 'Análise minuciosa de métricas de liquidez, rentabilidade operacional, ciclo financeiro, margens de contribuição, endividamento e giro de ativos. Nenhum ponto cego permanece oculto.',
+      desc: 'Raio-X completo da empresa: caixa, rentabilidade, prazos de pagamento e recebimento, endividamento, custos e giro de estoque. Nenhum ponto cego fica de fora antes de calcular o valor.',
     },
     {
       icon: AlertTriangle,
       badge: 'Prevenção de Crise',
       title: 'Insolvência Imediata e em 12 Meses',
-      desc: 'Modelagem antecipada de risco de insolvência no curto e médio prazo. Asseguramos que o laudo reflita a capacidade real de honrar compromissos operacionais sem comprometer a continuidade.',
+      desc: 'Teste antecipado de fôlego financeiro para hoje e para os próximos 12 meses. Garantimos que o valor da empresa esteja apoiado na capacidade real de honrar compromissos operacionais no dia a dia.',
     },
     {
       icon: ShieldCheck,
       badge: 'Segurança Patrimonial',
-      title: 'Avaliação por Indicador Seguro de Ativos',
-      desc: 'Mensuração criteriosa do valor dos ativos tangíveis e intangíveis com a aplicação de um indicador seguro. Estabelecemos a base patrimonial sólida e incontestável para transações.',
+      title: 'Avaliação de Ativos com Indicador Seguro',
+      desc: 'Reavaliação criteriosa de máquinas, imóveis, estoques e marcas com metodologia segura. Definimos o piso patrimonial do negócio para que você nunca venda por menos do que seus bens valem.',
     },
   ]
 
   const valuationSteps = [
     {
       step: '01',
-      title: 'Diagnóstico dos 48 Indicadores & Coleta',
-      desc: 'Levantamento minucioso dos balanços, DREs, fluxo de caixa e documentação contábil para apurar os 48 indicadores financeiros da metodologia Borlim.',
+      title: 'Diagnóstico dos 48 Indicadores & Coleta de Dados',
+      desc: 'Análise detalhada de balanços, demonstrativos (DRE), relatórios de faturamento e contas para apurar os 48 indicadores da metodologia Borlim.',
     },
     {
       step: '02',
       title: 'Teste de Solvência & Análise de Riscos',
-      desc: 'Verificação antecipada de vulnerabilidades de liquidez imediata e projeção de solvência para os próximos 12 meses, expurgando distorções pontuais.',
+      desc: 'Checagem do fôlego de caixa imediato e projeção da saúde financeira para os próximos 12 meses, separando o que é lucro real do que é distorção passageira.',
     },
     {
       step: '03',
-      title: 'Modelagem Econômica (FCD, Múltiplos e Ativos)',
-      desc: 'Aplicação integrada das abordagens: FCD com taxa de desconto calculada, Múltiplos de Mercado com pares do segmento e Indicador Seguro para avaliação patrimonial.',
+      title: 'Cálculo Econômico (Caixa Futuro, Múltiplos e Ativos)',
+      desc: 'Cruzamento das 3 metodologias: Fluxo de Caixa Descontado calibrado com a Selic, comparação com negócios do mesmo setor e avaliação patrimonial por indicador seguro.',
     },
     {
       step: '04',
-      title: 'Emissão do Laudo Executivo & Suporte',
-      desc: 'Entrega do relatório técnico de Valuation com memorial de cálculo, cenários de sensibilidade (otimista, neutro e conservador) e apoio consultivo nas negociações.',
+      title: 'Laudo Executivo & Apoio na Negociação',
+      desc: 'Entrega do relatório técnico com memorial de cálculo, faixa de valor (piso, justo e teto) e orientação direta dos consultores para as conversas decisivas.',
     },
   ]
 
   const valuationBenefits = [
     {
-      title: 'Base Objetiva e Defensável em Negociações',
-      desc: 'Argumentação técnica e incontestável perante compradores, investidores, bancos e peritos, afastando achismos e precificações genéricas.',
+      title: 'Argumentação Segura e Firme na Negociação',
+      desc: 'Você senta com compradores, investidores ou bancos com números comprovados e auditáveis na mão, sem depender de palpites ou regras genéricas.',
     },
     {
-      title: 'Valor Justo dos Ativos e do Negócio',
-      desc: 'Aplicação de indicador seguro para mensurar o patrimônio real com total transparência, considerando amortização, conservação e liquidez.',
+      title: 'Valor Real dos Seus Bens e do Negócio',
+      desc: 'Aplicação de indicador seguro que corrige a defasagem dos livros contábeis, mostrando quanto valem seus equipamentos, imóveis e ativos de verdade.',
     },
     {
-      title: 'Blindagem Contra Riscos de Insolvência',
-      desc: 'Clareza antecipada sobre a saúde de curto prazo e nos próximos 12 meses, garantindo premissas de continuidade fiéis à realidade.',
+      title: 'Visão Clara de Caixa e Sem Surpresas',
+      desc: 'O teste de insolvência imediata e em 12 meses revela se o faturamento se converte em dinheiro no bolso, blindando sua posição perante compradores.',
     },
     {
-      title: 'Faixa de Negociação: Piso, Justo e Teto',
-      desc: 'Apresentação clara de cenários de sensibilidade para que o empresário saiba exatamente os limites de concessão e o valor ótimo do fechamento.',
+      title: 'Faixa Estratégica: Piso, Valor Justo e Teto',
+      desc: 'Você descobre exatamente o valor mínimo aceitável, o valor de mercado justo e o teto da negociação para fechar no melhor cenário possível.',
     },
     {
-      title: 'Identificação de Alavancas de Valor',
-      desc: 'O diagnóstico aponta quais gargalos operacionais e financeiros, quando corrigidos, mais elevam o valor final da empresa antes da venda.',
+      title: 'Identificação do Que Aumenta o Valor da Empresa',
+      desc: 'O diagnóstico aponta quais gargalos operacionais ou financeiros, se corrigidos antes da venda, mais elevam o valor de mercado do negócio.',
     },
     {
-      title: 'Segurança Jurídica para Acordos de Sócios',
-      desc: 'Laudo pericial documentado e auditável, adequado para respaldo em estatutos, contratos sociais, divórcios e inventários patrimoniais.',
+      title: 'Validade Jurídica para Acordos e Sucessão',
+      desc: 'Relatório pericial estruturado e auditável, adequado para formalização em contratos sociais, inventários, holdings e acordos de acionistas.',
     },
   ]
 
   const faqs = [
     {
-      q: 'Qual a diferença entre o Valor Contábil e o Valuation Econômico?',
-      a: 'O valor contábil (Patrimônio Líquido) reflete o custo histórico de aquisição dos ativos menos as depreciações acumuladas registradas no balanço. Já o Valuation Econômico (em especial pelo Fluxo de Caixa Desconhecido ou Múltiplos) precifica a capacidade futura da empresa de gerar lucros, a força da sua marca, a carteira de clientes e sua posição competitiva. Muitas empresas operam com valor contábil modesto, mas possuem um Valuation de mercado várias vezes superior devido ao seu poder de geração de caixa.',
+      q: 'Quanto custa um laudo de Valuation e como ele é precificado?',
+      a: 'O investimento no laudo é proporcional à complexidade do negócio: tamanho da empresa, quantidade de filiais ou unidades de negócio, volume de ativos físicos a reavaliar e qualidade dos dados contábeis disponíveis. Na Borlim, o orçamento é apresentado de forma transparente e com escopo fechado logo após uma primeira conversa diagnóstica sem custo, sem taxas ocultas.',
     },
     {
-      q: 'Por que a Borlim avalia insolvência imediata e em 12 meses antes de precificar?',
-      a: 'Uma empresa pode apresentar faturamento elevado e lucros no papel, mas enfrentar um descasamento agudo de fluxo de caixa que ameace sua continuidade nos próximos meses. Na Borlim, o teste preventivo de insolvência imediata e em 12 meses garante que o Valuation não seja construído sobre premissas frágeis. Isso protege o empresário de contrapropostas agressivas do comprador durante a Due Diligence.',
+      q: 'Quanto tempo leva o processo de avaliação da empresa?',
+      a: 'Em média, o processo completo leva de 2 a 4 semanas de trabalho técnico conjunto. Esse prazo inclui o diagnóstico dos 48 indicadores financeiros, os testes de insolvência imediata e em 12 meses, a modelagem dos fluxos futuros, a avaliação dos ativos por indicador seguro e a redação do laudo executivo final.',
     },
     {
-      q: 'O que é o "Indicador Seguro" aplicado na avaliação dos ativos pela Borlim?',
-      a: 'É a metodologia própria da Borlim que audita e ajusta o valor dos ativos operacionais e não operacionais da empresa, corrigindo distorções como estoques obsoletos, créditos de liquidação duvidosa, depreciações fiscais irreais e maquinários já amortizados mas em plena produtividade. Com isso, apura-se o valor de reposição e o valor de liquidação ordenada dos ativos, oferecendo uma âncora patrimonial segura para o piso da negociação.',
+      q: 'Quais documentos e informações preciso fornecer para iniciar?',
+      a: 'O ponto de partida são os demonstrativos contábeis dos últimos 3 a 5 anos (Balanço Patrimonial e DRE), extratos e relatórios de fluxo de caixa, relação de endividamento bancário e fiscal, relação de bens/ativos fixos e estimativas gerais de receitas futuras. Nossa equipe conduz uma entrevista inicial guiada para que a coleta não tome tempo excessivo da sua rotina.',
     },
     {
-      q: 'Quanto tempo leva para a conclusão de um Laudo de Valuation?',
-      a: 'O prazo varia conforme o porte da empresa e a prontidão das demonstrações contábeis e financeiras. Em média, um projeto de Valuation completo da Borlim — compreendendo diagnóstico dos 48 indicadores, modelagem do FCD, análise de múltiplos e elaboração do laudo executivo — leva de 2 a 4 semanas de trabalho técnico conjunto.',
+      q: 'O laudo de Valuation serve para bancos, financiamentos e fundos de investimento?',
+      a: 'Sim. O laudo da Borlim segue padrões econômicos e periciais reconhecidos (CVM, IFRS, CPC e normas de perícia econômico-financeira). Bancos de fomento, instituições financeiras comerciais, fundos de Private Equity e investidores institucionais utilizam nosso material para balizar garantias, limites de crédito e participação societária.',
     },
     {
-      q: 'A Borlim auxilia na mesa de negociação com os compradores ou sócios?',
-      a: 'Sim. Além de entregar o relatório completo com análises de sensibilidade (piso, valor justo e teto), nossa equipe sênior participa de reuniões estratégicas com fundos, assessores jurídicos ou potenciais compradores para sustentar tecnicamente cada premissa econômica adotada no laudo.',
+      q: 'A avaliação serve para entrada ou saída de sócio (apuração de haveres)?',
+      a: 'Com certeza, é uma das aplicações mais frequentes. O Valuation independente estabelece uma base neutra, justa e matematicamente defensável para o valor das cotas societárias. Isso protege tanto o sócio que fica quanto o que sai, eliminando desconfianças e prevenindo ações judiciais desgastantes e caras.',
+    },
+    {
+      q: 'Qual é a diferença entre Valor Contábil e Valor de Mercado (Valuation)?',
+      a: 'O Valor Contábil (Patrimônio Líquido) registra o custo histórico de compra dos bens da empresa menos as depreciações fiscais anotadas na contabilidade. Já o Valor de Mercado (Valuation Econômico) mede a capacidade futura da empresa de gerar dinheiro, a força de sua marca, seus clientes e sua posição no setor. Muitas PMEs têm patrimônio contábil modesto, mas valem várias vezes mais porque geram caixa sólido e previsível.',
+    },
+    {
+      q: 'Com que frequência a empresa deve atualizar o seu Valuation?',
+      a: 'Para empresas em negociação ativa de venda, captação ou reorganização de sócios, a atualização deve ser anual ou sempre que houver mudança relevante (como novos contratos, expansões ou oscilações fortes na Selic e no custo do dinheiro). Para gestão estratégica, recomendamos revisar o valor a cada 12 a 24 meses junto com a atualização dos 48 indicadores.',
+    },
+    {
+      q: 'O processo e as informações compartilhadas são confidenciais?',
+      a: 'Totalmente. Antes mesmo do recebimento de qualquer documento financeiro ou contábil, a Borlim formaliza um Acordo de Confidencialidade (NDA - Non-Disclosure Agreement) com validade jurídica estrita. Todos os seus dados de faturamento, margens, clientes e patrimônio ficam sob sigilo absoluto.',
+    },
+    {
+      q: 'O que é o "Indicador Seguro" de avaliação de ativos da Borlim?',
+      a: 'É a metodologia proprietária da Borlim para auditar e corrigir o valor real dos bens da empresa (como máquinas já totalmente depreciadas no papel fiscal, mas em plena atividade e valendo milhões, bem como expurgo de estoques sem giro e créditos duvidosos). Com o indicador seguro, determinamos o piso patrimonial inegociável da empresa para que você não venda por menos do que seus ativos custariam para repor.',
+    },
+    {
+      q: 'E se eu ou outra parte discordarmos do valor encontrado no laudo?',
+      a: 'O laudo da Borlim não entrega apenas um número frio: apresentamos uma matriz de sensibilidade com cenários conservador, neutro e otimista (piso, valor justo e teto), acompanhada de todo o memorial de cálculo. Se houver divergência, nossos economistas sentam à mesa com você, seus sócios ou seus assessores jurídicos para detalhar cada premissa e demonstrar tecnicamente como o número foi construído.',
     },
   ]
 
@@ -187,21 +207,24 @@ export default function Valuation() {
             </h1>
 
             <p className="font-serif text-xl sm:text-2xl text-emerald-300 mt-4 font-normal leading-snug">
-              Precificação justa, defensável e ancorada na capacidade real de geração de caixa e no
-              lastro seguro de ativos.
+              Descubra quanto sua empresa realmente vale no mercado com números seguros,
+              transparentes e defensáveis.
             </p>
 
             <p className="text-base sm:text-lg text-slate-300 mt-6 leading-relaxed font-sans max-w-3xl">
-              Na <strong>Borlim Consultoria</strong>, unimos um diagnóstico exclusivo de{' '}
-              <strong>48 indicadores de desempenho econômico-financeiro</strong>, análise preventiva
-              de <strong>risco de insolvência imediata e em 12 meses</strong> e a utilização de um{' '}
-              <strong>indicador seguro para avaliar o valor dos seus ativos</strong>. Combinamos as
-              três principais abordagens do mercado —{' '}
-              <strong>Fluxo de Caixa Descontado (FCD)</strong>,{' '}
-              <strong>Múltiplos de Mercado</strong> e{' '}
-              <strong>Avaliação Patrimonial de Ativos</strong> — para entregar um laudo executivo
-              incontestável para fusões, aquisições, dissoluções societárias ou captações de
-              capital.
+              Na <strong>Borlim Consultoria</strong>, traduzimos a complexidade financeira em
+              decisões práticas para empresários. Combinamos um diagnóstico completo de{' '}
+              <strong>48 indicadores de desempenho financeiro</strong>, checagem preventiva de{' '}
+              <strong>fôlego de caixa (insolvência imediata e em 12 meses)</strong> e a aplicação de
+              um <strong>indicador seguro para reavaliar o valor real dos seus ativos</strong>.
+              Cruzamos as três principais metodologias do mercado —{' '}
+              <strong>Fluxo de Caixa Descontado (o caixa futuro trazido para hoje)</strong>,{' '}
+              <strong>Múltiplos de Mercado (comparação com transações do mesmo setor)</strong> e{' '}
+              <strong>
+                Avaliação Patrimonial de Ativos (o piso dos seus bens livres de dívidas)
+              </strong>{' '}
+              — para que você negocie com segurança na venda do negócio, na entrada ou saída de
+              sócios e perante bancos e investidores.
             </p>
 
             {/* CTAs do Hero */}
@@ -257,11 +280,11 @@ export default function Valuation() {
                 avaliaremos o valor dos seus Ativos.”
               </blockquote>
               <p className="text-sm sm:text-base text-slate-700 leading-relaxed font-sans">
-                Não trabalhamos com estimativas empíricas ou fórmulas genéricas de internet.
-                Cruzamos a solidez real dos seus ativos patrimoniais com o diagnóstico exaustivo de
-                48 indicadores financeiros e o teste preventivo de insolvência imediata e para 12
-                meses. O resultado é um laudo consistente e defensável, pronto para a mesa de
-                negociação com auditores, bancos, fundos e novos sócios.
+                Não usamos regras de bolso nem palpites de internet. Cruzamos a solidez real dos
+                seus bens com o diagnóstico aprofundado de 48 indicadores financeiros e a análise
+                preventiva de insolvência imediata e em 12 meses. O resultado é um laudo executivo
+                consistente, claro para você e inquestionável na mesa de negociação com sócios,
+                bancos, investidores ou compradores.
               </p>
             </div>
 
@@ -358,12 +381,12 @@ export default function Valuation() {
               Metodologias em Profundidade: Como a Borlim Avalia o Seu Negócio
             </h2>
             <p className="text-sm sm:text-base text-slate-600 mt-3 font-sans leading-relaxed">
-              O valor de uma empresa não é um número único e estático, mas sim uma faixa de
-              negociação delimitada pela convergência de métodos complementares. Abaixo detalhamos o{' '}
-              <strong>Fluxo de Caixa Descontado (FCD)</strong>, os{' '}
+              O valor de uma empresa não é um palpite solto, mas sim uma faixa estratégica (piso,
+              valor justo e teto) construída pelo cruzamento de métodos complementares. Veja a
+              seguir como funcionam o <strong>Fluxo de Caixa Descontado (FCD)</strong>, os{' '}
               <strong>Múltiplos de Mercado</strong> e a{' '}
-              <strong>Avaliação Patrimonial de Ativos</strong> com linguagem acessível para
-              tomadores de decisão.
+              <strong>Avaliação Patrimonial de Ativos</strong>, com cada conceito explicado de
+              empresário para empresário.{' '}
             </p>
           </div>
 
@@ -413,28 +436,28 @@ export default function Valuation() {
                 <div className="lg:col-span-8 space-y-6">
                   <div className="bg-[#F8FAFC] p-6 sm:p-8 rounded-2xl border border-slate-200 space-y-4">
                     <span className="text-xs font-mono font-bold uppercase tracking-widest text-[#15803D]">
-                      Conceito & Fundamento Teórico
+                      1. Fluxo de Caixa Descontado (FCD) — Visão do Empresário
                     </span>
                     <h3 className="font-serif text-2xl font-bold text-[#082852]">
-                      O que é o Fluxo de Caixa Descontado (FCD)?
+                      Quanto dinheiro a sua empresa vai colocar no bolso dos donos no futuro?
                     </h3>
                     <p className="text-sm sm:text-base text-slate-700 font-sans leading-relaxed">
-                      O <strong>Fluxo de Caixa Descontado (Discounted Cash Flow - DCF)</strong> é o
-                      método mais respeitado no ambiente acadêmico, bancos de investimento e fundos
-                      globais. Ele parte do princípio econômico de que{' '}
+                      O <strong>Fluxo de Caixa Descontado (FCD, ou Discounted Cash Flow)</strong> é
+                      o método mais reconhecido por bancos, peritos judiciais e investidores no
+                      mundo todo. A lógica é direta e intuitiva:{' '}
                       <strong>
-                        o valor de um negócio é a soma de todo o dinheiro que ele é capaz de gerar
-                        no futuro, trazido ao valor presente por uma taxa de desconto que reflete o
+                        sua empresa vale o total de dinheiro limpo que ela é capaz de gerar nos
+                        próximos anos, trazido para o valor de hoje com um desconto que reflete o
                         risco do negócio
                       </strong>
                       .
                     </p>
                     <p className="text-sm sm:text-base text-slate-700 font-sans leading-relaxed">
-                      Em vez de olhar apenas para o balanço passado ou lucros contábeis (que podem
-                      ser mascarados por depreciações ou prazos de pagamento), o FCD calcula a
-                      geração de caixa livre (FCFF ou FCFE) disponível para acionistas e credores
-                      após todos os custos operacionais, tributos e investimentos necessários em
-                      máquinas e capital de giro (Capex e NCG).
+                      Faturamento não é dinheiro no bolso, e lucro no papel muitas vezes não paga
+                      boleto. Por isso, o FCD trabalha com o <strong>Caixa Livre</strong>: o
+                      dinheiro real que sobra na conta da empresa depois de pagar salários,
+                      fornecedores, impostos e de investir na compra ou troca de máquinas (Capex) e
+                      no fôlego de capital de giro (NCG).
                     </p>
                   </div>
 
@@ -443,15 +466,17 @@ export default function Valuation() {
                       <div className="flex items-center gap-2 text-[#0B3B7A]">
                         <Calculator className="w-5 h-5 text-[#16A34A]" />
                         <h4 className="font-serif text-base font-bold text-[#082852]">
-                          A Taxa de Desconto (WACC / Ke)
+                          Taxa de Desconto (WACC) — O Custo do Dinheiro
                         </h4>
                       </div>
                       <p className="text-xs sm:text-sm text-slate-600 font-sans leading-relaxed">
-                        A taxa de desconto traduz o custo de oportunidade do capital. Ela pondera a
-                        taxa livre de risco da economia (como o CDI/Tesouro Direto Selic no Brasil),
-                        o risco-país, o risco específico do segmento (Beta) e a estrutura de dívida
-                        vs. capital próprio da empresa. Um risco maior exige taxa maior, o que reduz
-                        o valor presente do caixa.
+                        Receber R$ 1 milhão daqui a 5 anos não vale o mesmo que receber hoje. A taxa
+                        de desconto (denominada{' '}
+                        <strong>WACC — custo médio ponderado do capital</strong>) calcula exatamente
+                        esse desconto. Ela considera a Selic (o rendimento sem risco da economia
+                        brasileira), o risco-país Brasil, o risco específico do seu ramo de
+                        atividade (o fator Beta) e a proporção entre dívidas bancárias e dinheiro
+                        dos sócios. Quanto maior o risco da operação, maior essa taxa.
                       </p>
                     </div>
 
@@ -459,14 +484,15 @@ export default function Valuation() {
                       <div className="flex items-center gap-2 text-[#0B3B7A]">
                         <TrendingUp className="w-5 h-5 text-[#16A34A]" />
                         <h4 className="font-serif text-base font-bold text-[#082852]">
-                          Valor Residual / Perpetuidade
+                          Perpetuidade — A Continuidade do Negócio
                         </h4>
                       </div>
                       <p className="text-xs sm:text-sm text-slate-600 font-sans leading-relaxed">
-                        Como as empresas são constituídas para durar indefinidamente (princípio da
-                        continuidade), modelamos um horizonte explícito (geralmente de 5 a 10 anos)
-                        e, a partir daí, calculamos o valor da perpetuidade com base em uma taxa de
-                        crescimento conservadora alinhada à inflação ou ao PIB de longo prazo.
+                        Sua empresa não acaba no final da projeção de 5 anos. A{' '}
+                        <strong>perpetuidade</strong> calcula o valor do negócio para todos os anos
+                        seguintes de funcionamento contínuo, adotando uma taxa de crescimento
+                        prudente alinhada à inflação oficial ou ao crescimento esperado do país. É o
+                        valor que premia a história e a longevidade da marca que você construiu.
                       </p>
                     </div>
                   </div>
@@ -474,18 +500,20 @@ export default function Valuation() {
                   <div className="p-6 bg-emerald-50/70 border border-emerald-200 rounded-xl space-y-3">
                     <h4 className="font-serif text-base font-bold text-[#15803D] flex items-center gap-2">
                       <SearchCheck className="w-5 h-5 text-[#15803D]" />
-                      Como a BORLIM Aplica o FCD na Prática:
+                      Como a Borlim Aplica o FCD na Prática:
                     </h4>
                     <p className="text-xs sm:text-sm text-slate-700 font-sans leading-relaxed">
-                      Não projetamos metas fantasiosas de faturamento. Nosso diferencial é que{' '}
+                      Não criamos planos mágicos ou metas irrealistas de vendas. Nosso diferencial é
+                      que{' '}
                       <strong>
-                        as projeções do FCD são calibradas diretamente pelo diagnóstico dos 48
+                        as projeções do FCD nascem calibradas pelo diagnóstico prévio dos 48
                         indicadores
                       </strong>
-                      . Analisamos histórico de margem bruta, giro de estoques, prazo médio de
-                      cobrança e índice de inadimplência real. Além disso, antes de definir a taxa
-                      de desconto, auditamos se a empresa possui riscos de insolvência imediata ou
-                      em 12 meses, ajustando o prêmio de risco com exatidão científica.
+                      . Verificamos seus prazos médios de recebimento, giro de estoque,
+                      inadimplência histórica e margens reais. Além disso, aplicamos o teste
+                      preventivo de insolvência imediata e em 12 meses: assim, o comprador nunca
+                      poderá alegar na mesa de negociação que a empresa tem problemas ocultos de
+                      liquidez.
                     </p>
                   </div>
                 </div>
@@ -494,40 +522,41 @@ export default function Valuation() {
                   {/* Card Vantagens e Limitações */}
                   <div className="bg-[#082852] text-white p-6 sm:p-7 rounded-2xl border border-[#0B3B7A] space-y-4">
                     <span className="text-[11px] font-mono uppercase tracking-widest text-[#22C55E] font-bold">
-                      Quadro Síntese
+                      Em Poucas Palavras
                     </span>
                     <h4 className="font-serif text-lg font-bold text-white">Quando Usar o FCD?</h4>
                     <ul className="space-y-2.5 text-xs text-slate-300 font-sans">
                       <li className="flex items-start gap-2">
                         <Check className="w-4 h-4 text-[#22C55E] shrink-0 mt-0.5" />
                         <span>
-                          Empresas com histórico operacional consistente e previsibilidade de caixa.
+                          Empresas com histórico financeiro consolidado e previsibilidade de
+                          clientes.
                         </span>
                       </li>
                       <li className="flex items-start gap-2">
                         <Check className="w-4 h-4 text-[#22C55E] shrink-0 mt-0.5" />
                         <span>
-                          Negócios em fase de expansão, captação com fundos ou entrada de novos
-                          sócios.
+                          Negócios em expansão, captação de investimento ou negociação de quotas
+                          entre sócios.
                         </span>
                       </li>
                       <li className="flex items-start gap-2">
                         <Check className="w-4 h-4 text-[#22C55E] shrink-0 mt-0.5" />
                         <span>
-                          Operações com forte geração de caixa mas poucos ativos físicos (ex.:
-                          serviços, software, consultorias).
+                          Prestadores de serviços, distribuidoras e empresas que geram muito caixa
+                          sem precisar de grandes fábricas.
                         </span>
                       </li>
                     </ul>
 
                     <div className="pt-4 border-t border-slate-700/80 space-y-2">
                       <span className="text-[11px] font-mono uppercase tracking-wider text-amber-400 font-bold block">
-                        Atenção Técnica
+                        Atenção do Consultor
                       </span>
                       <p className="text-xs text-slate-300 font-sans leading-relaxed">
-                        O FCD é altamente sensível às premissas de taxa de desconto e crescimento na
-                        perpetuidade. Uma pequena variação na taxa pode alterar o valor em milhões.
-                        Por isso, a Borlim sempre entrega uma matriz de sensibilidade detalhada.
+                        Uma pequena mudança na taxa de juros mexe muito no valor final. Por isso, a
+                        Borlim sempre entrega uma tabela de sensibilidade mostrando o valor nos
+                        cenários conservador, realista e otimista.
                       </p>
                     </div>
                   </div>
@@ -538,15 +567,16 @@ export default function Valuation() {
                       Exemplo Prático Ilustrativo
                     </span>
                     <h5 className="font-serif text-sm font-bold text-[#082852]">
-                      Distribuidora com R$ 1,2M de Caixa Livre/ano
+                      Distribuidora com Caixa Livre de R$ 1,2 milhão ao ano
                     </h5>
                     <p className="text-xs text-slate-600 font-sans leading-relaxed">
-                      Suponha uma empresa distribuidora que gere R$ 1,2 milhão de caixa livre anual,
-                      com crescimento estimado de 4% a.a. e taxa de desconto WACC de 13,5% ao ano
-                      (com base na Selic e risco setorial). O cálculo a valor presente dos próximos
-                      5 anos mais a perpetuidade aponta um Enterprise Value em torno de R$ 11,8
-                      milhões. Deduzindo o endividamento líquido e somando as disponibilidades,
-                      atinge-se o valor das cotas dos sócios.
+                      Imagine uma distribuidora que coloque limpo no caixa R$ 1,2 milhão por ano,
+                      com crescimento anual estimado em 4% e taxa de desconto (WACC) calculada em
+                      13,5% ao ano (com base na taxa Selic atual e no risco do setor). O cálculo a
+                      valor presente dos próximos 5 anos somado à perpetuidade aponta um valor da
+                      operação (Enterprise Value) próximo a R$ 11,8 milhões. Subtraindo as dívidas
+                      líquidas e somando o saldo bancário, chegamos ao valor final que cabe aos
+                      donos (Equity Value).
                     </p>
                   </div>
                 </div>
@@ -561,61 +591,63 @@ export default function Valuation() {
                 <div className="lg:col-span-8 space-y-6">
                   <div className="bg-[#F8FAFC] p-6 sm:p-8 rounded-2xl border border-slate-200 space-y-4">
                     <span className="text-xs font-mono font-bold uppercase tracking-widest text-[#15803D]">
-                      Conceito & Avaliação Relativa
+                      2. Múltiplos de Mercado — Comparação com o Setor
                     </span>
                     <h3 className="font-serif text-2xl font-bold text-[#082852]">
-                      O que são Múltiplos de Mercado & Transações Similares?
+                      Por quanto empresas semelhantes à sua foram compradas recentemente?
                     </h3>
                     <p className="text-sm sm:text-base text-slate-700 font-sans leading-relaxed">
-                      A abordagem de <strong>Múltiplos de Mercado (Relative Valuation)</strong>{' '}
-                      parte da lógica de que negócios semelhantes devem ser avaliados por preços
-                      proporcionais. É um método amplamente utilizado por analistas de M&A e fundos
-                      de investimento para verificar rapidamente a razoabilidade de uma proposta de
-                      compra ou venda frente à realidade competitiva do setor.
+                      A avaliação por <strong>Múltiplos de Mercado</strong> funciona de forma
+                      parecida com a precificação de um imóvel pelo metro quadrado da vizinhança: se
+                      empresas parecidas com a sua são vendidas por 5 vezes o resultado operacional
+                      anual, seu negócio provavelmente terá uma referência proporcional no mercado.
                     </p>
                     <p className="text-sm sm:text-base text-slate-700 font-sans leading-relaxed">
-                      Consiste em comparar indicadores contábeis da empresa avaliada (como EBITDA,
-                      Faturamento Líquido ou Lucro Líquido) com empresas do mesmo setor que foram
-                      negociadas recentemente ou têm ações transacionadas em bolsa de valores.
+                      É o método preferido de investidores e fundos para bater o olho e checar
+                      rapidamente se a proposta faz sentido. Comparamos o resultado da sua empresa
+                      com transações reais de compra e venda e empresas de capital aberto do seu
+                      segmento.
                     </p>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div className="p-5 bg-white rounded-xl border border-slate-200 space-y-2">
                       <span className="text-[10px] font-mono uppercase tracking-wider text-[#15803D] font-bold">
-                        Mais Utilizado no Mercado
+                        Mais Utilizado
                       </span>
                       <h4 className="font-serif text-base font-bold text-[#082852]">EV / EBITDA</h4>
                       <p className="text-xs text-slate-600 font-sans leading-relaxed">
-                        Mede quantas vezes a geração de caixa operacional da empresa equivale ao
-                        valor total da firma (Enterprise Value). É neutro quanto à estrutura
-                        tributária e de dívida.
+                        Mostra quantas vezes o valor da empresa equivale ao seu caixa operacional
+                        bruto (EBITDA — lucro antes de juros, impostos, depreciação e amortização).
+                        Elimina distorções fiscais e de endividamento.
                       </p>
                     </div>
 
                     <div className="p-5 bg-white rounded-xl border border-slate-200 space-y-2">
                       <span className="text-[10px] font-mono uppercase tracking-wider text-[#0B3B7A] font-bold">
-                        Margem & Escala
+                        Margem & Faturamento
                       </span>
                       <h4 className="font-serif text-base font-bold text-[#082852]">
                         EV / Receita Líquida
                       </h4>
                       <p className="text-xs text-slate-600 font-sans leading-relaxed">
-                        Útil em empresas com margens temporariamente comprimidas ou em fase
-                        acelerada de ganho de market share, como tecnologia, varejo e startups.
+                        Compara o valor da empresa com seu faturamento anual líquido. Muito usado em
+                        empresas em rápido crescimento, comércio, plataformas e empresas que ainda
+                        estão ampliando margens.
                       </p>
                     </div>
 
                     <div className="p-5 bg-white rounded-xl border border-slate-200 space-y-2">
                       <span className="text-[10px] font-mono uppercase tracking-wider text-slate-600 font-bold">
-                        Visão do Acionista
+                        Retorno do Sócio
                       </span>
                       <h4 className="font-serif text-base font-bold text-[#082852]">
                         P/L (Preço / Lucro)
                       </h4>
                       <p className="text-xs text-slate-600 font-sans leading-relaxed">
-                        Indica quantos anos de lucro líquido anual acumulado seriam necessários para
-                        pagar o valor de compra das quotas ou ações da sociedade.
+                        Indica em quantos anos o lucro líquido acumulado pagaria o valor de compra
+                        da empresa. É o indicador clássico de retorno do investimento para os
+                        sócios.
                       </p>
                     </div>
                   </div>
@@ -623,29 +655,28 @@ export default function Valuation() {
                   <div className="p-6 bg-emerald-50/70 border border-emerald-200 rounded-xl space-y-3">
                     <h4 className="font-serif text-base font-bold text-[#15803D] flex items-center gap-2">
                       <SearchCheck className="w-5 h-5 text-[#15803D]" />
-                      Como a BORLIM Aplica os Múltiplos com Responsabilidade:
+                      Como a Borlim Aplica os Múltiplos com Responsabilidade:
                     </h4>
                     <p className="text-xs sm:text-sm text-slate-700 font-sans leading-relaxed">
-                      Aplicar múltiplos de grandes multinacionais abertas na B3 ou NYSE a uma
-                      empresa de médio porte brasileira é um erro clássico que infla o Valuation de
-                      forma irresponsável. Na <strong>BORLIM</strong>, realizamos os seguintes
-                      ajustes indispensáveis:
+                      Copiar múltiplos de grandes multinacionais que têm ações na bolsa para avaliar
+                      uma PME familiar brasileira é um erro grave que gera valores ilusórios. Na{' '}
+                      <strong>Borlim</strong>, fazemos os três ajustes essenciais:
                     </p>
                     <ul className="space-y-1.5 text-xs text-slate-700 font-sans pl-2">
                       <li>
-                        • <strong>Desconto por Iliquidez de Capital Fechado (DLOM):</strong>{' '}
-                        ajustamos o múltiplo porque cotas de empresas limitadas não são vendidas com
-                        a rapidez de ações em bolsa.
+                        • <strong>Desconto de Iliquidez de Empresa Fechada:</strong> cotas de uma
+                        empresa de médio porte não são vendidas com um clique como ações em bolsa;
+                        por isso aplicamos o desconto técnico cabível.
                       </li>
                       <li>
-                        • <strong>Normalização do EBITDA:</strong> expurgamos salários de sócios
-                        fora de mercado, despesas pessoais lançadas na pessoa jurídica e receitas
-                        não recorrentes.
+                        • <strong>Normalização do EBITDA:</strong> ajustamos retiradas de pró-labore
+                        fora do padrão de mercado, gastos pessoais lançados na pessoa jurídica e
+                        receitas atípicas de um único ano.
                       </li>
                       <li>
-                        • <strong>Ponderação com 48 Indicadores:</strong> se a empresa tem liquidez
-                        ou giro inferior aos pares do segmento, aplicamos o desconto correspondente
-                        no múltiplo.
+                        • <strong>Ajuste pelos 48 Indicadores:</strong> comparamos se sua empresa
+                        tem liquidez e rotação de estoques melhores ou piores do que a média dos
+                        concorrentes, calibrando o múltiplo para cima ou para baixo.
                       </li>
                     </ul>
                   </div>
@@ -654,7 +685,7 @@ export default function Valuation() {
                 <div className="lg:col-span-4 space-y-6">
                   <div className="bg-[#082852] text-white p-6 sm:p-7 rounded-2xl border border-[#0B3B7A] space-y-4">
                     <span className="text-[11px] font-mono uppercase tracking-widest text-[#22C55E] font-bold">
-                      Quadro Síntese
+                      Em Poucas Palavras
                     </span>
                     <h4 className="font-serif text-lg font-bold text-white">
                       Quando Usar Múltiplos?
@@ -663,33 +694,34 @@ export default function Valuation() {
                       <li className="flex items-start gap-2">
                         <Check className="w-4 h-4 text-[#22C55E] shrink-0 mt-0.5" />
                         <span>
-                          Sectores maduros com diversas transações recentes comprovadas (indústria,
-                          saúde, logística).
+                          Segmentos com muitas negociações recentes registradas (indústrias,
+                          clínicas, logística).
                         </span>
                       </li>
                       <li className="flex items-start gap-2">
                         <Check className="w-4 h-4 text-[#22C55E] shrink-0 mt-0.5" />
                         <span>
-                          Como validação cruzada do FCD para identificar se a projeção está coerente
-                          com o mercado.
+                          Como prova dos nove: checar se o cálculo do Fluxo de Caixa Descontado
+                          condiz com o mercado.
                         </span>
                       </li>
                       <li className="flex items-start gap-2">
                         <Check className="w-4 h-4 text-[#22C55E] shrink-0 mt-0.5" />
                         <span>
-                          Rodadas rápidas de sondagem preliminar com compradores em potencial.
+                          Para conversas preliminares rápidas com interessados e parceiros
+                          estratégicos.
                         </span>
                       </li>
                     </ul>
 
                     <div className="pt-4 border-t border-slate-700/80 space-y-2">
                       <span className="text-[11px] font-mono uppercase tracking-wider text-amber-400 font-bold block">
-                        Limitação do Método
+                        Cuidado Necessário
                       </span>
                       <p className="text-xs text-slate-300 font-sans leading-relaxed">
-                        Os múltiplos ignoram particularidades exclusivas da sua operação, como
-                        contratos de longo prazo fechados, vantagens fiscais específicas ou passivos
-                        ocultos. Por isso, a Borlim nunca os utiliza como método único e isolado.
+                        Múltiplos sozinhos não enxergam a fidelidade dos seus clientes, a segurança
+                        dos seus contratos nem dívidas fiscais antigas. Por isso a Borlim nunca usa
+                        múltiplos de forma isolada.
                       </p>
                     </div>
                   </div>
@@ -699,13 +731,14 @@ export default function Valuation() {
                       Exemplo Prático Ilustrativo
                     </span>
                     <h5 className="font-serif text-sm font-bold text-[#082852]">
-                      Indústria com EBITDA Normalizado de R$ 3,0M
+                      Indústria com Caixa Operacional (EBITDA) de R$ 3,0 milhões
                     </h5>
                     <p className="text-xs text-slate-600 font-sans leading-relaxed">
-                      Se transações de indústrias correlatas no interior paulista fecham a múltiplos
-                      médios de 4,5x a 5,5x EBITDA, uma empresa com EBITDA de R$ 3,0M terá seu
-                      Enterprise Value estimado entre R$ 13,5M e R$ 16,5M. Ajustando a dívida
-                      líquida, define-se o Equity Value com precisão mercadológica.
+                      Se transações de indústrias semelhantes no interior paulista vêm sendo
+                      fechadas entre 4,5 e 5,5 vezes o EBITDA ajustado, uma empresa com R$ 3,0
+                      milhões de EBITDA anual terá seu valor de operação balizado entre R$ 13,5M e
+                      R$ 16,5M. Deduzindo as dívidas líquidas, chega-se com firmeza ao valor das
+                      cotas dos donos.
                     </p>
                   </div>
                 </div>
@@ -720,26 +753,27 @@ export default function Valuation() {
                 <div className="lg:col-span-8 space-y-6">
                   <div className="bg-[#F8FAFC] p-6 sm:p-8 rounded-2xl border border-slate-200 space-y-4">
                     <span className="text-xs font-mono font-bold uppercase tracking-widest text-[#15803D]">
-                      Especialidade e Pilar BORLIM
+                      3. Avaliação Patrimonial — O Lastro Seguro da Empresa
                     </span>
                     <h3 className="font-serif text-2xl font-bold text-[#082852]">
-                      Avaliação Patrimonial de Ativos com Indicador Seguro
+                      Quanto valem os bens e o patrimônio real que sua empresa construiu?
                     </h3>
                     <p className="text-sm sm:text-base text-slate-700 font-sans leading-relaxed">
-                      A <strong>Avaliação Patrimonial Ajustada (Asset-Based Valuation)</strong>{' '}
-                      apura o valor econômico de todos os bens e direitos pertencentes à pessoa
-                      jurídica, deduzidas todas as obrigações e contingências. É o método que
-                      estabelece o <strong>piso financeiro da empresa</strong>: nenhum negócio deve
-                      ser vendido por valor inferior ao que se obteria na realização ordenada de
-                      seus ativos livres de dívidas.
+                      A <strong>Avaliação Patrimonial de Ativos (Asset-Based Valuation)</strong>{' '}
+                      apura o valor real de mercado de todos os bens e direitos da empresa (imóveis,
+                      máquinas, frota, estoques, marcas e recebíveis), subtraindo todas as dívidas e
+                      pendências. É o método que define o{' '}
+                      <strong>piso inegociável da negociação</strong>: nenhuma empresa deve ser
+                      vendida por valor menor do que seus bens próprios renderiam se fossem
+                      realizados de forma organizada.
                     </p>
                     <p className="text-sm sm:text-base text-slate-700 font-sans leading-relaxed">
-                      Muitos empresários subestimam ou superestimam seu patrimônio ao olhar apenas
-                      para o balancete contábil. Na Borlim, aplicamos um{' '}
-                      <strong>indicador seguro de avaliação de ativos</strong> que corrige tanto a
-                      depreciação contábil excessiva (máquinas com valor residual zero no balanço,
-                      mas avaliadas em milhões no mercado) quanto ativos fictícios (estoques sem
-                      giro e créditos incobráveis).
+                      Muitos empresários perdem dinheiro porque olham apenas para o balanço
+                      contábil. Na contabilidade, máquinas modernas compradas há anos podem constar
+                      com valor zero por causa da depreciação fiscal, quando continuam produzindo e
+                      valem milhões de reais. Na Borlim, aplicamos um{' '}
+                      <strong>indicador seguro de avaliação de ativos</strong> que corrige essas
+                      distorções e garante que o patrimônio real seja reconhecido pelo comprador.
                     </p>
                   </div>
 
@@ -748,14 +782,14 @@ export default function Valuation() {
                       <div className="flex items-center gap-2 text-[#0B3B7A]">
                         <Building2 className="w-5 h-5 text-[#16A34A]" />
                         <h4 className="font-serif text-base font-bold text-[#082852]">
-                          Ativos Tangíveis Reavaliados
+                          Bens Físicos Reavaliados (Ativos Tangíveis)
                         </h4>
                       </div>
                       <p className="text-xs sm:text-sm text-slate-600 font-sans leading-relaxed">
-                        Galpões, terrenos industriais, frota, maquinário operacional, estoques reais
-                        e aplicações de caixa. Ajustamos a valor de reposição e valor justo de
-                        mercado, eliminando a distorção gerada por regras fiscais da Receita
-                        Federal.
+                        Galpões, terrenos próprios, frotas, máquinas industriais, equipamentos de
+                        escritório, estoques auditados e dinheiro em caixa. Trazemos tudo para o
+                        valor justo de mercado e custo de reposição, eliminando a defasagem criada
+                        pelas tabelas fiscais da Receita Federal.
                       </p>
                     </div>
 
@@ -763,14 +797,14 @@ export default function Valuation() {
                       <div className="flex items-center gap-2 text-[#0B3B7A]">
                         <Award className="w-5 h-5 text-[#16A34A]" />
                         <h4 className="font-serif text-base font-bold text-[#082852]">
-                          Intangíveis e Passivos Ocultos
+                          Marcas, Intangíveis e Dívidas Ocultas
                         </h4>
                       </div>
                       <p className="text-xs sm:text-sm text-slate-600 font-sans leading-relaxed">
-                        Identificamos marcas registradas no INPI, carteira de clientes recorrentes,
-                        patentes, licenças regulatórias e softwares próprios. Em paralelo, auditamos
-                        passivos tributários, cíveis, trabalhistas e riscos de insolvência imediata
-                        e em 12 meses.
+                        Avaliamos marcas registradas no INPI, carteira de clientes ativos, patentes,
+                        licenças de operação e sistemas próprios. Ao mesmo tempo, auditamos
+                        eventuais passivos fiscais, trabalhistas e riscos de insolvência imediata e
+                        em 12 meses, para que nenhuma surpresa apareça no meio do caminho.
                       </p>
                     </div>
                   </div>
@@ -782,12 +816,12 @@ export default function Valuation() {
                       dos seus Ativos”?
                     </h4>
                     <p className="text-xs sm:text-sm text-slate-700 font-sans leading-relaxed">
-                      Significa que numa negociação de venda, o empresário não ficará vulnerável a
-                      depreciações oportunistas feitas pelo comprador. Nosso laudo apresenta um
-                      indicador técnico auditável que comprova a liquidez, o estado operacional e o
-                      custo de reposição dos ativos. Se o comprador tentar pagar apenas o patrimônio
-                      contábil, nosso laudo prova exatamente quanto a empresa vale pelo seu lastro
-                      seguro de bens.
+                      Significa que na hora de negociar, o empresário não fica refém de descontos
+                      oportunistas do comprador. Nosso laudo apresenta um indicador técnico
+                      auditável que comprova a liquidez, o estado de conservação e o valor de
+                      reposição dos seus bens. Se a outra parte tentar pagar apenas o valor contábil
+                      depreciado do balancete, nosso laudo demonstra na vírgula quanto a empresa
+                      realmente tem de lastro patrimonial seguro.
                     </p>
                   </div>
                 </div>
@@ -795,7 +829,7 @@ export default function Valuation() {
                 <div className="lg:col-span-4 space-y-6">
                   <div className="bg-[#082852] text-white p-6 sm:p-7 rounded-2xl border border-[#0B3B7A] space-y-4">
                     <span className="text-[11px] font-mono uppercase tracking-widest text-[#22C55E] font-bold">
-                      Quadro Síntese
+                      Em Poucas Palavras
                     </span>
                     <h4 className="font-serif text-lg font-bold text-white">
                       Quando Usar a Avaliação de Ativos?
@@ -804,19 +838,21 @@ export default function Valuation() {
                       <li className="flex items-start gap-2">
                         <Check className="w-4 h-4 text-[#22C55E] shrink-0 mt-0.5" />
                         <span>
-                          Empresas intensivas em capital (indústrias, construtoras, agronegócio,
-                          frotistas, galpões).
+                          Empresas com muitas máquinas, veículos ou galpões (indústrias,
+                          agronegócio, frotistas, construção).
                         </span>
                       </li>
                       <li className="flex items-start gap-2">
                         <Check className="w-4 h-4 text-[#22C55E] shrink-0 mt-0.5" />
-                        <span>Apuração de haveres na saída litigiosa ou amigável de sócios.</span>
+                        <span>
+                          Separação de cotas e apuração de haveres na entrada ou saída de sócios.
+                        </span>
                       </li>
                       <li className="flex items-start gap-2">
                         <Check className="w-4 h-4 text-[#22C55E] shrink-0 mt-0.5" />
                         <span>
-                          Reestruturação societária, recuperação judicial ou definição de garantias
-                          para grandes financiamentos.
+                          Garantias para empréstimos bancários de grande porte ou reestruturações
+                          societárias.
                         </span>
                       </li>
                     </ul>
@@ -826,9 +862,9 @@ export default function Valuation() {
                         Diferencial Borlim
                       </span>
                       <p className="text-xs text-slate-300 font-sans leading-relaxed">
-                        Cruzamos a solidez dos ativos com os 48 indicadores financeiros. Dessa
-                        forma, avaliamos não apenas o metal e o concreto, mas a capacidade daquele
-                        maquinário de produzir rentabilidade e fluxo livre.
+                        Conectamos o valor dos bens físicos aos 48 indicadores financeiros.
+                        Avaliamos não só o ferro e o tijolo, mas a capacidade real de cada máquina e
+                        galpão de continuar gerando lucro e caixa.
                       </p>
                     </div>
                   </div>
@@ -843,10 +879,10 @@ export default function Valuation() {
                     <p className="text-xs text-slate-600 font-sans leading-relaxed">
                       Uma metalúrgica cujo balanço registrava patrimônio líquido contábil de R$ 4,5
                       milhões teve seus galpões e maquinários modernos reavaliados por indicador
-                      seguro a valor de mercado em R$ 11,2 milhões. Com a exclusão de estoques
-                      obsoletos e precificação de dívidas fiscais parceladas, o piso de negociação
-                      subiu de R$ 4,5M para R$ 9,8M, impedindo que os sócios vendessem a empresa por
-                      metade do que valia.
+                      seguro a valor de mercado em R$ 11,2 milhões. Com o expurgo de estoques sem
+                      giro e a contabilização correta de dívidas parceladas, o piso mínimo de
+                      negociação subiu de R$ 4,5M para R$ 9,8M, impedindo que a família vendesse o
+                      negócio por menos da metade do que seus bens valiam.
                     </p>
                   </div>
                 </div>
@@ -914,14 +950,14 @@ export default function Valuation() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <span className="text-xs font-mono uppercase tracking-widest text-[#22C55E] font-bold">
-              Fluxo Técnico Executivo
+              Etapas Claras e Conduzidas pela Borlim
             </span>
             <h2 className="font-serif text-2xl sm:text-4xl font-bold text-white mt-2">
-              As 4 Etapas do Processo de Valuation na BORLIM
+              Como Funciona o Processo de Avaliação na BORLIM
             </h2>
             <p className="text-sm sm:text-base text-slate-300 mt-3 font-sans leading-relaxed">
-              Do levantamento dos dados contábeis à entrega do relatório pericial com suporte direto
-              aos acionistas.
+              Do envio dos primeiros documentos contábeis à entrega do laudo executivo com apoio
+              direto dos nossos economistas.
             </p>
           </div>
 
@@ -963,14 +999,14 @@ export default function Valuation() {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
         <div className="max-w-3xl mb-12">
           <span className="text-xs font-mono uppercase tracking-widest text-[#15803D] font-bold">
-            Vantagens Competitivas
+            Vantagens Práticas para o Dono do Negócio
           </span>
           <h2 className="font-serif text-2xl sm:text-4xl font-bold text-[#082852] mt-2">
-            Por Que Fazer a Avaliação da Sua Empresa com a BORLIM?
+            Por Que Avaliar a Sua Empresa com a BORLIM?
           </h2>
           <p className="text-sm sm:text-base text-slate-600 mt-3 font-sans leading-relaxed">
-            Benefícios práticos que transformam cálculos econômicos em poder real de barganha e
-            tranquilidade para os acionistas.
+            Benefícios diretos que transformam cálculos e números técnicos em poder real de
+            negociação e tranquilidade para sua família e seus sócios.
           </p>
         </div>
 
@@ -1051,12 +1087,13 @@ export default function Valuation() {
                 Atendimento Técnico & Laudos Periciais
               </span>
               <h2 className="font-serif text-2xl sm:text-4xl font-bold text-white leading-tight">
-                Descubra o valor real e justo da sua empresa com a BORLIM Consultoria.
+                Descubra quanto sua empresa realmente vale no mercado com a BORLIM Consultoria.
               </h2>
               <p className="text-sm sm:text-base text-slate-300 leading-relaxed font-sans">
-                Fale diretamente com nossa equipe técnica para solicitar um diagnóstico de 48
-                indicadores, avaliação de risco de insolvência imediata e em 12 meses ou uma
-                proposta completa de Laudo de Valuation.
+                Converse diretamente com o nosso economista e tire dúvidas sobre o diagnóstico de 48
+                indicadores, testes de insolvência imediata e em 12 meses, avaliação por indicador
+                seguro de ativos ou solicite uma proposta fechada de Laudo de Valuation para o seu
+                negócio.
               </p>
 
               <div className="space-y-3 font-mono text-xs pt-2">
