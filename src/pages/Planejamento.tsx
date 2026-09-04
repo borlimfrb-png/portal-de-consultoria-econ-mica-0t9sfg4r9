@@ -220,7 +220,7 @@ export default function Planejamento() {
   ]
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#F8FAFC]">
+    <div className="flex flex-col min-h-screen bg-[#F5F3EC]">
       {/* 1. HERO INSTITUCIONAL */}
       <section className="bg-[#082852] text-white py-16 sm:py-24 border-b border-[#0B3B7A] relative overflow-hidden">
         {/* Subtle decorative glowing backdrops */}
@@ -334,7 +334,7 @@ export default function Planejamento() {
               </p>
             </div>
 
-            <div className="lg:col-span-4 bg-[#F8FAFC] p-6 rounded-xl border border-slate-200 flex flex-col justify-between space-y-4">
+            <div className="lg:col-span-4 bg-[#EDEAE0]/70 p-6 rounded-xl border border-stone-200 flex flex-col justify-between space-y-4">
               <div className="space-y-2">
                 <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#15803D]">
                   Atendimento Direto com o Consultor
@@ -518,7 +518,7 @@ export default function Planejamento() {
             <div className="space-y-8 animate-fade-in">
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
                 <div className="lg:col-span-8 space-y-6">
-                  <div className="bg-[#F8FAFC] p-6 sm:p-8 rounded-2xl border border-slate-200 space-y-4">
+                  <div className="bg-[#EDEAE0]/60 p-6 sm:p-8 rounded-2xl border border-stone-200 space-y-4">
                     <span className="text-xs font-mono font-bold uppercase tracking-widest text-[#15803D]">
                       1. Planejamento Financeiro — Caixa, Liquidez & Capital de Giro
                     </span>
@@ -657,7 +657,7 @@ export default function Planejamento() {
             <div className="space-y-8 animate-fade-in">
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
                 <div className="lg:col-span-8 space-y-6">
-                  <div className="bg-[#F8FAFC] p-6 sm:p-8 rounded-2xl border border-slate-200 space-y-4">
+                  <div className="bg-[#EDEAE0]/60 p-6 sm:p-8 rounded-2xl border border-stone-200 space-y-4">
                     <span className="text-xs font-mono font-bold uppercase tracking-widest text-[#15803D]">
                       2. Planejamento Econômico — Lucro Mensal & Rentabilidade Real
                     </span>
@@ -791,7 +791,7 @@ export default function Planejamento() {
             <div className="space-y-8 animate-fade-in">
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
                 <div className="lg:col-span-8 space-y-6">
-                  <div className="bg-[#F8FAFC] p-6 sm:p-8 rounded-2xl border border-slate-200 space-y-4">
+                  <div className="bg-[#EDEAE0]/60 p-6 sm:p-8 rounded-2xl border border-stone-200 space-y-4">
                     <span className="text-xs font-mono font-bold uppercase tracking-widest text-[#15803D]">
                       3. Balanced Scorecard (BSC) — Competitividade & Retenção de Negócios
                     </span>
@@ -1149,7 +1149,7 @@ export default function Planejamento() {
                 >
                   <button
                     onClick={() => setOpenFaq(isOpen ? null : idx)}
-                    className="w-full text-left px-6 py-4.5 bg-[#F8FAFC] hover:bg-slate-100 flex items-center justify-between gap-4 transition-colors"
+                    className="w-full text-left px-6 py-4.5 bg-[#EDEAE0]/50 hover:bg-stone-100 flex items-center justify-between gap-4 transition-colors"
                   >
                     <span className="font-serif text-sm sm:text-base font-bold text-[#082852] flex items-center gap-2">
                       <HelpCircle className="w-4 h-4 text-[#16A34A] shrink-0" />
@@ -1225,7 +1225,7 @@ export default function Planejamento() {
             </div>
 
             <div className="lg:col-span-5 flex flex-col items-center justify-center bg-[#0B3B7A] p-8 rounded-2xl border border-slate-700 text-center shadow-inner">
-              <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-md mb-4 w-full max-w-[260px] flex items-center justify-center">
+              <div className="bg-white p-4 rounded-2xl border border-white/20 shadow-lg mb-4 w-full max-w-[260px] flex items-center justify-center">
                 <img
                   src={logoBorlim}
                   alt="BORLIM Consultoria Empresarial"

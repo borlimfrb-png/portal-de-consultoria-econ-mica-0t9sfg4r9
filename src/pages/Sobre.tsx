@@ -206,7 +206,7 @@ export default function Sobre() {
   ]
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#F8FAFC]">
+    <div className="flex flex-col min-h-screen bg-[#F5F3EC]">
       {/* 1. Header Hero (Navy/Blue) */}
       <section className="bg-[#082852] text-white py-16 sm:py-20 border-b border-[#0B3B7A] relative overflow-hidden">
         <div className="absolute -top-28 -right-28 w-96 h-96 bg-[#16A34A]/20 rounded-full blur-3xl pointer-events-none" />
@@ -474,7 +474,7 @@ export default function Sobre() {
                 return (
                   <div
                     key={idx}
-                    className="p-6 rounded-xl border border-slate-200 bg-[#F8FAFC] hover:border-[#16A34A] transition-all flex items-start gap-4"
+                    className="p-6 rounded-xl border border-stone-200 bg-[#EDEAE0]/60 hover:border-[#16A34A] transition-all flex items-start gap-4"
                   >
                     <div className="w-12 h-12 rounded-lg bg-[#082852] text-[#22C55E] flex items-center justify-center shrink-0">
                       <Icon className="w-6 h-6" />
@@ -518,7 +518,7 @@ export default function Sobre() {
                     className={`p-6 sm:p-7 rounded-xl border flex flex-col justify-between transition-all ${
                       isBorlimPillar
                         ? 'bg-emerald-50/50 border-[#16A34A] shadow-xs'
-                        : 'bg-[#F8FAFC] border-slate-200'
+                        : 'bg-[#EDEAE0]/60 border-stone-200'
                     }`}
                   >
                     <div>
@@ -568,7 +568,7 @@ export default function Sobre() {
           </div>
 
           {/* O Passo a Passo da Avaliação Borlim */}
-          <div className="mb-14 bg-[#F8FAFC] p-8 rounded-xl border border-slate-200">
+          <div className="mb-14 bg-[#EDEAE0]/60 p-8 rounded-xl border border-stone-200">
             <div className="mb-8 max-w-2xl">
               <span className="text-xs font-mono uppercase tracking-widest text-[#15803D] font-bold">
                 Fluxo Técnico
@@ -615,7 +615,7 @@ export default function Sobre() {
               {valuationBenefits.map((benefit, idx) => (
                 <div
                   key={idx}
-                  className="flex items-start gap-3 p-4 rounded-lg bg-slate-50 border border-slate-200"
+                  className="flex items-start gap-3 p-4 rounded-lg bg-stone-50 border border-stone-200"
                 >
                   <div className="w-8 h-8 rounded-md bg-[#16A34A]/10 text-[#16A34A] flex items-center justify-center shrink-0 mt-0.5">
                     <Check className="w-4 h-4" />
@@ -682,7 +682,7 @@ export default function Sobre() {
               return (
                 <div
                   key={idx}
-                  className="bg-[#F8FAFC] p-6 sm:p-8 rounded-xl border border-slate-200 hover:border-[#16A34A] transition-all flex flex-col justify-between"
+                  className="bg-white p-6 sm:p-8 rounded-xl border border-stone-200 hover:border-[#16A34A] transition-all flex flex-col justify-between shadow-xs"
                 >
                   <div>
                     <div className="flex items-center justify-between mb-4">
@@ -813,7 +813,7 @@ export default function Sobre() {
 
             <div className="md:col-span-5 flex flex-col items-center justify-center bg-[#0B3B7A] p-8 rounded-xl border border-slate-700 text-center shadow-inner">
               {/* Official Brand Logo */}
-              <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-md mb-4 w-full max-w-[260px] flex items-center justify-center">
+              <div className="bg-white p-4 rounded-2xl border border-white/20 shadow-lg mb-4 w-full max-w-[260px] flex items-center justify-center">
                 <img
                   src={logoBorlim}
                   alt="BORLIM Consultoria Empresarial"

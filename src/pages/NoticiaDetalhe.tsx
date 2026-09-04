@@ -112,9 +112,9 @@ export default function NoticiaDetalhe() {
   const dolar = indicators.find((i) => i.code === 'dolar_comercial')
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-[#F5F3EC]">
       {/* 1. Breadcrumb / Navigation */}
-      <div className="bg-slate-100/80 border-b border-slate-200 py-3">
+      <div className="bg-[#EDEAE0]/80 border-b border-stone-200/80 py-3">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 flex items-center justify-between text-xs font-mono text-slate-600">
           <Link
             to="/noticias"
@@ -182,7 +182,7 @@ export default function NoticiaDetalhe() {
           )}
 
           {/* Lead Summary Paragraph (Large Serif) */}
-          <div className="text-lg sm:text-xl font-serif text-[#082852] leading-relaxed bg-slate-50 p-6 rounded-xl border-l-4 border-[#16A34A]">
+          <div className="text-lg sm:text-xl font-serif text-[#082852] leading-relaxed bg-white/90 p-6 rounded-xl border-l-4 border-[#16A34A] border border-stone-200/60 shadow-xs">
             <p className="italic">{article.summary}</p>
           </div>
 

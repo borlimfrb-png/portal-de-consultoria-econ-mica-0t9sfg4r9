@@ -29,7 +29,7 @@ export default function IndicatorAreaChart({
 
   if (!history || history.length === 0) {
     return (
-      <div className="w-full flex items-center justify-center bg-slate-50 border border-dashed border-slate-200 rounded p-6 text-xs text-slate-400">
+      <div className="w-full flex items-center justify-center bg-stone-50 border border-dashed border-stone-200 rounded p-6 text-xs text-stone-500">
         Histórico não disponível para o período selecionado
       </div>
     )

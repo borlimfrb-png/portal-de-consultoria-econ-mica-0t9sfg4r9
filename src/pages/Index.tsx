@@ -332,7 +332,7 @@ export default function Index() {
       </section>
 
       {/* 2. INDICADORES EM DESTAQUE */}
-      <section className="py-16 bg-white border-b border-slate-200">
+      <section className="py-16 bg-[#F5F3EC] border-b border-stone-200/80">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
             <div>
@@ -361,7 +361,7 @@ export default function Index() {
       </section>
 
       {/* 2.5 NOSSOS SERVIÇOS — VALUATION & PLANEJAMENTO ESTRATÉGICO */}
-      <section className="py-16 sm:py-20 bg-[#F8FAFC] border-b border-slate-200 relative overflow-hidden">
+      <section className="py-16 sm:py-20 bg-[#ECEAE0]/60 border-b border-stone-200/80 relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
             <div className="max-w-3xl">
@@ -371,7 +371,7 @@ export default function Index() {
               <h2 className="font-serif text-3xl sm:text-4xl font-bold text-[#082852] mt-1">
                 Nossos Serviços Estratégicos
               </h2>
-              <p className="text-sm sm:text-base text-slate-600 mt-2 font-sans leading-relaxed">
+              <p className="text-sm sm:text-base text-slate-700 mt-2 font-sans leading-relaxed">
                 Consultoria econômica e financeira de empresário para empresário, fundamentada em 48
                 indicadores de desempenho e auditoria preventiva de insolvência.
               </p>
@@ -390,7 +390,7 @@ export default function Index() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Card 1: Valuation */}
-            <div className="bg-white rounded-2xl border border-slate-200 p-8 sm:p-10 shadow-sm hover:shadow-xl hover:border-[#16A34A] transition-all flex flex-col justify-between group relative overflow-hidden">
+            <div className="bg-white rounded-2xl border border-stone-200 p-8 sm:p-10 shadow-sm hover:shadow-xl hover:border-[#16A34A] transition-all flex flex-col justify-between group relative overflow-hidden">
               <div className="absolute top-0 right-0 w-32 h-32 bg-[#16A34A]/5 rounded-bl-full pointer-events-none group-hover:bg-[#16A34A]/10 transition-colors" />
 
               <div>
@@ -599,8 +599,8 @@ export default function Index() {
         </div>
       </section>
 
-      {/* 4. ÚLTIMAS DO PORTAL (Clean Slate/White Background) */}
-      <section className="py-16 bg-[#F8FAFC] border-b border-slate-200">
+      {/* 4. ÚLTIMAS DO PORTAL */}
+      <section className="py-16 bg-[#F5F3EC] border-b border-stone-200/80">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
             <div>
@@ -628,8 +628,8 @@ export default function Index() {
         </div>
       </section>
 
-      {/* 5. SOBRE A CONSULTORIA (White Background) */}
-      <section className="py-20 bg-white border-b border-slate-200">
+      {/* 5. SOBRE A CONSULTORIA */}
+      <section className="py-20 bg-[#EDEAE0]/50 border-b border-stone-200/80">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <span className="text-xs font-mono uppercase tracking-widest text-[#15803D] font-bold">
@@ -638,7 +638,7 @@ export default function Index() {
             <h2 className="font-serif text-3xl sm:text-4xl font-bold text-[#082852] mt-2 mb-4">
               Assessoria Econômica & Planejamento Tributário
             </h2>
-            <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
+            <p className="text-sm sm:text-base text-slate-700 leading-relaxed">
               Aliamos rigor metodológico quantitativo e visão regulatória aplicada para apoiar
               lideranças empresariais em momentos de volatilidade e transformação fiscal.
             </p>
@@ -646,7 +646,7 @@ export default function Index() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Card 1 */}
-            <div className="bg-[#F8FAFC] p-8 rounded-xl border border-slate-200 flex flex-col justify-between hover:border-[#16A34A] transition-colors shadow-xs">
+            <div className="bg-white p-8 rounded-2xl border border-stone-200/90 flex flex-col justify-between hover:border-[#16A34A] transition-all shadow-sm">
               <div>
                 <div className="w-12 h-12 rounded-lg bg-[#0B3B7A] flex items-center justify-center text-[#22C55E] mb-6">
                   <LineChartIcon className="w-6 h-6" />
@@ -659,13 +659,13 @@ export default function Index() {
                   risco de crédito para orientar decisões de investimento e dívida.
                 </p>
               </div>
-              <div className="pt-6 mt-6 border-t border-slate-200 text-[11px] font-mono text-[#15803D] font-semibold">
+              <div className="pt-6 mt-6 border-t border-stone-200 text-[11px] font-mono text-[#15803D] font-semibold">
                 Cenários Preditivos & Modelos
               </div>
             </div>
 
             {/* Card 2 */}
-            <div className="bg-[#F8FAFC] p-8 rounded-xl border border-slate-200 flex flex-col justify-between hover:border-[#16A34A] transition-colors shadow-xs">
+            <div className="bg-white p-8 rounded-2xl border border-stone-200/90 flex flex-col justify-between hover:border-[#16A34A] transition-all shadow-sm">
               <div>
                 <div className="w-12 h-12 rounded-lg bg-[#0B3B7A] flex items-center justify-center text-[#22C55E] mb-6">
                   <Scale className="w-6 h-6" />
@@ -678,13 +678,13 @@ export default function Index() {
                   cadeia produtiva e preparação técnica para o Split Payment.
                 </p>
               </div>
-              <div className="pt-6 mt-6 border-t border-slate-200 text-[11px] font-mono text-[#15803D] font-semibold">
+              <div className="pt-6 mt-6 border-t border-stone-200 text-[11px] font-mono text-[#15803D] font-semibold">
                 Transição Segura 2026-2033
               </div>
             </div>
 
             {/* Card 3 */}
-            <div className="bg-[#F8FAFC] p-8 rounded-xl border border-slate-200 flex flex-col justify-between hover:border-[#16A34A] transition-colors shadow-xs">
+            <div className="bg-white p-8 rounded-2xl border border-stone-200/90 flex flex-col justify-between hover:border-[#16A34A] transition-all shadow-sm">
               <div>
                 <div className="w-12 h-12 rounded-lg bg-[#0B3B7A] flex items-center justify-center text-[#22C55E] mb-6">
                   <Wallet className="w-6 h-6" />
@@ -697,7 +697,7 @@ export default function Index() {
                   e renegociação de passivos indexados a CDI e IPCA.
                 </p>
               </div>
-              <div className="pt-6 mt-6 border-t border-slate-200 text-[11px] font-mono text-[#15803D] font-semibold">
+              <div className="pt-6 mt-6 border-t border-stone-200 text-[11px] font-mono text-[#15803D] font-semibold">
                 Eficiência de Capital Corporativo
               </div>
             </div>

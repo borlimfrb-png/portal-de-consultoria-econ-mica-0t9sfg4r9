@@ -115,9 +115,9 @@ export default function Noticias() {
   ]
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-[#F5F3EC]">
       {/* 1. Header Band (Clean Blue/White) */}
-      <section className="bg-gradient-to-r from-[#082852] to-[#0B3B7A] text-white border-b border-slate-200 py-12">
+      <section className="bg-gradient-to-r from-[#082852] to-[#0B3B7A] text-white border-b border-[#0B3B7A] py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
             <div className="inline-flex items-center gap-2 mb-2">
@@ -139,7 +139,7 @@ export default function Noticias() {
       </section>
 
       {/* 2. Toolbar: Search + Category Chips */}
-      <section className="bg-white border-b border-slate-200 py-4 sticky top-[73px] z-30 shadow-xs">
+      <section className="bg-white/95 backdrop-blur-md border-b border-stone-200/80 py-4 sticky top-[73px] z-30 shadow-xs">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             {/* Category Chips */}
@@ -171,7 +171,7 @@ export default function Noticias() {
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 placeholder="Buscar notícias..."
-                className="w-full pl-9 pr-4 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-[#16A34A] text-[#082852] placeholder:text-slate-400 font-sans"
+                className="w-full pl-9 pr-4 py-1.5 text-xs bg-stone-50 border border-stone-200 rounded-lg focus:outline-none focus:border-[#16A34A] text-[#082852] placeholder:text-slate-400 font-sans"
               />
               <Search className="w-4 h-4 text-slate-400 absolute left-3 top-2" />
             </form>
@@ -248,7 +248,7 @@ export default function Noticias() {
                   type="button"
                   onClick={() => handlePageChange(page - 1)}
                   disabled={page <= 1}
-                  className="inline-flex items-center gap-1 px-3 py-2 text-xs font-mono rounded bg-white border border-slate-300 hover:bg-slate-50 disabled:opacity-40 disabled:hover:bg-white text-slate-700 font-semibold"
+                  className="inline-flex items-center gap-1 px-3 py-2 text-xs font-mono rounded bg-white border border-stone-300 hover:bg-stone-50 disabled:opacity-40 disabled:hover:bg-white text-slate-700 font-semibold"
                 >
                   <ChevronLeft className="w-4 h-4" />
                   <span>Anterior</span>
@@ -262,7 +262,7 @@ export default function Noticias() {
                     className={`w-9 h-9 flex items-center justify-center text-xs font-mono font-bold rounded-lg transition-colors ${
                       pNum === page
                         ? 'bg-[#0B3B7A] text-white shadow-xs'
-                        : 'bg-white border border-slate-300 hover:bg-slate-50 text-slate-700'
+                        : 'bg-white border border-stone-300 hover:bg-stone-50 text-slate-700'
                     }`}
                   >
                     {pNum}
@@ -273,7 +273,7 @@ export default function Noticias() {
                   type="button"
                   onClick={() => handlePageChange(page + 1)}
                   disabled={page >= totalPages}
-                  className="inline-flex items-center gap-1 px-3 py-2 text-xs font-mono rounded bg-white border border-slate-300 hover:bg-slate-50 disabled:opacity-40 disabled:hover:bg-white text-slate-700 font-semibold"
+                  className="inline-flex items-center gap-1 px-3 py-2 text-xs font-mono rounded bg-white border border-stone-300 hover:bg-stone-50 disabled:opacity-40 disabled:hover:bg-white text-slate-700 font-semibold"
                 >
                   <span>Próxima</span>
                   <ChevronRight className="w-4 h-4" />

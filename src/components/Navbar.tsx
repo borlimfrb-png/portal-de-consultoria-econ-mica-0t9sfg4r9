@@ -49,8 +49,8 @@ export default function Navbar() {
     <header
       className={`sticky top-0 z-40 w-full transition-all duration-300 ${
         isScrolled
-          ? 'bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm py-3'
-          : 'bg-white border-b border-slate-200 py-3.5'
+          ? 'bg-white/95 backdrop-blur-md border-b border-stone-200/80 shadow-xs py-3'
+          : 'bg-white/90 backdrop-blur-sm border-b border-stone-200/80 py-3.5'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-2">
@@ -60,7 +60,7 @@ export default function Navbar() {
           className="flex items-center gap-3 group shrink-0"
           aria-label="BORLIM Consultoria Empresarial - Início"
         >
-          <div className="bg-white px-3 sm:px-3.5 py-1.5 sm:py-2 rounded-lg border border-slate-200 shadow-xs flex items-center justify-center transition-transform duration-200 group-hover:scale-102 hover:border-[#16A34A]/50">
+          <div className="bg-white px-3 sm:px-3.5 py-1.5 sm:py-2 rounded-xl border border-stone-200 shadow-xs flex items-center justify-center transition-all duration-200 group-hover:scale-[1.02] group-hover:shadow-sm hover:border-[#16A34A]/60">
             <img
               src={logoBorlim}
               alt="BORLIM Consultoria Empresarial"
@@ -127,7 +127,7 @@ export default function Navbar() {
         <div className="flex lg:hidden items-center gap-2">
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 text-[#0B3B7A] hover:bg-slate-100 rounded focus:outline-none"
+            className="p-2 text-[#0B3B7A] hover:bg-stone-100 rounded focus:outline-none"
             aria-label="Abrir menu"
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -138,7 +138,7 @@ export default function Navbar() {
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
         <div className="fixed inset-0 top-[105px] z-50 lg:hidden bg-[#082852]/60 backdrop-blur-sm animate-fade-in">
-          <div className="bg-white border-b border-slate-200 shadow-xl p-6 flex flex-col space-y-4 animate-slide-down">
+          <div className="bg-white border-b border-stone-200 shadow-xl p-6 flex flex-col space-y-4 animate-slide-down">
             <div className="flex flex-col divide-y divide-slate-100">
               {navLinks.map((link) => {
                 const Icon = link.icon

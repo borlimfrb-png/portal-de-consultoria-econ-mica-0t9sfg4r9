@@ -120,7 +120,7 @@ export default function Indicadores() {
   })()
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-[#F5F3EC]">
       {/* 1. Header Band (Navy/Blue) */}
       <section className="bg-[#082852] text-white py-12 border-b border-[#0B3B7A]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -167,7 +167,7 @@ export default function Indicadores() {
       </section>
 
       {/* 2. Category Filter Bar */}
-      <section className="bg-white border-b border-slate-200 sticky top-[73px] z-30 shadow-xs">
+      <section className="bg-white/95 backdrop-blur-md border-b border-stone-200/80 sticky top-[73px] z-30 shadow-xs">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
           <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-1">
             <span className="text-xs font-mono text-slate-500 uppercase font-semibold flex items-center gap-1 mr-2 shrink-0">
@@ -272,7 +272,7 @@ export default function Indicadores() {
                       {indicator.description}
                     </p>
 
-                    <div className="flex flex-wrap items-baseline justify-between gap-4 p-4 bg-[#F8FAFC] rounded-lg border border-slate-200 mb-6">
+                    <div className="flex flex-wrap items-baseline justify-between gap-4 p-4 bg-[#F5F3EC]/70 rounded-lg border border-stone-200 mb-6">
                       <div className="flex items-baseline gap-2">
                         <span className="font-mono text-4xl font-extrabold text-[#082852] tracking-tight">
                           {indicator.current_value.toLocaleString('pt-BR', {
@@ -339,7 +339,7 @@ export default function Indicadores() {
                               return (
                                 <div
                                   key={idx}
-                                  className="p-2 bg-slate-50 rounded border border-slate-200/80 flex flex-col"
+                                  className="p-2 bg-stone-50 rounded border border-stone-200/80 flex flex-col"
                                 >
                                   <span className="text-[10px] text-slate-500">{dLabel}</span>
                                   <span className="font-bold text-[#082852] tabular-nums">

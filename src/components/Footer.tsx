@@ -64,7 +64,7 @@ export default function Footer() {
               className="flex items-center gap-3 group"
               aria-label="BORLIM Consultoria Empresarial - Início"
             >
-              <div className="bg-white px-4 py-2 rounded-lg border border-slate-200 shadow-sm inline-flex items-center justify-center transition-transform duration-200 group-hover:scale-102">
+              <div className="bg-white px-4 py-2.5 rounded-xl border border-white/20 shadow-md inline-flex items-center justify-center transition-all duration-200 group-hover:scale-[1.02] group-hover:shadow-lg">
                 <img
                   src={logoBorlim}
                   alt="BORLIM Consultoria Empresarial"
