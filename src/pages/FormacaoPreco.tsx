@@ -52,25 +52,25 @@ export default function FormacaoPreco() {
       icon: Percent,
       badge: 'Conceito Fundamental #1',
       title: 'Markup vs. Margem de Lucro: O Erro Clássico',
-      desc: 'Muitos empresários somam 30% sobre o custo achando que estão operando com 30% de margem. Se um produto custa R$ 70 e você vende a R$ 100, seu markup sobre o custo foi de 42,86%, mas sua margem sobre o preço de venda é de 30%. Se inverter o cálculo, o prejuízo é certo.',
+      desc: 'Markup é o percentual aplicado sobre o custo direto para definir o preço de venda. Já a margem de lucro é a fatia do preço final que realmente sobra como resultado. Se um produto custa R$ 70,00 e você o vende por R$ 100,00, seu markup sobre o custo foi de 42,86%, mas sua margem de lucro sobre a venda é de 30,00%. Confundir essas duas contas é o caminho mais rápido para operar no prejuízo acreditando ter lucro.',
     },
     {
       icon: DollarSign,
       badge: 'Conceito Fundamental #2',
       title: 'Margem de Contribuição Real',
-      desc: 'É o valor que sobra de cada venda após abater os custos e despesas variáveis diretas (matéria-prima, mercadoria, comissões e impostos sobre a venda). É essa margem que paga os custos fixos da empresa e gera o lucro líquido final no bolso dos sócios.',
+      desc: 'Margem de contribuição é o valor que sobra de cada venda após pagar todos os custos e despesas variáveis diretas — matéria-prima, compras de mercadoria, comissões de vendedores e impostos da nota fiscal. É exatamente esse saldo que paga as despesas fixas do mês (aluguel, salários e luz) e constrói o lucro líquido real dos sócios.',
     },
     {
       icon: Calculator,
       badge: 'Conceito Fundamental #3',
       title: 'Ponto de Equilíbrio Operacional (Break-even)',
-      desc: 'O faturamento exato necessário para cobrir 100% dos custos e despesas fixas. Abaixo dele a empresa opera no vermelho; acima dele, cada unidade vendida contribui integralmente para o lucro mensal da operação.',
+      desc: 'Ponto de equilíbrio (break-even) é o volume exato de faturamento que sua empresa precisa atingir para zerar as contas do mês: cobrir 100% dos custos variáveis e todas as despesas fixas. Abaixo desse ponto, a operação fecha no vermelho. Acima dele, cada nova unidade vendida passa a gerar lucro direto para o caixa.',
     },
     {
       icon: Scale,
       badge: 'Conceito Fundamental #4',
       title: 'Custos Fixos vs. Variáveis & Reforma Tributária',
-      desc: 'Separar o que varia com o volume de vendas daquilo que vence faça chuva ou faça sol (aluguel, folha fixa). No novo cenário da Reforma Tributária (IBS e CBS com crédito pleno), o preço precisa ser recalculado "por fora", eliminando a cumulatividade de PIS/COFINS e ICMS.',
+      desc: 'Custo variável é o que oscila proporcionalmente às vendas (insumos, comissões e tributos diretos). Custo fixo vence faça chuva ou faça sol (aluguel, pró-labore e folha básica). Com a Reforma Tributária (IBS e CBS com modelo de crédito amplo), os tributos passam a ser calculados "por fora", exigindo revisão técnica dos preços para proteger a competitividade da empresa.',
     },
   ]
 
@@ -78,31 +78,33 @@ export default function FormacaoPreco() {
   const pricingMistakes = [
     {
       title: 'Copiar cegamente a tabela do concorrente',
-      desc: 'Seu concorrente pode ter custos de matéria-prima menores, sede própria sem aluguel, dívidas bancárias já amortizadas ou estar à beira da insolvência vendendo sem lucro para gerar caixa imediato.',
+      desc: 'Seu concorrente pode ter poder de compra maior, galpão próprio sem aluguel, dívidas bancárias já quitadas ou até estar à beira da insolvência, queimando preços sem margem apenas para pagar a folha de hoje.',
       solution:
-        'Calcular a estrutura real de custos da sua operação antes de balizar com o mercado.',
+        'Conhecer e calcular a estrutura real de custos da sua própria operação antes de balizar com o mercado.',
     },
     {
       title: 'Confundir faturamento com lucro (o engano do markup)',
-      desc: 'Calcular 20% de margem no papel, mas aplicar 20% de markup simples sobre os custos diretos, esquecendo que comissões, cartão e impostos incidem sobre o preço total final da nota fiscal.',
+      desc: 'Planejar uma margem de 20% no papel, mas somar 20% de markup simples sobre o custo de compra, esquecendo que impostos sobre faturamento, comissões e taxas de cartão incidem sobre o valor total da nota fiscal.',
       solution:
-        'Utilizar fórmula de markup multiplicador divisor que projeta o preço líquido final.',
+        'Adotar a fórmula do markup divisor, que projeta o preço líquido final garantindo a cobertura total das deduções.',
     },
     {
       title: 'Desconsiderar perdas, refugos e ociosidade da equipe',
-      desc: 'Na indústria, matéria-prima perdida no processo e horas paradas de máquina; nos serviços, horas não faturadas (férias, prospecção e ociosidade) que continuam gerando folha de pagamento todo mês.',
+      desc: 'Na indústria, materiais perdidos no corte e máquinas paradas geram custo silencioso. Nos serviços, horas não faturadas (férias, treinamentos e intervalos entre contratos) continuam gerando folha de pagamento.',
       solution:
-        'Incorporar índice de perdas técnicas e taxa de utilização produtiva no custo-base.',
+        'Incorporar o índice de perdas técnicas e a taxa de utilização produtiva no cálculo do custo-base.',
     },
     {
       title: 'Não prever o impacto do capital de giro nos prazos concedidos',
-      desc: 'Vender em 6 vezes sem juros sem embutir o custo financeiro do dinheiro no tempo. Se o fornecedor cobra em 30 dias e o cliente paga em 180, a empresa terá de buscar empréstimos bancários caros.',
-      solution: 'Precificar de acordo com o prazo de recebimento e o ciclo financeiro do negócio.',
+      desc: 'Parcelar vendas em várias parcelas sem juros sem considerar o custo do dinheiro no tempo. Quando o fornecedor cobra em 30 dias e o cliente paga em 120 ou 180 dias, a empresa recorre a empréstimos bancários caros para fechar o caixa.',
+      solution:
+        'Precificar de acordo com o prazo médio de recebimento e a necessidade real de capital de giro (NCG).',
     },
     {
       title: 'Ignorar o impacto da transição para a Reforma Tributária (IBS/CBS)',
-      desc: 'Tratar tributos como percentuais estáticos sem monitorar a não-cumulatividade ampla do IBS e da CBS. Quem não auditar os créditos nas compras ficará com preços defasados e sem competitividade.',
-      solution: 'Alinhamento contínuo com os especialistas em Reforma Tributária da Borlim.',
+      desc: 'Tratar tributos como alíquotas estáticas sem acompanhar as novas regras de aproveitamento de crédito integral do IBS e da CBS. Quem não auditar os créditos tributários de entrada ficará com preços defasados e sem margem.',
+      solution:
+        'Revisar continuamente o cálculo tributário com a consultoria especializada da Borlim.',
     },
   ]
 
@@ -111,22 +113,22 @@ export default function FormacaoPreco() {
     {
       step: '01',
       title: 'Diagnóstico dos 48 Indicadores & Raio-X de Custos',
-      desc: 'Mapeamento minucioso de custos diretos, indiretos, despesas administrativas, prazos médios de recebimento e fôlego de capital de giro na contabilidade e na operação da sua empresa.',
+      desc: 'Mapeamento detalhado dos custos diretos, despesas fixas, prazos médios de recebimento e fôlego de capital de giro na contabilidade e na rotina da sua empresa.',
     },
     {
       step: '02',
       title: 'Segregação Estrutural: Custos Fixos, Variáveis e Tributos',
-      desc: 'Separação cirúrgica entre o que varia estritamente com a venda e a estrutura fixa. Simulação de tributação atual e do impacto do novo sistema tributário IBS/CBS sobre cada linha de produtos ou serviços.',
+      desc: 'Separação cirúrgica entre o que varia estritamente com as vendas e a estrutura fixa do negócio, simulando a tributação atual e a transição para o modelo IBS/CBS.',
     },
     {
       step: '03',
       title: 'Modelagem dos Simuladores por Segmento & Markup Seguro',
-      desc: 'Construção da planilha e simulador customizado para a sua realidade (Indústria com CIF e refugos; Comércio com CMV e giro; Serviços com homem-hora e taxa de utilização).',
+      desc: 'Construção de planilha e simulador sob medida para sua realidade: Indústria com CIF e refugos; Comércio com CMV e giro; Serviços com homem-hora e taxa de ocupação.',
     },
     {
       step: '04',
       title: 'Integração com DRE Gerencial, Metas e Acompanhamento',
-      desc: 'Conexão direta com o Planejamento Econômico (lucro mensal), teste de insolvência em 12 meses e treinamento da sua equipe comercial para negociar margens com segurança.',
+      desc: 'Conexão direta com o Planejamento Econômico (foco no lucro mensal), teste de insolvência em 12 meses e capacitação prática da equipe comercial para defender margens.',
     },
   ]
 
@@ -134,35 +136,35 @@ export default function FormacaoPreco() {
   const pricingFaqs = [
     {
       q: 'Qual é a diferença exata entre Markup e Margem de Lucro e por que esse erro quebra empresas?',
-      a: 'O Markup é o índice aplicado SOBRE O CUSTO para chegar ao preço de venda (olha para a base de custo). Já a Margem de Lucro é a porcentagem SOBRE O PREÇO DE VENDA que sobra no bolso da empresa. Exemplo didático: se um produto custa R$ 100,00 e você deseja uma margem líquida de 20%, pagando 15% de impostos e comissões, você NÃO PODE simplesmente somar 35% aos R$ 100,00 (vendendo a R$ 135,00). Vendendo a R$ 135,00, os 15% de tributos sobre o preço total darão R$ 20,25; sobrando R$ 114,75; menos o custo de R$ 100,00, seu lucro foi de R$ 14,75 (apenas 10,9% de margem real, quase metade do que você planejou!). O cálculo correto exige o markup divisor: Preço = Custo / (1 - (Impostos% + Margem Desejada%)). Ou seja: R$ 100 / (1 - 0,35) = R$ 153,85. Esse descompasso é uma das causas silenciosas de insolvência que a Borlim identifica e corrige.',
+      a: 'O markup é o fator de acréscimo aplicado SOBRE O CUSTO para formar o preço de venda. Já a margem de lucro é a porcentagem SOBRE O PREÇO DE VENDA que efetivamente sobra no caixa. Imagine um produto com custo direto de R$ 100,00 no qual você deseja 20% de margem líquida, pagando 15% entre impostos e comissões. Se você apenas somar 35% ao custo e vender a R$ 135,00, os 15% de tributos e encargos sobre a nota total descontarão R$ 20,25. Sobram R$ 114,75. Abatendo o custo de R$ 100,00, seu lucro real será de R$ 14,75 — uma margem de 10,93%, praticamente metade do planejado! O método correto exige a fórmula do markup divisor: Preço = Custo / [1 - (Impostos% + Margem Desejada%)], resultando em R$ 100,00 / (1 - 0,35) = R$ 153,85. Essa divergência matemática é uma das maiores causas de sangria de caixa que a Borlim identifica e corrige nas empresas.',
     },
     {
       q: 'Como a formação de preço varia entre Indústria, Comércio e Serviços na metodologia da Borlim?',
-      a: 'Cada segmento possui geradores de custo completamente distintos: (1) Na INDÚSTRIA, o núcleo é o Custo de Produção (matéria-prima direta, mão de obra fabril, custos indiretos de fabricação rateados, consumo de energia, depreciação do maquinário e perdas/refugos de matéria-prima no chão de fábrica); (2) No COMÉRCIO, o núcleo é o CMV (Custo das Mercadorias Vendidas), frete de entrada, crédito tributário na compra, tempo de estocagem (giro de estoque e capital parado que custa juros) e bonificações/descontos comerciais por volume; (3) Nos SERVIÇOS, o núcleo é o valor do Homem-Hora ou Homem-Mês, o rateio dos custos fixos da estrutura por hora produtiva real (taxa de utilização da equipe, descontando férias e ociosidade) e a gestão de escopo (evitando horas extras não cobradas). A Borlim constrói a regra específica do seu negócio, nunca uma fórmula genérica.',
+      a: 'Cada segmento econômico possui geradores de custo específicos. Na INDÚSTRIA, o ponto de partida é o Custo de Produção: matérias-primas, mão de obra fabril direta (MOD), custos indiretos de fabricação (CIF) rateados por máquina, energia e índice de perdas técnicas (refugos). No COMÉRCIO, o núcleo é o Custo das Mercadorias Vendidas (CMV), fretes de entrada (FOB), créditos tributários recuperáveis na compra, tempo de estocagem (giro de estoque que consome capital de giro) e taxas de cartão e antecipação de recebíveis. Nos SERVIÇOS, a base é o custo do homem-hora, a taxa de utilização produtiva da equipe técnica (descontando ociosidade, férias e prospecção) e a proteção de escopo contratual contra horas extras não faturadas. A Borlim constrói simuladores personalizados para o modelo de operação do seu negócio.',
     },
     {
       q: 'Como a Formação de Preço se conecta com o Planejamento Econômico da Borlim?',
-      a: 'Eles são duas faces da mesma moeda. O Planejamento Econômico tem por objetivo central melhorar o lucro mensal da empresa e estruturar a DRE gerencial. Nenhuma DRE gerencial tem resultado positivo se os preços dos produtos ou serviços forem formados no escuro. A Formação de Preço garante que cada unidade vendida entregue a Margem de Contribuição esperada. Quando a equipe comercial vende com preços calibrados, o Ponto de Equilíbrio é atingido mais rápido no mês, gerando lucro sustentável e fluxo de capital de giro saudável.',
+      a: 'Eles atuam de forma totalmente integrada. O objetivo central do Planejamento Econômico é melhorar o lucro mensal da empresa e estruturar a DRE gerencial (Demonstração do Resultado do Exercício). No entanto, nenhuma DRE fecha no azul de forma duradoura se os preços dos produtos ou serviços forem calculados sem critério técnico. A Formação de Preço assegura que cada venda entregue a margem de contribuição prevista. Quando a equipe comercial vende com preços ajustados, a empresa alcança o ponto de equilíbrio operacional mais cedo no mês, gerando lucro consistente e protegendo o caixa.',
     },
     {
       q: 'O que é Margem de Contribuição e como ela define se um produto deve continuar em linha?',
-      a: 'Margem de Contribuição = Preço de Venda Líquido - Custos Variáveis - Despesas Variáveis. Ela representa o quanto cada venda contribui fisicamente para pagar os custos fixos da empresa (aluguel, folha administrativa, etc.) e formar o lucro. Se um produto tem margem de contribuição negativa, quanto mais você vende, maior é o seu prejuízo. Se a margem de contribuição for positiva, ele ajuda a amortizar a estrutura da empresa. A Borlim calcula a margem de contribuição de cada produto, serviço ou linha de negócio, apontando quais itens devem ser incentivados e quais precisam de reajuste ou descontinuação.',
+      a: 'A Margem de Contribuição é obtida subtraindo do preço de venda líquido todos os custos e despesas variáveis diretas do item. Ela indica exatamente quantos reais cada unidade vendida coloca no caixa para amortizar as contas fixas da empresa (aluguel, salários administrativos e despesas gerais) e gerar o lucro final. Se um produto opera com margem de contribuição negativa, cada nova venda amplia o prejuízo. Por outro lado, produtos com margem de contribuição saudável fortalecem a estrutura do negócio. A Borlim analisa a margem item a item, orientando quais linhas devem ser promovidas, quais exigem repactuação e quais devem ser descontinuadas.',
     },
     {
       q: 'Como a Reforma Tributária (IBS e CBS) afetará os preços dos meus produtos e serviços?',
-      a: 'A Reforma Tributária substitui cinco tributos (PIS, COFINS, IPI, ICMS e ISS) por um IVA Dual (IBS estadual/municipal e CBS federal), instituindo a não-cumulatividade ampla e a tributação no destino. No modelo antigo, impostos "por dentro" geravam cálculos complexos e bitributação oculta. No novo modelo, todas as compras da sua empresa geram crédito financeiro integral, e o imposto é calculado "por fora". Indústrias e comércios terão cadeias de crédito mais limpas, enquanto o setor de serviços (que tem muita folha de pagamento, a qual não gera crédito de IBS/CBS) precisará de reavaliação precisa de margem para não perder lucratividade. A Borlim já prepara a precificação da sua empresa para essa transição regulatória.',
+      a: 'A Reforma Tributária substitui cinco tributos tradicionais (PIS, COFINS, IPI, ICMS e ISS) pelo modelo de IVA Dual, composto pelo IBS (estados e municípios) e pela CBS (União), instituindo o princípio do crédito amplo e a tributação no destino da mercadoria ou serviço. No regime anterior, impostos calculados "por dentro" geravam bitributação e cálculos complexos. No novo sistema, as aquisições de insumos geram crédito integral e a cobrança é feita "por fora". Indústrias e comércios se beneficiam de cadeias de crédito desoneradas. Já as empresas prestadoras de serviços — cuja maior despesa é a folha de pagamento, que não gera crédito tributário — necessitam de recalibração cuidadosa nas margens para manter a rentabilidade líquida. A Borlim prepara a estrutura de preços do seu negócio com simulações preventivas para essa transição.',
     },
     {
       q: 'E se o preço calculado tecnicamente ficar acima do que o meu concorrente pratica?',
-      a: 'Esse é o momento em que a consultoria econômica da Borlim faz a diferença. Se o preço técnico ficou acima do mercado, nós não forçamos um corte irresponsável de margem que levaria sua empresa ao prejuízo. Nós investigamos onde estão as ineficiências: custo de aquisição com fornecedores, perdas no processo fabril, giro de estoque lento, ociosidade da equipe de serviços ou excesso de custos fixos indiretos. Além disso, utilizamos os conceitos do Balanced Scorecard para agregar valor ao produto/serviço (prazos, qualidade, confiabilidade) para que seu cliente compre por valor, e não apenas por menor preço.',
+      a: 'Esse é o momento em que a consultoria econômica da Borlim se mostra decisiva. Se o preço técnico ficou superior ao do mercado, não recomendamos um corte impulsivo de margem que comprometa o caixa da sua empresa. Nossa equipe audita a cadeia de custos para encontrar ineficiências: renegociação com fornecedores, combate a perdas de processo, aceleração do giro de estoques lentos ou redução de despesas fixas desproporcionais. Simultaneamente, aplicamos conceitos do Balanced Scorecard para fortalecer diferenciais competitivos (pontualidade de entrega, qualidade técnica, assistência e confiabilidade), permitindo que seu cliente decida pelo valor percebido, e não exclusivamente pelo menor preço.',
     },
     {
       q: 'Como a Borlim avalia se o preço praticado cobre o fôlego de Capital de Giro?',
-      a: 'Através do diagnóstico dos 48 indicadores de desempenho e da análise de insolvência em 12 meses. Se a sua empresa vende a prazo (ex.: 60 e 90 dias) e paga fornecedores à vista ou em 30 dias, há uma Necessidade de Capital de Giro (NCG) que custa dinheiro no banco (juros e taxas bancárias). Esse custo financeiro da estocagem e do financiamento ao cliente precisa estar contemplado no preço de venda a prazo. Caso contrário, a empresa bate recorde de vendas e quebra por falta de caixa.',
+      a: 'Por meio do diagnóstico dos nossos 48 indicadores financeiros e do teste preventivo de insolvência em 12 meses. Quando sua empresa concede prazos elásticos aos clientes (como 60, 90 ou 120 dias) e precisa pagar fornecedores à vista ou em 30 dias, surge uma Necessidade de Capital de Giro (NCG) que consome recursos bancários a juros elevados. Esse custo financeiro do tempo e do carregamento de estoques precisa estar embutido no preço de venda a prazo. Sem essa disciplina, a empresa aumenta as vendas e pode enfrentar falta crítica de liquidez.',
     },
     {
       q: 'Como posso contratar o trabalho de Formação de Preço para Vendas da Borlim?',
-      a: 'Entre em contato direto com o economista Flávio Bordignon pelo WhatsApp (17) 99765-0672 ou e-mail flavio@borlim.com.br. Realizamos uma primeira conversa diagnóstica sobre o seu negócio (seja Indústria, Comércio ou Serviços) para entender sua estrutura atual de custos e propor um plano de implantação sob medida.',
+      a: 'O investimento e o escopo variam conforme o porte da empresa, o número de filiais ou linhas de produto e a complexidade operacional do segmento — seja Indústria, Comércio ou Serviços. Para receber uma proposta técnica sob medida, fale diretamente com o economista Flávio Bordignon pelo WhatsApp (17) 99765-0672 ou pelo e-mail flavio@borlim.com.br. Realizamos uma primeira conversa diagnóstica para entender sua estrutura atual de custos e propor um plano de implantação sob medida.',
     },
   ]
 
@@ -195,21 +197,21 @@ export default function FormacaoPreco() {
 
             <p className="text-base sm:text-lg text-slate-300 mt-6 leading-relaxed font-sans max-w-3xl">
               Na <strong>BORLIM Consultoria Empresarial</strong>, tratamos a formação de preço de
-              empresário para empresário, sem fórmulas mágicas e sem suposições perigosas. Cada
-              segmento econômico tem uma lógica de custo inteiramente própria: a{' '}
-              <strong>Indústria</strong> depende do custo de produção, mão de obra fabril, custos
-              indiretos de fabricação (CIF) e perdas/refugos; o <strong>Comércio</strong> gira em
-              torno do CMV, giro de estoque e capital imobilizado; e os <strong>Serviços</strong>{' '}
-              exigem o cálculo exato do homem-hora, taxa de utilização e rateio da estrutura fixa
-              por hora produtiva real.
+              empresário para empresário, sem fórmulas prontas e sem achismos. Cada setor da
+              economia possui uma dinâmica de custos própria: a <strong>Indústria</strong> depende
+              do custo de produção, mão de obra fabril, custos indiretos de fabricação (CIF) e
+              controle de refugos; o <strong>Comércio</strong> é pautado pelo Custo das Mercadorias
+              Vendidas (CMV), pelo giro de estoque e pelo fôlego do capital de giro; e os{' '}
+              <strong>Serviços</strong> exigem a apuração exata do homem-hora, da taxa de ocupação
+              da equipe e do rateio da estrutura fixa sobre as horas efetivamente faturadas.
             </p>
             <p className="text-base sm:text-lg text-slate-300 mt-4 leading-relaxed font-sans max-w-3xl">
-              Conectada aos nossos <strong>48 indicadores de desempenho</strong>, ao{' '}
-              <strong>Planejamento Econômico (lucro mensal)</strong> e ao teste preventivo de
-              insolvência em 12 meses, a precificação correta elimina o erro clássico de confundir
-              margem com markup, ajusta sua empresa ao novo cenário da{' '}
-              <strong>Reforma Tributária (IBS e CBS)</strong> e garante que cada venda gere dinheiro
-              líquido no caixa.
+              Integrada aos nossos <strong>48 indicadores de desempenho financeiro</strong>, ao{' '}
+              <strong>Planejamento Econômico (foco na melhoria do lucro mensal)</strong> e ao teste
+              preventivo de insolvência em 12 meses, a precificação técnica elimina a confusão
+              clássica entre markup e margem de lucro, prepara o seu negócio para a{' '}
+              <strong>Reforma Tributária (IBS e CBS)</strong> e garante que cada venda coloque
+              dinheiro limpo no caixa da empresa.
             </p>
 
             {/* CTAs Oficiais do Hero */}
@@ -265,12 +267,12 @@ export default function FormacaoPreco() {
                 é o que mantém a empresa viva e em crescimento.”
               </blockquote>
               <p className="text-sm sm:text-base text-slate-700 leading-relaxed font-sans">
-                Vender mais sem saber a margem real de cada item acelera a falência. A BORLIM ensina
-                e implanta na sua empresa a disciplina técnica da formação de preço para vendas:
-                separação precisa de custos fixos e variáveis, cálculo de markup multiplicador e
-                divisor, identificação do ponto de equilíbrio por linha e adequação aos novos
-                créditos tributários da Reforma. De empresário para empresário, colocamos fim aos
-                preços calculados por intuição.
+                Vender mais sem conhecer a margem unitária de cada produto, mercadoria ou serviço é
+                o caminho mais rápido para asfixiar o caixa. A BORLIM implanta na sua empresa a
+                disciplina técnica da formação de preço: segregação rigorosa entre custos fixos e
+                variáveis, aplicação do markup divisor, cálculo do ponto de equilíbrio por linha e
+                adequação aos créditos da Reforma Tributária. De empresário para empresário,
+                colocamos fim aos preços calculados por intuição ou cópia da concorrência.
               </p>
             </div>
 
@@ -365,9 +367,10 @@ export default function FormacaoPreco() {
                 Variáveis + % Margem de Lucro Desejada)]
               </h4>
               <p className="text-xs sm:text-sm text-slate-600 font-sans leading-relaxed">
-                Ao dividir em vez de somar, você garante que as alíquotas que incidem sobre o preço
-                final da nota fiscal (impostos sobre faturamento, comissões de vendedores e taxa de
-                cartão) sejam 100% cobertas sem corroer a sua margem de lucro líquido planejada.
+                Ao utilizar a divisão no lugar da soma simples, você assegura matematicamente que
+                todos os encargos incidentes sobre o valor bruto da nota fiscal (tributos sobre
+                faturamento, comissões comerciais e tarifas de cartão) sejam integralmente
+                absorvidos, sem corroer a sua margem de lucro líquido planejada.
               </p>
             </div>
             <div className="lg:col-span-4 bg-white p-4 rounded-xl border border-stone-200 text-center font-mono">
@@ -467,14 +470,13 @@ export default function FormacaoPreco() {
                   </div>
 
                   <p className="text-sm sm:text-base text-slate-700 leading-relaxed font-sans">
-                    Na indústria, o produto não nasce pronto na prateleira: ele é transformado a
-                    partir de insumos brutos mediante o consumo de mão de obra fabril direta (MOD),
-                    tempo de maquinário e despesas gerais de fábrica. O cálculo do preço industrial
-                    exige o domínio do <strong>Custo de Produção</strong> e a distinção precisa
-                    entre
-                    <strong>custeio por absorção</strong> (obrigatório para fins contábeis e
-                    fiscais) e <strong>custeio variável</strong> (o padrão gerencial recomendado
-                    pela Borlim para tomadas de decisão e cálculo da margem de contribuição).
+                    Na indústria, o produto é transformado a partir de matérias-primas e
+                    componentes, consumindo mão de obra direta (MOD), energia e tempo de máquinas. O
+                    cálculo do preço fabril exige o domínio do <strong>Custo de Produção</strong> e
+                    a separação clara entre o <strong>custeio por absorção</strong> (modelo exigido
+                    pela contabilidade fiscal) e o <strong>custeio variável</strong> (ferramenta
+                    gerencial recomendada pela Borlim para apurar a margem de contribuição real e
+                    definir estratégias comerciais).
                   </p>
 
                   <div className="space-y-3 pt-2">
@@ -486,30 +488,33 @@ export default function FormacaoPreco() {
                         <strong className="text-[#082852] block mb-1">
                           • Matéria-Prima & Insumos Diretos
                         </strong>
-                        Materiais fisicamente incorporados ao produto (ex.: aço, plástico, resinas),
-                        considerando o custo líquido após créditos de IPI/ICMS e IBS/CBS.
+                        Materiais que entram diretamente na composição do produto (como aço,
+                        polímeros e embalagens), apurados pelo custo líquido de créditos
+                        recuperáveis (IPI, ICMS e futura CBS/IBS).
                       </div>
                       <div className="p-3 bg-white rounded-lg border border-stone-200">
                         <strong className="text-[#082852] block mb-1">
                           • Mão de Obra Direta (MOD)
                         </strong>
-                        Salários, encargos sociais trabalhistas (INSS, FGTS, férias, 13º) e
-                        benefícios da equipe que atua diretamente na linha de transformação.
+                        Salários, encargos sociais e trabalhistas (INSS, FGTS, férias, 13º e
+                        provisões) e benefícios dos operadores que atuam diretamente na linha de
+                        transformação.
                       </div>
                       <div className="p-3 bg-white rounded-lg border border-stone-200">
                         <strong className="text-[#082852] block mb-1">
                           • Custos Indiretos de Fabricação (CIF)
                         </strong>
-                        Energia elétrica fabril, manutenção de máquinas, supervisão de fábrica,
-                        depreciação de equipamentos e aluguel do galpão de produção.
+                        Gastos indispensáveis à planta que não entram em uma única peça de forma
+                        direta: energia elétrica fabril, manutenção de equipamentos, supervisão
+                        técnica, depreciação de máquinas e aluguel do galpão.
                       </div>
                       <div className="p-3 bg-white rounded-lg border border-stone-200">
                         <strong className="text-[#082852] block mb-1">
-                          • Perdas, Cavacos & Refugos Fabris
+                          • Perdas Técnicas, Cavacos & Refugos
                         </strong>
-                        Todo processo gera sobras e perdas técnicas. Se 5% da chapa é perdida no
-                        corte, esse refugo deve ser incorporado ao custo do lote, e não absorvido no
-                        prejuízo.
+                        Sobras inevitáveis de usinagem, corte ou estampagem. Se 4% da matéria-prima
+                        é descartada no processo produtivo, esse percentual precisa compor a ficha
+                        técnica do produto em vez de virar prejuízo oculto.
                       </div>
                     </div>
                   </div>
@@ -517,13 +522,14 @@ export default function FormacaoPreco() {
                   <div className="p-4 bg-emerald-50 border border-emerald-200 rounded-xl space-y-2 text-xs sm:text-sm text-slate-700">
                     <h5 className="font-serif font-bold text-[#15803D] flex items-center gap-1.5">
                       <CheckCircle2 className="w-4 h-4 text-[#16A34A]" />
-                      Escala e Ponto de Equilíbrio de Produção:
+                      Escala e Ponto de Equilíbrio Fabril:
                     </h5>
                     <p>
-                      Quanto maior o volume produzido, menor é o custo fixo indireto (CIF) alocado a
-                      cada unidade. A Borlim calcula com exatidão a{' '}
-                      <strong>capacidade instalada</strong> e o lote mínimo de produção para que a
-                      sua fábrica nunca produza abaixo do ponto de equilíbrio operacional.
+                      Quanto mais a fábrica produz com eficiência, menor é o peso dos Custos
+                      Indiretos de Fabricação (CIF) sobre cada unidade. A Borlim calcula com
+                      precisão a <strong>capacidade instalada</strong> e o lote mínimo de produção
+                      para que a sua planta fabril nunca opere abaixo do ponto de equilíbrio
+                      econômico.
                     </p>
                   </div>
                 </div>
@@ -638,13 +644,14 @@ export default function FormacaoPreco() {
                   </div>
 
                   <p className="text-sm sm:text-base text-slate-700 leading-relaxed font-sans">
-                    No comércio (seja varejo de rua, e-commerce, distribuidora ou atacado), a
-                    empresa compra mercadorias prontas para revenda. Aqui, o grande segredo da
-                    precificação está na correta apuração do{' '}
-                    <strong>CMV (Custo das Mercadorias Vendidas)</strong>, no frete de aquisição
-                    (FOB), no aproveitamento de créditos fiscais e, principalmente, no{' '}
-                    <strong>giro de estoque</strong>: estoque parado no galpão é capital de giro
-                    imobilizado que consome juros bancários e reduz a margem real.
+                    No comércio (lojas físicas, e-commerce, distribuidores ou atacados), a empresa
+                    adquire mercadorias prontas para revenda. A chave da rentabilidade comercial
+                    está na apuração precisa do{' '}
+                    <strong>CMV (Custo das Mercadorias Vendidas)</strong>, no frete de transporte
+                    (frete FOB), no aproveitamento integral de créditos fiscais e, acima de tudo, na
+                    velocidade do <strong>giro de estoque</strong>: produto parado na prateleira é
+                    capital de giro imobilizado que consome juros bancários e corrói a margem
+                    líquida da empresa.
                   </p>
 
                   <div className="space-y-3 pt-2">
@@ -654,34 +661,35 @@ export default function FormacaoPreco() {
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs sm:text-sm text-slate-700">
                       <div className="p-3 bg-white rounded-lg border border-stone-200">
                         <strong className="text-[#082852] block mb-1">
-                          • Custo de Aquisição Líquido (CMV)
+                          • CMV Líquido (Custo de Aquisição)
                         </strong>
-                        Preço do fornecedor somado ao frete de entrada, seguro e taxas, abatidos os
-                        créditos tributários recuperáveis (ICMS, PIS/COFINS e futura CBS/IBS).
+                        Preço cobrado pelo fornecedor somado ao frete de entrada (FOB), seguros e
+                        taxas, subtraindo todos os créditos tributários recuperáveis (ICMS,
+                        PIS/COFINS e nova CBS/IBS).
                       </div>
                       <div className="p-3 bg-white rounded-lg border border-stone-200">
                         <strong className="text-[#082852] block mb-1">
-                          • Giro de Estoque & Capital Parado
+                          • Giro de Estoque & Custo do Capital Parado
                         </strong>
-                        Um produto que demora 180 dias para vender custa muito mais caro em capital
-                        de giro do que um produto que gira em 15 dias. A margem deve refletir a
-                        velocidade da rotação.
+                        Um item que demora 180 dias para girar custa muito mais caro em
+                        financiamento de capital de giro do que aquele que roda em 15 dias. O preço
+                        deve compensar a velocidade de venda de cada linha.
                       </div>
                       <div className="p-3 bg-white rounded-lg border border-stone-200">
                         <strong className="text-[#082852] block mb-1">
                           • Margem Bruta Comercial
                         </strong>
-                        Diferença entre o preço de venda líquido de impostos e o CMV. É o indicador
-                        vital monitorado nos 48 indicadores da Borlim para avaliar a eficiência do
-                        comprador.
+                        Diferença entre o faturamento líquido de impostos e o CMV. É o indicador
+                        essencial acompanhado nos 48 indicadores da Borlim para monitorar o poder de
+                        compra da sua empresa.
                       </div>
                       <div className="p-3 bg-white rounded-lg border border-stone-200">
                         <strong className="text-[#082852] block mb-1">
-                          • Descontos por Volume & Políticas de Preço
+                          • Escalas de Volume & Preço Diferenciado
                         </strong>
-                        Precificação em faixas de quantidade (atacarejo) calculadas de forma que o
-                        ganho em volume compense rigorosamente a redução percentual da margem
-                        unitária.
+                        Políticas de preços para vendas em quantidade (atacarejo e atacado),
+                        desenhadas de modo que o ganho em escala compense com folga o desconto
+                        percentual concedido na unidade.
                       </div>
                     </div>
                   </div>
@@ -689,13 +697,14 @@ export default function FormacaoPreco() {
                   <div className="p-4 bg-emerald-50 border border-emerald-200 rounded-xl space-y-2 text-xs sm:text-sm text-slate-700">
                     <h5 className="font-serif font-bold text-[#15803D] flex items-center gap-1.5">
                       <CheckCircle2 className="w-4 h-4 text-[#16A34A]" />
-                      O Perigo da Taxa de Cartão e Antecipação de Recebíveis:
+                      O Impacto Oculto das Taxas de Cartão e Antecipação:
                     </h5>
                     <p>
-                      Muitos comerciantes precificam pensando no dinheiro à vista e oferecem 10x sem
-                      juros. As taxas de parcelamento e de antecipação do cartão consomem até 8% do
-                      faturamento. Na Borlim, o markup comercial embute a média ponderada dos meios
-                      de pagamento para blindar o caixa.
+                      Muitos lojistas formam o preço pensando no recebimento à vista, mas vendem a
+                      prazo sem juros no cartão de crédito. Tarifas de maquininha e custos de
+                      antecipação de recebíveis chegam a consumir até 8% da receita bruta. Na
+                      consultoria da Borlim, o markup comercial embute o custo financeiro ponderado
+                      dos meios de pagamento para blindar o fluxo de caixa.
                     </p>
                   </div>
                 </div>
@@ -808,14 +817,14 @@ export default function FormacaoPreco() {
                   </div>
 
                   <p className="text-sm sm:text-base text-slate-700 leading-relaxed font-sans">
-                    No setor de serviços (consultorias, engenharias, tecnologia, agências, clínicas,
-                    manutenção e transportes), o estoque não fica na prateleira: o produto é o tempo
-                    e o conhecimento da equipe técnica. O cálculo do preço em serviços é um dos mais
-                    desafiadores, pois exige a apuração do{' '}
-                    <strong>Homem-Hora (ou Valor-Hora)</strong>, a consideração da{' '}
-                    <strong>taxa de utilização produtiva</strong> (horas faturadas vs. horas
-                    disponíveis) e o controle rigoroso contra o <em>escopo-creep</em> (trabalho
-                    extra não cobrado).
+                    No setor de serviços (empresas de tecnologia, engenharia, consultoria, agências,
+                    clínicas, transporte e manutenção), o produto é o tempo produtivo e o
+                    conhecimento da equipe. A precificação de serviços exige a apuração rigorosa do
+                    custo do <strong>homem-hora</strong> (custo da hora de trabalho por
+                    especialista), a medição da <strong>taxa de utilização produtiva</strong>{' '}
+                    (relação entre horas faturadas a clientes e horas totais pagas na folha) e o
+                    controle firme contra alterações não remuneradas de contrato (o desvio de
+                    escopo, ou <em>scope creep</em>).
                   </p>
 
                   <div className="space-y-3 pt-2">
@@ -827,33 +836,35 @@ export default function FormacaoPreco() {
                         <strong className="text-[#082852] block mb-1">
                           • Custo Real do Homem-Hora
                         </strong>
-                        Salário bruto somado a encargos trabalhistas, provisão de férias, 13º, FGTS,
-                        benefícios, alimentação e treinamentos dividido pelas horas efetivas de
-                        trabalho.
+                        Salário bruto somado a encargos trabalhistas (INSS, FGTS, provisões de
+                        férias e 13º), benefícios, alimentação, equipamentos e treinamentos,
+                        dividido pelas horas efetivas de dedicação ao negócio.
                       </div>
                       <div className="p-3 bg-white rounded-lg border border-stone-200">
                         <strong className="text-[#082852] block mb-1">
-                          • Taxa de Utilização da Equipe
+                          • Taxa de Utilização da Equipe Técnica
                         </strong>
-                        Nenhum profissional produz 176 horas por mês para clientes. Há reuniões
-                        internas, prospecção e ociosidade. Se a taxa de utilização é de 70%, o custo
-                        da hora faturada precisa ser ajustado.
+                        Nenhum colaborador fatura 100% da sua jornada (160h a 176h/mês) para
+                        clientes. Há reuniões internas, alinhamentos, prospecção e intervalos entre
+                        projetos. Se a ocupação é de 75%, o custo da hora faturada precisa ser
+                        calibrado para essa realidade.
                       </div>
                       <div className="p-3 bg-white rounded-lg border border-stone-200">
                         <strong className="text-[#082852] block mb-1">
                           • Rateio da Estrutura Fixa por Hora
                         </strong>
-                        Softwares corporativos, aluguel do escritório, administrativo e comercial
-                        devem ser absorvidos proporcionalmente pelas horas produtivas estimadas no
-                        mês.
+                        Licenças de softwares especializados, despesas com escritório, suporte
+                        jurídico, administrativo e vendas precisam ser absorvidos proporcionalmente
+                        pelas horas produtivas estimadas para o período.
                       </div>
                       <div className="p-3 bg-white rounded-lg border border-stone-200">
                         <strong className="text-[#082852] block mb-1">
-                          • Precificação por Projeto vs. por Hora
+                          • Projeto Fechado vs. Remuneração por Hora
                         </strong>
-                        Preço fechado (escopo fixo) transfere o risco de prazo para a sua empresa.
-                        Sem cláusulas claras de aditivos de escopo (escopo-creep), o projeto consome
-                        o dobro das horas e gera prejuízo.
+                        Vender projetos com preço fechado transfere todo o risco de prazo e
+                        retrabalho para a empresa prestadora. Sem cláusulas contratuais de aditivo
+                        de escopo, um projeto consome o dobro das horas previstas e fecha no
+                        vermelho.
                       </div>
                     </div>
                   </div>
@@ -861,13 +872,14 @@ export default function FormacaoPreco() {
                   <div className="p-4 bg-emerald-50 border border-emerald-200 rounded-xl space-y-2 text-xs sm:text-sm text-slate-700">
                     <h5 className="font-serif font-bold text-[#15803D] flex items-center gap-1.5">
                       <CheckCircle2 className="w-4 h-4 text-[#16A34A]" />
-                      Atenção Especial na Reforma Tributária para Serviços:
+                      Atenção Redobrada na Reforma Tributária para Prestadores de Serviços:
                     </h5>
                     <p>
-                      Com a unificação do ISS em IBS e PIS/COFINS em CBS, o setor de serviços (cuja
-                      maior despesa é folha salarial, que não gera crédito tributário) precisa de
-                      cálculos minuciosos para não ter sua margem comprimida pela alíquota padrão. A
-                      Borlim simula esse impacto com antecedência.
+                      Com a substituição do ISS pelo IBS e do PIS/COFINS pela CBS, o segmento de
+                      serviços — cuja estrutura de custos é intensiva em mão de obra (folha de
+                      pagamento que não gera créditos tributários de IBS/CBS) — precisa de
+                      simulações antecipadas para readequar o preço e proteger sua lucratividade
+                      líquida. A Borlim conduz essas simulações com base técnica segura.
                     </p>
                   </div>
                 </div>
@@ -1062,19 +1074,21 @@ export default function FormacaoPreco() {
                 Formação de Preço & Planejamento Econômico: A Dupla Que Garante o Lucro Mensal Real
               </h3>
               <p className="text-sm text-slate-200 font-sans leading-relaxed">
-                Na metodologia da BORLIM Consultoria, a Formação de Preço não é um exercício
-                isolado: ela se conecta diretamente ao <strong>Planejamento Econômico</strong> (que
-                melhora o lucro mensal da empresa e estrutura a DRE gerencial), ao{' '}
-                <strong>Planejamento Financeiro</strong> (que equilibra o capital de giro e o prazo
-                concedido aos clientes) e ao <strong>Balanced Scorecard</strong> (que garante
-                competitividade comercial para nenhum negócio ser perdido).
+                Na metodologia da BORLIM Consultoria, a formação de preço não é um exercício isolado
+                de planilha: ela se integra diretamente ao <strong>Planejamento Econômico</strong>{' '}
+                (focado em melhorar o lucro mensal e estruturar a DRE gerencial), ao{' '}
+                <strong>Planejamento Financeiro</strong> (responsável por equilibrar o capital de
+                giro e os prazos concedidos a clientes) e ao <strong>Balanced Scorecard</strong>{' '}
+                (que assegura agilidade comercial para que nenhum negócio seja perdido para a
+                concorrência).
               </p>
               <p className="text-sm text-slate-200 font-sans leading-relaxed">
-                Quando cada produto da sua <strong>Indústria</strong>, cada mercadoria do seu{' '}
-                <strong>Comércio</strong> ou cada hora do seu <strong>Serviço</strong> é precificada
-                pelo método técnico, seu <strong>Ponto de Equilíbrio</strong> é atingido com menos
-                esforço, a empresa afasta o risco de insolvência imediata e em 12 meses e o{' '}
-                <strong>Valuation</strong> do seu patrimônio dispara.
+                Quando cada item fabricado na sua <strong>Indústria</strong>, cada mercadoria
+                revendida no seu <strong>Comércio</strong> ou cada hora prestada na sua empresa de{' '}
+                <strong>Serviços</strong> é precificada com base técnica, o ponto de equilíbrio
+                operacional é alcançado com menor esforço de vendas, a empresa afasta o risco de
+                insolvência imediata e em 12 meses, e o <strong>Valuation</strong> do seu negócio se
+                consolida em patamares muito mais altos.
               </p>
             </div>
             <div className="lg:col-span-4 flex flex-col gap-3">
@@ -1209,14 +1223,14 @@ export default function FormacaoPreco() {
                 Atendimento Técnico & Diagnóstico Prévio
               </span>
               <h2 className="font-serif text-2xl sm:text-4xl font-bold text-white leading-tight">
-                Vamos colocar a sua empresa no caminho da lucratividade real com a BORLIM
+                Coloque a sua empresa no caminho da lucratividade sustentável com a BORLIM
                 Consultoria.
               </h2>
               <p className="text-sm sm:text-base text-slate-300 leading-relaxed font-sans">
-                Converse diretamente com o nosso economista e tire todas as suas dúvidas sobre a
-                formação de preço da sua indústria, comércio ou empresa de serviços. Integre sua
-                precificação aos 48 indicadores de desempenho financeiro, ao teste de insolvência em
-                12 meses e ao Planejamento Econômico.
+                Fale diretamente com o nosso economista e tire suas dúvidas sobre a precificação da
+                sua indústria, comércio ou prestadora de serviços. Conecte sua tabela de preços aos
+                48 indicadores de desempenho, ao teste preventivo de insolvência em 12 meses e ao
+                Planejamento Econômico focado na melhoria do lucro mensal.
               </p>
 
               <div className="space-y-3 font-mono text-xs pt-2">

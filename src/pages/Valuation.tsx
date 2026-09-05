@@ -145,43 +145,43 @@ export default function Valuation() {
   const faqs = [
     {
       q: 'Quanto custa um laudo de Valuation e como ele é precificado?',
-      a: 'O investimento no laudo é proporcional à complexidade do negócio: tamanho da empresa, quantidade de filiais ou unidades de negócio, volume de ativos físicos a reavaliar e qualidade dos dados contábeis disponíveis. Na Borlim, o orçamento é apresentado de forma transparente e com escopo fechado logo após uma primeira conversa diagnóstica sem custo, sem taxas ocultas.',
+      a: 'O investimento e o escopo variam conforme o porte, o segmento e a complexidade de cada empresa — como volume de filiais, composição dos ativos patrimoniais e nível de organização contábil. Na Borlim, não trabalhamos com tabelas genéricas ou valores engessados: realizamos uma conversa diagnóstica inicial para compreender a sua necessidade específica e apresentar uma proposta técnica sob medida, transparente e sem custos ocultos. Fale diretamente com o economista Flávio Bordignon pelo WhatsApp (17) 99765-0672 ou e-mail flavio@borlim.com.br.',
     },
     {
       q: 'Quanto tempo leva o processo de avaliação da empresa?',
-      a: 'Em média, o processo completo leva de 2 a 4 semanas de trabalho técnico conjunto. Esse prazo inclui o diagnóstico dos 48 indicadores financeiros, os testes de insolvência imediata e em 12 meses, a modelagem dos fluxos futuros, a avaliação dos ativos por indicador seguro e a redação do laudo executivo final.',
+      a: 'O cronograma de execução varia de acordo com o porte do negócio, a disponibilidade dos demonstrativos contábeis e a complexidade da estrutura patrimonial da empresa. A Borlim conduz cada etapa com agilidade e rigor técnico — desde a checagem dos 48 indicadores financeiros e testes de insolvência até a modelagem dos fluxos futuros e entrega do laudo pericial final. Para receber uma estimativa de cronograma adequada à sua demanda, consulte a Borlim pelo WhatsApp (17) 99765-0672 ou e-mail flavio@borlim.com.br.',
     },
     {
       q: 'Quais documentos e informações preciso fornecer para iniciar?',
-      a: 'O ponto de partida são os demonstrativos contábeis dos últimos 3 a 5 anos (Balanço Patrimonial e DRE), extratos e relatórios de fluxo de caixa, relação de endividamento bancário e fiscal, relação de bens/ativos fixos e estimativas gerais de receitas futuras. Nossa equipe conduz uma entrevista inicial guiada para que a coleta não tome tempo excessivo da sua rotina.',
+      a: 'A relação de informações varia de acordo com o regime tributário, o porte e o setor da sua empresa. De modo geral, partimos dos demonstrativos contábeis recentes (Balanço Patrimonial e DRE), controles gerenciais de fluxo de caixa, estrutura de endividamento e inventário de ativos. Para evitar sobrecarga na sua rotina, a Borlim orienta a coleta em uma reunião inicial guiada, solicitando apenas o estritamente necessário para cada caso. Contate-nos pelo WhatsApp (17) 99765-0672 ou e-mail flavio@borlim.com.br para orientações prévias.',
     },
     {
       q: 'O laudo de Valuation serve para bancos, financiamentos e fundos de investimento?',
-      a: 'Sim. O laudo da Borlim segue padrões econômicos e periciais reconhecidos (CVM, IFRS, CPC e normas de perícia econômico-financeira). Bancos de fomento, instituições financeiras comerciais, fundos de Private Equity e investidores institucionais utilizam nosso material para balizar garantias, limites de crédito e participação societária.',
+      a: 'Sim. O laudo da Borlim segue padrões econômicos e periciais amplamente reconhecidos (CVM, IFRS, CPC e normas de perícia econômico-financeira). Instituições financeiras, bancos de fomento, fundos de investimento e parceiros comerciais utilizam nossos relatórios para embasar concessão de garantias, limites de crédito e decisões de participação societária.',
     },
     {
       q: 'A avaliação serve para entrada ou saída de sócio (apuração de haveres)?',
-      a: 'Com certeza, é uma das aplicações mais frequentes. O Valuation independente estabelece uma base neutra, justa e matematicamente defensável para o valor das cotas societárias. Isso protege tanto o sócio que fica quanto o que sai, eliminando desconfianças e prevenindo ações judiciais desgastantes e caras.',
+      a: 'Com certeza, é uma das principais finalidades do Valuation. O estudo independente da Borlim estabelece uma base neutra, justa e tecnicamente fundamentada para o valor das quotas ou ações da sociedade. Essa abordagem protege tanto quem permanece quanto quem se desliga da operação, conferindo transparência à apuração de haveres e prevenindo litígios judiciais.',
     },
     {
       q: 'Qual é a diferença entre Valor Contábil e Valor de Mercado (Valuation)?',
-      a: 'O Valor Contábil (Patrimônio Líquido) registra o custo histórico de compra dos bens da empresa menos as depreciações fiscais anotadas na contabilidade. Já o Valor de Mercado (Valuation Econômico) mede a capacidade futura da empresa de gerar dinheiro, a força de sua marca, seus clientes e sua posição no setor. Muitas PMEs têm patrimônio contábil modesto, mas valem várias vezes mais porque geram caixa sólido e previsível.',
+      a: 'O Valor Contábil (Patrimônio Líquido) registra o custo histórico dos bens da empresa deduzido das depreciações contábeis e fiscais. Já o Valor de Mercado (Valuation Econômico) mede a real capacidade do negócio de gerar caixa no futuro, considerando sua carteira de clientes, reputação de marca, posicionamento competitivo e retorno sobre o capital. Por isso, empresas com patrimônio contábil reduzido frequentemente possuem valor de mercado expressivo quando operam com geração consistente de caixa.',
     },
     {
       q: 'Com que frequência a empresa deve atualizar o seu Valuation?',
-      a: 'Para empresas em negociação ativa de venda, captação ou reorganização de sócios, a atualização deve ser anual ou sempre que houver mudança relevante (como novos contratos, expansões ou oscilações fortes na Selic e no custo do dinheiro). Para gestão estratégica, recomendamos revisar o valor a cada 12 a 24 meses junto com a atualização dos 48 indicadores.',
+      a: 'A necessidade de atualização depende do momento estratégico da empresa. Em processos de venda, fusão, entrada de novos investidores ou reestruturação societária, a revisão deve ocorrer sempre que surgirem fatos econômicos relevantes, oscilações macroeconômicas expressivas (como juros e inflação) ou alterações na estrutura do negócio. Para acompanhamento de governança e gestão patrimonial, a Borlim orienta revisões periódicas alinhadas ao monitoramento contínuo dos indicadores financeiros. Fale conosco para definir a periodicidade recomendada ao seu perfil.',
     },
     {
       q: 'O processo e as informações compartilhadas são confidenciais?',
-      a: 'Totalmente. Antes mesmo do recebimento de qualquer documento financeiro ou contábil, a Borlim formaliza um Acordo de Confidencialidade (NDA - Non-Disclosure Agreement) com validade jurídica estrita. Todos os seus dados de faturamento, margens, clientes e patrimônio ficam sob sigilo absoluto.',
+      a: 'Sim, sob sigilo rigoroso. Antes de qualquer envio de dados contábeis, operacionais ou estratégicos, a Borlim firma um Acordo de Confidencialidade (NDA - Non-Disclosure Agreement) formal com plena validade jurídica. Todas as informações financeiras, margens, relações comerciais e dados patrimoniais do seu negócio são tratados com absoluto segredo profissional.',
     },
     {
       q: 'O que é o "Indicador Seguro" de avaliação de ativos da Borlim?',
-      a: 'É a metodologia proprietária da Borlim para auditar e corrigir o valor real dos bens da empresa (como máquinas já totalmente depreciadas no papel fiscal, mas em plena atividade e valendo milhões, bem como expurgo de estoques sem giro e créditos duvidosos). Com o indicador seguro, determinamos o piso patrimonial inegociável da empresa para que você não venda por menos do que seus ativos custariam para repor.',
+      a: 'É a metodologia proprietária da Borlim para apurar e sanear o valor real de mercado dos ativos da empresa — como instalações e equipamentos em pleno funcionamento produtivo (mesmo que contabilmente depreciados no papel fiscal), além do expurgo técnico de estoques sem giro ou créditos de liquidação incerta. Com o indicador seguro, fixamos um piso patrimonial consistente para que você não negocie seu negócio abaixo do que seus ativos efetivamente valem.',
     },
     {
       q: 'E se eu ou outra parte discordarmos do valor encontrado no laudo?',
-      a: 'O laudo da Borlim não entrega apenas um número frio: apresentamos uma matriz de sensibilidade com cenários conservador, neutro e otimista (piso, valor justo e teto), acompanhada de todo o memorial de cálculo. Se houver divergência, nossos economistas sentam à mesa com você, seus sócios ou seus assessores jurídicos para detalhar cada premissa e demonstrar tecnicamente como o número foi construído.',
+      a: 'O trabalho da Borlim não se limita a um único número fechado: fornecemos uma análise de sensibilidade completa, contemplando diferentes cenários mercadológicos e o memorial técnico integral de cálculo. Havendo questionamentos, nossos especialistas participam de reuniões conjuntas com os sócios, diretorias ou assessores jurídicos para detalhar cada premissa adotada e demonstrar a solidez dos critérios econômicos aplicados.',
     },
   ]
 
