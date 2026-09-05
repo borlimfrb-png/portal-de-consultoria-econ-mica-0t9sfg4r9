@@ -14,6 +14,7 @@ import {
   Coins,
   Compass,
   Tag,
+  Target,
 } from 'lucide-react'
 import logoBorlim from '@/assets/logo-borlim-debb0.png'
 
@@ -42,6 +43,7 @@ export default function Navbar() {
     { label: 'Valuation', path: '/valuation', icon: Coins },
     { label: 'Planejamento', path: '/planejamento', icon: Compass },
     { label: 'Formação de Preço', path: '/formacao-de-preco', icon: Tag },
+    { label: 'Balanced Scorecard', path: '/balanced-scorecard', icon: Target },
     { label: 'Sobre', path: '/sobre', icon: Info },
   ]
 
@@ -79,7 +81,8 @@ export default function Navbar() {
               (link.path === '/valuation' && location.pathname === '/avaliacao-de-empresas') ||
               (link.path === '/planejamento' &&
                 location.pathname === '/planejamento-economico-financeiro') ||
-              (link.path === '/formacao-de-preco' && location.pathname === '/formacao-preco')
+              (link.path === '/formacao-de-preco' && location.pathname === '/formacao-preco') ||
+              (link.path === '/balanced-scorecard' && location.pathname === '/bsc')
             return (
               <Link
                 key={link.path}
@@ -150,7 +153,8 @@ export default function Navbar() {
                   (link.path === '/valuation' && location.pathname === '/avaliacao-de-empresas') ||
                   (link.path === '/planejamento' &&
                     location.pathname === '/planejamento-economico-financeiro') ||
-                  (link.path === '/formacao-de-preco' && location.pathname === '/formacao-preco')
+                  (link.path === '/formacao-de-preco' && location.pathname === '/formacao-preco') ||
+                  (link.path === '/balanced-scorecard' && location.pathname === '/bsc')
                 return (
                   <Link
                     key={link.path}

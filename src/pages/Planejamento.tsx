@@ -882,6 +882,16 @@ export default function Planejamento() {
                         <span>Rotina periódica de revisão de metas e direcionamento executivo</span>
                       </li>
                     </ul>
+                    <div className="pt-2">
+                      <Link
+                        to="/balanced-scorecard"
+                        className="inline-flex items-center gap-2 px-4 py-2.5 bg-[#0B3B7A] hover:bg-[#1557A6] text-white text-xs font-mono font-bold uppercase tracking-wider rounded-lg transition-colors shadow-xs"
+                      >
+                        <Target className="w-4 h-4 text-[#22C55E]" />
+                        <span>Conhecer a Página Dedicada do Balanced Scorecard</span>
+                        <ArrowRight className="w-4 h-4 text-[#22C55E]" />
+                      </Link>
+                    </div>
                   </div>
                 </div>
 
