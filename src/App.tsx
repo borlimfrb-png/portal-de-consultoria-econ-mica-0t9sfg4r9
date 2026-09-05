@@ -11,6 +11,7 @@ import NoticiaDetalhe from './pages/NoticiaDetalhe'
 import Sobre from './pages/Sobre'
 import Valuation from './pages/Valuation'
 import Planejamento from './pages/Planejamento'
+import FormacaoPreco from './pages/FormacaoPreco'
 import NotFound from './pages/NotFound'
 
 const App = () => (
@@ -28,6 +29,8 @@ const App = () => (
           <Route path="/avaliacao-de-empresas" element={<Valuation />} />
           <Route path="/planejamento" element={<Planejamento />} />
           <Route path="/planejamento-economico-financeiro" element={<Planejamento />} />
+          <Route path="/formacao-de-preco" element={<FormacaoPreco />} />
+          <Route path="/formacao-preco" element={<FormacaoPreco />} />
           <Route path="/sobre" element={<Sobre />} />
         </Route>
         <Route path="*" element={<NotFound />} />

@@ -13,6 +13,7 @@ import {
   ExternalLink,
   Coins,
   Compass,
+  Tag,
 } from 'lucide-react'
 import logoBorlim from '@/assets/logo-borlim-debb0.png'
 
@@ -40,6 +41,7 @@ export default function Navbar() {
     { label: 'Notícias', path: '/noticias', icon: Newspaper },
     { label: 'Valuation', path: '/valuation', icon: Coins },
     { label: 'Planejamento', path: '/planejamento', icon: Compass },
+    { label: 'Formação de Preço', path: '/formacao-de-preco', icon: Tag },
     { label: 'Sobre', path: '/sobre', icon: Info },
   ]
 
@@ -70,25 +72,26 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop Navigation Links */}
-        <nav className="hidden lg:flex items-center space-x-0.5 xl:space-x-1.5">
+        <nav className="hidden lg:flex items-center space-x-0.5 xl:space-x-1">
           {navLinks.map((link) => {
             const isActive =
               location.pathname === link.path ||
               (link.path === '/valuation' && location.pathname === '/avaliacao-de-empresas') ||
               (link.path === '/planejamento' &&
-                location.pathname === '/planejamento-economico-financeiro')
+                location.pathname === '/planejamento-economico-financeiro') ||
+              (link.path === '/formacao-de-preco' && location.pathname === '/formacao-preco')
             return (
               <Link
                 key={link.path}
                 to={link.path}
-                className={`relative px-2.5 xl:px-3 py-2 text-sm font-medium transition-colors ${
+                className={`relative px-2 xl:px-2.5 py-2 text-xs xl:text-sm font-medium transition-colors whitespace-nowrap ${
                   isActive ? 'text-[#0B3B7A] font-bold' : 'text-slate-600 hover:text-[#0B3B7A]'
                 }`}
               >
                 {link.label}
                 {/* Brand Green animated underline */}
                 <span
-                  className={`absolute bottom-0 left-2.5 right-2.5 xl:left-3 xl:right-3 h-[2px] bg-[#16A34A] transition-all duration-200 ${
+                  className={`absolute bottom-0 left-2 right-2 xl:left-2.5 xl:right-2.5 h-[2px] bg-[#16A34A] transition-all duration-200 ${
                     isActive
                       ? 'opacity-100 scale-x-100'
                       : 'opacity-0 scale-x-0 group-hover:opacity-100 group-hover:scale-x-100'
@@ -146,7 +149,8 @@ export default function Navbar() {
                   location.pathname === link.path ||
                   (link.path === '/valuation' && location.pathname === '/avaliacao-de-empresas') ||
                   (link.path === '/planejamento' &&
-                    location.pathname === '/planejamento-economico-financeiro')
+                    location.pathname === '/planejamento-economico-financeiro') ||
+                  (link.path === '/formacao-de-preco' && location.pathname === '/formacao-preco')
                 return (
                   <Link
                     key={link.path}

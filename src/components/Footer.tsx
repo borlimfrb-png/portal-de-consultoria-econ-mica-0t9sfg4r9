@@ -140,6 +140,14 @@ export default function Footer() {
               </li>
               <li>
                 <Link
+                  to="/formacao-de-preco"
+                  className="hover:text-[#22C55E] transition-colors flex items-center gap-1.5"
+                >
+                  <span className="text-[#16A34A] text-xs">›</span> Formação de Preço para Vendas
+                </Link>
+              </li>
+              <li>
+                <Link
                   to="/sobre"
                   className="hover:text-[#22C55E] transition-colors flex items-center gap-1.5"
                 >

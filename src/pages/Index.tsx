@@ -15,6 +15,7 @@ import {
   Coins,
   Calculator,
   CheckCircle2,
+  Tag,
 } from 'lucide-react'
 import {
   ResponsiveContainer,
@@ -388,9 +389,9 @@ export default function Index() {
             </a>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {/* Card 1: Valuation */}
-            <div className="bg-white rounded-2xl border border-stone-200 p-8 sm:p-10 shadow-sm hover:shadow-xl hover:border-[#16A34A] transition-all flex flex-col justify-between group relative overflow-hidden">
+            <div className="bg-white rounded-2xl border border-stone-200 p-7 sm:p-8 shadow-sm hover:shadow-xl hover:border-[#16A34A] transition-all flex flex-col justify-between group relative overflow-hidden">
               <div className="absolute top-0 right-0 w-32 h-32 bg-[#16A34A]/5 rounded-bl-full pointer-events-none group-hover:bg-[#16A34A]/10 transition-colors" />
 
               <div>
@@ -403,11 +404,11 @@ export default function Index() {
                   </span>
                 </div>
 
-                <h3 className="font-serif text-2xl font-bold text-[#082852] mb-3 group-hover:text-[#0B3B7A] transition-colors">
+                <h3 className="font-serif text-xl sm:text-2xl font-bold text-[#082852] mb-3 group-hover:text-[#0B3B7A] transition-colors leading-snug">
                   Valuation & Avaliação de Empresas
                 </h3>
 
-                <p className="text-sm text-slate-600 leading-relaxed font-sans mb-6">
+                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-sans mb-6">
                   Avaliação precisa de ativos com indicador seguro para definir o piso patrimonial
                   do negócio, diagnóstico rigoroso com 48 indicadores e análise preventiva de
                   insolvência imediata e em 12 meses para negociações com sócios, compradores e
@@ -442,7 +443,7 @@ export default function Index() {
             </div>
 
             {/* Card 2: Planejamento */}
-            <div className="bg-white rounded-2xl border border-slate-200 p-8 sm:p-10 shadow-sm hover:shadow-xl hover:border-[#16A34A] transition-all flex flex-col justify-between group relative overflow-hidden">
+            <div className="bg-white rounded-2xl border border-slate-200 p-7 sm:p-8 shadow-sm hover:shadow-xl hover:border-[#16A34A] transition-all flex flex-col justify-between group relative overflow-hidden">
               <div className="absolute top-0 right-0 w-32 h-32 bg-[#0B3B7A]/5 rounded-bl-full pointer-events-none group-hover:bg-[#0B3B7A]/10 transition-colors" />
 
               <div>
@@ -455,11 +456,11 @@ export default function Index() {
                   </span>
                 </div>
 
-                <h3 className="font-serif text-2xl font-bold text-[#082852] mb-3 group-hover:text-[#0B3B7A] transition-colors">
+                <h3 className="font-serif text-xl sm:text-2xl font-bold text-[#082852] mb-3 group-hover:text-[#0B3B7A] transition-colors leading-snug">
                   Planejamento Econômico e Financeiro
                 </h3>
 
-                <p className="text-sm text-slate-600 leading-relaxed font-sans mb-6">
+                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-sans mb-6">
                   Estruturação dos três planejamentos estratégicos da Borlim (Financeiro, Econômico
                   e Balanced Scorecard) com teste preventivo de insolvência em 12 meses, garantindo
                   fluxo eficiente de capital de giro e maximização do lucro mensal da empresa.
@@ -487,6 +488,57 @@ export default function Index() {
                   className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-[#082852] hover:bg-[#0B3B7A] text-white text-xs font-mono font-bold uppercase tracking-wider rounded-lg transition-all shadow group/btn border border-[#0B3B7A] hover:border-[#16A34A]"
                 >
                   <span>Conhecer o Planejamento</span>
+                  <ArrowRight className="w-4 h-4 text-[#22C55E] group-hover/btn:translate-x-1 transition-transform" />
+                </Link>
+              </div>
+            </div>
+
+            {/* Card 3: Formação de Preço para Vendas */}
+            <div className="bg-white rounded-2xl border border-stone-200 p-7 sm:p-8 shadow-sm hover:shadow-xl hover:border-[#16A34A] transition-all flex flex-col justify-between group relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-[#16A34A]/5 rounded-bl-full pointer-events-none group-hover:bg-[#16A34A]/10 transition-colors" />
+
+              <div>
+                <div className="flex items-center justify-between mb-6">
+                  <div className="w-14 h-14 rounded-xl bg-[#082852] text-[#22C55E] flex items-center justify-center group-hover:scale-105 transition-transform shadow-sm">
+                    <Tag className="w-7 h-7" />
+                  </div>
+                  <span className="px-3 py-1 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider bg-emerald-50 text-[#15803D] border border-emerald-200">
+                    Pricing & Rentabilidade
+                  </span>
+                </div>
+
+                <h3 className="font-serif text-xl sm:text-2xl font-bold text-[#082852] mb-3 group-hover:text-[#0B3B7A] transition-colors leading-snug">
+                  Formação de Preço para Vendas
+                </h3>
+
+                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-sans mb-6">
+                  Precificação técnica para Indústria (custo fabril e CIF), Comércio (CMV e giro) e
+                  Serviços (homem-hora e utilização), conectada à margem de contribuição, ao ponto
+                  de equilíbrio e à nova Reforma Tributária (IBS/CBS).
+                </p>
+
+                <div className="space-y-2 mb-8 pt-4 border-t border-slate-100 font-sans text-xs text-slate-600">
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-[#16A34A] shrink-0" />
+                    <span>Eliminação do erro clássico de confundir markup com margem</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-[#16A34A] shrink-0" />
+                    <span>Metodologia sob medida para Indústria, Comércio e Serviços</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-[#16A34A] shrink-0" />
+                    <span>Conexão direta com a melhoria do lucro mensal e capital de giro</span>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <Link
+                  to="/formacao-de-preco"
+                  className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-[#082852] hover:bg-[#0B3B7A] text-white text-xs font-mono font-bold uppercase tracking-wider rounded-lg transition-all shadow group/btn border border-[#0B3B7A] hover:border-[#16A34A]"
+                >
+                  <span>Conhecer Formação de Preço</span>
                   <ArrowRight className="w-4 h-4 text-[#22C55E] group-hover/btn:translate-x-1 transition-transform" />
                 </Link>
               </div>
