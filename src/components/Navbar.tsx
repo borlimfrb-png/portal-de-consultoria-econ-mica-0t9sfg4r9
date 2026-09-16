@@ -9,6 +9,7 @@ import {
   Info,
   Home,
   Mail,
+  CalendarDays,
   FileSpreadsheet,
   ExternalLink,
   Coins,
@@ -122,6 +123,7 @@ export default function Navbar() {
     { label: 'Início', path: '/', icon: Home },
     { label: 'Indicadores', path: '/indicadores', icon: TrendingUp },
     { label: 'Notícias', path: '/noticias', icon: Newspaper },
+    { label: 'Agenda Tributária', path: '/agenda-tributaria', icon: CalendarDays },
   ]
 
   const directNavLinksAfter = [{ label: 'Sobre', path: '/sobre', icon: Info }]
@@ -154,20 +156,20 @@ export default function Navbar() {
           </Link>
         </div>
 
-        {/* Desktop Navigation Links - Centered & Fully Visible (5 direct items: Início, Indicadores, Notícias, Serviços [dropdown], Sobre) */}
+        {/* Desktop Navigation Links - Centered & Fully Visible (6 direct items: Início, Indicadores, Notícias, Agenda Tributária, Serviços [dropdown], Sobre) */}
         <nav
           className="hidden lg:flex flex-1 items-center justify-center px-1 xl:px-3 min-w-0"
           aria-label="Navegação principal"
         >
           <div className="flex items-center justify-center gap-x-0.5 xl:gap-x-1 2xl:gap-x-2">
-            {/* Links Início, Indicadores, Notícias */}
+            {/* Links Início, Indicadores, Notícias, Agenda Tributária */}
             {directNavLinksBefore.map((link) => {
               const isActive = location.pathname === link.path
               return (
                 <Link
                   key={link.path}
                   to={link.path}
-                  className={`group relative px-2 xl:px-2.5 2xl:px-3 py-1.5 text-xs xl:text-[13px] 2xl:text-sm font-medium tracking-tight xl:tracking-normal transition-colors whitespace-nowrap rounded-md hover:bg-stone-100/70 shrink-0 ${
+                  className={`group relative px-1.5 xl:px-2.5 2xl:px-3 py-1.5 text-xs xl:text-[13px] 2xl:text-sm font-medium tracking-tight xl:tracking-normal transition-colors whitespace-nowrap rounded-md hover:bg-stone-100/70 shrink-0 ${
                     isActive ? 'text-[#0B3B7A] font-bold' : 'text-slate-700 hover:text-[#0B3B7A]'
                   }`}
                 >
@@ -197,7 +199,7 @@ export default function Navbar() {
                 aria-expanded={servicesDropdownOpen}
                 aria-haspopup="true"
                 aria-label="Menu de Serviços da Borlim"
-                className={`group relative inline-flex items-center gap-1 px-2 xl:px-2.5 2xl:px-3 py-1.5 text-xs xl:text-[13px] 2xl:text-sm font-medium tracking-tight xl:tracking-normal transition-colors whitespace-nowrap rounded-md hover:bg-stone-100/70 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#16A34A] shrink-0 ${
+                className={`group relative inline-flex items-center gap-1 px-1.5 xl:px-2.5 2xl:px-3 py-1.5 text-xs xl:text-[13px] 2xl:text-sm font-medium tracking-tight xl:tracking-normal transition-colors whitespace-nowrap rounded-md hover:bg-stone-100/70 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#16A34A] shrink-0 ${
                   isServiceActive
                     ? 'text-[#0B3B7A] font-bold'
                     : 'text-slate-700 hover:text-[#0B3B7A]'
@@ -301,7 +303,7 @@ export default function Navbar() {
                 <Link
                   key={link.path}
                   to={link.path}
-                  className={`group relative px-2 xl:px-2.5 2xl:px-3 py-1.5 text-xs xl:text-[13px] 2xl:text-sm font-medium tracking-tight xl:tracking-normal transition-colors whitespace-nowrap rounded-md hover:bg-stone-100/70 shrink-0 ${
+                  className={`group relative px-1.5 xl:px-2.5 2xl:px-3 py-1.5 text-xs xl:text-[13px] 2xl:text-sm font-medium tracking-tight xl:tracking-normal transition-colors whitespace-nowrap rounded-md hover:bg-stone-100/70 shrink-0 ${
                     isActive ? 'text-[#0B3B7A] font-bold' : 'text-slate-700 hover:text-[#0B3B7A]'
                   }`}
                 >
