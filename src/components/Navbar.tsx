@@ -10,6 +10,7 @@ import {
   Home,
   Mail,
   CalendarDays,
+  Landmark,
   FileSpreadsheet,
   ExternalLink,
   Coins,
@@ -124,6 +125,12 @@ export default function Navbar() {
     { label: 'Indicadores', path: '/indicadores', icon: TrendingUp },
     { label: 'Notícias', path: '/noticias', icon: Newspaper },
     { label: 'Agenda Tributária', path: '/agenda-tributaria', icon: CalendarDays },
+    {
+      label: 'Reforma Tributária',
+      path: '/reforma-tributaria',
+      aliasPaths: ['/reforma'],
+      icon: Landmark,
+    },
   ]
 
   const directNavLinksAfter = [{ label: 'Sobre', path: '/sobre', icon: Info }]
@@ -162,9 +169,11 @@ export default function Navbar() {
           aria-label="Navegação principal"
         >
           <div className="flex items-center justify-center gap-x-0.5 xl:gap-x-1 2xl:gap-x-2">
-            {/* Links Início, Indicadores, Notícias, Agenda Tributária */}
+            {/* Links Início, Indicadores, Notícias, Agenda Tributária, Reforma Tributária */}
             {directNavLinksBefore.map((link) => {
-              const isActive = location.pathname === link.path
+              const isActive =
+                location.pathname === link.path ||
+                (link.aliasPaths && link.aliasPaths.includes(location.pathname))
               return (
                 <Link
                   key={link.path}
@@ -379,7 +388,9 @@ export default function Navbar() {
               {/* Páginas principais iniciais */}
               {directNavLinksBefore.map((link) => {
                 const Icon = link.icon
-                const isActive = location.pathname === link.path
+                const isActive =
+                  location.pathname === link.path ||
+                  (link.aliasPaths && link.aliasPaths.includes(location.pathname))
                 return (
                   <Link
                     key={link.path}

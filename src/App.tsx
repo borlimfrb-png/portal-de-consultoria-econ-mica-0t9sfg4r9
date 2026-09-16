@@ -14,6 +14,7 @@ import Planejamento from './pages/Planejamento'
 import FormacaoPreco from './pages/FormacaoPreco'
 import BalancedScorecard from './pages/BalancedScorecard'
 import AgendaTributaria from './pages/AgendaTributaria'
+import ReformaTributaria from './pages/ReformaTributaria'
 import NotFound from './pages/NotFound'
 
 const App = () => (
@@ -36,6 +37,8 @@ const App = () => (
           <Route path="/balanced-scorecard" element={<BalancedScorecard />} />
           <Route path="/bsc" element={<BalancedScorecard />} />
           <Route path="/agenda-tributaria" element={<AgendaTributaria />} />
+          <Route path="/reforma-tributaria" element={<ReformaTributaria />} />
+          <Route path="/reforma" element={<ReformaTributaria />} />
           <Route path="/sobre" element={<Sobre />} />
         </Route>
         <Route path="*" element={<NotFound />} />
