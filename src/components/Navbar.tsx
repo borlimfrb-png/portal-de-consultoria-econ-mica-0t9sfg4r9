@@ -19,6 +19,7 @@ import {
   Target,
   ChevronDown,
   Briefcase,
+  Scale,
 } from 'lucide-react'
 import logoBorlim from '@/assets/logo-borlim-debb0.png'
 
@@ -112,6 +113,13 @@ export default function Navbar() {
       aliasPaths: ['/bsc'],
       description: 'Gestão estratégica nas 4 perspectivas para não perder negócios',
       icon: Target,
+    },
+    {
+      label: 'Análise de Tributação',
+      path: '/reforma-tributaria#formas-de-tributacao',
+      aliasPaths: [],
+      description: 'Simples Nacional, Lucro Presumido e Lucro Real comparados',
+      icon: Scale,
     },
   ]
 
@@ -246,7 +254,7 @@ export default function Navbar() {
                       Soluções em Consultoria
                     </span>
                     <span className="text-[10px] font-semibold text-[#16A34A] bg-emerald-50 border border-emerald-100 px-1.5 py-0.5 rounded">
-                      4 Especialidades
+                      5 Especialidades
                     </span>
                   </div>
 

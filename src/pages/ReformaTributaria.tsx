@@ -30,6 +30,7 @@ import {
   Wallet,
 } from 'lucide-react'
 import logoBorlim from '@/assets/logo-borlim-debb0.png'
+import FormasDeTributacaoSection from '@/components/FormasDeTributacaoSection'
 
 export default function ReformaTributaria() {
   const [activeTransitionTab, setActiveTransitionTab] = useState<number>(0)
@@ -415,6 +416,15 @@ export default function ReformaTributaria() {
                 <Mail className="w-4 h-4 text-emerald-300" />
                 <span>flavio@borlim.com.br</span>
               </a>
+
+              <a
+                href="#formas-de-tributacao"
+                className="inline-flex items-center gap-2 px-4 py-3 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-200 border border-emerald-400/30 text-xs sm:text-sm font-mono font-semibold transition-all"
+              >
+                <Scale className="w-4 h-4 text-[#22C55E]" />
+                <span>Comparar 3 Formas de Tributação</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </a>
             </div>
           </div>
         </div>
@@ -685,6 +695,9 @@ export default function ReformaTributaria() {
           })()}
         </div>
       </section>
+
+      {/* 4.5. NOVA SEÇÃO: AS 3 FORMAS DE TRIBUTAÇÃO (SIMPLES, PRESUMIDO, REAL) */}
+      <FormasDeTributacaoSection />
 
       {/* 5. ANÁLISE COMPARATIVA: PONTOS FORTES vs PONTOS FRACOS (DESAFIOS) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
