@@ -13,6 +13,7 @@ import Valuation from './pages/Valuation'
 import Planejamento from './pages/Planejamento'
 import FormacaoPreco from './pages/FormacaoPreco'
 import BalancedScorecard from './pages/BalancedScorecard'
+import GestaoFinanceira from './pages/GestaoFinanceira'
 import AgendaTributaria from './pages/AgendaTributaria'
 import ReformaTributaria from './pages/ReformaTributaria'
 import BolsaDeValores from './pages/BolsaDeValores'
@@ -31,6 +32,8 @@ const App = () => (
           <Route path="/noticias/:id" element={<NoticiaDetalhe />} />
           <Route path="/bolsa-de-valores" element={<BolsaDeValores />} />
           <Route path="/bolsa" element={<BolsaDeValores />} />
+          <Route path="/gestao-financeira" element={<GestaoFinanceira />} />
+          <Route path="/gestao-financeira-empresarial" element={<GestaoFinanceira />} />
           <Route path="/valuation" element={<Valuation />} />
           <Route path="/avaliacao-de-empresas" element={<Valuation />} />
           <Route path="/planejamento" element={<Planejamento />} />

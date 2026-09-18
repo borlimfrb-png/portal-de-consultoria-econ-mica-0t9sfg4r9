@@ -22,6 +22,7 @@ import {
   Globe,
   Phone,
   MessageCircle,
+  CircleDollarSign,
 } from 'lucide-react'
 import logoBorlim from '@/assets/logo-borlim-debb0.png'
 
@@ -86,8 +87,15 @@ export default function Navbar() {
     }, 150)
   }
 
-  // 4 serviços agrupados no dropdown
+  // 5 serviços agrupados no dropdown
   const serviceItems = [
+    {
+      label: 'Gestão Financeira',
+      path: '/gestao-financeira',
+      aliasPaths: ['/gestao-financeira-empresarial'],
+      description: 'Fluxo de caixa, ferramentas de decisão, 48 indicadores e insolvência',
+      icon: CircleDollarSign,
+    },
     {
       label: 'Valuation',
       path: '/valuation',
@@ -123,9 +131,15 @@ export default function Navbar() {
   )
 
   // Direct nav links ordenados conforme especificação para a Linha 2:
-  // Início, Indicadores, Notícias, [Serviços dropdown], Agenda Tributária, Reforma Tributária, Tributação (direto para as 3 formas de tributação), Bolsa de Valores, Sobre
+  // Início, Gestão Financeira (aba dedicada solicitada pelo cliente), Indicadores, Notícias, [Serviços dropdown], Agenda Tributária, Reforma Tributária, Tributação, Bolsa de Valores, Sobre
   const directNavLinksLine2 = [
     { label: 'Início', path: '/', icon: Home },
+    {
+      label: 'Gestão Financeira',
+      path: '/gestao-financeira',
+      aliasPaths: ['/gestao-financeira-empresarial'],
+      icon: CircleDollarSign,
+    },
     { label: 'Indicadores', path: '/indicadores', icon: TrendingUp },
     { label: 'Notícias', path: '/noticias', icon: Newspaper },
     // Serviços entra aqui no desktop
@@ -160,6 +174,12 @@ export default function Navbar() {
   // Para o menu mobile (ordem confortável para navegação touch)
   const mobileNavLinks = [
     { label: 'Início', path: '/', icon: Home },
+    {
+      label: 'Gestão Financeira',
+      path: '/gestao-financeira',
+      aliasPaths: ['/gestao-financeira-empresarial'],
+      icon: CircleDollarSign,
+    },
     { label: 'Indicadores', path: '/indicadores', icon: TrendingUp },
     { label: 'Notícias', path: '/noticias', icon: Newspaper },
     {
@@ -278,7 +298,7 @@ export default function Navbar() {
               Soluções em Consultoria
             </span>
             <span className="text-[10px] font-semibold text-[#16A34A] bg-emerald-50 border border-emerald-100 px-1.5 py-0.5 rounded">
-              4 Especialidades
+              5 Especialidades
             </span>
           </div>
 
@@ -434,29 +454,32 @@ export default function Navbar() {
             {/* 1. Início */}
             {renderNavLink(directNavLinksLine2[0])}
 
-            {/* 2. Indicadores */}
+            {/* 2. Gestão Financeira (Aba solicitada no Menu Principal) */}
             {renderNavLink(directNavLinksLine2[1])}
 
-            {/* 3. Notícias */}
+            {/* 3. Indicadores */}
             {renderNavLink(directNavLinksLine2[2])}
 
-            {/* 4. Dropdown Serviços */}
-            {renderServicesDropdown()}
-
-            {/* 5. Agenda Tributária */}
+            {/* 4. Notícias */}
             {renderNavLink(directNavLinksLine2[3])}
 
-            {/* 6. Reforma Tributária */}
+            {/* 5. Dropdown Serviços */}
+            {renderServicesDropdown()}
+
+            {/* 6. Agenda Tributária */}
             {renderNavLink(directNavLinksLine2[4])}
 
-            {/* 7. Tributação */}
+            {/* 7. Reforma Tributária */}
             {renderNavLink(directNavLinksLine2[5])}
 
-            {/* 8. Bolsa de Valores */}
+            {/* 8. Tributação */}
             {renderNavLink(directNavLinksLine2[6])}
 
-            {/* 9. Sobre */}
+            {/* 9. Bolsa de Valores */}
             {renderNavLink(directNavLinksLine2[7])}
+
+            {/* 10. Sobre */}
+            {renderNavLink(directNavLinksLine2[8])}
           </div>
         </nav>
       </div>
@@ -466,9 +489,11 @@ export default function Navbar() {
           <div className="bg-white border-b border-stone-200 shadow-xl p-6 flex flex-col space-y-4 animate-slide-down max-h-[calc(100vh-110px)] overflow-y-auto">
             <div className="flex flex-col divide-y divide-slate-100">
               {/* Páginas principais no Mobile */}
-              {mobileNavLinks.slice(0, 3).map((link) => {
+              {mobileNavLinks.slice(0, 4).map((link) => {
                 const Icon = link.icon
-                const isActive = location.pathname === link.path
+                const isActive =
+                  location.pathname === link.path ||
+                  Boolean(link.aliasPaths && link.aliasPaths.includes(location.pathname))
                 return (
                   <Link
                     key={link.path}
@@ -526,7 +551,7 @@ export default function Navbar() {
               </div>
 
               {/* Demais links no Mobile */}
-              {mobileNavLinks.slice(3).map((link) => {
+              {mobileNavLinks.slice(4).map((link) => {
                 const Icon = link.icon
                 const targetPath = link.path.split('#')[0]
                 const targetHash =

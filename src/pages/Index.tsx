@@ -17,6 +17,7 @@ import {
   CheckCircle2,
   Tag,
   Target,
+  CircleDollarSign,
 } from 'lucide-react'
 import {
   ResponsiveContainer,
@@ -390,9 +391,60 @@ export default function Index() {
             </a>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {/* Card 1: Valuation */}
-            <div className="bg-white rounded-2xl border border-stone-200 p-7 sm:p-8 shadow-sm hover:shadow-xl hover:border-[#16A34A] transition-all flex flex-col justify-between group relative overflow-hidden">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+            {/* Card 1: Gestão Financeira */}
+            <div className="bg-white rounded-2xl border border-stone-200 p-6 sm:p-7 shadow-sm hover:shadow-xl hover:border-[#16A34A] transition-all flex flex-col justify-between group relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-[#16A34A]/5 rounded-bl-full pointer-events-none group-hover:bg-[#16A34A]/10 transition-colors" />
+
+              <div>
+                <div className="flex items-center justify-between mb-5">
+                  <div className="w-13 h-13 rounded-xl bg-[#082852] text-[#22C55E] flex items-center justify-center group-hover:scale-105 transition-transform shadow-sm p-3">
+                    <CircleDollarSign className="w-7 h-7" />
+                  </div>
+                  <span className="px-2.5 py-1 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider bg-emerald-50 text-[#15803D] border border-emerald-200">
+                    Controle & Caixa
+                  </span>
+                </div>
+
+                <h3 className="font-serif text-lg sm:text-xl font-bold text-[#082852] mb-2.5 group-hover:text-[#0B3B7A] transition-colors leading-snug">
+                  Gestão Financeira
+                </h3>
+
+                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-sans mb-5">
+                  Fluxo de caixa prático, diferença entre lucro e caixa real, ferramentas de
+                  decisão, diagnóstico dos 48 indicadores e análise de risco de insolvência imediata
+                  e em 12 meses.
+                </p>
+
+                <div className="space-y-2 mb-6 pt-3 border-t border-slate-100 font-sans text-xs text-slate-600">
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-[#16A34A] shrink-0" />
+                    <span>Ciclo operacional vs. financeiro & NCG</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-[#16A34A] shrink-0" />
+                    <span>Ferramentas: DRE, Ponto de Equilíbrio e Liquidez</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-[#16A34A] shrink-0" />
+                    <span>48 indicadores e insolvência em 12 meses</span>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <Link
+                  to="/gestao-financeira"
+                  className="w-full inline-flex items-center justify-center gap-2 px-5 py-3 bg-[#082852] hover:bg-[#0B3B7A] text-white text-xs font-mono font-bold uppercase tracking-wider rounded-lg transition-all shadow group/btn border border-[#0B3B7A] hover:border-[#16A34A]"
+                >
+                  <span>Conhecer Gestão</span>
+                  <ArrowRight className="w-4 h-4 text-[#22C55E] group-hover/btn:translate-x-1 transition-transform" />
+                </Link>
+              </div>
+            </div>
+
+            {/* Card 2: Valuation */}
+            <div className="bg-white rounded-2xl border border-stone-200 p-6 sm:p-7 shadow-sm hover:shadow-xl hover:border-[#16A34A] transition-all flex flex-col justify-between group relative overflow-hidden">
               <div className="absolute top-0 right-0 w-32 h-32 bg-[#16A34A]/5 rounded-bl-full pointer-events-none group-hover:bg-[#16A34A]/10 transition-colors" />
 
               <div>
@@ -443,8 +495,8 @@ export default function Index() {
               </div>
             </div>
 
-            {/* Card 2: Planejamento */}
-            <div className="bg-white rounded-2xl border border-slate-200 p-7 sm:p-8 shadow-sm hover:shadow-xl hover:border-[#16A34A] transition-all flex flex-col justify-between group relative overflow-hidden">
+            {/* Card 3: Planejamento */}
+            <div className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-7 shadow-sm hover:shadow-xl hover:border-[#16A34A] transition-all flex flex-col justify-between group relative overflow-hidden">
               <div className="absolute top-0 right-0 w-32 h-32 bg-[#0B3B7A]/5 rounded-bl-full pointer-events-none group-hover:bg-[#0B3B7A]/10 transition-colors" />
 
               <div>
@@ -494,8 +546,8 @@ export default function Index() {
               </div>
             </div>
 
-            {/* Card 3: Formação de Preço para Vendas */}
-            <div className="bg-white rounded-2xl border border-stone-200 p-7 sm:p-8 shadow-sm hover:shadow-xl hover:border-[#16A34A] transition-all flex flex-col justify-between group relative overflow-hidden">
+            {/* Card 4: Formação de Preço para Vendas */}
+            <div className="bg-white rounded-2xl border border-stone-200 p-6 sm:p-7 shadow-sm hover:shadow-xl hover:border-[#16A34A] transition-all flex flex-col justify-between group relative overflow-hidden">
               <div className="absolute top-0 right-0 w-32 h-32 bg-[#16A34A]/5 rounded-bl-full pointer-events-none group-hover:bg-[#16A34A]/10 transition-colors" />
 
               <div>
@@ -545,8 +597,8 @@ export default function Index() {
               </div>
             </div>
 
-            {/* Card 4: Balanced Scorecard */}
-            <div className="bg-white rounded-2xl border border-stone-200 p-7 sm:p-8 shadow-sm hover:shadow-xl hover:border-[#16A34A] transition-all flex flex-col justify-between group relative overflow-hidden">
+            {/* Card 5: Balanced Scorecard */}
+            <div className="bg-white rounded-2xl border border-stone-200 p-6 sm:p-7 shadow-sm hover:shadow-xl hover:border-[#16A34A] transition-all flex flex-col justify-between group relative overflow-hidden">
               <div className="absolute top-0 right-0 w-32 h-32 bg-[#16A34A]/5 rounded-bl-full pointer-events-none group-hover:bg-[#16A34A]/10 transition-colors" />
 
               <div>
