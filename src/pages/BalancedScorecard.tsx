@@ -320,7 +320,7 @@ export default function BalancedScorecard() {
   const CurIcon = curPerspective.icon
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#F5F3EC]">
+    <div className="flex flex-col min-h-screen bg-[#F0F4F8]">
       {/* 1. HERO INSTITUCIONAL */}
       <section className="bg-[#082852] text-white py-16 sm:py-24 border-b border-[#0B3B7A] relative overflow-hidden">
         <div className="absolute -top-28 -right-28 w-96 h-96 bg-[#16A34A]/20 rounded-full blur-3xl pointer-events-none" />
@@ -428,7 +428,7 @@ export default function BalancedScorecard() {
               </p>
             </div>
 
-            <div className="lg:col-span-4 bg-[#EDEAE0]/70 p-6 rounded-xl border border-stone-200 flex flex-col justify-between space-y-4">
+            <div className="lg:col-span-4 bg-[#E5EDF5]/70 p-6 rounded-xl border border-stone-200 flex flex-col justify-between space-y-4">
               <div className="space-y-2">
                 <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#15803D]">
                   Contato Direto com o Consultor
@@ -659,7 +659,7 @@ export default function BalancedScorecard() {
           </div>
 
           {/* Active Tab Content */}
-          <div className="bg-[#EDEAE0]/40 rounded-2xl border border-stone-200 p-6 sm:p-10 animate-fade-in">
+          <div className="bg-[#E5EDF5]/40 rounded-2xl border border-stone-200 p-6 sm:p-10 animate-fade-in">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
               {/* Left Column: Details & KPIs */}
               <div className="lg:col-span-8 space-y-6">
@@ -1026,7 +1026,7 @@ export default function BalancedScorecard() {
                 >
                   <button
                     onClick={() => setOpenFaq(isOpen ? null : idx)}
-                    className="w-full text-left px-6 py-4.5 bg-[#EDEAE0]/50 hover:bg-stone-100 flex items-center justify-between gap-4 transition-colors"
+                    className="w-full text-left px-6 py-4.5 bg-[#E5EDF5]/50 hover:bg-stone-100 flex items-center justify-between gap-4 transition-colors"
                   >
                     <span className="font-serif text-sm sm:text-base font-bold text-[#082852] flex items-center gap-2">
                       <HelpCircle className="w-4 h-4 text-[#16A34A] shrink-0" />

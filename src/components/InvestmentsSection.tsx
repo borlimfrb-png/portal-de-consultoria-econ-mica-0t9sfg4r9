@@ -327,7 +327,7 @@ export default function InvestmentsSection({ rates }: InvestmentsSectionProps) {
                       className={`transition-colors ${
                         item.isBest
                           ? 'bg-emerald-50/70 font-semibold'
-                          : 'hover:bg-[#F5F3EC]/50 text-slate-800'
+                          : 'hover:bg-[#F0F4F8]/50 text-slate-800'
                       }`}
                     >
                       <td className="py-4 px-4 text-center">
@@ -474,7 +474,7 @@ export default function InvestmentsSection({ rates }: InvestmentsSectionProps) {
                     value={inputAmount}
                     onChange={handleAmountChange}
                     placeholder="Ex: 10.000"
-                    className="w-full pl-11 pr-4 py-3 bg-[#F5F3EC]/50 border-2 border-stone-200 rounded-xl font-mono text-xl font-bold text-[#082852] focus:outline-none focus:border-[#16A34A] focus:bg-white transition-all shadow-inner"
+                    className="w-full pl-11 pr-4 py-3 bg-[#F0F4F8]/50 border-2 border-stone-200 rounded-xl font-mono text-xl font-bold text-[#082852] focus:outline-none focus:border-[#16A34A] focus:bg-white transition-all shadow-inner"
                   />
                   {inputAmount && (
                     <button
@@ -659,7 +659,7 @@ export default function InvestmentsSection({ rates }: InvestmentsSectionProps) {
                       className={`transition-colors ${
                         row.isBest
                           ? 'bg-emerald-50/80 font-semibold'
-                          : 'hover:bg-[#F5F3EC]/50 text-slate-800'
+                          : 'hover:bg-[#F0F4F8]/50 text-slate-800'
                       }`}
                     >
                       <td className="py-4 px-4">

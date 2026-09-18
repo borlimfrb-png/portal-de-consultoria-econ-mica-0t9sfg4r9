@@ -115,7 +115,7 @@ export default function Noticias() {
   ]
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#F5F3EC]">
+    <div className="flex flex-col min-h-screen bg-[#F0F4F8]">
       {/* 1. Header Band (Clean Blue/White) */}
       <section className="bg-gradient-to-r from-[#082852] to-[#0B3B7A] text-white border-b border-[#0B3B7A] py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

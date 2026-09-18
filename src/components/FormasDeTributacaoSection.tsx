@@ -287,7 +287,7 @@ export default function FormasDeTributacaoSection() {
   return (
     <section
       id="formas-de-tributacao"
-      className="bg-[#F5F3EC] py-16 sm:py-24 border-b border-stone-200 scroll-mt-20 relative overflow-hidden"
+      className="bg-[#F0F4F8] py-16 sm:py-24 border-b border-stone-200 scroll-mt-20 relative overflow-hidden"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Cabeçalho da Seção */}
@@ -394,7 +394,7 @@ export default function FormasDeTributacaoSection() {
             </div>
 
             {/* Banner de Limite de Faturamento em Destaque */}
-            <div className="bg-[#EDEAE0]/70 p-4 sm:p-5 rounded-2xl border border-stone-200 max-w-md shrink-0">
+            <div className="bg-[#E5EDF5]/70 p-4 sm:p-5 rounded-2xl border border-stone-200 max-w-md shrink-0">
               <div className="flex items-center gap-2 text-xs font-mono font-bold uppercase text-[#15803D] mb-1">
                 <BadgeDollarSign className="w-4 h-4 text-[#16A34A]" />
                 <span>Limite Legal de Faturamento</span>
@@ -430,7 +430,7 @@ export default function FormasDeTributacaoSection() {
               {currentRegime.comoFunciona.pontos.map((ponto, idx) => (
                 <div
                   key={idx}
-                  className="p-4 sm:p-5 rounded-xl bg-[#F5F3EC]/60 border border-stone-200 hover:border-[#16A34A]/50 transition-colors"
+                  className="p-4 sm:p-5 rounded-xl bg-[#F0F4F8]/60 border border-stone-200 hover:border-[#16A34A]/50 transition-colors"
                 >
                   <h4 className="font-serif text-sm sm:text-base font-bold text-[#082852] mb-1.5 flex items-start gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#16A34A] mt-2 shrink-0" />

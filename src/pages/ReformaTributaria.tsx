@@ -343,7 +343,7 @@ export default function ReformaTributaria() {
   ]
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#F5F3EC]">
+    <div className="flex flex-col min-h-screen bg-[#F0F4F8]">
       {/* 1. HERO INSTITUCIONAL */}
       <section className="bg-[#082852] text-white py-16 sm:py-24 border-b border-[#0B3B7A] relative overflow-hidden">
         <div className="absolute -top-28 -right-28 w-96 h-96 bg-[#16A34A]/20 rounded-full blur-3xl pointer-events-none" />
@@ -456,7 +456,7 @@ export default function ReformaTributaria() {
               </p>
             </div>
 
-            <div className="lg:col-span-4 bg-[#EDEAE0]/70 p-6 rounded-xl border border-stone-200 flex flex-col justify-between space-y-4">
+            <div className="lg:col-span-4 bg-[#E5EDF5]/70 p-6 rounded-xl border border-stone-200 flex flex-col justify-between space-y-4">
               <div className="space-y-2">
                 <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#15803D]">
                   Orientação Técnica Especializada
@@ -612,7 +612,7 @@ export default function ReformaTributaria() {
                 className={`py-3 px-3 rounded-xl text-center transition-all border ${
                   activeTransitionTab === idx
                     ? 'bg-[#082852] text-white border-[#082852] shadow-md'
-                    : 'bg-[#F5F3EC]/70 hover:bg-stone-200/80 text-slate-700 border-stone-200'
+                    : 'bg-[#F0F4F8]/70 hover:bg-stone-200/80 text-slate-700 border-stone-200'
                 }`}
               >
                 <span className="font-mono text-base sm:text-lg font-bold block">{step.ano}</span>
@@ -631,7 +631,7 @@ export default function ReformaTributaria() {
           {(() => {
             const currentStep = timelineTransition[activeTransitionTab]
             return (
-              <div className="bg-[#F5F3EC]/50 p-6 sm:p-10 rounded-3xl border border-stone-200 shadow-sm animate-in fade-in-50 duration-200">
+              <div className="bg-[#F0F4F8]/50 p-6 sm:p-10 rounded-3xl border border-stone-200 shadow-sm animate-in fade-in-50 duration-200">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-stone-200">
                   <div className="flex items-center gap-4">
                     <div className="w-14 h-14 rounded-2xl bg-[#082852] text-[#22C55E] flex items-center justify-center font-mono text-xl font-bold shadow-md shrink-0">
@@ -860,7 +860,7 @@ export default function ReformaTributaria() {
             {planoAcaoEmpresarial.map((item, idx) => (
               <div
                 key={idx}
-                className="bg-[#F5F3EC]/60 p-7 rounded-2xl border border-stone-200 flex flex-col justify-between hover:border-[#16A34A] transition-all group"
+                className="bg-[#F0F4F8]/60 p-7 rounded-2xl border border-stone-200 flex flex-col justify-between hover:border-[#16A34A] transition-all group"
               >
                 <div>
                   <span className="font-mono text-3xl font-bold text-[#16A34A] block mb-3 group-hover:scale-105 transition-transform">
@@ -926,7 +926,7 @@ export default function ReformaTributaria() {
             </div>
             <Link
               to="/formacao-de-preco"
-              className="inline-flex items-center justify-between w-full py-2.5 px-3.5 rounded-lg bg-[#F5F3EC] hover:bg-[#16A34A] text-[#082852] hover:text-white font-mono text-xs font-bold uppercase tracking-wider transition-all"
+              className="inline-flex items-center justify-between w-full py-2.5 px-3.5 rounded-lg bg-[#F0F4F8] hover:bg-[#16A34A] text-[#082852] hover:text-white font-mono text-xs font-bold uppercase tracking-wider transition-all"
             >
               <span>Acessar Formação de Preço</span>
               <ArrowRight className="w-4 h-4" />
@@ -953,7 +953,7 @@ export default function ReformaTributaria() {
             </div>
             <Link
               to="/planejamento"
-              className="inline-flex items-center justify-between w-full py-2.5 px-3.5 rounded-lg bg-[#F5F3EC] hover:bg-[#16A34A] text-[#082852] hover:text-white font-mono text-xs font-bold uppercase tracking-wider transition-all"
+              className="inline-flex items-center justify-between w-full py-2.5 px-3.5 rounded-lg bg-[#F0F4F8] hover:bg-[#16A34A] text-[#082852] hover:text-white font-mono text-xs font-bold uppercase tracking-wider transition-all"
             >
               <span>Acessar Planejamento</span>
               <ArrowRight className="w-4 h-4" />
@@ -980,7 +980,7 @@ export default function ReformaTributaria() {
             </div>
             <Link
               to="/agenda-tributaria"
-              className="inline-flex items-center justify-between w-full py-2.5 px-3.5 rounded-lg bg-[#F5F3EC] hover:bg-[#16A34A] text-[#082852] hover:text-white font-mono text-xs font-bold uppercase tracking-wider transition-all"
+              className="inline-flex items-center justify-between w-full py-2.5 px-3.5 rounded-lg bg-[#F0F4F8] hover:bg-[#16A34A] text-[#082852] hover:text-white font-mono text-xs font-bold uppercase tracking-wider transition-all"
             >
               <span>Acessar Agenda Tributária</span>
               <ArrowRight className="w-4 h-4" />
@@ -1011,7 +1011,7 @@ export default function ReformaTributaria() {
               return (
                 <div
                   key={idx}
-                  className="rounded-2xl border border-stone-200 bg-[#F5F3EC]/40 overflow-hidden transition-all duration-200"
+                  className="rounded-2xl border border-stone-200 bg-[#F0F4F8]/40 overflow-hidden transition-all duration-200"
                 >
                   <button
                     type="button"

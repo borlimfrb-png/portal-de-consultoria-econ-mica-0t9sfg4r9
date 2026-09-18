@@ -112,9 +112,10 @@ export default function NoticiaDetalhe() {
   const dolar = indicators.find((i) => i.code === 'dolar_comercial')
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#F5F3EC]">
-      {/* 1. Breadcrumb / Navigation */}
-      <div className="bg-[#EDEAE0]/80 border-b border-stone-200/80 py-3">
+    <div className="flex flex-col min-h-screen bg-[#F0F4F8]">
+      {/* Breadcrumb Bar */}
+      <div className="bg-[#E5EDF5]/80 border-b border-stone-200/80 py-3">
+        {' '}
         <div className="max-w-4xl mx-auto px-4 sm:px-6 flex items-center justify-between text-xs font-mono text-slate-600">
           <Link
             to="/noticias"

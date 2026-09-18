@@ -131,7 +131,7 @@ export default function AgendaTributaria() {
   ]
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#F5F3EC]">
+    <div className="flex flex-col min-h-screen bg-[#F0F4F8]">
       {/* 1. HERO SECTION */}
       <section className="bg-[#082852] text-white py-14 sm:py-20 border-b border-[#0B3B7A] relative overflow-hidden">
         <div className="absolute -top-28 -right-28 w-96 h-96 bg-[#16A34A]/20 rounded-full blur-3xl pointer-events-none" />
@@ -335,7 +335,7 @@ export default function AgendaTributaria() {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Buscar por tributo, sigla (ex: DAS, IRPJ, PIS) ou código de receita..."
-              className="w-full pl-9 pr-3 py-2 text-xs sm:text-sm rounded-lg border border-stone-200 focus:outline-none focus:border-[#16A34A] focus:ring-1 focus:ring-[#16A34A] bg-[#F5F3EC]/40"
+              className="w-full pl-9 pr-3 py-2 text-xs sm:text-sm rounded-lg border border-stone-200 focus:outline-none focus:border-[#16A34A] focus:ring-1 focus:ring-[#16A34A] bg-[#F0F4F8]/40"
             />
             {searchTerm && (
               <button
@@ -487,7 +487,7 @@ export default function AgendaTributaria() {
                     </div>
 
                     {/* Lado Direito: Código de Receita DARF/DAS */}
-                    <div className="w-full lg:w-auto flex flex-row lg:flex-col items-center lg:items-end justify-between lg:justify-center gap-2 bg-[#F5F3EC]/70 p-3 rounded-xl border border-stone-200 shrink-0">
+                    <div className="w-full lg:w-auto flex flex-row lg:flex-col items-center lg:items-end justify-between lg:justify-center gap-2 bg-[#F0F4F8]/70 p-3 rounded-xl border border-stone-200 shrink-0">
                       <div className="text-left lg:text-right">
                         <span className="text-[10px] font-mono uppercase tracking-wider text-slate-500 block font-bold">
                           Código de Receita / Guia
@@ -589,7 +589,7 @@ export default function AgendaTributaria() {
             </div>
 
             <div className="space-y-3 text-xs sm:text-sm font-sans text-slate-700">
-              <div className="grid grid-cols-2 gap-3 bg-[#F5F3EC] p-3 rounded-xl border border-stone-200 font-mono text-xs">
+              <div className="grid grid-cols-2 gap-3 bg-[#F0F4F8] p-3 rounded-xl border border-stone-200 font-mono text-xs">
                 <div>
                   <span className="text-slate-500 block text-[10px]">CÓDIGO DE RECEITA:</span>
                   <span className="font-bold text-[#082852]">

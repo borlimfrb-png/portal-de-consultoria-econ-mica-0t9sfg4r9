@@ -206,7 +206,7 @@ export default function Sobre() {
   ]
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#F5F3EC]">
+    <div className="flex flex-col min-h-screen bg-[#F0F4F8]">
       {/* 1. Header Hero (Navy/Blue) */}
       <section className="bg-[#082852] text-white py-16 sm:py-20 border-b border-[#0B3B7A] relative overflow-hidden">
         <div className="absolute -top-28 -right-28 w-96 h-96 bg-[#16A34A]/20 rounded-full blur-3xl pointer-events-none" />
@@ -474,7 +474,7 @@ export default function Sobre() {
                 return (
                   <div
                     key={idx}
-                    className="p-6 rounded-xl border border-stone-200 bg-[#EDEAE0]/60 hover:border-[#16A34A] transition-all flex items-start gap-4"
+                    className="p-6 rounded-xl border border-stone-200 bg-[#E5EDF5]/60 hover:border-[#16A34A] transition-all flex items-start gap-4"
                   >
                     <div className="w-12 h-12 rounded-lg bg-[#082852] text-[#22C55E] flex items-center justify-center shrink-0">
                       <Icon className="w-6 h-6" />
@@ -518,7 +518,7 @@ export default function Sobre() {
                     className={`p-6 sm:p-7 rounded-xl border flex flex-col justify-between transition-all ${
                       isBorlimPillar
                         ? 'bg-emerald-50/50 border-[#16A34A] shadow-xs'
-                        : 'bg-[#EDEAE0]/60 border-stone-200'
+                        : 'bg-[#E5EDF5]/60 border-stone-200'
                     }`}
                   >
                     <div>
@@ -568,7 +568,7 @@ export default function Sobre() {
           </div>
 
           {/* O Passo a Passo da Avaliação Borlim */}
-          <div className="mb-14 bg-[#EDEAE0]/60 p-8 rounded-xl border border-stone-200">
+          <div className="mb-14 bg-[#E5EDF5]/60 p-8 rounded-xl border border-stone-200">
             <div className="mb-8 max-w-2xl">
               <span className="text-xs font-mono uppercase tracking-widest text-[#15803D] font-bold">
                 Fluxo Técnico

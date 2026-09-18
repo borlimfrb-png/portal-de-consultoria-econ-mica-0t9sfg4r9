@@ -7,8 +7,8 @@
 
 @layer base {
   :root {
-    /* Brand Colors: Borlim Official Palette — Blue (#0B3B7A / #082852), Green (#16A34A / #15803D), Warm Off-White/Ivory (#F5F3EC / #EDEAE0) */
-    --background: 45 24% 95%; /* #F5F3EC Warm Ivory / Off-White */
+    /* Brand Colors: Borlim Official Palette — Blue (#0B3B7A / #082852), Green (#16A34A / #15803D), Cool Off-White/Soft Blue-Gray (#F0F4F8 / #E5EDF5) */
+    --background: 213 33% 96%; /* #F0F4F8 Soft Cool Blue-tinted Off-White */
     --foreground: 214 84% 18%; /* #0B3B7A Deep Borlim Royal Blue */
 
     --card: 0 0% 100%;
@@ -23,7 +23,7 @@
     --secondary: 142 45% 92%; /* Borlim subtle green tint */
     --secondary-foreground: 142 76% 22%;
 
-    --muted: 40 18% 91%; /* #ECE9E1 Warm Muted */
+    --muted: 214 25% 93%; /* #E5EDF5 Soft Cool Blue Muted */
     --muted-foreground: 215 25% 42%;
 
     --accent: 142 76% 36%; /* #16A34A Borlim Emerald Green */
@@ -32,8 +32,8 @@
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 40 14% 87%; /* #E3DFD5 Warm border */
-    --input: 40 14% 87%;
+    --border: 214 20% 88%; /* #D9E2EC Cool subtle border */
+    --input: 214 20% 88%;
     --ring: 142 76% 36%;
 
     --chart-1: 214 83% 26%; /* #0B3B7A */
@@ -57,8 +57,8 @@
     --borlim-green-light: #22c55e;
     --borlim-green-subtle: #dcfce7;
     --borlim-white: #ffffff;
-    --borlim-surface: #f5f3ec;
-    --borlim-surface-soft: #edeae0;
+    --borlim-surface: #f0f4f8;
+    --borlim-surface-soft: #e5edf5;
     --green-gain: #15803d;
     --red-loss: #dc2626;
   }

@@ -90,7 +90,7 @@ export default function BolsaDeValores() {
   ]
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#F5F3EC]">
+    <div className="flex flex-col min-h-screen bg-[#F0F4F8]">
       {/* 1. HERO INSTITUCIONAL */}
       <section className="bg-[#082852] text-white py-14 sm:py-20 border-b border-[#0B3B7A] relative overflow-hidden">
         <div className="absolute -top-24 -right-24 w-96 h-96 bg-[#16A34A]/20 rounded-full blur-3xl pointer-events-none" />
@@ -337,7 +337,7 @@ export default function BolsaDeValores() {
 
           {/* 4 Blocos de Ativos */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-            <div className="bg-[#F5F3EC]/70 rounded-xl p-6 border border-stone-200">
+            <div className="bg-[#F0F4F8]/70 rounded-xl p-6 border border-stone-200">
               <div className="w-10 h-10 rounded-lg bg-[#082852] text-white flex items-center justify-center font-bold mb-4">
                 <Building2 className="w-5 h-5 text-[#22C55E]" />
               </div>
@@ -354,7 +354,7 @@ export default function BolsaDeValores() {
               </p>
             </div>
 
-            <div className="bg-[#F5F3EC]/70 rounded-xl p-6 border border-stone-200">
+            <div className="bg-[#F0F4F8]/70 rounded-xl p-6 border border-stone-200">
               <div className="w-10 h-10 rounded-lg bg-[#082852] text-white flex items-center justify-center font-bold mb-4">
                 <PieChart className="w-5 h-5 text-[#22C55E]" />
               </div>
@@ -371,7 +371,7 @@ export default function BolsaDeValores() {
               </p>
             </div>
 
-            <div className="bg-[#F5F3EC]/70 rounded-xl p-6 border border-stone-200">
+            <div className="bg-[#F0F4F8]/70 rounded-xl p-6 border border-stone-200">
               <div className="w-10 h-10 rounded-lg bg-[#082852] text-white flex items-center justify-center font-bold mb-4">
                 <Coins className="w-5 h-5 text-[#22C55E]" />
               </div>
@@ -388,7 +388,7 @@ export default function BolsaDeValores() {
               </p>
             </div>
 
-            <div className="bg-[#F5F3EC]/70 rounded-xl p-6 border border-stone-200">
+            <div className="bg-[#F0F4F8]/70 rounded-xl p-6 border border-stone-200">
               <div className="w-10 h-10 rounded-lg bg-[#082852] text-white flex items-center justify-center font-bold mb-4">
                 <Landmark className="w-5 h-5 text-[#22C55E]" />
               </div>

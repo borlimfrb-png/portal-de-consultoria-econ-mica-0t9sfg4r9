@@ -297,7 +297,7 @@ export default function Navbar() {
                   className={`group flex items-start gap-3 p-2.5 rounded-lg transition-all duration-150 text-left ${
                     isCurrent
                       ? 'bg-emerald-50/80 border border-emerald-200/80 text-[#0B3B7A]'
-                      : 'hover:bg-[#F5F3EC]/70 text-slate-700 hover:text-[#0B3B7A]'
+                      : 'hover:bg-[#F0F4F8]/70 text-slate-700 hover:text-[#0B3B7A]'
                   }`}
                 >
                   <div
@@ -339,8 +339,8 @@ export default function Navbar() {
     <header
       className={`sticky top-0 z-40 w-full transition-all duration-300 ${
         isScrolled
-          ? 'bg-[#F5F3EC]/95 backdrop-blur-md border-b border-stone-200/80 shadow-sm'
-          : 'bg-[#F5F3EC]/90 backdrop-blur-sm border-b border-stone-200/80'
+          ? 'bg-[#F0F4F8]/95 backdrop-blur-md border-b border-stone-200/80 shadow-sm'
+          : 'bg-[#F0F4F8]/90 backdrop-blur-sm border-b border-stone-200/80'
       }`}
     >
       {/* LINHA 1 (Desktop) / Barra Única (Mobile/Tablet): Logotipo + CTA + Contato */}

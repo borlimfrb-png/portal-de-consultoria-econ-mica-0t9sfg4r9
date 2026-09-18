@@ -220,7 +220,7 @@ export default function Planejamento() {
   ]
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#F5F3EC]">
+    <div className="flex flex-col min-h-screen bg-[#F0F4F8]">
       {/* 1. HERO INSTITUCIONAL */}
       <section className="bg-[#082852] text-white py-16 sm:py-24 border-b border-[#0B3B7A] relative overflow-hidden">
         {/* Subtle decorative glowing backdrops */}
@@ -334,7 +334,7 @@ export default function Planejamento() {
               </p>
             </div>
 
-            <div className="lg:col-span-4 bg-[#EDEAE0]/70 p-6 rounded-xl border border-stone-200 flex flex-col justify-between space-y-4">
+            <div className="lg:col-span-4 bg-[#E5EDF5]/70 p-6 rounded-xl border border-stone-200 flex flex-col justify-between space-y-4">
               <div className="space-y-2">
                 <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#15803D]">
                   Atendimento Direto com o Consultor
@@ -518,7 +518,7 @@ export default function Planejamento() {
             <div className="space-y-8 animate-fade-in">
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
                 <div className="lg:col-span-8 space-y-6">
-                  <div className="bg-[#EDEAE0]/60 p-6 sm:p-8 rounded-2xl border border-stone-200 space-y-4">
+                  <div className="bg-[#E5EDF5]/60 p-6 sm:p-8 rounded-2xl border border-stone-200 space-y-4">
                     <span className="text-xs font-mono font-bold uppercase tracking-widest text-[#15803D]">
                       1. Planejamento Financeiro — Caixa, Liquidez & Capital de Giro
                     </span>
@@ -657,10 +657,10 @@ export default function Planejamento() {
             <div className="space-y-8 animate-fade-in">
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
                 <div className="lg:col-span-8 space-y-6">
-                  <div className="bg-[#EDEAE0]/60 p-6 sm:p-8 rounded-2xl border border-stone-200 space-y-4">
+                  <div className="bg-[#E5EDF5]/60 p-6 sm:p-8 rounded-2xl border border-stone-200 space-y-4">
                     <span className="text-xs font-mono font-bold uppercase tracking-widest text-[#15803D]">
-                      2. Planejamento Econômico — Lucro Mensal & Rentabilidade Real
-                    </span>
+                      2. Planejamento Econômico — DRE, Lucro Real & Margens
+                    </span>{' '}
                     <h3 className="font-serif text-2xl font-bold text-[#082852]">
                       Melhorar o lucro mensal da empresa, alinhando receitas, custos e margens
                     </h3>
@@ -791,10 +791,10 @@ export default function Planejamento() {
             <div className="space-y-8 animate-fade-in">
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
                 <div className="lg:col-span-8 space-y-6">
-                  <div className="bg-[#EDEAE0]/60 p-6 sm:p-8 rounded-2xl border border-stone-200 space-y-4">
+                  <div className="bg-[#E5EDF5]/60 p-6 sm:p-8 rounded-2xl border border-stone-200 space-y-4">
                     <span className="text-xs font-mono font-bold uppercase tracking-widest text-[#15803D]">
-                      3. Balanced Scorecard (BSC) — Competitividade & Retenção de Negócios
-                    </span>
+                      3. Os 48 Indicadores — A Radiografia Financeira Completa
+                    </span>{' '}
                     <h3 className="font-serif text-2xl font-bold text-[#082852]">
                       A empresa fica muito mais competitiva no mercado: nenhum negócio será perdido
                       com a implantação do Balanced Scorecard
@@ -1159,7 +1159,7 @@ export default function Planejamento() {
                 >
                   <button
                     onClick={() => setOpenFaq(isOpen ? null : idx)}
-                    className="w-full text-left px-6 py-4.5 bg-[#EDEAE0]/50 hover:bg-stone-100 flex items-center justify-between gap-4 transition-colors"
+                    className="w-full text-left px-6 py-4.5 bg-[#E5EDF5]/50 hover:bg-stone-100 flex items-center justify-between gap-4 transition-colors"
                   >
                     <span className="font-serif text-sm sm:text-base font-bold text-[#082852] flex items-center gap-2">
                       <HelpCircle className="w-4 h-4 text-[#16A34A] shrink-0" />
