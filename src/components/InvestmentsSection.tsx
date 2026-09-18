@@ -44,17 +44,47 @@ export default function InvestmentsSection({ rates }: InvestmentsSectionProps) {
   const bestOption = ranking[0]
 
   // Estado interativo do Simulador - SEM GRAVAR NADA (em memória)
-  const [inputAmount, setInputAmount] = useState<string>('10000')
+  const [inputAmount, setInputAmount] = useState<string>('10.000,00')
   const [selectedMonths, setSelectedMonths] = useState<number>(12)
   const [activeTab, setActiveTab] = useState<'ranking' | 'simulador'>('ranking')
 
-  // Limpeza de valor numérico
-  const numericAmount = useMemo(() => {
-    if (!inputAmount) return 0
-    // Remove tudo exceto dígitos e vírgulas/pontos
-    const cleaned = inputAmount.replace(/\./g, '').replace(',', '.')
+  // Formatador monetário padrão pt-BR: R$ 1.234,56
+  const formatBRL = (value: number) => {
+    return new Intl.NumberFormat('pt-BR', {
+      style: 'currency',
+      currency: 'BRL',
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(value)
+  }
+
+  // Limpeza e interpretação de valor numérico no padrão brasileiro (10.000,50 ou 10000.50)
+  const parseBrazilianNumber = (str: string): number => {
+    if (!str) return 0
+    // Remove R$ e espaços
+    let cleaned = str.replace(/[R$\s]/g, '').trim()
+    if (!cleaned) return 0
+
+    // Se possui vírgula, tratamos vírgula como separador decimal (padrão pt-BR)
+    if (cleaned.includes(',')) {
+      // Remove pontos de milhar e substitui vírgula por ponto
+      cleaned = cleaned.replace(/\./g, '').replace(',', '.')
+    } else if (cleaned.includes('.')) {
+      // Se tiver múltiplos pontos, são separadores de milhar (ex: 1.000.000)
+      const parts = cleaned.split('.')
+      if (parts.length > 2) {
+        cleaned = cleaned.replace(/\./g, '')
+      } else if (parts[1] && parts[1].length === 3) {
+        // Ex: 10.000 -> é milhar, não decimal
+        cleaned = cleaned.replace(/\./g, '')
+      }
+    }
     const parsed = parseFloat(cleaned)
     return isNaN(parsed) || parsed < 0 ? 0 : parsed
+  }
+
+  const numericAmount = useMemo(() => {
+    return parseBrazilianNumber(inputAmount)
   }, [inputAmount])
 
   // Exemplo visual pré-preenchido se o usuário zerar o campo
@@ -69,16 +99,6 @@ export default function InvestmentsSection({ rates }: InvestmentsSectionProps) {
   const bestSimResult = simulationResults[0]
   const currentTaxInfo = useMemo(() => getRegressiveTaxRate(selectedMonths), [selectedMonths])
 
-  // Formatadores de moeda e porcentagem
-  const formatBRL = (value: number) => {
-    return value.toLocaleString('pt-BR', {
-      style: 'currency',
-      currency: 'BRL',
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    })
-  }
-
   const formatPercent = (value: number) => {
     return `${value.toLocaleString('pt-BR', {
       minimumFractionDigits: 2,
@@ -88,7 +108,7 @@ export default function InvestmentsSection({ rates }: InvestmentsSectionProps) {
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value
-    // Permitir dígitos e formatação amigável
+    // Permitir dígitos, ponto e vírgula
     setInputAmount(val)
   }
 
@@ -475,7 +495,14 @@ export default function InvestmentsSection({ rates }: InvestmentsSectionProps) {
                     <button
                       key={amt}
                       type="button"
-                      onClick={() => setInputAmount(amt.toString())}
+                      onClick={() =>
+                        setInputAmount(
+                          amt.toLocaleString('pt-BR', {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2,
+                          }),
+                        )
+                      }
                       className={`px-2 py-0.5 rounded text-[11px] font-mono font-semibold transition-colors ${
                         numericAmount === amt
                           ? 'bg-[#082852] text-white'

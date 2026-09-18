@@ -15,6 +15,7 @@ import FormacaoPreco from './pages/FormacaoPreco'
 import BalancedScorecard from './pages/BalancedScorecard'
 import AgendaTributaria from './pages/AgendaTributaria'
 import ReformaTributaria from './pages/ReformaTributaria'
+import BolsaDeValores from './pages/BolsaDeValores'
 import NotFound from './pages/NotFound'
 
 const App = () => (
@@ -28,6 +29,8 @@ const App = () => (
           <Route path="/indicadores" element={<Indicadores />} />
           <Route path="/noticias" element={<Noticias />} />
           <Route path="/noticias/:id" element={<NoticiaDetalhe />} />
+          <Route path="/bolsa-de-valores" element={<BolsaDeValores />} />
+          <Route path="/bolsa" element={<BolsaDeValores />} />
           <Route path="/valuation" element={<Valuation />} />
           <Route path="/avaliacao-de-empresas" element={<Valuation />} />
           <Route path="/planejamento" element={<Planejamento />} />

@@ -106,6 +106,24 @@ export default function Footer() {
               </li>
               <li>
                 <Link
+                  to="/bolsa-de-valores"
+                  className="hover:text-[#22C55E] transition-colors flex items-center gap-1.5"
+                >
+                  <span className="text-[#16A34A] text-xs">›</span> Bolsa de Valores & Mercados
+                  Globais
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/reforma-tributaria#formas-de-tributacao"
+                  className="hover:text-[#22C55E] transition-colors flex items-center gap-1.5"
+                >
+                  <span className="text-[#16A34A] text-xs">›</span> Formas de Tributação (Simples,
+                  Presumido, Real)
+                </Link>
+              </li>
+              <li>
+                <Link
                   to="/noticias"
                   className="hover:text-[#22C55E] transition-colors flex items-center gap-1.5"
                 >

@@ -56,12 +56,19 @@ export default function IndicatorCard({
       {/* Main Value & Unit */}
       <div className="flex items-baseline gap-2 mb-3">
         <span className="font-mono text-3xl font-extrabold text-[#082852] tracking-tight">
-          {indicator.current_value.toLocaleString('pt-BR', {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2,
-          })}
+          {indicator.unit === 'R$'
+            ? indicator.current_value.toLocaleString('pt-BR', {
+                style: 'currency',
+                currency: 'BRL',
+              })
+            : indicator.current_value.toLocaleString('pt-BR', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })}
         </span>
-        <span className="text-sm font-semibold text-slate-500 font-mono">{indicator.unit}</span>
+        {indicator.unit !== 'R$' && (
+          <span className="text-sm font-semibold text-slate-500 font-mono">{indicator.unit}</span>
+        )}
       </div>
 
       {/* Variation & Sparkline Row */}

@@ -71,11 +71,15 @@ export default function TopTicker() {
                     {item.short_name}
                   </span>
                   <span className="text-slate-200 tabular-nums font-bold">
-                    {item.current_value.toLocaleString('pt-BR', {
-                      minimumFractionDigits: 2,
-                      maximumFractionDigits: 2,
-                    })}{' '}
-                    {item.unit}
+                    {item.unit === 'R$'
+                      ? item.current_value.toLocaleString('pt-BR', {
+                          style: 'currency',
+                          currency: 'BRL',
+                        })
+                      : `${item.current_value.toLocaleString('pt-BR', {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
+                        })} ${item.unit}`}
                   </span>
 
                   {!isZero && (

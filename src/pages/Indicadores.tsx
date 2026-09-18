@@ -314,14 +314,21 @@ export default function Indicadores() {
                     <div className="flex flex-wrap items-baseline justify-between gap-4 p-4 bg-[#F5F3EC]/70 rounded-lg border border-stone-200 mb-6">
                       <div className="flex items-baseline gap-2">
                         <span className="font-mono text-4xl font-extrabold text-[#082852] tracking-tight">
-                          {indicator.current_value.toLocaleString('pt-BR', {
-                            minimumFractionDigits: 2,
-                            maximumFractionDigits: 2,
-                          })}
+                          {indicator.unit === 'R$'
+                            ? indicator.current_value.toLocaleString('pt-BR', {
+                                style: 'currency',
+                                currency: 'BRL',
+                              })
+                            : indicator.current_value.toLocaleString('pt-BR', {
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2,
+                              })}
                         </span>
-                        <span className="text-base font-semibold font-mono text-slate-600">
-                          {indicator.unit}
-                        </span>
+                        {indicator.unit !== 'R$' && (
+                          <span className="text-base font-semibold font-mono text-slate-600">
+                            {indicator.unit}
+                          </span>
+                        )}
                       </div>
 
                       <div className="flex items-center gap-2 font-mono text-xs">
@@ -382,11 +389,15 @@ export default function Indicadores() {
                                 >
                                   <span className="text-[10px] text-slate-500">{dLabel}</span>
                                   <span className="font-bold text-[#082852] tabular-nums">
-                                    {obs.value.toLocaleString('pt-BR', {
-                                      minimumFractionDigits: 2,
-                                      maximumFractionDigits: 2,
-                                    })}{' '}
-                                    {indicator.unit}
+                                    {indicator.unit === 'R$'
+                                      ? obs.value.toLocaleString('pt-BR', {
+                                          style: 'currency',
+                                          currency: 'BRL',
+                                        })
+                                      : `${obs.value.toLocaleString('pt-BR', {
+                                          minimumFractionDigits: 2,
+                                          maximumFractionDigits: 2,
+                                        })} ${indicator.unit}`}
                                   </span>
                                 </div>
                               )

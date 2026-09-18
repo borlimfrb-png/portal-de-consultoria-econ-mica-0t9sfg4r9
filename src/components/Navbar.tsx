@@ -20,6 +20,7 @@ import {
   ChevronDown,
   Briefcase,
   Scale,
+  Globe,
 } from 'lucide-react'
 import logoBorlim from '@/assets/logo-borlim-debb0.png'
 
@@ -84,7 +85,7 @@ export default function Navbar() {
     }, 150)
   }
 
-  // 4 serviços agrupados
+  // 4 serviços agrupados no dropdown
   const serviceItems = [
     {
       label: 'Valuation',
@@ -114,25 +115,31 @@ export default function Navbar() {
       description: 'Gestão estratégica nas 4 perspectivas para não perder negócios',
       icon: Target,
     },
-    {
-      label: 'Análise de Tributação',
-      path: '/reforma-tributaria#formas-de-tributacao',
-      aliasPaths: [],
-      description: 'Simples Nacional, Lucro Presumido e Lucro Real comparados',
-      icon: Scale,
-    },
   ]
 
   const isServiceActive = serviceItems.some(
     (item) => location.pathname === item.path || item.aliasPaths.includes(location.pathname),
   )
 
-  // Top direct nav links (excluding services which are in dropdown)
+  // Top direct nav links (visíveis na barra principal)
   const directNavLinksBefore = [
     { label: 'Início', path: '/', icon: Home },
     { label: 'Indicadores', path: '/indicadores', icon: TrendingUp },
+    {
+      label: 'Bolsa de Valores',
+      path: '/bolsa-de-valores',
+      aliasPaths: ['/bolsa'],
+      icon: Globe,
+    },
+    {
+      label: 'Tributação',
+      path: '/reforma-tributaria#formas-de-tributacao',
+      aliasPaths: [],
+      icon: Scale,
+      hash: '#formas-de-tributacao',
+    },
     { label: 'Notícias', path: '/noticias', icon: Newspaper },
-    { label: 'Agenda Tributária', path: '/agenda-tributaria', icon: CalendarDays },
+    { label: 'Agenda', path: '/agenda-tributaria', icon: CalendarDays },
     {
       label: 'Reforma Tributária',
       path: '/reforma-tributaria',
@@ -177,16 +184,21 @@ export default function Navbar() {
           aria-label="Navegação principal"
         >
           <div className="flex items-center justify-center gap-x-0.5 xl:gap-x-1 2xl:gap-x-2">
-            {/* Links Início, Indicadores, Notícias, Agenda Tributária, Reforma Tributária */}
+            {/* Links Início, Indicadores, Bolsa de Valores, Tributação, Notícias, Agenda Tributária, Reforma Tributária */}
             {directNavLinksBefore.map((link) => {
-              const isActive =
-                location.pathname === link.path ||
-                (link.aliasPaths && link.aliasPaths.includes(location.pathname))
+              const targetPath = link.path.split('#')[0]
+              const targetHash =
+                link.hash || (link.path.includes('#') ? '#' + link.path.split('#')[1] : '')
+              const isActive = targetHash
+                ? location.pathname === targetPath && location.hash === targetHash
+                : location.pathname === link.path ||
+                  Boolean(link.aliasPaths && link.aliasPaths.includes(location.pathname))
+
               return (
                 <Link
                   key={link.path}
                   to={link.path}
-                  className={`group relative px-1.5 xl:px-2.5 2xl:px-3 py-1.5 text-xs xl:text-[13px] 2xl:text-sm font-medium tracking-tight xl:tracking-normal transition-colors whitespace-nowrap rounded-md hover:bg-stone-100/70 shrink-0 ${
+                  className={`group relative px-1.5 xl:px-2 2xl:px-2.5 py-1.5 text-xs xl:text-[13px] 2xl:text-sm font-medium tracking-tight xl:tracking-normal transition-colors whitespace-nowrap rounded-md hover:bg-stone-100/70 shrink-0 ${
                     isActive ? 'text-[#0B3B7A] font-bold' : 'text-slate-700 hover:text-[#0B3B7A]'
                   }`}
                 >
@@ -254,7 +266,7 @@ export default function Navbar() {
                       Soluções em Consultoria
                     </span>
                     <span className="text-[10px] font-semibold text-[#16A34A] bg-emerald-50 border border-emerald-100 px-1.5 py-0.5 rounded">
-                      5 Especialidades
+                      4 Especialidades
                     </span>
                   </div>
 
@@ -396,13 +408,19 @@ export default function Navbar() {
               {/* Páginas principais iniciais */}
               {directNavLinksBefore.map((link) => {
                 const Icon = link.icon
-                const isActive =
-                  location.pathname === link.path ||
-                  (link.aliasPaths && link.aliasPaths.includes(location.pathname))
+                const targetPath = link.path.split('#')[0]
+                const targetHash =
+                  link.hash || (link.path.includes('#') ? '#' + link.path.split('#')[1] : '')
+                const isActive = targetHash
+                  ? location.pathname === targetPath && location.hash === targetHash
+                  : location.pathname === link.path ||
+                    Boolean(link.aliasPaths && link.aliasPaths.includes(location.pathname))
+
                 return (
                   <Link
                     key={link.path}
                     to={link.path}
+                    onClick={() => setMobileMenuOpen(false)}
                     className={`flex items-center gap-3 py-3 text-base font-serif font-medium ${
                       isActive
                         ? 'text-[#16A34A] font-bold pl-2 border-l-2 border-[#16A34A]'
@@ -432,6 +450,7 @@ export default function Navbar() {
                       <Link
                         key={service.path}
                         to={service.path}
+                        onClick={() => setMobileMenuOpen(false)}
                         className={`flex items-center gap-3 py-2.5 px-2 rounded-lg text-sm font-medium transition-colors ${
                           isActive
                             ? 'bg-emerald-50 text-[#16A34A] font-bold border-l-2 border-[#16A34A]'
@@ -461,12 +480,14 @@ export default function Navbar() {
                   <Link
                     key={link.path}
                     to={link.path}
+                    onClick={() => setMobileMenuOpen(false)}
                     className={`flex items-center gap-3 py-3 text-base font-serif font-medium ${
                       isActive
                         ? 'text-[#16A34A] font-bold pl-2 border-l-2 border-[#16A34A]'
                         : 'text-[#0B3B7A]'
                     }`}
                   >
+                    {' '}
                     <Icon className={`w-5 h-5 ${isActive ? 'text-[#16A34A]' : 'text-slate-500'}`} />
                     <span>{link.label}</span>
                   </Link>
