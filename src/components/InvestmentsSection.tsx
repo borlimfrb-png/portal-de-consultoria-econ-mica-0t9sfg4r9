@@ -22,6 +22,8 @@ import {
   getInvestmentsRanking,
   simulateInvestments,
   getRegressiveTaxRate,
+  estimateBusinessDays,
+  SimulationPeriodUnit,
 } from '@/data/investments'
 
 interface InvestmentsSectionProps {
@@ -29,6 +31,14 @@ interface InvestmentsSectionProps {
 }
 
 const PRESET_AMOUNTS = [5000, 10000, 25000, 50000, 100000, 500000]
+
+const PRESET_DAYS = [
+  { label: '10 dias', days: 10, desc: 'Ultra-curto (exemplo do usuário • IR 22,5%)' },
+  { label: '30 dias', days: 30, desc: '1 mês civil (IR 22,5%)' },
+  { label: '60 dias', days: 60, desc: '2 meses (IR 22,5%)' },
+  { label: '90 dias', days: 90, desc: '3 meses (IR 22,5%)' },
+  { label: '180 dias', days: 180, desc: 'Limite da 1ª faixa de IR (22,5%)' },
+]
 
 const PRESET_MONTHS = [
   { label: '6 meses', months: 6, desc: 'Curto prazo (IR 22,5% / Isento)' },
@@ -45,6 +55,9 @@ export default function InvestmentsSection({ rates }: InvestmentsSectionProps) {
 
   // Estado interativo do Simulador - SEM GRAVAR NADA (em memória)
   const [inputAmount, setInputAmount] = useState<string>('10.000,00')
+  const [periodUnit, setPeriodUnit] = useState<SimulationPeriodUnit>('days')
+  const [selectedDays, setSelectedDays] = useState<number>(10)
+  const [customDaysInput, setCustomDaysInput] = useState<string>('10')
   const [selectedMonths, setSelectedMonths] = useState<number>(12)
   const [activeTab, setActiveTab] = useState<'ranking' | 'simulador'>('ranking')
 
@@ -91,13 +104,33 @@ export default function InvestmentsSection({ rates }: InvestmentsSectionProps) {
   const effectiveSimAmount = numericAmount > 0 ? numericAmount : 10000
   const isUsingFallbackAmount = numericAmount <= 0
 
+  // Período efetivo considerado para a simulação
+  const effectivePeriod = useMemo(() => {
+    if (periodUnit === 'days') {
+      const parsed = parseInt(customDaysInput, 10)
+      return isNaN(parsed) || parsed <= 0 ? (selectedDays > 0 ? selectedDays : 10) : parsed
+    }
+    return selectedMonths > 0 ? selectedMonths : 12
+  }, [periodUnit, customDaysInput, selectedDays, selectedMonths])
+
+  // Estimativa de dias úteis quando unidade for dias
+  const businessDaysCount = useMemo(() => {
+    if (periodUnit === 'days') {
+      return estimateBusinessDays(effectivePeriod)
+    }
+    return Math.round((effectivePeriod * 252) / 12)
+  }, [periodUnit, effectivePeriod])
+
   // Resultados da simulação
   const simulationResults = useMemo(() => {
-    return simulateInvestments(effectiveSimAmount, selectedMonths, rates)
-  }, [effectiveSimAmount, selectedMonths, rates])
+    return simulateInvestments(effectiveSimAmount, effectivePeriod, rates, periodUnit)
+  }, [effectiveSimAmount, effectivePeriod, rates, periodUnit])
 
   const bestSimResult = simulationResults[0]
-  const currentTaxInfo = useMemo(() => getRegressiveTaxRate(selectedMonths), [selectedMonths])
+  const currentTaxInfo = useMemo(
+    () => getRegressiveTaxRate(effectivePeriod, periodUnit),
+    [effectivePeriod, periodUnit],
+  )
 
   const formatPercent = (value: number) => {
     return `${value.toLocaleString('pt-BR', {
@@ -515,42 +548,146 @@ export default function InvestmentsSection({ rates }: InvestmentsSectionProps) {
                 </div>
               </div>
 
-              {/* Seletor de Prazo */}
+              {/* Seletor de Prazo (Dias vs Meses) */}
               <div className="lg:col-span-7 space-y-2">
-                <label className="block text-xs font-mono font-bold uppercase tracking-wider text-[#082852]">
-                  Prazo de Permanência:
-                </label>
-                <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
-                  {PRESET_MONTHS.map((item) => {
-                    const isSelected = selectedMonths === item.months
-                    return (
-                      <button
-                        key={item.months}
-                        type="button"
-                        onClick={() => setSelectedMonths(item.months)}
-                        className={`p-2.5 rounded-xl text-center border transition-all ${
-                          isSelected
-                            ? 'bg-[#16A34A] text-white border-[#15803D] shadow-sm font-bold scale-[1.02]'
-                            : 'bg-white hover:bg-stone-50 border-stone-200 text-slate-700 font-medium'
-                        }`}
-                      >
-                        <div className="font-mono text-xs sm:text-sm font-bold">{item.label}</div>
-                        <div
-                          className={`text-[10px] mt-0.5 truncate ${
-                            isSelected ? 'text-emerald-100' : 'text-slate-500'
-                          }`}
-                        >
-                          {item.months <= 12 ? `${item.months} meses` : `${item.months / 12} anos`}
-                        </div>
-                      </button>
-                    )
-                  })}
+                <div className="flex items-center justify-between">
+                  <label className="block text-xs font-mono font-bold uppercase tracking-wider text-[#082852]">
+                    Prazo de Permanência:
+                  </label>
+
+                  {/* Toggle Dias vs Meses */}
+                  <div className="inline-flex items-center bg-[#F0F4F8] p-1 rounded-lg border border-stone-200 text-xs font-mono">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setPeriodUnit('days')
+                        if (!customDaysInput) setCustomDaysInput(String(selectedDays || 10))
+                      }}
+                      className={`px-3 py-1 rounded-md font-bold transition-all ${
+                        periodUnit === 'days'
+                          ? 'bg-[#082852] text-white shadow-xs'
+                          : 'text-slate-600 hover:text-[#082852]'
+                      }`}
+                    >
+                      Prazos em Dias
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setPeriodUnit('months')}
+                      className={`px-3 py-1 rounded-md font-bold transition-all ${
+                        periodUnit === 'months'
+                          ? 'bg-[#082852] text-white shadow-xs'
+                          : 'text-slate-600 hover:text-[#082852]'
+                      }`}
+                    >
+                      Prazos em Meses / Anos
+                    </button>
+                  </div>
                 </div>
 
+                {/* OPÇÃO 1: PRAZOS EM DIAS (Com atalhos 10, 30, 60, 90, 180 e campo livre) */}
+                {periodUnit === 'days' ? (
+                  <div className="space-y-2">
+                    <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
+                      {PRESET_DAYS.map((item) => {
+                        const isSelected = effectivePeriod === item.days
+                        return (
+                          <button
+                            key={item.days}
+                            type="button"
+                            onClick={() => {
+                              setSelectedDays(item.days)
+                              setCustomDaysInput(String(item.days))
+                            }}
+                            className={`p-2.5 rounded-xl text-center border transition-all ${
+                              isSelected
+                                ? 'bg-[#16A34A] text-white border-[#15803D] shadow-sm font-bold scale-[1.02]'
+                                : 'bg-white hover:bg-stone-50 border-stone-200 text-slate-700 font-medium'
+                            }`}
+                          >
+                            <div className="font-mono text-xs sm:text-sm font-bold">
+                              {item.label}
+                            </div>
+                            <div
+                              className={`text-[10px] mt-0.5 truncate ${
+                                isSelected ? 'text-emerald-100' : 'text-slate-500'
+                              }`}
+                            >
+                              ~{estimateBusinessDays(item.days)} d. úteis
+                            </div>
+                          </button>
+                        )
+                      })}
+                    </div>
+
+                    {/* Input manual de dias para qualquer valor arbitrário (ex: 10, 15, 45, etc.) */}
+                    <div className="flex items-center gap-2 pt-1 bg-[#F0F4F8]/60 p-2.5 rounded-xl border border-stone-200">
+                      <span className="text-xs font-mono text-slate-700 font-medium shrink-0">
+                        Ou digite outro prazo em dias:
+                      </span>
+                      <div className="relative w-28">
+                        <input
+                          type="number"
+                          min="1"
+                          max="1825"
+                          value={customDaysInput}
+                          onChange={(e) => {
+                            const val = e.target.value
+                            setCustomDaysInput(val)
+                            const num = parseInt(val, 10)
+                            if (!isNaN(num) && num > 0) {
+                              setSelectedDays(num)
+                            }
+                          }}
+                          placeholder="Ex: 10"
+                          className="w-full px-3 py-1 bg-white border border-stone-300 rounded-lg font-mono text-sm font-bold text-[#082852] focus:outline-none focus:border-[#16A34A] text-center"
+                        />
+                      </div>
+                      <span className="text-xs font-mono text-slate-600 font-bold">
+                        dias corridos
+                      </span>
+                      <span className="text-[11px] font-mono text-slate-500 ml-auto hidden sm:inline">
+                        (~{businessDaysCount} dias úteis estimados na base 252)
+                      </span>
+                    </div>
+                  </div>
+                ) : (
+                  /* OPÇÃO 2: PRAZOS EM MESES / ANOS */
+                  <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
+                    {PRESET_MONTHS.map((item) => {
+                      const isSelected = selectedMonths === item.months
+                      return (
+                        <button
+                          key={item.months}
+                          type="button"
+                          onClick={() => setSelectedMonths(item.months)}
+                          className={`p-2.5 rounded-xl text-center border transition-all ${
+                            isSelected
+                              ? 'bg-[#16A34A] text-white border-[#15803D] shadow-sm font-bold scale-[1.02]'
+                              : 'bg-white hover:bg-stone-50 border-stone-200 text-slate-700 font-medium'
+                          }`}
+                        >
+                          <div className="font-mono text-xs sm:text-sm font-bold">{item.label}</div>
+                          <div
+                            className={`text-[10px] mt-0.5 truncate ${
+                              isSelected ? 'text-emerald-100' : 'text-slate-500'
+                            }`}
+                          >
+                            {item.months <= 12
+                              ? `${item.months} meses`
+                              : `${item.months / 12} anos`}
+                          </div>
+                        </button>
+                      )
+                    })}
+                  </div>
+                )}
+
                 {/* Resumo da alíquota aplicável no prazo selecionado */}
-                <div className="text-[11px] font-mono text-slate-600 flex items-center justify-between pt-1">
+                <div className="text-[11px] font-mono text-slate-600 flex flex-wrap items-center justify-between pt-1 gap-1">
                   <span>
-                    Tabela regressiva no prazo:{' '}
+                    Tabela regressiva no prazo ({effectivePeriod}{' '}
+                    {periodUnit === 'days' ? 'dias' : 'meses'}):{' '}
                     <strong className="text-[#082852]">{currentTaxInfo.rangeLabel}</strong>
                   </span>
                   <span className="text-[#15803D] font-bold">LCI/LCA e Poupança: 0% de IR</span>
@@ -582,7 +719,7 @@ export default function InvestmentsSection({ rates }: InvestmentsSectionProps) {
                       style: 'currency',
                       currency: 'BRL',
                     })}{' '}
-                    em {selectedMonths} meses:
+                    em {effectivePeriod} {periodUnit === 'days' ? 'dias' : 'meses'}:
                   </span>
                 </div>
                 <h4 className="font-serif text-2xl font-bold text-white">{bestSimResult.name}</h4>
@@ -600,6 +737,15 @@ export default function InvestmentsSection({ rates }: InvestmentsSectionProps) {
                     </span>
                   )}
                 </p>
+                {periodUnit === 'days' && (
+                  <div className="pt-1 flex items-center gap-2 text-[11px] font-mono text-emerald-300">
+                    <CheckCircle2 className="w-3.5 h-3.5" />
+                    <span>
+                      Critério de mercado: conversão pro-rata com base em {businessDaysCount} dias
+                      úteis (padrão 252 d.u./ano).
+                    </span>
+                  </div>
+                )}
               </div>
 
               <div className="bg-white/10 backdrop-blur-md border border-white/20 p-4 rounded-xl text-right shrink-0 min-w-[200px]">
@@ -629,7 +775,13 @@ export default function InvestmentsSection({ rates }: InvestmentsSectionProps) {
                 <p className="text-xs text-slate-600 mt-1">
                   Valores estimados para uma aplicação de{' '}
                   <strong>{formatBRL(effectiveSimAmount)}</strong> pelo prazo de{' '}
-                  <strong>{selectedMonths} meses</strong>.
+                  <strong>
+                    {effectivePeriod} {periodUnit === 'days' ? 'dias' : 'meses'}
+                  </strong>
+                  {periodUnit === 'days' && (
+                    <span> (~{businessDaysCount} dias úteis considerados para CDI/Selic)</span>
+                  )}
+                  .
                 </p>
               </div>
 
@@ -669,6 +821,12 @@ export default function InvestmentsSection({ rates }: InvestmentsSectionProps) {
                           )}
                           <span className="font-serif font-bold text-[#082852]">{row.name}</span>
                         </div>
+                        {row.note && (
+                          <div className="text-[11px] font-sans text-amber-700 mt-0.5 flex items-center gap-1 font-normal">
+                            <Info className="w-3 h-3 shrink-0 text-amber-600" />
+                            <span>{row.note}</span>
+                          </div>
+                        )}
                       </td>
 
                       <td className="py-4 px-4">
@@ -740,8 +898,8 @@ export default function InvestmentsSection({ rates }: InvestmentsSectionProps) {
               </table>
             </div>
 
-            {/* Tabela Didática do IR Regressivo */}
-            <div className="p-6 bg-stone-50 border-t border-stone-200">
+            {/* Tabela Didática do IR Regressivo & Transparência do Cálculo */}
+            <div className="p-6 bg-stone-50 border-t border-stone-200 space-y-4">
               <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
                 <div>
                   <h5 className="font-serif font-bold text-sm text-[#082852] mb-1">
@@ -749,8 +907,9 @@ export default function InvestmentsSection({ rates }: InvestmentsSectionProps) {
                   </h5>
                   <p className="text-xs text-slate-600 max-w-3xl leading-relaxed">
                     O Imposto de Renda incide <strong>exclusivamente sobre o lucro</strong>{' '}
-                    (rendimento), nunca sobre o capital investido. Quanto mais tempo o dinheiro
-                    permanece aplicado, menor é a mordida do leão.
+                    (rendimento), nunca sobre o capital investido. Para aplicações de curto prazo
+                    (até 180 dias, como simulações em 10, 30, 60 ou 90 dias), a alíquota aplicável é
+                    de <strong>22,5%</strong>.
                   </p>
                 </div>
 
@@ -764,6 +923,9 @@ export default function InvestmentsSection({ rates }: InvestmentsSectionProps) {
                   >
                     <div>Até 180 dias</div>
                     <div className="font-bold text-sm">22,5%</div>
+                    {currentTaxInfo.ratePercent === 22.5 && (
+                      <div className="text-[10px] text-[#15803D] uppercase mt-0.5">Prazo atual</div>
+                    )}
                   </div>
                   <div
                     className={`p-2 rounded border ${
@@ -774,6 +936,9 @@ export default function InvestmentsSection({ rates }: InvestmentsSectionProps) {
                   >
                     <div>181 a 360 dias</div>
                     <div className="font-bold text-sm">20,0%</div>
+                    {currentTaxInfo.ratePercent === 20.0 && (
+                      <div className="text-[10px] text-[#15803D] uppercase mt-0.5">Prazo atual</div>
+                    )}
                   </div>
                   <div
                     className={`p-2 rounded border ${
@@ -784,6 +949,9 @@ export default function InvestmentsSection({ rates }: InvestmentsSectionProps) {
                   >
                     <div>361 a 720 dias</div>
                     <div className="font-bold text-sm">17,5%</div>
+                    {currentTaxInfo.ratePercent === 17.5 && (
+                      <div className="text-[10px] text-[#15803D] uppercase mt-0.5">Prazo atual</div>
+                    )}
                   </div>
                   <div
                     className={`p-2 rounded border ${
@@ -794,7 +962,29 @@ export default function InvestmentsSection({ rates }: InvestmentsSectionProps) {
                   >
                     <div>+720 dias (2a+)</div>
                     <div className="font-bold text-sm">15,0%</div>
+                    {currentTaxInfo.ratePercent === 15.0 && (
+                      <div className="text-[10px] text-[#15803D] uppercase mt-0.5">Prazo atual</div>
+                    )}
                   </div>
+                </div>
+              </div>
+
+              {/* Nota de Metodologia e Transparência do Cálculo Diário */}
+              <div className="pt-3 border-t border-stone-200/80 text-[11px] text-slate-500 leading-relaxed space-y-1">
+                <div className="flex items-start gap-1.5">
+                  <Info className="w-3.5 h-3.5 text-[#0B3B7A] shrink-0 mt-0.5" />
+                  <span>
+                    <strong>Critério de Cálculo do Mercado Financeiro Nacional:</strong> Para
+                    aplicações atreladas a CDI, Selic e títulos públicos, a convenção padrão
+                    brasileira adota <strong>252 dias úteis por ano</strong> na capitalização
+                    composta diária. Em simulações expressas em dias corridos (ex.: 10 dias
+                    corridos), o sistema converte para os dias úteis equivalentes (~
+                    {businessDaysCount} d.u. para {effectivePeriod} dias) para apuração precisa. A
+                    Caderneta de Poupança segue remuneração de aniversário mensal (base 365 dias
+                    pro-rata para fins comparativos). Em resgates em prazo inferior a 30 dias na
+                    regra real, a poupança perde os rendimentos. Simulação com finalidade educativa
+                    e analítica.
+                  </span>
                 </div>
               </div>
             </div>

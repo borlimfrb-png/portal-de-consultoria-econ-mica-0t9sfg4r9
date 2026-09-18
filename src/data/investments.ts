@@ -38,23 +38,39 @@ export interface InvestmentOption {
 }
 
 // Tabela Regressiva do Imposto de Renda para Renda Fixa (Lei 11.033/2004)
-export function getRegressiveTaxRate(months: number): {
-  rate: number // ex: 0.175 para 17,5%
-  ratePercent: number // ex: 17.5
-  rangeLabel: string // ex: "361 a 720 dias (1 a 2 anos)"
+// Recebe ou o número de meses OU a quantidade exata de dias corridos (via daysCount)
+export function getRegressiveTaxRate(
+  period: number,
+  unit: 'months' | 'days' = 'months',
+): {
+  rate: number // ex: 0.225 para 22,5%
+  ratePercent: number // ex: 22.5
+  rangeLabel: string // ex: "Até 180 dias (22,5%)"
+  daysApprox: number
 } {
-  const daysApprox = months * 30.4167
+  const days =
+    unit === 'days' ? Math.max(1, Math.round(period)) : Math.max(1, Math.round(period * 30.4167))
 
-  if (daysApprox <= 180) {
-    return { rate: 0.225, ratePercent: 22.5, rangeLabel: 'Até 180 dias (22,5%)' }
+  if (days <= 180) {
+    return { rate: 0.225, ratePercent: 22.5, rangeLabel: 'Até 180 dias (22,5%)', daysApprox: days }
   }
-  if (daysApprox <= 360) {
-    return { rate: 0.2, ratePercent: 20.0, rangeLabel: '181 a 360 dias (20,0%)' }
+  if (days <= 360) {
+    return { rate: 0.2, ratePercent: 20.0, rangeLabel: '181 a 360 dias (20,0%)', daysApprox: days }
   }
-  if (daysApprox <= 720) {
-    return { rate: 0.175, ratePercent: 17.5, rangeLabel: '361 a 720 dias (17,5%)' }
+  if (days <= 720) {
+    return {
+      rate: 0.175,
+      ratePercent: 17.5,
+      rangeLabel: '361 a 720 dias (17,5%)',
+      daysApprox: days,
+    }
   }
-  return { rate: 0.15, ratePercent: 15.0, rangeLabel: 'Acima de 720 dias (15,0%)' }
+  return {
+    rate: 0.15,
+    ratePercent: 15.0,
+    rangeLabel: 'Acima de 720 dias (15,0%)',
+    daysApprox: days,
+  }
 }
 
 /**
@@ -222,6 +238,8 @@ export function getInvestmentsRanking(
   }))
 }
 
+export type SimulationPeriodUnit = 'months' | 'days'
+
 export interface SimulationResultRow {
   id: InvestmentType
   name: string
@@ -238,32 +256,95 @@ export interface SimulationResultRow {
   grossAnnualRate: number
   isBest: boolean
   diffFromPoupanca: number // Quanto a mais que a poupança em R$
+  note?: string // Observação contextual (ex: regra de aniversário da Poupança ou carência de LCI)
 }
 
 /**
- * Simula os ganhos para um valor e prazo específico.
+ * Converte dias corridos para dias úteis estimados no padrão de mercado brasileiro
+ * Proporção média de dias úteis em um ano comercial: ~252 úteis para ~365 corridos (fator ~0,69)
+ * Para prazos pequenos (ex.: 10 dias corridos), equivalem tipicamente a 7 dias úteis.
+ */
+export function estimateBusinessDays(calendarDays: number): number {
+  if (calendarDays <= 0) return 0
+  if (calendarDays <= 7) return Math.min(calendarDays, 5)
+  // Contagem pro-rata proporcional padrão de mercado: 252 / 365.25 ≈ 0.69
+  return Math.max(1, Math.round((calendarDays * 252) / 365.25))
+}
+
+/**
+ * Simula os ganhos para um valor e prazo específico (em meses ou dias).
  * Totalmente em memória - não grava nada.
+ *
+ * Metodologia:
+ * - Para prazos em meses: capitalização composta anual M = P * (1 + taxa_aa)^(meses / 12).
+ * - Para prazos em dias:
+ *   - Ativos atrelados a CDI / Selic / IPCA+: padrão do mercado brasileiro é base 252 dias úteis:
+ *     fator = (1 + taxa_aa)^(dias_úteis / 252).
+ *   - Poupança: regulamentada com rendimento mensal creditado no aniversário. Em períodos
+ *     diários (< 30 dias), por lei ela só rende no dia do aniversário (ou seja, saque antes de 30 dias renderia R$ 0).
+ *     Para efeito comparativo de simulação econômica educativa, calculamos a rentabilidade pro-rata
+ *     diária proporcional (base 30 dias corridos por mês / 365 no ano) e explicitamos a ressalva na linha/nota.
+ * - Imposto de Renda:
+ *   - Regressivo federal (Lei 11.033/2004):
+ *     * Até 180 dias: 22,5%
+ *     * 181 a 360 dias: 20,0%
+ *     * 361 a 720 dias: 17,5%
+ *     * Acima de 720 dias: 15,0%
+ *   - Isenções legais: LCI/LCA e Poupança são 0% de IR para pessoas físicas.
  */
 export function simulateInvestments(
   initialAmount: number,
-  months: number,
+  periodValue: number,
   rates: EconomicRates,
+  unit: SimulationPeriodUnit = 'months',
 ): SimulationResultRow[] {
-  if (initialAmount <= 0 || months <= 0) {
+  if (initialAmount <= 0 || periodValue <= 0) {
     return []
   }
 
-  const taxInfo = getRegressiveTaxRate(months)
-  const years = months / 12
+  const taxInfo = getRegressiveTaxRate(periodValue, unit)
+
+  // Tempo decorrido em frações de ano
+  const calendarDays = unit === 'days' ? Math.round(periodValue) : Math.round(periodValue * 30.4167)
+  const businessDays =
+    unit === 'days' ? estimateBusinessDays(calendarDays) : Math.round((periodValue * 252) / 12)
+  const yearsEquivalent = unit === 'days' ? businessDays / 252 : periodValue / 12
 
   const rows: SimulationResultRow[] = INVESTMENT_OPTIONS.map((opt) => {
     const grossAnnualRate = opt.getGrossAnnualRate(rates)
     const annualMultiplier = 1 + grossAnnualRate / 100
 
-    // Montante Bruto com juros compostos: M = P * (1 + i)^t
-    const grossAmount = initialAmount * Math.pow(annualMultiplier, years)
-    const grossYield = Math.max(0, grossAmount - initialAmount)
+    let grossAmount: number
+    let note: string | undefined
 
+    if (unit === 'days') {
+      if (opt.id === 'poupanca') {
+        // Poupança: regra legal é aniversário a cada 30 dias.
+        // Pro-rata diário composto para análise comparativa
+        const poupancaDailyMultiplier = Math.pow(annualMultiplier, calendarDays / 365)
+        grossAmount = initialAmount * poupancaDailyMultiplier
+        if (calendarDays < 30) {
+          note = 'Atenção: na regra real, resgate antes de 30 dias perde todo o rendimento do mês.'
+        }
+      } else {
+        // Títulos de renda fixa privada e pública de liquidez (CDB, Tesouro Selic/IPCA, LCI/LCA)
+        // Convenção brasileira do mercado financeiro: base 252 dias úteis
+        const factor = Math.pow(annualMultiplier, businessDays / 252)
+        grossAmount = initialAmount * factor
+
+        if (opt.id === 'lci_lca' && calendarDays < 270) {
+          note = 'Carência legal de 9 meses (270 dias) para resgate.'
+        }
+      }
+    } else {
+      // Prazos em meses
+      grossAmount = initialAmount * Math.pow(annualMultiplier, yearsEquivalent)
+      if (opt.id === 'lci_lca' && periodValue < 9) {
+        note = 'Carência legal mínima de 9 meses.'
+      }
+    }
+
+    const grossYield = Math.max(0, grossAmount - initialAmount)
     const taxRatePercent = opt.isTaxExempt ? 0 : taxInfo.ratePercent
     const taxAmount = opt.isTaxExempt ? 0 : grossYield * (taxRatePercent / 100)
     const netYield = grossYield - taxAmount
@@ -286,6 +367,7 @@ export function simulateInvestments(
       grossAnnualRate,
       isBest: false,
       diffFromPoupanca: 0,
+      note,
     }
   })
 
