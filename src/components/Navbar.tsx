@@ -123,7 +123,7 @@ export default function Navbar() {
   )
 
   // Direct nav links ordenados conforme especificação para a Linha 2:
-  // Início, Indicadores, Notícias, [Serviços dropdown], Agenda Tributária, Reforma Tributária, Tributação, Bolsa de Valores, Sobre
+  // Início, Indicadores, Notícias, [Serviços dropdown], Agenda Tributária, Reforma Tributária, Tributação (direto para as 3 formas de tributação), Bolsa de Valores, Sobre
   const directNavLinksLine2 = [
     { label: 'Início', path: '/', icon: Home },
     { label: 'Indicadores', path: '/indicadores', icon: TrendingUp },
