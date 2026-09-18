@@ -26,6 +26,8 @@ import { getEconomicIndicators, syncIndicatorsNow } from '@/services/indicators'
 import { useRealtime } from '@/hooks/use-realtime'
 import IndicatorAreaChart from '@/components/IndicatorAreaChart'
 import Sparkline from '@/components/Sparkline'
+import InvestmentsSection from '@/components/InvestmentsSection'
+import { EconomicRates } from '@/data/investments'
 import { toast } from '@/hooks/use-toast'
 
 export default function Indicadores() {
@@ -84,6 +86,26 @@ export default function Indicadores() {
     { id: 'cambio', label: 'Câmbio' },
     { id: 'atividade', label: 'Atividade Econômica' },
   ]
+
+  // Extração das taxas ativas para a seção de Investimentos
+  const economicRates: EconomicRates = (() => {
+    const selicObj = indicators.find((i) => i.code === 'selic')
+    const cdiObj = indicators.find((i) => i.code === 'cdi')
+    const ipcaObj = indicators.find((i) => i.code === 'ipca_12m')
+
+    const selicVal = selicObj?.current_value
+    const cdiVal = cdiObj?.current_value
+    const ipcaVal = ipcaObj?.current_value
+
+    return {
+      selic: typeof selicVal === 'number' && !isNaN(selicVal) ? selicVal : 13.75,
+      cdi: typeof cdiVal === 'number' && !isNaN(cdiVal) ? cdiVal : 13.9,
+      ipca: typeof ipcaVal === 'number' && !isNaN(ipcaVal) ? ipcaVal : 4.22,
+      isEstimateSelic: typeof selicVal !== 'number' || isNaN(selicVal),
+      isEstimateCdi: typeof cdiVal !== 'number' || isNaN(cdiVal),
+      isEstimateIpca: typeof ipcaVal !== 'number' || isNaN(ipcaVal),
+    }
+  })()
 
   const filteredIndicators = indicators.filter((ind) => {
     if (selectedCategory === 'all') return true
@@ -161,6 +183,14 @@ export default function Indicadores() {
                 <RefreshCw className={`w-3.5 h-3.5 ${syncing ? 'animate-spin' : ''}`} />
                 <span>{syncing ? 'Atualizando...' : 'Sincronizar BCB'}</span>
               </button>
+
+              <a
+                href="#investimentos"
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-white/10 hover:bg-white/20 text-white text-xs font-mono font-bold uppercase tracking-wider rounded-lg transition-colors border border-emerald-400/40 text-emerald-300 hover:text-white"
+              >
+                <TrendingUp className="w-3.5 h-3.5 text-[#22C55E]" />
+                <span>Ver Investimentos</span>
+              </a>
             </div>
           </div>
         </div>
@@ -189,6 +219,15 @@ export default function Indicadores() {
                 </button>
               )
             })}
+
+            <div className="h-4 w-[1px] bg-stone-300 mx-1 shrink-0" />
+
+            <a
+              href="#investimentos"
+              className="px-3.5 py-1.5 rounded-lg text-xs font-mono font-bold transition-all shrink-0 bg-emerald-50 hover:bg-emerald-100 text-[#15803D] border border-emerald-200 inline-flex items-center gap-1"
+            >
+              <span>⭐ Investimentos & Simulador</span>
+            </a>
           </div>
         </div>
       </section>
@@ -465,6 +504,9 @@ export default function Indicadores() {
             </div>
           </section>
         )}
+
+        {/* 5. NOVA SEÇÃO DE INVESTIMENTOS (Melhor Aplicação Atual + Grade Simuladora sem Gravação) */}
+        <InvestmentsSection rates={economicRates} />
       </main>
     </div>
   )
