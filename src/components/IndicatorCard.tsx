@@ -38,37 +38,47 @@ export default function IndicatorCard({
   return (
     <Link
       to="/indicadores"
-      className={`group block bg-white rounded-xl p-5 border border-slate-200 card-subtle-shadow card-hover-lift hover:border-[#16A34A] relative transition-all ${className}`}
+      className={`group block bg-white rounded-2xl p-5 sm:p-6 border border-stone-200/90 card-subtle-shadow card-hover-lift hover:border-[#16A34A] relative transition-all overflow-hidden ${className}`}
     >
+      {/* Subtle modern top hairline indicator */}
+      <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#16A34A]/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+
       {/* Category Eyebrow & Link Icon */}
       <div className="flex items-center justify-between mb-3">
-        <span className="text-[10px] font-mono font-bold tracking-widest text-[#15803D] uppercase">
+        <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[10px] font-mono font-bold tracking-widest text-[#15803D] uppercase bg-emerald-50/80 border border-emerald-100">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#16A34A]"></span>
           {categoryEyebrow}
         </span>
-        <ArrowUpRight className="w-4 h-4 text-slate-400 group-hover:text-[#16A34A] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+        <div className="w-7 h-7 rounded-lg bg-stone-100 group-hover:bg-[#082852] flex items-center justify-center transition-colors">
+          <ArrowUpRight className="w-3.5 h-3.5 text-slate-500 group-hover:text-[#22C55E] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+        </div>
       </div>
 
       {/* Indicator Name */}
-      <h3 className="font-serif text-lg font-bold text-[#082852] mb-2 leading-snug group-hover:text-[#0B3B7A] transition-colors">
+      <h3 className="font-serif text-lg font-bold text-[#082852] mb-3 leading-snug group-hover:text-[#0B3B7A] transition-colors">
         {indicator.name}
       </h3>
 
-      {/* Main Value & Unit */}
-      <div className="flex items-baseline gap-2 mb-3">
-        <span className="font-mono text-3xl font-extrabold text-[#082852] tracking-tight">
-          {indicator.unit === 'R$'
-            ? indicator.current_value.toLocaleString('pt-BR', {
-                style: 'currency',
-                currency: 'BRL',
-              })
-            : indicator.current_value.toLocaleString('pt-BR', {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              })}
-        </span>
-        {indicator.unit !== 'R$' && (
-          <span className="text-sm font-semibold text-slate-500 font-mono">{indicator.unit}</span>
-        )}
+      {/* Main Value & Unit Terminal Box */}
+      <div className="p-3 bg-[#F0F4F8]/80 rounded-xl border border-stone-200/70 mb-3 group-hover:bg-[#F0F4F8] transition-colors">
+        <div className="flex items-baseline justify-between gap-2">
+          <span className="font-mono text-3xl font-extrabold text-[#082852] tracking-tight tabular-nums">
+            {indicator.unit === 'R$'
+              ? indicator.current_value.toLocaleString('pt-BR', {
+                  style: 'currency',
+                  currency: 'BRL',
+                })
+              : indicator.current_value.toLocaleString('pt-BR', {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}
+          </span>
+          {indicator.unit !== 'R$' && (
+            <span className="text-xs font-bold text-slate-500 font-mono uppercase tracking-wider">
+              {indicator.unit}
+            </span>
+          )}
+        </div>
       </div>
 
       {/* Variation & Sparkline Row */}
@@ -76,12 +86,12 @@ export default function IndicatorCard({
         {/* Variation Badge */}
         <div className="flex items-center gap-1.5">
           <span
-            className={`inline-flex items-center gap-1 text-xs font-mono font-bold px-2 py-0.5 rounded ${
+            className={`inline-flex items-center gap-1 text-xs font-mono font-bold px-2 py-0.5 rounded border ${
               isPositive
-                ? 'text-[#15803D] bg-emerald-50'
+                ? 'text-[#15803D] bg-emerald-50 border-emerald-200/80'
                 : isNegative
-                  ? 'text-[#DC2626] bg-red-50'
-                  : 'text-slate-600 bg-slate-100'
+                  ? 'text-[#DC2626] bg-red-50 border-red-200/80'
+                  : 'text-slate-600 bg-slate-100 border-slate-200'
             }`}
           >
             {isPositive && <TrendingUp className="w-3.5 h-3.5" />}
@@ -95,12 +105,14 @@ export default function IndicatorCard({
               })}
             </span>
           </span>
-          <span className="text-[10px] text-slate-500 uppercase tracking-wider">var.</span>
+          <span className="text-[10px] text-slate-500 uppercase tracking-wider font-mono">
+            var.
+          </span>
         </div>
 
         {/* Sparkline */}
         {showSparkline && indicator.history && indicator.history.length > 2 && (
-          <div className="shrink-0">
+          <div className="shrink-0 p-1 rounded bg-stone-50/70 border border-stone-100">
             <Sparkline
               data={indicator.history}
               width={90}
@@ -114,8 +126,8 @@ export default function IndicatorCard({
       {/* Caption footer */}
       <div className="mt-3 flex items-center justify-between text-[11px] text-slate-500 font-mono">
         <span>Ref: {formattedDate}</span>
-        <span className="text-[10px] text-slate-500 truncate max-w-[140px]">
-          {indicator.frequency || 'BCB'}
+        <span className="text-[10px] text-slate-500 font-semibold truncate max-w-[140px]">
+          {indicator.frequency || 'BCB/SGS'}
         </span>
       </div>
     </Link>

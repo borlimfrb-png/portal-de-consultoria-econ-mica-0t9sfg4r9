@@ -134,22 +134,72 @@
     box-shadow: 0 0 35px -5px rgba(11, 59, 122, 0.35);
   }
 
+  /* Fintech & Proptech modern visual layers */
+  .tech-grid-pattern {
+    background-size: 36px 36px;
+    background-image:
+      linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  }
+
+  .tech-dots-pattern {
+    background-image: radial-gradient(rgba(34, 197, 94, 0.18) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  .tech-glass-card {
+    background: rgba(255, 255, 255, 0.88);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(229, 237, 245, 0.9);
+    box-shadow:
+      0 4px 6px -1px rgba(8, 40, 82, 0.04),
+      0 10px 24px -4px rgba(8, 40, 82, 0.06);
+  }
+
+  .tech-glass-dark {
+    background: rgba(8, 40, 82, 0.75);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(34, 197, 94, 0.2);
+    box-shadow:
+      0 10px 30px -5px rgba(0, 0, 0, 0.35),
+      0 0 30px -10px rgba(34, 197, 94, 0.25);
+  }
+
   .card-subtle-shadow {
     box-shadow:
-      0 4px 20px -2px rgba(11, 59, 122, 0.05),
-      0 2px 6px -1px rgba(11, 59, 122, 0.03);
+      0 1px 3px 0 rgba(8, 40, 82, 0.03),
+      0 4px 16px -2px rgba(8, 40, 82, 0.05),
+      0 10px 28px -4px rgba(8, 40, 82, 0.04);
   }
 
   .card-hover-lift {
     transition:
-      transform 0.22s cubic-bezier(0.16, 1, 0.3, 1),
-      box-shadow 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+      transform 0.24s cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow 0.24s cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 0.24s ease;
   }
 
   .card-hover-lift:hover {
-    transform: translateY(-3px);
+    transform: translateY(-4px);
     box-shadow:
-      0 12px 30px -4px rgba(11, 59, 122, 0.12),
-      0 4px 10px -2px rgba(11, 59, 122, 0.04);
+      0 16px 36px -6px rgba(8, 40, 82, 0.12),
+      0 6px 14px -2px rgba(8, 40, 82, 0.05),
+      0 0 0 1px rgba(22, 163, 74, 0.25);
+  }
+
+  /* Flash animation for live updating values */
+  @keyframes valueFlash {
+    0% {
+      background-color: rgba(34, 197, 94, 0.25);
+    }
+    100% {
+      background-color: transparent;
+    }
+  }
+
+  .animate-value-flash {
+    animation: valueFlash 1.2s ease-out;
   }
 }

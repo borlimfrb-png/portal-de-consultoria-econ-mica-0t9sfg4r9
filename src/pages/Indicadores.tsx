@@ -143,21 +143,28 @@ export default function Indicadores() {
 
   return (
     <div className="flex flex-col min-h-screen bg-[#F0F4F8]">
-      {/* 1. Header Band (Navy/Blue) */}
-      <section className="bg-[#082852] text-white py-12 border-b border-[#0B3B7A]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* 1. Header Band (Fintech Terminal Header with Mesh & Orbs) */}
+      <section className="bg-[#082852] text-white py-14 border-b border-[#0B3B7A] relative overflow-hidden">
+        <div className="absolute inset-0 tech-grid-pattern opacity-20 pointer-events-none" />
+        <div className="absolute top-0 right-1/4 w-80 h-80 bg-[#16A34A]/15 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-20 left-10 w-72 h-72 bg-[#1557A6]/25 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
             <div>
-              <div className="inline-flex items-center gap-2 mb-2">
-                <span className="w-2 h-2 rounded-full bg-[#16A34A]" />
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#16A34A]/15 border border-[#22C55E]/30 mb-3 backdrop-blur-sm">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-[#22C55E]"></span>
+                </span>
                 <span className="text-[11px] font-mono uppercase tracking-[0.2em] text-[#22C55E] font-bold">
                   Sistema Gerenciador de Séries Temporais (SGS / BCB)
                 </span>
               </div>
-              <h1 className="font-serif text-3xl sm:text-4xl font-bold text-white">
+              <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight">
                 Indicadores Econômicos
               </h1>
-              <p className="text-sm text-slate-300 mt-2 max-w-2xl leading-relaxed">
+              <p className="text-sm sm:text-base text-slate-300 mt-2.5 max-w-2xl leading-relaxed font-sans">
                 Atualizados automaticamente a partir do Banco Central do Brasil (SGS) todos os dias
                 às 08:00 e 18:00 UTC. Séries históricas com acompanhamento em tempo real.
               </p>
@@ -178,7 +185,7 @@ export default function Indicadores() {
                 type="button"
                 onClick={handleManualSync}
                 disabled={syncing}
-                className="inline-flex items-center gap-2 px-4 py-2 bg-[#16A34A] hover:bg-[#15803D] text-white text-xs font-mono font-bold uppercase tracking-wider rounded-lg transition-colors disabled:opacity-50"
+                className="inline-flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-[#16A34A] to-[#15803D] hover:from-[#15803D] hover:to-[#166534] text-white text-xs font-mono font-bold uppercase tracking-wider rounded-lg transition-all shadow-md hover:shadow-lg disabled:opacity-50 border border-[#22C55E]/40"
               >
                 <RefreshCw className={`w-3.5 h-3.5 ${syncing ? 'animate-spin' : ''}`} />
                 <span>{syncing ? 'Atualizando...' : 'Sincronizar BCB'}</span>
@@ -186,7 +193,7 @@ export default function Indicadores() {
 
               <a
                 href="#investimentos"
-                className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-white/10 hover:bg-white/20 text-white text-xs font-mono font-bold uppercase tracking-wider rounded-lg transition-colors border border-emerald-400/40 text-emerald-300 hover:text-white"
+                className="inline-flex items-center gap-1.5 px-3.5 py-2.5 bg-[#0B3B7A] hover:bg-[#1557A6] text-white text-xs font-mono font-bold uppercase tracking-wider rounded-lg transition-colors border border-emerald-400/40 text-emerald-300 hover:text-white shadow-xs"
               >
                 <TrendingUp className="w-3.5 h-3.5 text-[#22C55E]" />
                 <span>Ver Investimentos</span>
@@ -289,8 +296,9 @@ export default function Indicadores() {
               return (
                 <div
                   key={indicator.id}
-                  className="bg-white rounded-xl p-6 border border-slate-200 card-subtle-shadow flex flex-col justify-between"
+                  className="bg-white rounded-2xl p-6 sm:p-7 border border-stone-200/90 card-subtle-shadow card-hover-lift flex flex-col justify-between relative overflow-hidden group"
                 >
+                  <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#16A34A]/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                   {/* Top Row: Details & Main Value */}
                   <div>
                     <div className="flex items-center justify-between mb-2">
@@ -420,7 +428,7 @@ export default function Indicadores() {
 
         {/* 4. COMPARATIVO SECTION (IPCA 12m vs IGP-M) */}
         {comparisonChartData.length > 0 && (
-          <section className="mt-16 bg-white rounded-xl p-8 border border-slate-200 card-subtle-shadow">
+          <section className="mt-16 bg-white rounded-2xl p-8 border border-stone-200/90 card-subtle-shadow">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 border-b border-slate-100 pb-4">
               <div>
                 <span className="text-xs font-mono uppercase tracking-widest text-[#15803D] font-bold">

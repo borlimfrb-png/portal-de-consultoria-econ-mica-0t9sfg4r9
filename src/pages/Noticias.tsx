@@ -116,20 +116,27 @@ export default function Noticias() {
 
   return (
     <div className="flex flex-col min-h-screen bg-[#F0F4F8]">
-      {/* 1. Header Band (Clean Blue/White) */}
-      <section className="bg-gradient-to-r from-[#082852] to-[#0B3B7A] text-white border-b border-[#0B3B7A] py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* 1. Header Band (Fintech Editorial Wire Header) */}
+      <section className="bg-[#082852] text-white border-b border-[#0B3B7A] py-14 relative overflow-hidden">
+        <div className="absolute inset-0 tech-grid-pattern opacity-20 pointer-events-none" />
+        <div className="absolute top-0 right-1/4 w-80 h-80 bg-[#16A34A]/15 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-20 left-10 w-72 h-72 bg-[#1557A6]/25 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 mb-2">
-              <span className="w-2 h-2 rounded-full bg-[#22C55E]" />
+            <div className="inline-flex items-center gap-2 mb-3 px-3 py-1 rounded-full bg-[#16A34A]/15 border border-[#22C55E]/30 backdrop-blur-sm">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#22C55E]"></span>
+              </span>
               <span className="text-[11px] font-mono uppercase tracking-[0.2em] text-[#22C55E] font-bold">
                 Cobertura Editorial & Feeds Automatizados
               </span>
             </div>
-            <h1 className="font-serif text-3xl sm:text-4xl font-bold text-white">
+            <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight">
               Notícias & Reforma Tributária
             </h1>
-            <p className="text-sm sm:text-base text-slate-200 mt-2 leading-relaxed">
+            <p className="text-sm sm:text-base text-slate-300 mt-2.5 leading-relaxed font-sans">
               Acompanhamento detalhado da regulamentação do IBS, CBS e Imposto Seletivo, além dos
               principais acontecimentos macroeconômicos do país, com síntese orientada à tomada de
               decisão.

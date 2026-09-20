@@ -321,15 +321,20 @@ export default function BalancedScorecard() {
 
   return (
     <div className="flex flex-col min-h-screen bg-[#F0F4F8]">
-      {/* 1. HERO INSTITUCIONAL */}
+      {/* 1. HERO INSTITUCIONAL (Fintech BSC Strategic Architecture) */}
       <section className="bg-[#082852] text-white py-16 sm:py-24 border-b border-[#0B3B7A] relative overflow-hidden">
+        <div className="absolute inset-0 tech-grid-pattern opacity-20 pointer-events-none" />
         <div className="absolute -top-28 -right-28 w-96 h-96 bg-[#16A34A]/20 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute -bottom-28 -left-28 w-96 h-96 bg-[#0B3B7A]/40 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-28 -left-28 w-96 h-96 bg-[#1557A6]/30 rounded-full blur-3xl pointer-events-none" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="max-w-4xl">
             {/* Tag / Breadcrumb */}
-            <div className="inline-flex items-center gap-2 mb-4 px-3 py-1 rounded-full bg-[#16A34A]/20 border border-[#16A34A]/40">
+            <div className="inline-flex items-center gap-2 mb-4 px-3.5 py-1.5 rounded-full bg-[#16A34A]/15 border border-[#22C55E]/30 backdrop-blur-sm">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#22C55E]"></span>
+              </span>
               <Target className="w-3.5 h-3.5 text-[#22C55E]" />
               <span className="text-[11px] font-mono uppercase tracking-[0.2em] text-[#22C55E] font-bold">
                 Especialidade Estratégica — BORLIM Consultoria
@@ -371,9 +376,10 @@ export default function BalancedScorecard() {
                 href={balanceAnalysisUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2.5 px-6 py-3.5 bg-[#16A34A] hover:bg-[#15803D] text-white text-xs sm:text-sm font-mono font-bold uppercase tracking-wider rounded-lg transition-all shadow-lg hover:shadow-xl border-2 border-[#22C55E] group"
+                className="inline-flex items-center gap-2.5 px-6 py-3.5 bg-gradient-to-r from-[#16A34A] to-[#15803D] hover:from-[#15803D] hover:to-[#166534] text-white text-xs sm:text-sm font-mono font-bold uppercase tracking-wider rounded-lg transition-all shadow-lg hover:shadow-2xl border border-[#22C55E]/40 hover:scale-[1.02] active:scale-[0.99] group relative overflow-hidden"
                 title="Acessar o Sistema de Gestão Empresarial da Borlim (abre em nova aba)"
               >
+                <span className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
                 <FileSpreadsheet className="w-4 h-4 sm:w-5 sm:h-5 text-white group-hover:scale-110 transition-transform" />
                 <span>GESTÃO EMPRESARIAL</span>
                 <ExternalLink className="w-4 h-4 text-emerald-100 group-hover:translate-x-0.5 transition-transform" />

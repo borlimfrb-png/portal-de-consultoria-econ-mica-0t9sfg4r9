@@ -359,8 +359,8 @@ export default function Navbar() {
     <header
       className={`sticky top-0 z-40 w-full transition-all duration-300 ${
         isScrolled
-          ? 'bg-[#F0F4F8]/95 backdrop-blur-md border-b border-stone-200/80 shadow-sm'
-          : 'bg-[#F0F4F8]/90 backdrop-blur-sm border-b border-stone-200/80'
+          ? 'bg-[#F0F4F8]/95 backdrop-blur-md border-b border-[#0B3B7A]/15 shadow-sm'
+          : 'bg-[#F0F4F8]/90 backdrop-blur-sm border-b border-[#0B3B7A]/10'
       }`}
     >
       {/* LINHA 1 (Desktop) / Barra Única (Mobile/Tablet): Logotipo + CTA + Contato */}
@@ -372,7 +372,7 @@ export default function Navbar() {
             className="flex items-center gap-2 group shrink-0"
             aria-label="BORLIM Consultoria Empresarial - Início"
           >
-            <div className="bg-white px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-xl border border-stone-200 shadow-xs flex items-center justify-center transition-all duration-200 group-hover:scale-[1.02] group-hover:shadow-sm hover:border-[#16A34A]/60">
+            <div className="bg-white px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-xl border border-stone-200/90 shadow-xs flex items-center justify-center transition-all duration-200 group-hover:scale-[1.02] group-hover:shadow-md hover:border-[#16A34A]/60">
               <img
                 src={logoBorlim}
                 alt="BORLIM Consultoria Empresarial"
@@ -382,40 +382,41 @@ export default function Navbar() {
           </Link>
         </div>
 
-        {/* Linha 1: CTA Verde "GESTÃO EMPRESARIAL" + Contato WhatsApp / E-mail à Direita (Desktop >=1024px) */}
+        {/* Linha 1: CTA Verde Moderno "GESTÃO EMPRESARIAL" + Contato WhatsApp / E-mail à Direita (Desktop >=1024px) */}
         <div className="hidden lg:flex items-center gap-2.5 xl:gap-3 2xl:gap-4 shrink-0">
-          {/* Main Brand CTA: GESTÃO EMPRESARIAL */}
+          {/* Main Brand CTA: GESTÃO EMPRESARIAL com acabamento refinado */}
           <a
             href={balanceAnalysisUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 xl:gap-2 px-3 xl:px-4 py-2 xl:py-2.5 text-xs xl:text-[13px] 2xl:text-sm font-bold uppercase tracking-wider bg-[#16A34A] hover:bg-[#15803D] text-white rounded-lg shadow-md hover:shadow-lg transition-all border border-[#15803D] hover:scale-[1.02] active:scale-[0.99] shrink-0 font-mono group"
+            className="inline-flex items-center gap-1.5 xl:gap-2 px-3.5 xl:px-4 py-2 xl:py-2.5 text-xs xl:text-[13px] 2xl:text-sm font-bold uppercase tracking-wider bg-gradient-to-r from-[#16A34A] to-[#15803D] hover:from-[#15803D] hover:to-[#166534] text-white rounded-lg shadow-md hover:shadow-lg transition-all border border-[#22C55E]/40 hover:scale-[1.02] active:scale-[0.99] shrink-0 font-mono group relative overflow-hidden"
             title="Acessar o Sistema de Gestão Empresarial da Borlim (abre em nova aba)"
           >
+            <span className="absolute inset-0 w-full h-full bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
             <FileSpreadsheet className="w-3.5 h-3.5 xl:w-4 xl:h-4 text-white group-hover:scale-110 transition-transform" />
             <span>GESTÃO EMPRESARIAL</span>
-            <ExternalLink className="w-3 h-3 xl:w-3.5 xl:h-3.5 text-emerald-100" />
+            <ExternalLink className="w-3 h-3 xl:w-3.5 xl:h-3.5 text-emerald-100 group-hover:translate-x-0.5 transition-transform" />
           </a>
 
-          {/* WhatsApp Direct Contact */}
+          {/* WhatsApp Direct Contact com hairline e hover glow */}
           <a
             href="https://wa.me/5517997650672"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 px-2.5 xl:px-3 py-2 text-xs xl:text-[13px] font-semibold text-slate-700 hover:text-[#16A34A] bg-white hover:bg-stone-50 border border-stone-200/90 hover:border-[#16A34A]/50 rounded-lg shadow-2xs transition-all shrink-0"
+            className="inline-flex items-center gap-1.5 px-2.5 xl:px-3 py-2 text-xs xl:text-[13px] font-semibold text-slate-800 hover:text-[#16A34A] bg-white hover:bg-emerald-50/50 border border-stone-200/90 hover:border-[#16A34A]/50 rounded-lg shadow-2xs transition-all shrink-0 font-mono"
             title="Fale conosco via WhatsApp: (17) 99765-0672"
           >
             <MessageCircle className="w-4 h-4 text-[#16A34A]" />
-            <span className="font-mono font-medium text-slate-800">(17) 99765-0672</span>
+            <span className="font-semibold text-slate-800">(17) 99765-0672</span>
           </a>
 
           {/* Email Contact Button */}
           <a
             href="mailto:flavio@borlim.com.br?subject=Consulta%20Econ%C3%B4mica%20-%20Contato"
-            className="inline-flex items-center gap-1.5 px-3 xl:px-3.5 py-2 xl:py-2.5 text-xs xl:text-[13px] font-semibold uppercase tracking-wider bg-[#0B3B7A] text-white hover:bg-[#1557A6] transition-colors rounded-lg shadow-xs border border-[#0B3B7A] hover:border-[#16A34A] shrink-0"
+            className="inline-flex items-center gap-1.5 px-3 xl:px-3.5 py-2 xl:py-2.5 text-xs xl:text-[13px] font-semibold uppercase tracking-wider bg-[#0B3B7A] text-white hover:bg-[#1557A6] transition-all rounded-lg shadow-xs border border-[#0B3B7A] hover:border-[#22C55E]/60 shrink-0 font-mono group"
             title="Enviar e-mail para flavio@borlim.com.br"
           >
-            <Mail className="w-3.5 h-3.5 text-[#22C55E]" />
+            <Mail className="w-3.5 h-3.5 text-[#22C55E] group-hover:scale-110 transition-transform" />
             <span>Contato</span>
           </a>
         </div>
@@ -444,8 +445,8 @@ export default function Navbar() {
           </button>
         </div>
       </div>
-      {/* LINHA 2 (Desktop): Links de Navegação com altura confortável, centralizados e espaçados */}
-      <div className="hidden lg:block border-t border-stone-200/80 bg-white/70">
+      {/* LINHA 2 (Desktop): Links de Navegação com acabamento de vidro e micro-interações */}
+      <div className="hidden lg:block border-t border-[#0B3B7A]/10 bg-white/80 backdrop-blur-md">
         <nav
           className="w-full max-w-[1780px] mx-auto px-4 lg:px-6 xl:px-8 py-1.5 flex items-center justify-center"
           aria-label="Navegação principal"

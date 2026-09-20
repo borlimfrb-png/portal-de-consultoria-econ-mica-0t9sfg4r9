@@ -63,7 +63,7 @@ export default function NewsCard({ article, isNew = false, className = '' }: New
 
   return (
     <article
-      className={`group flex flex-col bg-white rounded-xl border border-slate-200 overflow-hidden card-subtle-shadow card-hover-lift hover:border-[#16A34A] relative transition-all duration-300 ${
+      className={`group flex flex-col bg-white rounded-2xl border border-stone-200/90 overflow-hidden card-subtle-shadow card-hover-lift hover:border-[#16A34A] relative transition-all duration-300 ${
         isNew ? 'ring-2 ring-[#16A34A] animate-pulse' : ''
       } ${className}`}
     >

@@ -152,45 +152,97 @@ export default function Index() {
 
   return (
     <div className="flex flex-col">
-      {/* 1. HERO SECTION (Dark Blue with Green Glow) */}
-      <section className="relative bg-[#082852] text-white overflow-hidden pt-12 pb-20 border-b border-[#0B3B7A]">
-        {/* Subtle Radial Green Glow top-right */}
-        <div className="absolute -top-32 -right-32 w-96 h-96 bg-[#16A34A]/20 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-1/4 w-80 h-80 bg-[#0B3B7A]/40 rounded-full blur-3xl pointer-events-none" />
+      {/* 1. HERO SECTION (Fintech Premium: Tech Mesh, Glows, Glassmorphism & Terminal Metrics) */}
+      <section className="relative bg-[#082852] text-white overflow-hidden pt-14 pb-20 sm:pb-24 border-b border-[#0B3B7A]">
+        {/* Technological background patterns & glowing orbs */}
+        <div className="absolute inset-0 tech-grid-pattern opacity-25 pointer-events-none" />
+        <div className="absolute top-0 right-1/4 w-[500px] h-[500px] bg-[#16A34A]/15 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-20 -left-20 w-[450px] h-[450px] bg-[#1557A6]/30 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(ellipse_at_center,transparent_40%,#082852_95%)] pointer-events-none" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            {/* Left Column: Typography & CTAs */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+            {/* Left Column: Typography, Live Terminal Stats & CTAs */}
             <div className="lg:col-span-6 flex flex-col space-y-6">
-              {/* Eyebrow */}
-              <div className="inline-flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-[#16A34A]" />
+              {/* Eyebrow badge with live pulse */}
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#16A34A]/15 border border-[#22C55E]/30 w-fit backdrop-blur-md">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-[#22C55E]"></span>
+                </span>
                 <span className="text-[11px] font-mono uppercase tracking-[0.2em] text-[#22C55E] font-bold">
-                  Inteligência Econômica para Decisões de Negócio
+                  Inteligência Macroeconômica & Consultoria Estratégica
                 </span>
               </div>
 
               {/* Headline */}
-              <h1 className="font-serif text-4xl sm:text-5xl lg:text-5xl font-bold text-white leading-[1.15] tracking-tight">
-                A economia brasileira, explicada com dados e contexto.
+              <h1 className="font-serif text-4xl sm:text-5xl lg:text-[3.25rem] font-bold text-white leading-[1.12] tracking-tight">
+                A economia brasileira, explicada com{' '}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-[#22C55E] to-teal-300">
+                  dados e precisão
+                </span>
+                .
               </h1>
 
               {/* Subheadline */}
-              <p className="text-base sm:text-lg text-slate-300 leading-relaxed max-w-xl">
+              <p className="text-base sm:text-lg text-slate-300 leading-relaxed max-w-xl font-sans">
                 Acompanhamento contínuo dos indicadores macroeconômicos oficiais (BCB/SGS) e análise
                 dos impactos da Reforma Tributária sobre empresas e investimentos.
               </p>
 
+              {/* Mini Terminal Metrics (Tech HUD Grid) */}
+              <div className="grid grid-cols-3 gap-2.5 sm:gap-3 p-3 sm:p-4 rounded-xl bg-[#0B3B7A]/60 border border-slate-700/80 backdrop-blur-md">
+                <div className="flex flex-col">
+                  <span className="text-[10px] font-mono text-slate-400 uppercase tracking-wider font-semibold">
+                    Taxa Selic
+                  </span>
+                  <span className="text-lg sm:text-xl font-extrabold font-mono text-[#22C55E] tabular-nums">
+                    {selicIndicator?.current_value
+                      ? `${selicIndicator.current_value.toFixed(2)}%`
+                      : '13,25%'}
+                  </span>
+                  <span className="text-[10px] font-mono text-slate-400">Meta Copom</span>
+                </div>
+                <div className="flex flex-col border-x border-slate-700/60 px-2 sm:px-3">
+                  <span className="text-[10px] font-mono text-slate-400 uppercase tracking-wider font-semibold">
+                    IPCA 12m
+                  </span>
+                  <span className="text-lg sm:text-xl font-extrabold font-mono text-[#60A5FA] tabular-nums">
+                    {ipcaIndicator?.current_value
+                      ? `${ipcaIndicator.current_value.toFixed(2)}%`
+                      : '4,56%'}
+                  </span>
+                  <span className="text-[10px] font-mono text-slate-400">Inflação Oficial</span>
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-[10px] font-mono text-slate-400 uppercase tracking-wider font-semibold">
+                    Juro Real
+                  </span>
+                  <span className="text-lg sm:text-xl font-extrabold font-mono text-white tabular-nums">
+                    +
+                    {(
+                      (selicIndicator?.current_value ?? 13.25) -
+                      (ipcaIndicator?.current_value ?? 4.56)
+                    ).toFixed(2)}
+                    %
+                  </span>
+                  <span className="text-[10px] font-mono text-emerald-400/90 font-medium">
+                    Líquido a.a.
+                  </span>
+                </div>
+              </div>
+
               {/* CTAs */}
-              <div className="flex flex-wrap items-center gap-3 pt-2">
+              <div className="flex flex-wrap items-center gap-3 pt-1">
                 {/* Main Featured Brand CTA: GESTÃO EMPRESARIAL */}
                 <a
                   href="https://analise-de-balanco-6514f.goskip.app"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-3.5 bg-[#16A34A] hover:bg-[#15803D] text-white font-bold text-xs sm:text-sm uppercase tracking-wider rounded-lg transition-all shadow-lg hover:shadow-xl font-mono border-2 border-[#22C55E] hover:scale-102 group"
+                  className="inline-flex items-center gap-2 px-6 py-3.5 bg-gradient-to-r from-[#16A34A] to-[#15803D] hover:from-[#15803D] hover:to-[#166534] text-white font-bold text-xs sm:text-sm uppercase tracking-wider rounded-lg transition-all shadow-lg hover:shadow-2xl font-mono border border-[#22C55E]/50 hover:scale-[1.02] active:scale-[0.99] group relative overflow-hidden"
                   title="Acessar o Sistema de Gestão Empresarial da Borlim (abre em nova aba)"
                 >
+                  <span className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
                   <FileSpreadsheet className="w-4 h-4 sm:w-5 sm:h-5 text-white group-hover:scale-110 transition-transform" />
                   <span>GESTÃO EMPRESARIAL</span>
                   <ExternalLink className="w-4 h-4 text-emerald-100 group-hover:translate-x-0.5 transition-transform" />
@@ -214,10 +266,10 @@ export default function Index() {
               </div>
 
               {/* Live sync footnote */}
-              <div className="pt-2 flex items-center gap-3 text-[11px] font-mono text-slate-400">
-                <span className="inline-flex items-center gap-1 text-[#22C55E]">
+              <div className="pt-1 flex items-center gap-3 text-[11px] font-mono text-slate-400">
+                <span className="inline-flex items-center gap-1.5 text-[#22C55E]">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#22C55E] animate-pulse" />
-                  Alimentação Automática BCB
+                  Alimentação Automática BCB / SGS
                 </span>
                 <span>•</span>
                 <button
@@ -234,22 +286,25 @@ export default function Index() {
               </div>
             </div>
 
-            {/* Right Column: Hero Interactive Area Chart */}
-            <div className="lg:col-span-6 bg-[#0B3B7A]/80 backdrop-blur-md rounded-2xl p-6 border border-slate-700 shadow-2xl">
+            {/* Right Column: Hero Interactive Area Chart (Financial Terminal Glass Panel) */}
+            <div className="lg:col-span-6 bg-[#0B3B7A]/85 backdrop-blur-md rounded-2xl p-6 border border-slate-700/80 shadow-2xl relative overflow-hidden group">
+              <div className="absolute top-0 right-0 w-40 h-40 bg-[#16A34A]/10 rounded-full blur-2xl pointer-events-none" />
+
               <div className="flex items-center justify-between mb-4 border-b border-slate-700/80 pb-3">
                 <div className="flex flex-col">
-                  <span className="text-xs font-mono uppercase tracking-wider text-[#22C55E] font-bold">
+                  <span className="text-[11px] font-mono uppercase tracking-wider text-[#22C55E] font-bold flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#22C55E]" />
                     Dinâmica Macroeconômica (Últimos 90 dias)
                   </span>
-                  <span className="font-serif text-sm text-white">
+                  <span className="font-serif text-sm text-white font-medium">
                     Taxa Selic (% a.a.) vs IPCA 12m (%)
                   </span>
                 </div>
                 <div className="flex items-center gap-3 text-[11px] font-mono">
-                  <span className="flex items-center gap-1 text-[#22C55E]">
+                  <span className="flex items-center gap-1.5 text-[#22C55E] font-semibold">
                     <span className="w-2.5 h-2.5 rounded bg-[#16A34A]" /> Selic
                   </span>
-                  <span className="flex items-center gap-1 text-[#60A5FA]">
+                  <span className="flex items-center gap-1.5 text-[#60A5FA] font-semibold">
                     <span className="w-2.5 h-2.5 rounded bg-[#60A5FA]" /> IPCA 12m
                   </span>
                 </div>
@@ -263,11 +318,11 @@ export default function Index() {
                   >
                     <defs>
                       <linearGradient id="heroSelic" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#16A34A" stopOpacity={0.4} />
+                        <stop offset="5%" stopColor="#16A34A" stopOpacity={0.45} />
                         <stop offset="95%" stopColor="#16A34A" stopOpacity={0.0} />
                       </linearGradient>
                       <linearGradient id="heroIpca" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#60A5FA" stopOpacity={0.3} />
+                        <stop offset="5%" stopColor="#60A5FA" stopOpacity={0.35} />
                         <stop offset="95%" stopColor="#60A5FA" stopOpacity={0.0} />
                       </linearGradient>
                     </defs>
@@ -289,7 +344,7 @@ export default function Index() {
                         if (active && payload && payload.length) {
                           const item = payload[0].payload
                           return (
-                            <div className="bg-[#082852] border border-[#16A34A] p-3 rounded-lg shadow-xl text-xs font-mono">
+                            <div className="bg-[#082852]/95 backdrop-blur-md border border-[#16A34A] p-3 rounded-lg shadow-xl text-xs font-mono">
                               <p className="text-slate-400 mb-1">{item.date}</p>
                               <p className="text-[#22C55E] font-bold">
                                 Selic: {item.selic?.toFixed(2)}% a.a.
@@ -324,9 +379,14 @@ export default function Index() {
               </div>
 
               <div className="mt-3 pt-3 border-t border-slate-700/80 flex items-center justify-between text-[10px] font-mono text-slate-400">
-                <span>Fonte: Banco Central do Brasil — SGS</span>
-                <span className="text-[#22C55E]">
-                  Taxa real calculada: +{(13.25 - 4.56).toFixed(2)}% a.a.
+                <span>Fonte Oficial: Banco Central do Brasil — SGS</span>
+                <span className="text-[#22C55E] font-semibold">
+                  Taxa real de juros calculada: +
+                  {(
+                    (selicIndicator?.current_value ?? 13.25) -
+                    (ipcaIndicator?.current_value ?? 4.56)
+                  ).toFixed(2)}
+                  % a.a.
                 </span>
               </div>
             </div>
@@ -393,8 +453,9 @@ export default function Index() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
             {/* Card 1: Gestão Financeira */}
-            <div className="bg-white rounded-2xl border border-stone-200 p-6 sm:p-7 shadow-sm hover:shadow-xl hover:border-[#16A34A] transition-all flex flex-col justify-between group relative overflow-hidden">
+            <div className="bg-white rounded-2xl border border-stone-200/90 p-6 sm:p-7 shadow-sm hover:shadow-xl hover:border-[#16A34A] card-hover-lift transition-all flex flex-col justify-between group relative overflow-hidden">
               <div className="absolute top-0 right-0 w-32 h-32 bg-[#16A34A]/5 rounded-bl-full pointer-events-none group-hover:bg-[#16A34A]/10 transition-colors" />
+              <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#16A34A]/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
 
               <div>
                 <div className="flex items-center justify-between mb-5">
@@ -444,8 +505,9 @@ export default function Index() {
             </div>
 
             {/* Card 2: Valuation */}
-            <div className="bg-white rounded-2xl border border-stone-200 p-6 sm:p-7 shadow-sm hover:shadow-xl hover:border-[#16A34A] transition-all flex flex-col justify-between group relative overflow-hidden">
+            <div className="bg-white rounded-2xl border border-stone-200/90 p-6 sm:p-7 shadow-sm hover:shadow-xl hover:border-[#16A34A] card-hover-lift transition-all flex flex-col justify-between group relative overflow-hidden">
               <div className="absolute top-0 right-0 w-32 h-32 bg-[#16A34A]/5 rounded-bl-full pointer-events-none group-hover:bg-[#16A34A]/10 transition-colors" />
+              <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#16A34A]/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
 
               <div>
                 <div className="flex items-center justify-between mb-6">
@@ -496,8 +558,9 @@ export default function Index() {
             </div>
 
             {/* Card 3: Planejamento */}
-            <div className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-7 shadow-sm hover:shadow-xl hover:border-[#16A34A] transition-all flex flex-col justify-between group relative overflow-hidden">
+            <div className="bg-white rounded-2xl border border-stone-200/90 p-6 sm:p-7 shadow-sm hover:shadow-xl hover:border-[#16A34A] card-hover-lift transition-all flex flex-col justify-between group relative overflow-hidden">
               <div className="absolute top-0 right-0 w-32 h-32 bg-[#0B3B7A]/5 rounded-bl-full pointer-events-none group-hover:bg-[#0B3B7A]/10 transition-colors" />
+              <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#16A34A]/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
 
               <div>
                 <div className="flex items-center justify-between mb-6">
@@ -547,8 +610,9 @@ export default function Index() {
             </div>
 
             {/* Card 4: Formação de Preço para Vendas */}
-            <div className="bg-white rounded-2xl border border-stone-200 p-6 sm:p-7 shadow-sm hover:shadow-xl hover:border-[#16A34A] transition-all flex flex-col justify-between group relative overflow-hidden">
+            <div className="bg-white rounded-2xl border border-stone-200/90 p-6 sm:p-7 shadow-sm hover:shadow-xl hover:border-[#16A34A] card-hover-lift transition-all flex flex-col justify-between group relative overflow-hidden">
               <div className="absolute top-0 right-0 w-32 h-32 bg-[#16A34A]/5 rounded-bl-full pointer-events-none group-hover:bg-[#16A34A]/10 transition-colors" />
+              <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#16A34A]/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
 
               <div>
                 <div className="flex items-center justify-between mb-6">
@@ -598,8 +662,9 @@ export default function Index() {
             </div>
 
             {/* Card 5: Balanced Scorecard */}
-            <div className="bg-white rounded-2xl border border-stone-200 p-6 sm:p-7 shadow-sm hover:shadow-xl hover:border-[#16A34A] transition-all flex flex-col justify-between group relative overflow-hidden">
+            <div className="bg-white rounded-2xl border border-stone-200/90 p-6 sm:p-7 shadow-sm hover:shadow-xl hover:border-[#16A34A] card-hover-lift transition-all flex flex-col justify-between group relative overflow-hidden">
               <div className="absolute top-0 right-0 w-32 h-32 bg-[#16A34A]/5 rounded-bl-full pointer-events-none group-hover:bg-[#16A34A]/10 transition-colors" />
+              <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#16A34A]/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
 
               <div>
                 <div className="flex items-center justify-between mb-6">
@@ -650,17 +715,20 @@ export default function Index() {
           </div>
         </div>
       </section>
-      {/* 3. REFORMA TRIBUTÁRIA EM FOCO (Dark Blue Band) */}
-      <section className="py-16 bg-[#082852] text-white border-b border-[#0B3B7A]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* 3. REFORMA TRIBUTÁRIA EM FOCO (Fintech Terminal Band) */}
+      <section className="py-16 sm:py-20 bg-[#082852] text-white border-b border-[#0B3B7A] relative overflow-hidden">
+        <div className="absolute inset-0 tech-grid-pattern opacity-15 pointer-events-none" />
+        <div className="absolute top-1/2 right-10 w-80 h-80 bg-[#16A34A]/10 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="flex items-center justify-between mb-10 border-b border-slate-700/80 pb-4">
             <div className="flex items-center gap-3">
-              <span className="p-2 bg-[#16A34A]/20 text-[#22C55E] rounded-lg">
+              <span className="p-2.5 bg-[#16A34A]/20 text-[#22C55E] rounded-xl border border-emerald-500/30">
                 <Scale className="w-5 h-5" />
               </span>
               <div>
                 <span className="text-[10px] font-mono uppercase tracking-widest text-[#22C55E] font-bold">
-                  Especial Regulatório
+                  Especial Regulatório & Tributário
                 </span>
                 <h2 className="font-serif text-2xl sm:text-3xl font-bold text-white">
                   Reforma Tributária em foco
@@ -670,7 +738,7 @@ export default function Index() {
 
             <Link
               to="/noticias?categoria=reforma_tributaria"
-              className="hidden sm:inline-flex items-center gap-1 text-xs font-mono font-bold text-[#22C55E] hover:text-white uppercase tracking-wider"
+              className="hidden sm:inline-flex items-center gap-1.5 text-xs font-mono font-bold text-[#22C55E] hover:text-white uppercase tracking-wider transition-colors"
             >
               <span>Todas sobre Reforma</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -680,7 +748,7 @@ export default function Index() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             {/* Left: Lead Story */}
             {leadReformaStory && (
-              <div className="lg:col-span-7 bg-[#0B3B7A]/90 rounded-xl p-6 sm:p-8 border border-slate-700 flex flex-col justify-between h-full">
+              <div className="lg:col-span-7 bg-[#0B3B7A]/85 backdrop-blur-md rounded-2xl p-6 sm:p-8 border border-slate-700/80 flex flex-col justify-between h-full shadow-xl">
                 <div>
                   <div className="flex items-center gap-2 mb-4">
                     <span className="px-2.5 py-0.5 rounded text-[10px] font-mono font-bold uppercase tracking-wider bg-[#16A34A] text-white">
@@ -700,7 +768,7 @@ export default function Index() {
                   </p>
 
                   {leadReformaStory.ai_analysis && (
-                    <div className="bg-[#082852] border-l-4 border-[#16A34A] p-4 rounded-r mb-6">
+                    <div className="bg-[#082852] border-l-4 border-[#16A34A] p-4 rounded-r-xl mb-6">
                       <div className="flex items-center gap-1.5 text-[11px] font-mono text-[#22C55E] font-bold mb-1">
                         <Sparkles className="w-3.5 h-3.5" />
                         <span>Visão da Consultoria</span>
@@ -728,7 +796,7 @@ export default function Index() {
                 <Link
                   key={story.id}
                   to={`/noticias/${story.slug || story.id}`}
-                  className="group block bg-[#0B3B7A]/60 hover:bg-[#0B3B7A] rounded-xl p-5 border border-slate-700 transition-all"
+                  className="group block bg-[#0B3B7A]/60 hover:bg-[#0B3B7A]/90 backdrop-blur-sm rounded-xl p-5 border border-slate-700/80 hover:border-[#16A34A]/50 transition-all shadow-sm"
                 >
                   <div className="flex items-center justify-between text-[11px] font-mono text-slate-400 mb-2">
                     <span className="text-[#22C55E] font-semibold">{story.source}</span>
@@ -801,12 +869,14 @@ export default function Index() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Card 1 */}
-            <div className="bg-white p-8 rounded-2xl border border-stone-200/90 flex flex-col justify-between hover:border-[#16A34A] transition-all shadow-sm">
+            <div className="bg-white p-8 rounded-2xl border border-stone-200/90 flex flex-col justify-between hover:border-[#16A34A] card-hover-lift transition-all shadow-sm relative overflow-hidden group">
+              <div className="absolute top-0 right-0 w-28 h-28 bg-[#16A34A]/5 rounded-bl-full pointer-events-none group-hover:bg-[#16A34A]/10 transition-colors" />
+              <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#16A34A]/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
               <div>
-                <div className="w-12 h-12 rounded-lg bg-[#0B3B7A] flex items-center justify-center text-[#22C55E] mb-6">
+                <div className="w-12 h-12 rounded-xl bg-[#082852] flex items-center justify-center text-[#22C55E] mb-6 group-hover:scale-105 transition-transform shadow-xs">
                   <LineChartIcon className="w-6 h-6" />
                 </div>
-                <h3 className="font-serif text-xl font-bold text-[#082852] mb-3">
+                <h3 className="font-serif text-xl font-bold text-[#082852] mb-3 group-hover:text-[#0B3B7A] transition-colors">
                   Análise Macroeconômica
                 </h3>
                 <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
@@ -814,18 +884,21 @@ export default function Index() {
                   risco de crédito para orientar decisões de investimento e dívida.
                 </p>
               </div>
-              <div className="pt-6 mt-6 border-t border-stone-200 text-[11px] font-mono text-[#15803D] font-semibold">
-                Cenários Preditivos & Modelos
+              <div className="pt-6 mt-6 border-t border-stone-200 text-[11px] font-mono text-[#15803D] font-semibold uppercase tracking-wider flex items-center justify-between">
+                <span>Cenários Preditivos</span>
+                <span className="w-1.5 h-1.5 rounded-full bg-[#16A34A]" />
               </div>
             </div>
 
             {/* Card 2 */}
-            <div className="bg-white p-8 rounded-2xl border border-stone-200/90 flex flex-col justify-between hover:border-[#16A34A] transition-all shadow-sm">
+            <div className="bg-white p-8 rounded-2xl border border-stone-200/90 flex flex-col justify-between hover:border-[#16A34A] card-hover-lift transition-all shadow-sm relative overflow-hidden group">
+              <div className="absolute top-0 right-0 w-28 h-28 bg-[#16A34A]/5 rounded-bl-full pointer-events-none group-hover:bg-[#16A34A]/10 transition-colors" />
+              <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#16A34A]/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
               <div>
-                <div className="w-12 h-12 rounded-lg bg-[#0B3B7A] flex items-center justify-center text-[#22C55E] mb-6">
+                <div className="w-12 h-12 rounded-xl bg-[#082852] flex items-center justify-center text-[#22C55E] mb-6 group-hover:scale-105 transition-transform shadow-xs">
                   <Scale className="w-6 h-6" />
                 </div>
-                <h3 className="font-serif text-xl font-bold text-[#082852] mb-3">
+                <h3 className="font-serif text-xl font-bold text-[#082852] mb-3 group-hover:text-[#0B3B7A] transition-colors">
                   Reforma Tributária (IVA Dual)
                 </h3>
                 <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
@@ -833,18 +906,21 @@ export default function Index() {
                   cadeia produtiva e preparação técnica para o Split Payment.
                 </p>
               </div>
-              <div className="pt-6 mt-6 border-t border-stone-200 text-[11px] font-mono text-[#15803D] font-semibold">
-                Transição Segura 2026-2033
+              <div className="pt-6 mt-6 border-t border-stone-200 text-[11px] font-mono text-[#15803D] font-semibold uppercase tracking-wider flex items-center justify-between">
+                <span>Transição 2026-2033</span>
+                <span className="w-1.5 h-1.5 rounded-full bg-[#16A34A]" />
               </div>
             </div>
 
             {/* Card 3 */}
-            <div className="bg-white p-8 rounded-2xl border border-stone-200/90 flex flex-col justify-between hover:border-[#16A34A] transition-all shadow-sm">
+            <div className="bg-white p-8 rounded-2xl border border-stone-200/90 flex flex-col justify-between hover:border-[#16A34A] card-hover-lift transition-all shadow-sm relative overflow-hidden group">
+              <div className="absolute top-0 right-0 w-28 h-28 bg-[#16A34A]/5 rounded-bl-full pointer-events-none group-hover:bg-[#16A34A]/10 transition-colors" />
+              <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#16A34A]/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
               <div>
-                <div className="w-12 h-12 rounded-lg bg-[#0B3B7A] flex items-center justify-center text-[#22C55E] mb-6">
+                <div className="w-12 h-12 rounded-xl bg-[#082852] flex items-center justify-center text-[#22C55E] mb-6 group-hover:scale-105 transition-transform shadow-xs">
                   <Wallet className="w-6 h-6" />
                 </div>
-                <h3 className="font-serif text-xl font-bold text-[#082852] mb-3">
+                <h3 className="font-serif text-xl font-bold text-[#082852] mb-3 group-hover:text-[#0B3B7A] transition-colors">
                   Planejamento Financeiro
                 </h3>
                 <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
@@ -852,40 +928,48 @@ export default function Index() {
                   e renegociação de passivos indexados a CDI e IPCA.
                 </p>
               </div>
-              <div className="pt-6 mt-6 border-t border-stone-200 text-[11px] font-mono text-[#15803D] font-semibold">
-                Eficiência de Capital Corporativo
+              <div className="pt-6 mt-6 border-t border-stone-200 text-[11px] font-mono text-[#15803D] font-semibold uppercase tracking-wider flex items-center justify-between">
+                <span>Eficiência de Capital</span>
+                <span className="w-1.5 h-1.5 rounded-full bg-[#16A34A]" />
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 6. CTA FINAL (Blue/Green Brand Panel) */}
-      <section className="py-16 bg-[#082852] text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-gradient-to-r from-[#0B3B7A] to-[#082852] rounded-2xl p-8 sm:p-12 border border-[#16A34A]/40 shadow-2xl flex flex-col lg:flex-row items-center justify-between gap-8">
-            <div className="max-w-2xl">
-              <span className="text-xs font-mono uppercase tracking-widest text-[#22C55E] font-bold">
+      {/* 6. CTA FINAL (Fintech Glass Panel com Grid & Glow) */}
+      <section className="py-16 sm:py-20 bg-[#082852] text-white relative overflow-hidden">
+        <div className="absolute inset-0 tech-grid-pattern opacity-15 pointer-events-none" />
+        <div className="absolute -top-24 right-1/4 w-80 h-80 bg-[#16A34A]/20 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="bg-gradient-to-r from-[#0B3B7A]/90 via-[#082852]/95 to-[#0B3B7A]/80 backdrop-blur-md rounded-3xl p-8 sm:p-12 border border-[#16A34A]/40 shadow-2xl flex flex-col lg:flex-row items-center justify-between gap-8 relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-60 h-60 bg-[#22C55E]/10 rounded-full blur-2xl pointer-events-none" />
+
+            <div className="max-w-2xl relative z-10">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-mono uppercase tracking-widest text-[#22C55E] font-bold bg-[#16A34A]/15 border border-[#22C55E]/30 mb-3 backdrop-blur-sm">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#22C55E]" />
                 Atendimento Consultivo Direto
               </span>
-              <h2 className="font-serif text-2xl sm:text-3xl font-bold text-white mt-1 mb-3">
+              <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-white mt-1 mb-3">
                 Quer uma análise personalizada aplicada ao seu negócio?
               </h2>
-              <p className="text-sm text-slate-300 leading-relaxed">
+              <p className="text-sm sm:text-base text-slate-300 leading-relaxed font-sans">
                 Entre em contato com nossa equipe técnica para discutir cenários econômicos e
                 antecipar os impactos da Reforma Tributária na sua empresa.
               </p>
             </div>
 
-            <div className="flex flex-col sm:flex-row items-center gap-3 shrink-0 w-full lg:w-auto">
+            <div className="flex flex-col sm:flex-row items-center gap-3 shrink-0 w-full lg:w-auto relative z-10">
               {/* Main Green CTA: GESTÃO EMPRESARIAL */}
               <a
                 href="https://analise-de-balanco-6514f.goskip.app"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-[#16A34A] hover:bg-[#15803D] text-white text-xs sm:text-sm font-mono font-bold uppercase tracking-wider rounded-lg transition-all shadow-lg hover:shadow-xl border-2 border-[#22C55E] group"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-gradient-to-r from-[#16A34A] to-[#15803D] hover:from-[#15803D] hover:to-[#166534] text-white text-xs sm:text-sm font-mono font-bold uppercase tracking-wider rounded-lg transition-all shadow-lg hover:shadow-xl border border-[#22C55E]/50 group relative overflow-hidden hover:scale-[1.02] active:scale-[0.99]"
                 title="Acessar o Sistema de Gestão Empresarial da Borlim (abre em nova aba)"
               >
+                <span className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
                 <FileSpreadsheet className="w-4 h-4 sm:w-5 sm:h-5 text-white group-hover:scale-110 transition-transform" />
                 <span>GESTÃO EMPRESARIAL</span>
                 <ExternalLink className="w-4 h-4 text-emerald-100 group-hover:translate-x-0.5 transition-transform" />
@@ -893,7 +977,7 @@ export default function Index() {
 
               <a
                 href="mailto:flavio@borlim.com.br?subject=Solicitação%20de%20Consultoria%20Econômica"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3.5 bg-white text-[#082852] hover:bg-slate-100 text-xs font-mono font-bold uppercase tracking-wider rounded-lg transition-all shadow-md"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3.5 bg-white text-[#082852] hover:bg-slate-100 text-xs font-mono font-bold uppercase tracking-wider rounded-lg transition-all shadow-md hover:scale-[1.01]"
               >
                 <Mail className="w-4 h-4 text-[#0B3B7A]" />
                 <span>Fale com especialista</span>
@@ -901,7 +985,7 @@ export default function Index() {
 
               <Link
                 to="/sobre"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3.5 bg-white/10 hover:bg-white/20 text-white text-xs font-mono font-bold uppercase tracking-wider rounded-lg border border-slate-600 transition-colors"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3.5 bg-white/10 hover:bg-white/20 text-white text-xs font-mono font-bold uppercase tracking-wider rounded-lg border border-slate-600 transition-colors backdrop-blur-sm"
               >
                 <span>Nossos serviços</span>
               </Link>
