@@ -2,10 +2,14 @@ import { Outlet } from 'react-router-dom'
 import TopTicker from './TopTicker'
 import Navbar from './Navbar'
 import Footer from './Footer'
+import LogoIntroSplash from './LogoIntroSplash'
 
 export default function Layout() {
   return (
     <div className="flex flex-col min-h-screen bg-[#F0F4F8] text-[#082852] antialiased selection:bg-[#16A34A]/20 selection:text-[#082852]">
+      {/* 0. Sequência de Abertura / Animação do Logo de Entrada */}
+      <LogoIntroSplash />
+
       {/* 1. Global Top Marquee Ticker */}
       <TopTicker />
 

@@ -40,8 +40,8 @@ export default function IndicatorCard({
       to="/indicadores"
       className={`group block bg-white rounded-2xl p-5 sm:p-6 border border-stone-200/90 card-subtle-shadow card-hover-lift hover:border-[#16A34A] relative transition-all overflow-hidden ${className}`}
     >
-      {/* Subtle modern top hairline indicator */}
-      <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#16A34A]/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+      {/* Subtle modern top hairline indicator com glow verde */}
+      <div className="absolute top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-transparent via-[#22C55E] to-transparent opacity-0 group-hover:opacity-100 transition-opacity shadow-[0_0_12px_#22C55E]" />
 
       {/* Category Eyebrow & Link Icon */}
       <div className="flex items-center justify-between mb-3">

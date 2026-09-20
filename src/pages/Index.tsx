@@ -154,11 +154,16 @@ export default function Index() {
     <div className="flex flex-col">
       {/* 1. HERO SECTION (Fintech Premium: Tech Mesh, Glows, Glassmorphism & Terminal Metrics) */}
       <section className="relative bg-[#082852] text-white overflow-hidden pt-14 pb-20 sm:pb-24 border-b border-[#0B3B7A]">
-        {/* Technological background patterns & glowing orbs */}
-        <div className="absolute inset-0 tech-grid-pattern opacity-25 pointer-events-none" />
-        <div className="absolute top-0 right-1/4 w-[500px] h-[500px] bg-[#16A34A]/15 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute -bottom-20 -left-20 w-[450px] h-[450px] bg-[#1557A6]/30 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(ellipse_at_center,transparent_40%,#082852_95%)] pointer-events-none" />
+        {/* Technological background patterns & glowing orbs — Intensified glow & animated grid */}
+        <div className="absolute inset-0 tech-grid-pattern opacity-35 tech-grid-animated pointer-events-none" />
+        <div className="absolute top-0 right-1/4 w-[550px] h-[550px] bg-[#16A34A]/25 rounded-full blur-3xl pointer-events-none animate-float-slow-1" />
+        <div className="absolute -bottom-20 -left-20 w-[500px] h-[500px] bg-[#1557A6]/40 rounded-full blur-3xl pointer-events-none animate-float-slow-2" />
+        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[380px] h-[380px] bg-[#22C55E]/15 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(ellipse_at_center,transparent_35%,#082852_95%)] pointer-events-none" />
+
+        {/* Top/bottom edge subtle green glow lines */}
+        <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#22C55E]/50 to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#22C55E]/40 to-transparent" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
@@ -234,23 +239,24 @@ export default function Index() {
 
               {/* CTAs */}
               <div className="flex flex-wrap items-center gap-3 pt-1">
-                {/* Main Featured Brand CTA: GESTÃO EMPRESARIAL */}
+                {/* Main Featured Brand CTA: GESTÃO EMPRESARIAL com Glow Verde Intensificado */}
                 <a
                   href="https://analise-de-balanco-6514f.goskip.app"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-6 py-3.5 bg-gradient-to-r from-[#16A34A] to-[#15803D] hover:from-[#15803D] hover:to-[#166534] text-white font-bold text-xs sm:text-sm uppercase tracking-wider rounded-lg transition-all shadow-lg hover:shadow-2xl font-mono border border-[#22C55E]/50 hover:scale-[1.02] active:scale-[0.99] group relative overflow-hidden"
+                  className="inline-flex items-center gap-2 px-6 py-3.5 bg-gradient-to-r from-[#16A34A] to-[#15803D] hover:from-[#15803D] hover:to-[#166534] text-white font-bold text-xs sm:text-sm uppercase tracking-wider rounded-lg transition-all shadow-[0_0_25px_rgba(34,197,94,0.45)] hover:shadow-[0_0_40px_rgba(34,197,94,0.75)] font-mono border-2 border-[#22C55E]/80 hover:border-[#22C55E] hover:scale-[1.03] active:scale-[0.99] group relative overflow-hidden"
                   title="Acessar o Sistema de Gestão Empresarial da Borlim (abre em nova aba)"
                 >
-                  <span className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-                  <FileSpreadsheet className="w-4 h-4 sm:w-5 sm:h-5 text-white group-hover:scale-110 transition-transform" />
-                  <span>GESTÃO EMPRESARIAL</span>
-                  <ExternalLink className="w-4 h-4 text-emerald-100 group-hover:translate-x-0.5 transition-transform" />
+                  <span className="absolute inset-0 bg-white/15 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <span className="absolute -inset-1 bg-emerald-400/25 blur-sm rounded-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+                  <FileSpreadsheet className="w-4 h-4 sm:w-5 sm:h-5 text-white group-hover:scale-110 transition-transform relative z-10" />
+                  <span className="relative z-10">GESTÃO EMPRESARIAL</span>
+                  <ExternalLink className="w-4 h-4 text-emerald-100 group-hover:translate-x-0.5 transition-transform relative z-10" />
                 </a>
 
                 <Link
                   to="/indicadores"
-                  className="inline-flex items-center gap-2 px-5 py-3.5 bg-[#0B3B7A] hover:bg-[#1557A6] text-white border border-[#22C55E]/60 hover:border-[#22C55E] font-semibold text-xs uppercase tracking-wider rounded-lg transition-all shadow-md font-mono"
+                  className="inline-flex items-center gap-2 px-5 py-3.5 bg-[#0B3B7A] hover:bg-[#1557A6] text-white border border-[#22C55E]/60 hover:border-[#22C55E] hover:shadow-[0_0_20px_rgba(34,197,94,0.3)] font-semibold text-xs uppercase tracking-wider rounded-lg transition-all shadow-md font-mono"
                 >
                   <span>Ver indicadores</span>
                   <TrendingUp className="w-4 h-4 text-[#22C55E]" />
@@ -287,8 +293,9 @@ export default function Index() {
             </div>
 
             {/* Right Column: Hero Interactive Area Chart (Financial Terminal Glass Panel) */}
-            <div className="lg:col-span-6 bg-[#0B3B7A]/85 backdrop-blur-md rounded-2xl p-6 border border-slate-700/80 shadow-2xl relative overflow-hidden group">
-              <div className="absolute top-0 right-0 w-40 h-40 bg-[#16A34A]/10 rounded-full blur-2xl pointer-events-none" />
+            <div className="lg:col-span-6 bg-[#0B3B7A]/85 backdrop-blur-md rounded-2xl p-6 border border-[#22C55E]/40 hover:border-[#22C55E]/70 shadow-[0_0_35px_rgba(8,40,82,0.8),0_0_25px_rgba(34,197,94,0.2)] relative overflow-hidden group transition-all duration-300">
+              <div className="absolute top-0 right-0 w-48 h-48 bg-[#16A34A]/25 rounded-full blur-2xl pointer-events-none animate-float-slow-1" />
+              <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-[#1557A6]/35 rounded-full blur-2xl pointer-events-none" />
 
               <div className="flex items-center justify-between mb-4 border-b border-slate-700/80 pb-3">
                 <div className="flex flex-col">
@@ -717,8 +724,9 @@ export default function Index() {
       </section>
       {/* 3. REFORMA TRIBUTÁRIA EM FOCO (Fintech Terminal Band) */}
       <section className="py-16 sm:py-20 bg-[#082852] text-white border-b border-[#0B3B7A] relative overflow-hidden">
-        <div className="absolute inset-0 tech-grid-pattern opacity-15 pointer-events-none" />
-        <div className="absolute top-1/2 right-10 w-80 h-80 bg-[#16A34A]/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute inset-0 tech-grid-pattern opacity-30 tech-grid-animated pointer-events-none" />
+        <div className="absolute top-1/2 right-10 w-96 h-96 bg-[#16A34A]/20 rounded-full blur-3xl pointer-events-none animate-float-slow-1" />
+        <div className="absolute bottom-0 left-10 w-80 h-80 bg-[#1557A6]/30 rounded-full blur-3xl pointer-events-none" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="flex items-center justify-between mb-10 border-b border-slate-700/80 pb-4">
@@ -939,12 +947,13 @@ export default function Index() {
 
       {/* 6. CTA FINAL (Fintech Glass Panel com Grid & Glow) */}
       <section className="py-16 sm:py-20 bg-[#082852] text-white relative overflow-hidden">
-        <div className="absolute inset-0 tech-grid-pattern opacity-15 pointer-events-none" />
-        <div className="absolute -top-24 right-1/4 w-80 h-80 bg-[#16A34A]/20 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute inset-0 tech-grid-pattern opacity-30 tech-grid-animated pointer-events-none" />
+        <div className="absolute -top-24 right-1/4 w-96 h-96 bg-[#16A34A]/25 rounded-full blur-3xl pointer-events-none animate-float-slow-1" />
+        <div className="absolute -bottom-24 left-1/4 w-96 h-96 bg-[#1557A6]/35 rounded-full blur-3xl pointer-events-none animate-float-slow-2" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="bg-gradient-to-r from-[#0B3B7A]/90 via-[#082852]/95 to-[#0B3B7A]/80 backdrop-blur-md rounded-3xl p-8 sm:p-12 border border-[#16A34A]/40 shadow-2xl flex flex-col lg:flex-row items-center justify-between gap-8 relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-60 h-60 bg-[#22C55E]/10 rounded-full blur-2xl pointer-events-none" />
+          <div className="bg-gradient-to-r from-[#0B3B7A]/95 via-[#082852]/98 to-[#0B3B7A]/90 backdrop-blur-md rounded-3xl p-8 sm:p-12 border-2 border-[#22C55E]/50 shadow-[0_0_50px_rgba(8,40,82,0.9),0_0_30px_rgba(34,197,94,0.3)] flex flex-col lg:flex-row items-center justify-between gap-8 relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-80 h-80 bg-[#22C55E]/20 rounded-full blur-3xl pointer-events-none" />
 
             <div className="max-w-2xl relative z-10">
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-mono uppercase tracking-widest text-[#22C55E] font-bold bg-[#16A34A]/15 border border-[#22C55E]/30 mb-3 backdrop-blur-sm">
@@ -966,13 +975,13 @@ export default function Index() {
                 href="https://analise-de-balanco-6514f.goskip.app"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-gradient-to-r from-[#16A34A] to-[#15803D] hover:from-[#15803D] hover:to-[#166534] text-white text-xs sm:text-sm font-mono font-bold uppercase tracking-wider rounded-lg transition-all shadow-lg hover:shadow-xl border border-[#22C55E]/50 group relative overflow-hidden hover:scale-[1.02] active:scale-[0.99]"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-gradient-to-r from-[#16A34A] to-[#15803D] hover:from-[#15803D] hover:to-[#166534] text-white text-xs sm:text-sm font-mono font-bold uppercase tracking-wider rounded-lg transition-all shadow-[0_0_25px_rgba(34,197,94,0.45)] hover:shadow-[0_0_40px_rgba(34,197,94,0.75)] border-2 border-[#22C55E]/80 hover:border-[#22C55E] group relative overflow-hidden hover:scale-[1.03] active:scale-[0.99]"
                 title="Acessar o Sistema de Gestão Empresarial da Borlim (abre em nova aba)"
               >
-                <span className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-                <FileSpreadsheet className="w-4 h-4 sm:w-5 sm:h-5 text-white group-hover:scale-110 transition-transform" />
-                <span>GESTÃO EMPRESARIAL</span>
-                <ExternalLink className="w-4 h-4 text-emerald-100 group-hover:translate-x-0.5 transition-transform" />
+                <span className="absolute inset-0 bg-white/15 opacity-0 group-hover:opacity-100 transition-opacity" />
+                <FileSpreadsheet className="w-4 h-4 sm:w-5 sm:h-5 text-white group-hover:scale-110 transition-transform relative z-10" />
+                <span className="relative z-10">GESTÃO EMPRESARIAL</span>
+                <ExternalLink className="w-4 h-4 text-emerald-100 group-hover:translate-x-0.5 transition-transform relative z-10" />
               </a>
 
               <a

@@ -384,18 +384,19 @@ export default function Navbar() {
 
         {/* Linha 1: CTA Verde Moderno "GESTÃO EMPRESARIAL" + Contato WhatsApp / E-mail à Direita (Desktop >=1024px) */}
         <div className="hidden lg:flex items-center gap-2.5 xl:gap-3 2xl:gap-4 shrink-0">
-          {/* Main Brand CTA: GESTÃO EMPRESARIAL com acabamento refinado */}
+          {/* Main Brand CTA: GESTÃO EMPRESARIAL com acabamento refinado e glow verde intenso */}
           <a
             href={balanceAnalysisUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 xl:gap-2 px-3.5 xl:px-4 py-2 xl:py-2.5 text-xs xl:text-[13px] 2xl:text-sm font-bold uppercase tracking-wider bg-gradient-to-r from-[#16A34A] to-[#15803D] hover:from-[#15803D] hover:to-[#166534] text-white rounded-lg shadow-md hover:shadow-lg transition-all border border-[#22C55E]/40 hover:scale-[1.02] active:scale-[0.99] shrink-0 font-mono group relative overflow-hidden"
+            className="inline-flex items-center gap-1.5 xl:gap-2 px-3.5 xl:px-4 py-2 xl:py-2.5 text-xs xl:text-[13px] 2xl:text-sm font-bold uppercase tracking-wider bg-gradient-to-r from-[#16A34A] to-[#15803D] hover:from-[#15803D] hover:to-[#166534] text-white rounded-lg shadow-[0_0_20px_rgba(34,197,94,0.35)] hover:shadow-[0_0_30px_rgba(34,197,94,0.65)] transition-all border border-[#22C55E]/70 hover:border-[#22C55E] hover:scale-[1.03] active:scale-[0.99] shrink-0 font-mono group relative overflow-hidden"
             title="Acessar o Sistema de Gestão Empresarial da Borlim (abre em nova aba)"
           >
-            <span className="absolute inset-0 w-full h-full bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-            <FileSpreadsheet className="w-3.5 h-3.5 xl:w-4 xl:h-4 text-white group-hover:scale-110 transition-transform" />
-            <span>GESTÃO EMPRESARIAL</span>
-            <ExternalLink className="w-3 h-3 xl:w-3.5 xl:h-3.5 text-emerald-100 group-hover:translate-x-0.5 transition-transform" />
+            <span className="absolute inset-0 w-full h-full bg-white/15 opacity-0 group-hover:opacity-100 transition-opacity" />
+            <span className="absolute -inset-1 bg-emerald-400/20 blur-sm rounded-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+            <FileSpreadsheet className="w-3.5 h-3.5 xl:w-4 xl:h-4 text-white group-hover:scale-110 transition-transform relative z-10" />
+            <span className="relative z-10">GESTÃO EMPRESARIAL</span>
+            <ExternalLink className="w-3 h-3 xl:w-3.5 xl:h-3.5 text-emerald-100 group-hover:translate-x-0.5 transition-transform relative z-10" />
           </a>
 
           {/* WhatsApp Direct Contact com hairline e hover glow */}
@@ -604,7 +605,7 @@ export default function Navbar() {
                 href={balanceAnalysisUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full flex items-center justify-center gap-2 px-5 py-3.5 text-sm font-bold uppercase tracking-wider bg-[#16A34A] hover:bg-[#15803D] text-white rounded-lg shadow-md font-mono transition-all border border-[#15803D]"
+                className="w-full flex items-center justify-center gap-2 px-5 py-3.5 text-sm font-bold uppercase tracking-wider bg-gradient-to-r from-[#16A34A] to-[#15803D] hover:from-[#15803D] hover:to-[#166534] text-white rounded-lg shadow-[0_0_20px_rgba(34,197,94,0.4)] font-mono transition-all border border-[#22C55E]/60"
               >
                 <FileSpreadsheet className="w-4 h-4 text-white" />
                 <span>GESTÃO EMPRESARIAL</span>

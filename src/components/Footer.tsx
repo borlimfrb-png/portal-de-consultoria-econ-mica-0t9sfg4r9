@@ -55,10 +55,14 @@ export default function Footer() {
 
   return (
     <footer className="bg-[#082852] border-t border-[#0B3B7A] text-slate-200 pt-16 pb-10 relative overflow-hidden">
-      {/* Background tech mesh & glow */}
-      <div className="absolute inset-0 tech-grid-pattern opacity-15 pointer-events-none" />
-      <div className="absolute -top-32 -right-32 w-80 h-80 bg-[#16A34A]/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 left-10 w-80 h-80 bg-[#0B3B7A]/40 rounded-full blur-3xl pointer-events-none" />
+      {/* Background tech mesh & intensified glowing orbs */}
+      <div className="absolute inset-0 tech-grid-pattern opacity-30 tech-grid-animated pointer-events-none" />
+      <div className="absolute -top-32 -right-32 w-96 h-96 bg-[#16A34A]/25 rounded-full blur-3xl pointer-events-none animate-float-slow-1" />
+      <div className="absolute bottom-0 left-10 w-96 h-96 bg-[#1557A6]/35 rounded-full blur-3xl pointer-events-none animate-float-slow-2" />
+      <div className="absolute bottom-1/2 left-1/3 w-72 h-72 bg-[#22C55E]/15 rounded-full blur-3xl pointer-events-none" />
+
+      {/* Top green glowing hairline along the border */}
+      <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#22C55E]/70 to-transparent shadow-[0_0_15px_#22C55E]" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
@@ -69,7 +73,7 @@ export default function Footer() {
               className="flex items-center gap-3 group"
               aria-label="BORLIM Consultoria Empresarial - Início"
             >
-              <div className="bg-white px-4 py-2.5 rounded-xl border border-white/20 shadow-md inline-flex items-center justify-center transition-all duration-200 group-hover:scale-[1.02] group-hover:shadow-lg hover:border-[#16A34A]/60">
+              <div className="bg-white px-4 py-2.5 rounded-xl border-2 border-white/40 shadow-[0_0_25px_rgba(34,197,94,0.3)] inline-flex items-center justify-center transition-all duration-200 group-hover:scale-[1.03] group-hover:shadow-[0_0_35px_rgba(34,197,94,0.55)] group-hover:border-[#22C55E]">
                 <img
                   src={logoBorlim}
                   alt="BORLIM Consultoria Empresarial"
@@ -214,11 +218,11 @@ export default function Footer() {
                   href="https://analise-de-balanco-6514f.goskip.app"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-3.5 py-2 bg-[#16A34A] hover:bg-[#15803D] text-white rounded-lg border border-[#22C55E] text-xs font-mono font-bold uppercase tracking-wider transition-all shadow-md group"
+                  className="inline-flex items-center gap-2 px-3.5 py-2 bg-gradient-to-r from-[#16A34A] to-[#15803D] hover:from-[#15803D] hover:to-[#166534] text-white rounded-lg border border-[#22C55E]/70 hover:border-[#22C55E] text-xs font-mono font-bold uppercase tracking-wider transition-all shadow-[0_0_20px_rgba(34,197,94,0.35)] hover:shadow-[0_0_30px_rgba(34,197,94,0.65)] hover:scale-[1.02] group"
                   title="Acessar o Sistema de Gestão Empresarial da Borlim (abre em nova aba)"
                 >
                   <FileSpreadsheet className="w-4 h-4 text-white group-hover:scale-110 transition-transform" />
-                  <span>GESTÃO EMPRESARIAL</span>
+                  <span className="font-bold">GESTÃO EMPRESARIAL</span>
                   <ExternalLink className="w-3 h-3 text-emerald-100 group-hover:translate-x-0.5 transition-transform" />
                 </a>
               </li>

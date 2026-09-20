@@ -67,6 +67,8 @@ export default function NewsCard({ article, isNew = false, className = '' }: New
         isNew ? 'ring-2 ring-[#16A34A] animate-pulse' : ''
       } ${className}`}
     >
+      {/* Top glowing hairline indicator on hover */}
+      <div className="absolute top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-transparent via-[#22C55E] to-transparent opacity-0 group-hover:opacity-100 transition-opacity shadow-[0_0_12px_#22C55E] z-10" />
       {/* Image or Gradient Placeholder */}
       <Link
         to={`/noticias/${article.slug || article.id}`}

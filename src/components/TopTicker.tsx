@@ -40,18 +40,21 @@ export default function TopTicker() {
   const displayList = [...tickerItems, ...tickerItems]
 
   return (
-    <div className="w-full bg-[#082852]/95 backdrop-blur-md text-slate-200 border-b border-[#0B3B7A]/80 overflow-hidden py-2 select-none relative z-50 text-xs font-mono shadow-xs">
+    <div className="w-full bg-[#082852]/95 backdrop-blur-md text-slate-200 border-b border-[#0B3B7A]/80 overflow-hidden py-2 select-none relative z-50 text-xs font-mono shadow-[0_4px_20px_rgba(8,40,82,0.35)]">
+      {/* Subtle glowing baseline */}
+      <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#22C55E]/40 to-transparent" />
       <div className="flex items-center">
         {/* Market status badge fixed on the left */}
-        <div className="hidden md:flex items-center gap-2 pl-4 pr-3.5 border-r border-[#0B3B7A] bg-[#082852]/90 backdrop-blur-sm shrink-0 z-10">
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-[#22C55E] shadow-[0_0_8px_#22C55E]"></span>
+        <div className="hidden md:flex items-center gap-2 pl-4 pr-3.5 border-r border-[#0B3B7A] bg-[#082852]/95 backdrop-blur-sm shrink-0 z-10 shadow-[4px_0_15px_rgba(0,0,0,0.3)]">
+          <span className="relative flex h-2.5 w-2.5">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#22C55E] opacity-80"></span>
+            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#22C55E] shadow-[0_0_12px_#22C55E,0_0_20px_rgba(34,197,94,0.8)]"></span>
           </span>
-          <span className="text-[10px] uppercase tracking-[0.16em] text-slate-300 font-bold">
-            MERCADOS AO VIVO
+          <span className="text-[10px] uppercase tracking-[0.16em] text-white font-extrabold flex items-center gap-1">
+            <span>MERCADOS AO VIVO</span>
+            <span className="inline-block w-1 h-1 rounded-full bg-[#22C55E] animate-pulse" />
           </span>
-          <span className="text-[9px] px-1.5 py-0.5 rounded bg-emerald-950/60 text-[#22C55E] border border-emerald-500/30 font-semibold">
+          <span className="text-[9px] px-1.5 py-0.5 rounded bg-emerald-950/80 text-[#22C55E] border border-emerald-500/40 font-bold shadow-[0_0_10px_rgba(34,197,94,0.25)]">
             BCB / SGS
           </span>
         </div>

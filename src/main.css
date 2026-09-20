@@ -127,24 +127,116 @@
   }
 
   .brand-glow {
-    box-shadow: 0 0 35px -5px rgba(22, 163, 74, 0.3);
+    box-shadow:
+      0 0 45px -2px rgba(34, 197, 94, 0.5),
+      0 0 20px -2px rgba(22, 163, 74, 0.6);
   }
 
   .brand-blue-glow {
-    box-shadow: 0 0 35px -5px rgba(11, 59, 122, 0.35);
+    box-shadow:
+      0 0 45px -2px rgba(21, 87, 166, 0.55),
+      0 0 20px -2px rgba(11, 59, 122, 0.7);
   }
 
-  /* Fintech & Proptech modern visual layers */
+  .brand-glow-strong {
+    box-shadow:
+      0 0 50px 2px rgba(34, 197, 94, 0.45),
+      0 0 25px 0 rgba(22, 163, 74, 0.7),
+      inset 0 0 15px rgba(34, 197, 94, 0.25);
+  }
+
+  /* Intensified Grid Patterns with coordinate ticks */
   .tech-grid-pattern {
-    background-size: 36px 36px;
+    background-size: 32px 32px;
     background-image:
-      linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+      linear-gradient(to right, rgba(255, 255, 255, 0.09) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.09) 1px, transparent 1px);
+  }
+
+  .tech-grid-pattern-strong {
+    background-size: 32px 32px;
+    background-image:
+      linear-gradient(to right, rgba(34, 197, 94, 0.14) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(34, 197, 94, 0.14) 1px, transparent 1px),
+      linear-gradient(to right, rgba(255, 255, 255, 0.11) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.11) 1px, transparent 1px);
+  }
+
+  .tech-grid-light {
+    background-size: 32px 32px;
+    background-image:
+      linear-gradient(to right, rgba(11, 59, 122, 0.06) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(11, 59, 122, 0.06) 1px, transparent 1px);
   }
 
   .tech-dots-pattern {
-    background-image: radial-gradient(rgba(34, 197, 94, 0.18) 1px, transparent 1px);
+    background-image: radial-gradient(rgba(34, 197, 94, 0.28) 1.2px, transparent 1.2px);
     background-size: 24px 24px;
+  }
+
+  /* Subtle scanning shimmer beam over tech mesh */
+  @keyframes gridScan {
+    0% {
+      background-position:
+        0 0,
+        0 0;
+    }
+    100% {
+      background-position:
+        64px 64px,
+        64px 64px;
+    }
+  }
+
+  .tech-grid-animated {
+    animation: gridScan 24s linear infinite;
+  }
+
+  /* Slow floating orbs animations */
+  @keyframes floatSlow1 {
+    0%,
+    100% {
+      transform: translate(0, 0) scale(1);
+    }
+    50% {
+      transform: translate(-25px, 20px) scale(1.08);
+    }
+  }
+
+  @keyframes floatSlow2 {
+    0%,
+    100% {
+      transform: translate(0, 0) scale(1);
+    }
+    50% {
+      transform: translate(30px, -25px) scale(1.12);
+    }
+  }
+
+  @keyframes pulseGlowRing {
+    0%,
+    100% {
+      box-shadow:
+        0 0 35px 2px rgba(34, 197, 94, 0.4),
+        0 0 15px rgba(22, 163, 74, 0.6);
+    }
+    50% {
+      box-shadow:
+        0 0 55px 6px rgba(34, 197, 94, 0.65),
+        0 0 25px rgba(34, 197, 94, 0.9);
+    }
+  }
+
+  .animate-float-slow-1 {
+    animation: floatSlow1 14s ease-in-out infinite;
+  }
+
+  .animate-float-slow-2 {
+    animation: floatSlow2 18s ease-in-out infinite;
+  }
+
+  .animate-pulse-glow {
+    animation: pulseGlowRing 3s ease-in-out infinite;
   }
 
   .tech-glass-card {
@@ -158,13 +250,13 @@
   }
 
   .tech-glass-dark {
-    background: rgba(8, 40, 82, 0.75);
+    background: rgba(8, 40, 82, 0.78);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(34, 197, 94, 0.2);
+    border: 1px solid rgba(34, 197, 94, 0.3);
     box-shadow:
-      0 10px 30px -5px rgba(0, 0, 0, 0.35),
-      0 0 30px -10px rgba(34, 197, 94, 0.25);
+      0 10px 30px -5px rgba(0, 0, 0, 0.45),
+      0 0 35px -8px rgba(34, 197, 94, 0.35);
   }
 
   .card-subtle-shadow {
@@ -184,9 +276,10 @@
   .card-hover-lift:hover {
     transform: translateY(-4px);
     box-shadow:
-      0 16px 36px -6px rgba(8, 40, 82, 0.12),
-      0 6px 14px -2px rgba(8, 40, 82, 0.05),
-      0 0 0 1px rgba(22, 163, 74, 0.25);
+      0 18px 40px -6px rgba(8, 40, 82, 0.14),
+      0 8px 18px -2px rgba(8, 40, 82, 0.06),
+      0 0 25px -4px rgba(34, 197, 94, 0.35),
+      0 0 0 1.5px rgba(34, 197, 94, 0.5);
   }
 
   /* Flash animation for live updating values */
