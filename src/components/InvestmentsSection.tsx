@@ -43,11 +43,10 @@ const PRESET_DAYS = [
 const PRESET_MONTHS = [
   { label: '6 meses', months: 6, desc: 'Curto prazo (IR 22,5% / Isento)' },
   { label: '1 ano (12m)', months: 12, desc: 'Médio prazo (IR 17,5% / Isento)' },
-  { label: '2 anos (24m)', months: 24, desc: 'Médio-longo (IR 15,0% / Isento)' },
+  { label: '2 anos (24m)', months: 24, desc: 'Médio-longo • Vencimento mínimo LFDI (IR 15,0%)' },
   { label: '3 anos (36m)', months: 36, desc: 'Longo prazo (IR 15,0% / Isento)' },
   { label: '5 anos (60m)', months: 60, desc: 'Horizonte estrutural (IR 15,0%)' },
 ]
-
 export default function InvestmentsSection({ rates }: InvestmentsSectionProps) {
   // Ranking de referência em 12 meses
   const ranking = useMemo(() => getInvestmentsRanking(rates, 12), [rates])
@@ -438,14 +437,20 @@ export default function InvestmentsSection({ rates }: InvestmentsSectionProps) {
             <div className="p-5 bg-stone-50 border-t border-stone-200 text-xs text-slate-600 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div className="flex items-start gap-2 max-w-3xl">
                 <Info className="w-4 h-4 text-[#0B3B7A] shrink-0 mt-0.5" />
-                <span>
-                  <strong>Aviso de Transparência Borlim:</strong> As estimativas utilizam as taxas
-                  reais do SGS/Banco Central (CDI, Selic e IPCA) capitalizadas anualmente. Não
-                  constituem recomendação direta de investimento individualizada. Cada empresa ou
-                  pessoa física deve considerar prazos de liquidez e risco de contraparte.
+                <span className="space-y-1 block">
+                  <span>
+                    <strong>Aviso de Transparência Borlim:</strong> As estimativas utilizam as taxas
+                    reais do SGS/Banco Central (CDI, Selic e IPCA) capitalizadas anualmente. Não
+                    constituem recomendação direta de investimento individualizada.
+                  </span>
+                  <span className="block text-slate-500">
+                    <strong>Nota sobre a Letra Financeira (LFDI):</strong> A LF tem prazo mínimo
+                    legal de 2 anos (24 meses / 720 dias), garantindo a menor alíquota de IR da
+                    tabela regressiva (15,0%), com proteção do FGC até o limite legal por CPF/CNPJ
+                    em emissões ordinárias.
+                  </span>
                 </span>
               </div>
-
               <button
                 type="button"
                 onClick={() => setActiveTab('simulador')}
@@ -690,7 +695,9 @@ export default function InvestmentsSection({ rates }: InvestmentsSectionProps) {
                     {periodUnit === 'days' ? 'dias' : 'meses'}):{' '}
                     <strong className="text-[#082852]">{currentTaxInfo.rangeLabel}</strong>
                   </span>
-                  <span className="text-[#15803D] font-bold">LCI/LCA e Poupança: 0% de IR</span>
+                  <span className="text-[#15803D] font-bold">
+                    LCI/LCA e Poupança: 0% de IR • LFDI: IR fixo de 15,0% (prazo mín. 24m)
+                  </span>
                 </div>
               </div>
             </div>
@@ -993,19 +1000,33 @@ export default function InvestmentsSection({ rates }: InvestmentsSectionProps) {
       )}
 
       {/* 3. Glossário Educativo / Empresarial */}
-      <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <div className="bg-white p-5 rounded-xl border border-stone-200 shadow-xs">
           <div className="flex items-center gap-2 mb-2 text-xs font-mono font-bold uppercase text-[#0B3B7A]">
             <Percent className="w-4 h-4 text-[#16A34A]" />
             <span>O que é CDI?</span>
           </div>
           <h4 className="font-serif font-bold text-base text-[#082852] mb-1">
-            Certificado de Depósito Interbancário
+            Certificado Interbancário
           </h4>
           <p className="text-xs text-slate-600 leading-relaxed">
-            É a taxa média que os bancos cobram para emprestar dinheiro uns aos outros de um dia
-            para o outro. Ela anda sempre colada à Taxa Selic (cerca de 0,10 p.p. abaixo) e serve de
-            régua para quase toda a renda fixa do país.
+            É a taxa média que os bancos cobram para emprestar recursos entre si de um dia para o
+            outro. Anda colada à Taxa Selic e serve de balizador para toda a renda fixa.
+          </p>
+        </div>
+
+        <div className="bg-white p-5 rounded-xl border border-stone-200 shadow-xs">
+          <div className="flex items-center gap-2 mb-2 text-xs font-mono font-bold uppercase text-[#0B3B7A]">
+            <Award className="w-4 h-4 text-[#16A34A]" />
+            <span>Letra Financeira (LFDI)</span>
+          </div>
+          <h4 className="font-serif font-bold text-base text-[#082852] mb-1">
+            Renda Fixa de Médio-Longo Prazo
+          </h4>
+          <p className="text-xs text-slate-600 leading-relaxed">
+            Título bancário com prazo mínimo de 2 anos (24 meses). Paga taxas atrativas (ex.: 112%
+            do CDI) e, como só vence a partir de 720 dias, garante sempre a menor alíquota de IR da
+            tabela regressiva (15%). Protegida pelo FGC.
           </p>
         </div>
 
@@ -1015,12 +1036,11 @@ export default function InvestmentsSection({ rates }: InvestmentsSectionProps) {
             <span>Por que LCI e LCA são Isentas?</span>
           </div>
           <h4 className="font-serif font-bold text-base text-[#082852] mb-1">
-            Incentivo ao Agro e Imobiliário
+            Incentivo ao Agro e Imóveis
           </h4>
           <p className="text-xs text-slate-600 leading-relaxed">
             Criadas por lei federal para canalizar recursos a setores estratégicos. Por não pagarem
-            IRPF, uma LCI a 90% do CDI frequentemente entrega retorno líquido superior a um CDB
-            tributado de 100% ou 105% do CDI.
+            IRPF, uma LCI a 90% do CDI entrega retorno líquido muito competitivo em prazos médios.
           </p>
         </div>
 
@@ -1033,13 +1053,11 @@ export default function InvestmentsSection({ rates }: InvestmentsSectionProps) {
             De Empresário para Empresário
           </h4>
           <p className="text-xs text-slate-600 leading-relaxed">
-            Deixar dinheiro parado na conta corrente ou na poupança corrói o poder de compra da
-            empresa diante da inflação. Aplicar reservas operacionais em títulos de liquidez diária
-            gera receita financeira e fortalece a liquidez corporativa.
+            Deixar dinheiro parado corrói o poder de compra diante da inflação. Aplicar reservas em
+            instrumentos estruturados e seguros gera receita financeira e liquidez.
           </p>
         </div>
       </div>
-
       {/* 4. Banner CTA: Flávio Bordignon / Borlim Consultoria */}
       <div className="mt-10 bg-gradient-to-r from-[#082852] to-[#0B3B7A] rounded-2xl p-6 sm:p-8 text-white shadow-lg border border-[#0B3B7A] flex flex-col md:flex-row items-center justify-between gap-6">
         <div className="space-y-2 text-center md:text-left">

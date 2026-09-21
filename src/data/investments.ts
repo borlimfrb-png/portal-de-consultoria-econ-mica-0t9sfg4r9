@@ -18,6 +18,7 @@ export interface EconomicRates {
 
 export type InvestmentType =
   | 'lci_lca'
+  | 'lfdi'
   | 'cdb_110'
   | 'tesouro_ipca'
   | 'tesouro_selic'
@@ -102,6 +103,19 @@ export const INVESTMENT_OPTIONS: InvestmentOption[] = [
     isTaxExempt: true,
     benchmarkType: 'cdi',
     getGrossAnnualRate: (rates) => rates.cdi * 0.9,
+  },
+  {
+    id: 'lfdi',
+    name: 'Letra Financeira (LFDI)',
+    category: 'Tributado Regressivo',
+    description:
+      'Título de renda fixa emitido por instituições financeiras (bancos) com remuneração atrelada ao CDI (112% do CDI) e prazo mínimo de 2 anos (24 meses). Protegida pelo FGC (para LFs sem cláusula de subordinação até R$ 250 mil). Por ter prazo mínimo legal de 2 anos, beneficia-se sempre da menor alíquota de IR da tabela regressiva (15%).',
+    indexerDisplay: '112% do CDI',
+    liquidity: 'Carência legal de 24 meses (prazo mínimo 2 anos)',
+    taxTreatment: 'IR 15,0% (Prazo mínimo de 24m garante alíquota mínima)',
+    isTaxExempt: false,
+    benchmarkType: 'cdi',
+    getGrossAnnualRate: (rates) => rates.cdi * 1.12,
   },
   {
     id: 'cdb_110',
@@ -202,12 +216,20 @@ export function getInvestmentsRanking(
 
   const items = INVESTMENT_OPTIONS.map((opt) => {
     const grossAnnualRate = opt.getGrossAnnualRate(rates)
-    const effectiveTaxRate = opt.isTaxExempt ? 0 : taxInfo.ratePercent
+    // Para LFDI: prazo mínimo legal é 24 meses, então na prática sua alíquota de IR é 15% (acima de 720 dias).
+    // Para as demais opções tributadas, usamos a alíquota de referência padrão do prazo (ex: 17,5% em 12m).
+    const effectiveTaxRate = opt.isTaxExempt ? 0 : opt.id === 'lfdi' ? 15.0 : taxInfo.ratePercent
     // Rendimento líquido estimado anual:
     // Para aplicações tributadas: Bruto * (1 - aliquota)
     const netAnnualRate = opt.isTaxExempt
       ? grossAnnualRate
       : grossAnnualRate * (1 - effectiveTaxRate / 100)
+
+    const taxTreatmentDisplay = opt.isTaxExempt
+      ? 'Isento de IR'
+      : opt.id === 'lfdi'
+        ? 'IR 15,0% (fixo min. 24m)'
+        : `IR ${taxInfo.ratePercent}% (ref. ${referenceMonths}m)`
 
     return {
       id: opt.id,
@@ -216,9 +238,7 @@ export function getInvestmentsRanking(
       description: opt.description,
       indexerDisplay: opt.indexerDisplay,
       liquidity: opt.liquidity,
-      taxTreatment: opt.isTaxExempt
-        ? 'Isento de IR'
-        : `IR ${taxInfo.ratePercent}% (ref. ${referenceMonths}m)`,
+      taxTreatment: taxTreatmentDisplay,
       isTaxExempt: opt.isTaxExempt,
       grossAnnualRate,
       effectiveTaxRate,
@@ -334,6 +354,9 @@ export function simulateInvestments(
 
         if (opt.id === 'lci_lca' && calendarDays < 270) {
           note = 'Carência legal de 9 meses (270 dias) para resgate.'
+        } else if (opt.id === 'lfdi' && calendarDays < 720) {
+          note =
+            'Aviso de carência: A Letra Financeira só pode ser resgatada a partir de 2 anos (720 dias).'
         }
       }
     } else {
@@ -341,11 +364,17 @@ export function simulateInvestments(
       grossAmount = initialAmount * Math.pow(annualMultiplier, yearsEquivalent)
       if (opt.id === 'lci_lca' && periodValue < 9) {
         note = 'Carência legal mínima de 9 meses.'
+      } else if (opt.id === 'lfdi' && periodValue < 24) {
+        note =
+          'Aviso de carência: A Letra Financeira só pode ser resgatada a partir de 2 anos (24 meses).'
       }
     }
 
+    // Para LFDI: a LF possui carência e prazo mínimo de 24 meses (720 dias corridos),
+    // portanto na vigência real de resgate fica sempre na alíquota definitiva de 15,0%.
+    const taxRatePercent = opt.isTaxExempt ? 0 : opt.id === 'lfdi' ? 15.0 : taxInfo.ratePercent
+
     const grossYield = Math.max(0, grossAmount - initialAmount)
-    const taxRatePercent = opt.isTaxExempt ? 0 : taxInfo.ratePercent
     const taxAmount = opt.isTaxExempt ? 0 : grossYield * (taxRatePercent / 100)
     const netYield = grossYield - taxAmount
     const netAmount = initialAmount + netYield

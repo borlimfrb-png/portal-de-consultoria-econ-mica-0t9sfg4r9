@@ -142,7 +142,7 @@ export default function Index() {
     })
   })()
 
-  // Highlighted 4 indicators
+  // Highlighted 4 indicators (Selic, IPCA, IGP-M e Dólar Comercial)
   const featuredIndicators = indicators
     .filter((i) => ['selic', 'ipca_12m', 'igpm_12m', 'dolar_comercial'].includes(i.code))
     .slice(0, 4)

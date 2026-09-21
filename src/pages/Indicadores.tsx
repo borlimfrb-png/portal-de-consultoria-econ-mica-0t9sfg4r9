@@ -81,9 +81,9 @@ export default function Indicadores() {
 
   const categoryChips: { id: IndicatorCategory | 'all'; label: string }[] = [
     { id: 'all', label: 'Todos os Indicadores' },
+    { id: 'cambio', label: 'Câmbio (Comercial, Turismo, Cartão)' },
     { id: 'juros', label: 'Juros' },
     { id: 'inflacao', label: 'Inflação' },
-    { id: 'cambio', label: 'Câmbio' },
     { id: 'atividade', label: 'Atividade Econômica' },
   ]
 
@@ -296,6 +296,7 @@ export default function Indicadores() {
               return (
                 <div
                   key={indicator.id}
+                  id={indicator.code}
                   className="bg-white rounded-2xl p-6 sm:p-7 border border-stone-200/90 card-subtle-shadow card-hover-lift flex flex-col justify-between relative overflow-hidden group"
                 >
                   <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#16A34A]/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />

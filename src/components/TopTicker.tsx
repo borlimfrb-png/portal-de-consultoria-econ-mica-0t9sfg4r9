@@ -32,7 +32,27 @@ export default function TopTicker() {
           { id: '2', short_name: 'CDI', current_value: 13.15, unit: '% a.a.', variation: 1.0 },
           { id: '3', short_name: 'IPCA 12m', current_value: 4.56, unit: '%', variation: -0.27 },
           { id: '4', short_name: 'IGP-M', current_value: 6.22, unit: '%', variation: 0.27 },
-          { id: '5', short_name: 'Dólar', current_value: 5.76, unit: 'R$', variation: -0.06 },
+          {
+            id: '5',
+            short_name: 'Dólar Comercial',
+            current_value: 5.76,
+            unit: 'R$',
+            variation: -0.06,
+          },
+          {
+            id: '5b',
+            short_name: 'Dólar Turismo',
+            current_value: 5.96,
+            unit: 'R$',
+            variation: -0.06,
+          },
+          {
+            id: '5c',
+            short_name: 'Dólar Cartão',
+            current_value: 6.25,
+            unit: 'R$',
+            variation: -0.07,
+          },
           { id: '6', short_name: 'Euro', current_value: 6.03, unit: 'R$', variation: -0.05 },
           { id: '7', short_name: 'Desemprego', current_value: 6.2, unit: '%', variation: -0.2 },
         ] as EconomicIndicator[])

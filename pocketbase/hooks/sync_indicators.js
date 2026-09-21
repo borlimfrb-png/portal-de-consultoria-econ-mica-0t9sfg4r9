@@ -150,6 +150,107 @@ routerAdd('GET', '/backend/v1/sync/indicators', (e) => {
     }
   }
 
+  // Atualizar Dólar Turismo e Dólar Cartão a partir de cotação pública AwesomeAPI / derivada da PTAX
+  try {
+    let comercialVal = 0
+    let comercialDate = ''
+    try {
+      const rec = $app.findFirstRecordByData('economic_indicators', 'code', 'dolar_comercial')
+      comercialVal = rec.getFloat('current_value')
+      comercialDate = rec.getString('reference_date')
+    } catch (_) {}
+
+    // 1. Tentar buscar Dólar Turismo na AwesomeAPI (USD-BRLT)
+    let turismoVal = 0
+    let turismoVar = 0
+    let turismoDate = comercialDate || new Date().toISOString().slice(0, 10)
+
+    try {
+      const awRes = $http.send({
+        url: 'https://economia.awesomeapi.com.br/json/last/USD-BRLT',
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+          'User-Agent': 'PortalConsultoriaEconomica/1.0',
+        },
+        timeout: 15,
+      })
+
+      if (awRes.statusCode === 200 && awRes.json && awRes.json.USDBRLT) {
+        const itemT = awRes.json.USDBRLT
+        const bid = parseFloat(itemT.bid)
+        const ask = parseFloat(itemT.ask)
+        turismoVal = ask > 0 ? ask : bid
+        turismoVar = parseFloat(itemT.varBid || '0')
+        if (itemT.create_date) {
+          turismoDate = itemT.create_date.slice(0, 10)
+        }
+      }
+    } catch (e) {
+      console.log('[BORLIM Indicators Sync] Erro AwesomeAPI USD-BRLT: ' + e.message)
+    }
+
+    if (turismoVal <= 0 && comercialVal > 0) {
+      turismoVal = +(comercialVal * 1.035).toFixed(4)
+      turismoVar = 0.01
+    }
+
+    if (turismoVal > 0) {
+      try {
+        const tRec = $app.findFirstRecordByData('economic_indicators', 'code', 'dolar_turismo')
+        const currentHist = tRec.get('history') || []
+        const historyArr = Array.isArray(currentHist) ? currentHist : []
+        const lastHist = historyArr.length > 0 ? historyArr[historyArr.length - 1] : null
+        if (!lastHist || lastHist.date !== turismoDate) {
+          historyArr.push({ date: turismoDate, value: turismoVal })
+          if (historyArr.length > 30) historyArr.shift()
+        } else {
+          lastHist.value = turismoVal
+        }
+
+        const prevVal = tRec.getFloat('current_value') || +(turismoVal - turismoVar).toFixed(4)
+        tRec.set('previous_value', prevVal)
+        tRec.set('current_value', turismoVal)
+        tRec.set('variation', +turismoVar.toFixed(4))
+        tRec.set('reference_date', turismoDate)
+        tRec.set('history', historyArr)
+        $app.save(tRec)
+        updatedCount++
+      } catch (_) {}
+    }
+
+    // 2. Atualizar Dólar Cartão (PTAX comercial + spread bancário 4.0% + IOF 4.38%)
+    const refBase = comercialVal > 0 ? comercialVal : turismoVal > 0 ? turismoVal / 1.035 : 0
+    if (refBase > 0) {
+      const cartaoVal = +(refBase * 1.04 * 1.0438).toFixed(4)
+      const cartaoDate = comercialDate || turismoDate || new Date().toISOString().slice(0, 10)
+      try {
+        const cRec = $app.findFirstRecordByData('economic_indicators', 'code', 'dolar_cartao')
+        const currentHist = cRec.get('history') || []
+        const historyArr = Array.isArray(currentHist) ? currentHist : []
+        const lastHist = historyArr.length > 0 ? historyArr[historyArr.length - 1] : null
+        if (!lastHist || lastHist.date !== cartaoDate) {
+          historyArr.push({ date: cartaoDate, value: cartaoVal })
+          if (historyArr.length > 30) historyArr.shift()
+        } else {
+          lastHist.value = cartaoVal
+        }
+
+        const prevVal = cRec.getFloat('current_value') || +(cartaoVal - 0.02).toFixed(4)
+        const diff = +(cartaoVal - prevVal).toFixed(4)
+        cRec.set('previous_value', prevVal)
+        cRec.set('current_value', cartaoVal)
+        cRec.set('variation', diff)
+        cRec.set('reference_date', cartaoDate)
+        cRec.set('history', historyArr)
+        $app.save(cRec)
+        updatedCount++
+      } catch (_) {}
+    }
+  } catch (errCambio) {
+    console.log('[BORLIM Indicators Sync] Erro moedas: ' + errCambio.message)
+  }
+
   console.log(
     '[BORLIM Indicators Sync] Sync completed. Total updated: ' +
       updatedCount +
@@ -319,6 +420,107 @@ routerAdd('POST', '/backend/v1/sync/indicators', (e) => {
     if (!success) {
       failedIndicators.push(item.code)
     }
+  }
+
+  // Atualizar Dólar Turismo e Dólar Cartão a partir de cotação pública AwesomeAPI / derivada da PTAX
+  try {
+    let comercialVal = 0
+    let comercialDate = ''
+    try {
+      const rec = $app.findFirstRecordByData('economic_indicators', 'code', 'dolar_comercial')
+      comercialVal = rec.getFloat('current_value')
+      comercialDate = rec.getString('reference_date')
+    } catch (_) {}
+
+    // 1. Tentar buscar Dólar Turismo na AwesomeAPI (USD-BRLT)
+    let turismoVal = 0
+    let turismoVar = 0
+    let turismoDate = comercialDate || new Date().toISOString().slice(0, 10)
+
+    try {
+      const awRes = $http.send({
+        url: 'https://economia.awesomeapi.com.br/json/last/USD-BRLT',
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+          'User-Agent': 'PortalConsultoriaEconomica/1.0',
+        },
+        timeout: 15,
+      })
+
+      if (awRes.statusCode === 200 && awRes.json && awRes.json.USDBRLT) {
+        const itemT = awRes.json.USDBRLT
+        const bid = parseFloat(itemT.bid)
+        const ask = parseFloat(itemT.ask)
+        turismoVal = ask > 0 ? ask : bid
+        turismoVar = parseFloat(itemT.varBid || '0')
+        if (itemT.create_date) {
+          turismoDate = itemT.create_date.slice(0, 10)
+        }
+      }
+    } catch (e) {
+      console.log('[BORLIM Indicators Sync] Erro AwesomeAPI USD-BRLT: ' + e.message)
+    }
+
+    if (turismoVal <= 0 && comercialVal > 0) {
+      turismoVal = +(comercialVal * 1.035).toFixed(4)
+      turismoVar = 0.01
+    }
+
+    if (turismoVal > 0) {
+      try {
+        const tRec = $app.findFirstRecordByData('economic_indicators', 'code', 'dolar_turismo')
+        const currentHist = tRec.get('history') || []
+        const historyArr = Array.isArray(currentHist) ? currentHist : []
+        const lastHist = historyArr.length > 0 ? historyArr[historyArr.length - 1] : null
+        if (!lastHist || lastHist.date !== turismoDate) {
+          historyArr.push({ date: turismoDate, value: turismoVal })
+          if (historyArr.length > 30) historyArr.shift()
+        } else {
+          lastHist.value = turismoVal
+        }
+
+        const prevVal = tRec.getFloat('current_value') || +(turismoVal - turismoVar).toFixed(4)
+        tRec.set('previous_value', prevVal)
+        tRec.set('current_value', turismoVal)
+        tRec.set('variation', +turismoVar.toFixed(4))
+        tRec.set('reference_date', turismoDate)
+        tRec.set('history', historyArr)
+        $app.save(tRec)
+        updatedCount++
+      } catch (_) {}
+    }
+
+    // 2. Atualizar Dólar Cartão (PTAX comercial + spread bancário 4.0% + IOF 4.38%)
+    const refBase = comercialVal > 0 ? comercialVal : turismoVal > 0 ? turismoVal / 1.035 : 0
+    if (refBase > 0) {
+      const cartaoVal = +(refBase * 1.04 * 1.0438).toFixed(4)
+      const cartaoDate = comercialDate || turismoDate || new Date().toISOString().slice(0, 10)
+      try {
+        const cRec = $app.findFirstRecordByData('economic_indicators', 'code', 'dolar_cartao')
+        const currentHist = cRec.get('history') || []
+        const historyArr = Array.isArray(currentHist) ? currentHist : []
+        const lastHist = historyArr.length > 0 ? historyArr[historyArr.length - 1] : null
+        if (!lastHist || lastHist.date !== cartaoDate) {
+          historyArr.push({ date: cartaoDate, value: cartaoVal })
+          if (historyArr.length > 30) historyArr.shift()
+        } else {
+          lastHist.value = cartaoVal
+        }
+
+        const prevVal = cRec.getFloat('current_value') || +(cartaoVal - 0.02).toFixed(4)
+        const diff = +(cartaoVal - prevVal).toFixed(4)
+        cRec.set('previous_value', prevVal)
+        cRec.set('current_value', cartaoVal)
+        cRec.set('variation', diff)
+        cRec.set('reference_date', cartaoDate)
+        cRec.set('history', historyArr)
+        $app.save(cRec)
+        updatedCount++
+      } catch (_) {}
+    }
+  } catch (errCambio) {
+    console.log('[BORLIM Indicators Sync] Erro moedas: ' + errCambio.message)
   }
 
   console.log(

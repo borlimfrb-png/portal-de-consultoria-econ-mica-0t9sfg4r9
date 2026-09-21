@@ -110,6 +110,8 @@ export default function NoticiaDetalhe() {
   const ipca = indicators.find((i) => i.code === 'ipca_12m')
   const cdi = indicators.find((i) => i.code === 'cdi')
   const dolar = indicators.find((i) => i.code === 'dolar_comercial')
+  const dolarTurismo = indicators.find((i) => i.code === 'dolar_turismo')
+  const dolarCartao = indicators.find((i) => i.code === 'dolar_cartao')
 
   return (
     <div className="flex flex-col min-h-screen bg-[#F0F4F8]">
@@ -251,10 +253,30 @@ export default function NoticiaDetalhe() {
               {dolar && (
                 <div className="bg-[#0B3B7A] p-3 rounded border border-slate-700">
                   <span className="text-[10px] font-mono text-slate-300 block uppercase">
-                    Dólar PTAX
+                    Dólar Comercial
                   </span>
                   <span className="text-lg font-mono font-bold text-emerald-400">
                     R$ {dolar.current_value.toFixed(2)}
+                  </span>
+                </div>
+              )}
+              {dolarTurismo && (
+                <div className="bg-[#0B3B7A] p-3 rounded border border-slate-700">
+                  <span className="text-[10px] font-mono text-slate-300 block uppercase">
+                    Dólar Turismo
+                  </span>
+                  <span className="text-lg font-mono font-bold text-emerald-400">
+                    R$ {dolarTurismo.current_value.toFixed(2)}
+                  </span>
+                </div>
+              )}
+              {dolarCartao && (
+                <div className="bg-[#0B3B7A] p-3 rounded border border-slate-700">
+                  <span className="text-[10px] font-mono text-slate-300 block uppercase">
+                    Dólar Cartão
+                  </span>
+                  <span className="text-lg font-mono font-bold text-emerald-400">
+                    R$ {dolarCartao.current_value.toFixed(2)}
                   </span>
                 </div>
               )}
