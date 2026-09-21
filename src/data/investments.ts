@@ -132,19 +132,21 @@ export const INVESTMENT_OPTIONS: InvestmentOption[] = [
   },
   {
     id: 'tesouro_ipca',
-    name: 'Tesouro IPCA+ (IPCA + 6,2% a.a.)',
+    name: 'Tesouro IPCA+ (IPCA + 6,00% a.a.)',
     category: 'Tributado Regressivo',
     description:
-      'Título público federal que garante a reposição da inflação oficial (IPCA) acrescido de uma taxa de juros real prefixada.',
-    indexerDisplay: 'IPCA + 6,20% a.a.',
-    liquidity: 'Diária (com marcação a mercado se resgatar antes)',
-    taxTreatment: 'Tabela Regressiva (15% a 22,5%)',
+      'Título público federal que garante a reposição da inflação oficial (IPCA) acrescido de uma taxa de juro real contratual (~6,0% a.a.). Sujeito a marcação a mercado em caso de resgate antecipado antes do vencimento.',
+    indexerDisplay: 'IPCA + 6,00% a.a.',
+    liquidity: 'Diária D+1 (marcação a mercado em resgate antecipado)',
+    taxTreatment: 'Tabela Regressiva (15% a 22,5%) + Custódia B3 0,20% a.a.',
     isTaxExempt: false,
     benchmarkType: 'ipca_plus',
     getGrossAnnualRate: (rates) => {
-      // (1 + IPCA) * (1 + juro real) - 1
+      // Fórmula da ANBIMA para títulos pós-fixados/híbridos indexados à inflação:
+      // Taxa Bruta Anual = (1 + IPCA) * (1 + juro real) - 1
+      // Taxa real de referência educativa: 6,00% a.a.
       const ipcaFactor = 1 + rates.ipca / 100
-      const realFactor = 1 + 0.062 // taxa média de juro real praticada pelo Tesouro IPCA
+      const realFactor = 1 + 0.06
       return (ipcaFactor * realFactor - 1) * 100
     },
   },
@@ -221,15 +223,22 @@ export function getInvestmentsRanking(
     const effectiveTaxRate = opt.isTaxExempt ? 0 : opt.id === 'lfdi' ? 15.0 : taxInfo.ratePercent
     // Rendimento líquido estimado anual:
     // Para aplicações tributadas: Bruto * (1 - aliquota)
-    const netAnnualRate = opt.isTaxExempt
-      ? grossAnnualRate
-      : grossAnnualRate * (1 - effectiveTaxRate / 100)
+    // Para Tesouro IPCA+: desconta ainda a taxa de custódia B3 de 0,20% a.a.
+    const b3Deduction = opt.id === 'tesouro_ipca' ? 0.2 : 0
+    const netAnnualRate = Math.max(
+      0,
+      opt.isTaxExempt
+        ? grossAnnualRate
+        : grossAnnualRate * (1 - effectiveTaxRate / 100) - b3Deduction,
+    )
 
     const taxTreatmentDisplay = opt.isTaxExempt
       ? 'Isento de IR'
       : opt.id === 'lfdi'
         ? 'IR 15,0% (fixo min. 24m)'
-        : `IR ${taxInfo.ratePercent}% (ref. ${referenceMonths}m)`
+        : opt.id === 'tesouro_ipca'
+          ? `IR ${taxInfo.ratePercent}% + B3 0,20%`
+          : `IR ${taxInfo.ratePercent}% (ref. ${referenceMonths}m)`
 
     return {
       id: opt.id,
@@ -270,6 +279,7 @@ export interface SimulationResultRow {
   grossYield: number
   taxAmount: number
   taxRatePercent: number
+  b3FeeAmount?: number // Taxa de custódia B3 (0,20% a.a. sobre o montante, aplicável a títulos públicos)
   netAmount: number
   netYield: number
   netReturnPercent: number
@@ -277,6 +287,7 @@ export interface SimulationResultRow {
   isBest: boolean
   diffFromPoupanca: number // Quanto a mais que a poupança em R$
   note?: string // Observação contextual (ex: regra de aniversário da Poupança ou carência de LCI)
+  marketWarning?: boolean // Sinaliza que o ativo sofre marcação a mercado em prazos curtos
 }
 
 /**
@@ -357,6 +368,14 @@ export function simulateInvestments(
         } else if (opt.id === 'lfdi' && calendarDays < 720) {
           note =
             'Aviso de carência: A Letra Financeira só pode ser resgatada a partir de 2 anos (720 dias).'
+        } else if (opt.id === 'tesouro_ipca') {
+          if (calendarDays < 30) {
+            note =
+              'Inadequado para curtíssimo prazo: liquidação em D+1 útil e alta volatilidade por marcação a mercado. Para prazos menores que 30 dias, utilize Tesouro Selic ou CDB com liquidez diária.'
+          } else if (calendarDays < 365) {
+            note =
+              'Aviso de Marcação a Mercado: o resgate antecipado em prazos inferiores a 1 ano depende da cotação de mercado do título e pode render mais ou menos que o projetado (inclusive com risco de perda temporária). Para reservas de curto prazo, recomenda-se Tesouro Selic.'
+          }
         }
       }
     } else {
@@ -367,6 +386,9 @@ export function simulateInvestments(
       } else if (opt.id === 'lfdi' && periodValue < 24) {
         note =
           'Aviso de carência: A Letra Financeira só pode ser resgatada a partir de 2 anos (24 meses).'
+      } else if (opt.id === 'tesouro_ipca' && periodValue < 12) {
+        note =
+          'Aviso de Marcação a Mercado: o resgate antes do vencimento (< 12 meses) reflete o preço de mercado dos títulos públicos e pode oscilar positiva ou negativamente. Para liquidez e curto prazo, prefira Tesouro Selic.'
       }
     }
 
@@ -376,9 +398,23 @@ export function simulateInvestments(
 
     const grossYield = Math.max(0, grossAmount - initialAmount)
     const taxAmount = opt.isTaxExempt ? 0 : grossYield * (taxRatePercent / 100)
-    const netYield = grossYield - taxAmount
+
+    // Taxa de custódia da B3 para Tesouro Direto: 0,20% a.a. sobre o valor total (proporcional ao prazo)
+    // No Tesouro Selic até R$ 10.000 há isenção de custódia B3; no Tesouro IPCA+ incide 0,20% a.a.
+    let b3FeeAmount = 0
+    if (opt.id === 'tesouro_ipca') {
+      const b3AnnualRate = 0.002 // 0,20% a.a.
+      // Custo proporcional ao período em anos sobre o montante médio/final aproximado
+      b3FeeAmount = Math.max(0, grossAmount * (1 - Math.exp(-b3AnnualRate * yearsEquivalent)))
+      // Em prazos muito curtos, b3FeeAmount é pequeno mas proporcional
+    }
+
+    const netYield = Math.max(0, grossYield - taxAmount - b3FeeAmount)
     const netAmount = initialAmount + netYield
     const netReturnPercent = (netYield / initialAmount) * 100
+
+    const isShortTermIpca =
+      opt.id === 'tesouro_ipca' && (unit === 'days' ? calendarDays < 365 : periodValue < 12)
 
     return {
       id: opt.id,
@@ -390,6 +426,7 @@ export function simulateInvestments(
       grossYield,
       taxAmount,
       taxRatePercent,
+      b3FeeAmount: b3FeeAmount > 0 ? b3FeeAmount : undefined,
       netAmount,
       netYield,
       netReturnPercent,
@@ -397,6 +434,7 @@ export function simulateInvestments(
       isBest: false,
       diffFromPoupanca: 0,
       note,
+      marketWarning: isShortTermIpca,
     }
   })
 

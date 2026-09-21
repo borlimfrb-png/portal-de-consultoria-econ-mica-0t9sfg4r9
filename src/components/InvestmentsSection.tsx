@@ -822,15 +822,27 @@ export default function InvestmentsSection({ rates }: InvestmentsSectionProps) {
                       }`}
                     >
                       <td className="py-4 px-4">
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-2 flex-wrap">
                           {row.isBest && (
                             <span className="w-2 h-2 rounded-full bg-[#16A34A] shrink-0" />
                           )}
                           <span className="font-serif font-bold text-[#082852]">{row.name}</span>
+                          {row.id === 'tesouro_ipca' && row.marketWarning && (
+                            <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-100 text-amber-800 border border-amber-300">
+                              <AlertCircle className="w-3 h-3 text-amber-700" />
+                              <span>Marcação a Mercado</span>
+                            </span>
+                          )}
                         </div>
                         {row.note && (
-                          <div className="text-[11px] font-sans text-amber-700 mt-0.5 flex items-center gap-1 font-normal">
-                            <Info className="w-3 h-3 shrink-0 text-amber-600" />
+                          <div
+                            className={`text-[11px] font-sans mt-1 flex items-start gap-1 font-normal leading-tight ${
+                              row.id === 'tesouro_ipca'
+                                ? 'text-amber-800 bg-amber-50/70 p-1.5 rounded border border-amber-200/60'
+                                : 'text-amber-700'
+                            }`}
+                          >
+                            <Info className="w-3.5 h-3.5 shrink-0 text-amber-600 mt-0.5" />
                             <span>{row.note}</span>
                           </div>
                         )}
@@ -856,12 +868,19 @@ export default function InvestmentsSection({ rates }: InvestmentsSectionProps) {
                             Isento (R$ 0,00)
                           </span>
                         ) : (
-                          <span className="text-xs text-red-600 font-medium">
-                            - {formatBRL(row.taxAmount)}{' '}
-                            <span className="text-[10px] text-slate-500 font-normal">
-                              ({row.taxRatePercent}%)
+                          <div>
+                            <span className="text-xs text-red-600 font-medium block">
+                              - {formatBRL(row.taxAmount)}{' '}
+                              <span className="text-[10px] text-slate-500 font-normal">
+                                ({row.taxRatePercent}%)
+                              </span>
                             </span>
-                          </span>
+                            {row.b3FeeAmount && row.b3FeeAmount > 0 ? (
+                              <span className="text-[10px] text-slate-500 block mt-0.5">
+                                + B3: -{formatBRL(row.b3FeeAmount)} (0,20% a.a.)
+                              </span>
+                            ) : null}
+                          </div>
                         )}
                       </td>
 
@@ -977,21 +996,35 @@ export default function InvestmentsSection({ rates }: InvestmentsSectionProps) {
               </div>
 
               {/* Nota de Metodologia e Transparência do Cálculo Diário */}
-              <div className="pt-3 border-t border-stone-200/80 text-[11px] text-slate-500 leading-relaxed space-y-1">
+              <div className="pt-3 border-t border-stone-200/80 text-[11px] text-slate-500 leading-relaxed space-y-2">
                 <div className="flex items-start gap-1.5">
                   <Info className="w-3.5 h-3.5 text-[#0B3B7A] shrink-0 mt-0.5" />
-                  <span>
-                    <strong>Critério de Cálculo do Mercado Financeiro Nacional:</strong> Para
-                    aplicações atreladas a CDI, Selic e títulos públicos, a convenção padrão
-                    brasileira adota <strong>252 dias úteis por ano</strong> na capitalização
-                    composta diária. Em simulações expressas em dias corridos (ex.: 10 dias
-                    corridos), o sistema converte para os dias úteis equivalentes (~
-                    {businessDaysCount} d.u. para {effectivePeriod} dias) para apuração precisa. A
-                    Caderneta de Poupança segue remuneração de aniversário mensal (base 365 dias
-                    pro-rata para fins comparativos). Em resgates em prazo inferior a 30 dias na
-                    regra real, a poupança perde os rendimentos. Simulação com finalidade educativa
-                    e analítica.
-                  </span>
+                  <div>
+                    <span className="block">
+                      <strong>Critério de Cálculo do Mercado Financeiro Nacional:</strong> Para
+                      aplicações atreladas a CDI, Selic e títulos públicos, a convenção padrão
+                      brasileira adota <strong>252 dias úteis por ano</strong> na capitalização
+                      composta diária. Em simulações expressas em dias corridos (ex.: 10 dias
+                      corridos), o sistema converte para os dias úteis equivalentes (~
+                      {businessDaysCount} d.u. para {effectivePeriod} dias) para apuração precisa. A
+                      Caderneta de Poupança segue remuneração de aniversário mensal (base 365 dias
+                      pro-rata para fins comparativos). Em resgates em prazo inferior a 30 dias na
+                      regra real, a poupança perde os rendimentos.
+                    </span>
+                    <span className="block mt-1 text-slate-600">
+                      <strong>Aviso Educativo Tesouro IPCA+:</strong> A remuneração baseia-se na
+                      taxa oficial do IPCA mais a taxa real de referência de{' '}
+                      <strong>~6,00% a.a.</strong> praticada nos leilões do Tesouro Direto. O valor
+                      líquido deduz o IR regressivo e a taxa de custódia obrigatória da B3 (
+                      <strong>0,20% a.a.</strong> proporcional ao prazo). Em prazos curtos
+                      (inferiores a 1 ano) e liquidação diária (D+1 útil), o resgate antecipado fica
+                      sujeito à <strong>marcação a mercado</strong>: se as taxas de juros subirem no
+                      período, o título pode sofrer desvalorização temporária no resgate antecipado;
+                      se caírem, pode valorizar além do projetado. Para reservas de emergência ou
+                      liquidez de curto prazo, o mais indicado é o <strong>Tesouro Selic</strong> ou
+                      CDB pós-fixado com liquidez diária. Caráter exclusivamente educativo.
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1000,62 +1033,105 @@ export default function InvestmentsSection({ rates }: InvestmentsSectionProps) {
       )}
 
       {/* 3. Glossário Educativo / Empresarial */}
-      <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div className="bg-white p-5 rounded-xl border border-stone-200 shadow-xs">
-          <div className="flex items-center gap-2 mb-2 text-xs font-mono font-bold uppercase text-[#0B3B7A]">
-            <Percent className="w-4 h-4 text-[#16A34A]" />
-            <span>O que é CDI?</span>
+      <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-5">
+        <div className="bg-white p-5 rounded-xl border border-stone-200 shadow-xs flex flex-col justify-between">
+          <div>
+            <div className="flex items-center gap-2 mb-2 text-xs font-mono font-bold uppercase text-[#0B3B7A]">
+              <TrendingUp className="w-4 h-4 text-[#16A34A]" />
+              <span>Tesouro IPCA+</span>
+            </div>
+            <h4 className="font-serif font-bold text-base text-[#082852] mb-1">
+              Inflação + Juro Real (~6% a.a.)
+            </h4>
+            <p className="text-xs text-slate-600 leading-relaxed">
+              Protege o poder de compra ao repor a inflação (IPCA) mais juro real garantido até o
+              vencimento. Se resgatado antes do vencimento, sofre{' '}
+              <strong>marcação a mercado</strong>: os preços oscilam diariamente e podem gerar
+              perdas em prazos curtos.
+            </p>
           </div>
-          <h4 className="font-serif font-bold text-base text-[#082852] mb-1">
-            Certificado Interbancário
-          </h4>
-          <p className="text-xs text-slate-600 leading-relaxed">
-            É a taxa média que os bancos cobram para emprestar recursos entre si de um dia para o
-            outro. Anda colada à Taxa Selic e serve de balizador para toda a renda fixa.
-          </p>
+          <div className="mt-3 pt-2 border-t border-stone-100 text-[10px] font-mono text-emerald-800 font-semibold">
+            Ideal: Médio/Longo Prazo • Custódia B3 0,20% a.a.
+          </div>
         </div>
 
-        <div className="bg-white p-5 rounded-xl border border-stone-200 shadow-xs">
-          <div className="flex items-center gap-2 mb-2 text-xs font-mono font-bold uppercase text-[#0B3B7A]">
-            <Award className="w-4 h-4 text-[#16A34A]" />
-            <span>Letra Financeira (LFDI)</span>
+        <div className="bg-white p-5 rounded-xl border border-stone-200 shadow-xs flex flex-col justify-between">
+          <div>
+            <div className="flex items-center gap-2 mb-2 text-xs font-mono font-bold uppercase text-[#0B3B7A]">
+              <Percent className="w-4 h-4 text-[#16A34A]" />
+              <span>O que é CDI?</span>
+            </div>
+            <h4 className="font-serif font-bold text-base text-[#082852] mb-1">
+              Certificado Interbancário
+            </h4>
+            <p className="text-xs text-slate-600 leading-relaxed">
+              É a taxa média que os bancos cobram para emprestar recursos entre si de um dia para o
+              outro. Anda colada à Taxa Selic e serve de balizador para toda a renda fixa
+              pós-fixada.
+            </p>
           </div>
-          <h4 className="font-serif font-bold text-base text-[#082852] mb-1">
-            Renda Fixa de Médio-Longo Prazo
-          </h4>
-          <p className="text-xs text-slate-600 leading-relaxed">
-            Título bancário com prazo mínimo de 2 anos (24 meses). Paga taxas atrativas (ex.: 112%
-            do CDI) e, como só vence a partir de 720 dias, garante sempre a menor alíquota de IR da
-            tabela regressiva (15%). Protegida pelo FGC.
-          </p>
+          <div className="mt-3 pt-2 border-t border-stone-100 text-[10px] font-mono text-slate-500">
+            Referência de CDBs e LCIs
+          </div>
         </div>
 
-        <div className="bg-white p-5 rounded-xl border border-stone-200 shadow-xs">
-          <div className="flex items-center gap-2 mb-2 text-xs font-mono font-bold uppercase text-[#0B3B7A]">
-            <ShieldCheck className="w-4 h-4 text-[#16A34A]" />
-            <span>Por que LCI e LCA são Isentas?</span>
+        <div className="bg-white p-5 rounded-xl border border-stone-200 shadow-xs flex flex-col justify-between">
+          <div>
+            <div className="flex items-center gap-2 mb-2 text-xs font-mono font-bold uppercase text-[#0B3B7A]">
+              <Award className="w-4 h-4 text-[#16A34A]" />
+              <span>Letra Financeira (LFDI)</span>
+            </div>
+            <h4 className="font-serif font-bold text-base text-[#082852] mb-1">
+              Renda Fixa Médio-Longo Prazo
+            </h4>
+            <p className="text-xs text-slate-600 leading-relaxed">
+              Título bancário com prazo mínimo de 2 anos (24 meses). Paga taxas atrativas (ex.: 112%
+              do CDI) e, como só vence a partir de 720 dias, garante sempre a menor alíquota de IR
+              (15%). Protegida pelo FGC.
+            </p>
           </div>
-          <h4 className="font-serif font-bold text-base text-[#082852] mb-1">
-            Incentivo ao Agro e Imóveis
-          </h4>
-          <p className="text-xs text-slate-600 leading-relaxed">
-            Criadas por lei federal para canalizar recursos a setores estratégicos. Por não pagarem
-            IRPF, uma LCI a 90% do CDI entrega retorno líquido muito competitivo em prazos médios.
-          </p>
+          <div className="mt-3 pt-2 border-t border-stone-100 text-[10px] font-mono text-slate-500">
+            Carência mínima: 24 meses
+          </div>
         </div>
 
-        <div className="bg-white p-5 rounded-xl border border-stone-200 shadow-xs">
-          <div className="flex items-center gap-2 mb-2 text-xs font-mono font-bold uppercase text-[#0B3B7A]">
-            <SlidersHorizontal className="w-4 h-4 text-[#16A34A]" />
-            <span>Gestão do Caixa da Empresa</span>
+        <div className="bg-white p-5 rounded-xl border border-stone-200 shadow-xs flex flex-col justify-between">
+          <div>
+            <div className="flex items-center gap-2 mb-2 text-xs font-mono font-bold uppercase text-[#0B3B7A]">
+              <ShieldCheck className="w-4 h-4 text-[#16A34A]" />
+              <span>Por que LCI e LCA são Isentas?</span>
+            </div>
+            <h4 className="font-serif font-bold text-base text-[#082852] mb-1">
+              Incentivo ao Agro e Imóveis
+            </h4>
+            <p className="text-xs text-slate-600 leading-relaxed">
+              Criadas por lei federal para canalizar recursos a setores estratégicos. Por não
+              pagarem IRPF, uma LCI a 90% do CDI entrega retorno líquido muito competitivo em prazos
+              médios.
+            </p>
           </div>
-          <h4 className="font-serif font-bold text-base text-[#082852] mb-1">
-            De Empresário para Empresário
-          </h4>
-          <p className="text-xs text-slate-600 leading-relaxed">
-            Deixar dinheiro parado corrói o poder de compra diante da inflação. Aplicar reservas em
-            instrumentos estruturados e seguros gera receita financeira e liquidez.
-          </p>
+          <div className="mt-3 pt-2 border-t border-stone-100 text-[10px] font-mono text-slate-500">
+            0% de IR para PF • FGC R$ 250k
+          </div>
+        </div>
+
+        <div className="bg-white p-5 rounded-xl border border-stone-200 shadow-xs flex flex-col justify-between">
+          <div>
+            <div className="flex items-center gap-2 mb-2 text-xs font-mono font-bold uppercase text-[#0B3B7A]">
+              <SlidersHorizontal className="w-4 h-4 text-[#16A34A]" />
+              <span>Gestão do Caixa da Empresa</span>
+            </div>
+            <h4 className="font-serif font-bold text-base text-[#082852] mb-1">
+              De Empresário para Empresário
+            </h4>
+            <p className="text-xs text-slate-600 leading-relaxed">
+              Deixar dinheiro parado corrói o poder de compra diante da inflação. Aplicar reservas
+              em instrumentos estruturados e seguros gera receita financeira e liquidez.
+            </p>
+          </div>
+          <div className="mt-3 pt-2 border-t border-stone-100 text-[10px] font-mono text-slate-500">
+            Borlim Consultoria Empresarial
+          </div>
         </div>
       </div>
       {/* 4. Banner CTA: Flávio Bordignon / Borlim Consultoria */}
