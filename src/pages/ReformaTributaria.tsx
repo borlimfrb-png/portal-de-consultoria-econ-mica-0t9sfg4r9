@@ -31,6 +31,7 @@ import {
 } from 'lucide-react'
 import logoBorlim from '@/assets/logo-borlim-debb0.png'
 import FormasDeTributacaoSection from '@/components/FormasDeTributacaoSection'
+import CalculoCbsIbsSection from '@/components/CalculoCbsIbsSection'
 
 export default function ReformaTributaria() {
   const [activeTransitionTab, setActiveTransitionTab] = useState<number>(0)
@@ -363,16 +364,13 @@ export default function ReformaTributaria() {
                 Especial Regulatório & Tributário — BORLIM Consultoria
               </span>
             </div>
-
             <h1 className="font-serif text-3xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight">
               Reforma Tributária Brasileira
             </h1>
-
             <p className="font-serif text-xl sm:text-2xl text-emerald-300 mt-4 font-normal leading-snug">
               Guia executivo completo sobre o IVA Dual (IBS e CBS), Imposto Seletivo e Split
               Payment: pontos fortes, desafios reais e os impactos diretos na gestão do seu negócio.
             </p>
-
             <p className="text-base sm:text-lg text-slate-300 mt-6 leading-relaxed font-sans max-w-3xl">
               Instituída pela <strong>Emenda Constitucional 132/2023</strong> e regulamentada pela{' '}
               <strong>Lei Complementar 214/2025</strong>, a Reforma Tributária representa a maior
@@ -381,14 +379,12 @@ export default function ReformaTributaria() {
               <strong>Imposto sobre Valor Agregado Dual (IBS e CBS)</strong> com tributação no
               destino, cálculo &ldquo;por fora&rdquo; e retenção automática via split payment.
             </p>
-
             <p className="text-base sm:text-lg text-slate-300 mt-4 leading-relaxed font-sans max-w-3xl">
               Na <strong>BORLIM Consultoria Empresarial</strong>, analisamos essas mudanças de
               empresário para empresário: sem jargões jurídicos desnecessários, com foco na proteção
               da margem de lucro, na revisão do markup de venda, na sustentabilidade do capital de
               giro e na conexão com os nossos <strong>48 indicadores econômico-financeiros</strong>.
             </p>
-
             {/* CTAs Oficiais do Hero */}
             <div className="mt-8 flex flex-wrap gap-3 sm:gap-4 items-center">
               <a
@@ -416,22 +412,31 @@ export default function ReformaTributaria() {
               </a>
 
               <a
+                href="#calculo-cbs-ibs"
+                className="inline-flex items-center gap-2 px-4 py-3 rounded-lg bg-emerald-500/25 hover:bg-emerald-500/35 text-white border border-[#22C55E]/50 text-xs sm:text-sm font-mono font-bold transition-all shadow-sm"
+              >
+                <Percent className="w-4 h-4 text-[#22C55E]" />
+                <span>Como Calcular CBS e IBS</span>
+                <ArrowRight className="w-3.5 h-3.5 text-emerald-300" />
+              </a>
+
+              <a
+                href="#formas-de-tributacao"
+                className="inline-flex items-center gap-2 px-4 py-3 rounded-lg bg-white/10 hover:bg-white/15 text-emerald-200 border border-white/20 text-xs sm:text-sm font-mono font-semibold transition-all"
+              >
+                <Scale className="w-4 h-4 text-[#22C55E]" />
+                <span>Comparar 3 Formas de Tributação</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </a>
+
+              <a
                 href="mailto:flavio@borlim.com.br?subject=D%C3%BAvidas%20sobre%20Reforma%20Tribut%C3%A1ria%20-%20Borlim"
                 className="inline-flex items-center gap-2 px-5 py-3 rounded-lg bg-white/10 hover:bg-white/15 text-white border border-white/20 text-xs sm:text-sm font-mono font-semibold transition-all"
               >
                 <Mail className="w-4 h-4 text-emerald-300" />
                 <span>flavio@borlim.com.br</span>
               </a>
-
-              <a
-                href="#formas-de-tributacao"
-                className="inline-flex items-center gap-2 px-4 py-3 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-200 border border-emerald-400/30 text-xs sm:text-sm font-mono font-semibold transition-all"
-              >
-                <Scale className="w-4 h-4 text-[#22C55E]" />
-                <span>Comparar 3 Formas de Tributação</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </a>
-            </div>
+            </div>{' '}
           </div>
         </div>
       </section>
@@ -704,6 +709,9 @@ export default function ReformaTributaria() {
 
       {/* 4.5. NOVA SEÇÃO: AS 3 FORMAS DE TRIBUTAÇÃO (SIMPLES, PRESUMIDO, REAL) */}
       <FormasDeTributacaoSection />
+
+      {/* 4.8. NOVA SEÇÃO DEDICADA: COMO SE CALCULA O CBS E O IBS NA PRÁTICA */}
+      <CalculoCbsIbsSection />
 
       {/* 5. ANÁLISE COMPARATIVA: PONTOS FORTES vs PONTOS FRACOS (DESAFIOS) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
