@@ -8,6 +8,8 @@ import Index from './pages/Index'
 import Indicadores from './pages/Indicadores'
 import Noticias from './pages/Noticias'
 import NoticiaDetalhe from './pages/NoticiaDetalhe'
+import Biblioteca from './pages/Biblioteca'
+import AdminBiblioteca from './pages/AdminBiblioteca'
 import Sobre from './pages/Sobre'
 import Valuation from './pages/Valuation'
 import Planejamento from './pages/Planejamento'
@@ -28,6 +30,7 @@ const App = () => (
         <Route element={<Layout />}>
           <Route path="/" element={<Index />} />
           <Route path="/indicadores" element={<Indicadores />} />
+          <Route path="/biblioteca" element={<Biblioteca />} />
           <Route path="/noticias" element={<Noticias />} />
           <Route path="/noticias/:id" element={<NoticiaDetalhe />} />
           <Route path="/bolsa-de-valores" element={<BolsaDeValores />} />
@@ -47,6 +50,8 @@ const App = () => (
           <Route path="/reforma" element={<ReformaTributaria />} />
           <Route path="/sobre" element={<Sobre />} />
         </Route>
+        {/* Painel Administrativo Interno da Biblioteca */}
+        <Route path="/admin/biblioteca" element={<AdminBiblioteca />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </TooltipProvider>

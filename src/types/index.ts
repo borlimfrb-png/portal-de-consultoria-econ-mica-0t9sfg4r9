@@ -46,3 +46,16 @@ export interface NewsletterSubscriber extends RecordModel {
   email: string
   name?: string
 }
+
+export type LibraryDocumentType = 'livro' | 'artigo'
+
+export interface LibraryDocument extends RecordModel {
+  title: string
+  description?: string
+  type: LibraryDocumentType
+  file?: string
+  file_size?: number
+  content_text?: string
+  published: boolean
+  published_at?: string
+}

@@ -115,6 +115,15 @@ export default function Footer() {
               </li>
               <li>
                 <Link
+                  to="/biblioteca"
+                  className="hover:text-[#22C55E] transition-colors flex items-center gap-1.5"
+                >
+                  <span className="text-[#16A34A] text-xs">›</span> Biblioteca (Livros & Artigos
+                  PDF)
+                </Link>
+              </li>
+              <li>
+                <Link
                   to="/bolsa-de-valores"
                   className="hover:text-[#22C55E] transition-colors flex items-center gap-1.5"
                 >

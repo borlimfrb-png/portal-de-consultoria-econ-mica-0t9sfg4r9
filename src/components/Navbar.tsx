@@ -5,6 +5,7 @@ import {
   X,
   TrendingUp,
   Newspaper,
+  BookOpen,
   Info,
   Home,
   Mail,
@@ -141,6 +142,7 @@ export default function Navbar() {
       icon: CircleDollarSign,
     },
     { label: 'Indicadores', path: '/indicadores', icon: TrendingUp },
+    { label: 'Biblioteca', path: '/biblioteca', icon: BookOpen },
     { label: 'Notícias', path: '/noticias', icon: Newspaper },
     // Serviços entra aqui no desktop
     {
@@ -181,6 +183,7 @@ export default function Navbar() {
       icon: CircleDollarSign,
     },
     { label: 'Indicadores', path: '/indicadores', icon: TrendingUp },
+    { label: 'Biblioteca', path: '/biblioteca', icon: BookOpen },
     { label: 'Notícias', path: '/noticias', icon: Newspaper },
     {
       label: 'Agenda Tributária',
@@ -462,26 +465,29 @@ export default function Navbar() {
             {/* 3. Indicadores */}
             {renderNavLink(directNavLinksLine2[2])}
 
-            {/* 4. Notícias */}
+            {/* 4. Biblioteca */}
             {renderNavLink(directNavLinksLine2[3])}
 
-            {/* 5. Dropdown Serviços */}
-            {renderServicesDropdown()}
-
-            {/* 6. Agenda Tributária */}
+            {/* 5. Notícias */}
             {renderNavLink(directNavLinksLine2[4])}
 
-            {/* 7. Reforma Tributária */}
+            {/* 6. Dropdown Serviços */}
+            {renderServicesDropdown()}
+
+            {/* 7. Agenda Tributária */}
             {renderNavLink(directNavLinksLine2[5])}
 
-            {/* 8. Tributação */}
+            {/* 8. Reforma Tributária */}
             {renderNavLink(directNavLinksLine2[6])}
 
-            {/* 9. Bolsa de Valores */}
+            {/* 9. Tributação */}
             {renderNavLink(directNavLinksLine2[7])}
 
-            {/* 10. Sobre */}
+            {/* 10. Bolsa de Valores */}
             {renderNavLink(directNavLinksLine2[8])}
+
+            {/* 11. Sobre */}
+            {renderNavLink(directNavLinksLine2[9])}
           </div>
         </nav>
       </div>
@@ -491,7 +497,7 @@ export default function Navbar() {
           <div className="bg-white border-b border-stone-200 shadow-xl p-6 flex flex-col space-y-4 animate-slide-down max-h-[calc(100vh-110px)] overflow-y-auto">
             <div className="flex flex-col divide-y divide-slate-100">
               {/* Páginas principais no Mobile */}
-              {mobileNavLinks.slice(0, 4).map((link) => {
+              {mobileNavLinks.slice(0, 5).map((link) => {
                 const Icon = link.icon
                 const isActive =
                   location.pathname === link.path ||
@@ -553,7 +559,7 @@ export default function Navbar() {
               </div>
 
               {/* Demais links no Mobile */}
-              {mobileNavLinks.slice(4).map((link) => {
+              {mobileNavLinks.slice(5).map((link) => {
                 const Icon = link.icon
                 const targetPath = link.path.split('#')[0]
                 const targetHash =
