@@ -49,10 +49,19 @@ export interface NewsletterSubscriber extends RecordModel {
 
 export type LibraryDocumentType = 'livro' | 'artigo'
 
+export type LibraryCategory =
+  | 'reforma_tributaria'
+  | 'valuation'
+  | 'gestao_financeira'
+  | 'planejamento'
+  | 'precificacao'
+  | 'outros'
+
 export interface LibraryDocument extends RecordModel {
   title: string
   description?: string
   type: LibraryDocumentType
+  category?: LibraryCategory
   file?: string
   file_size?: number
   content_text?: string

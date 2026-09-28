@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-28T01:25:59.923Z",
+  "generatedAt": "2026-09-28T12:42:48.875Z",
   "collections": [
     {
       "name": "users",
@@ -385,11 +385,26 @@
           "required": false,
           "system": false,
           "autodateTriggers": ["onCreate", "onUpdate"]
+        },
+        {
+          "name": "category",
+          "type": "select",
+          "required": false,
+          "system": false,
+          "selectValues": [
+            "reforma_tributaria",
+            "valuation",
+            "gestao_financeira",
+            "planejamento",
+            "precificacao",
+            "outros"
+          ]
         }
       ],
       "indexes": [
         "CREATE INDEX idx_lib_pub_date ON library_documents (published, published_at DESC)",
-        "CREATE INDEX idx_lib_type ON library_documents (type)"
+        "CREATE INDEX idx_lib_type ON library_documents (type)",
+        "CREATE INDEX `idx_lib_category` ON `library_documents` (category)"
       ]
     }
   ]

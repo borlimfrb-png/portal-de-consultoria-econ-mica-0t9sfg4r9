@@ -1,15 +1,40 @@
 import pb from '@/lib/pocketbase/client'
-import { LibraryDocument, LibraryDocumentType } from '@/types'
+import { LibraryDocument, LibraryDocumentType, LibraryCategory } from '@/types'
 
 export interface LibraryFilterParams {
   type?: LibraryDocumentType | 'all'
+  category?: LibraryCategory | 'all'
   search?: string
+}
+
+export const LIBRARY_CATEGORIES: { id: LibraryCategory; label: string; shortLabel: string }[] = [
+  {
+    id: 'reforma_tributaria',
+    label: 'Reforma Tributária (IBS/CBS)',
+    shortLabel: 'Reforma Tributária',
+  },
+  { id: 'valuation', label: 'Valuation & Avaliação', shortLabel: 'Valuation' },
+  {
+    id: 'gestao_financeira',
+    label: 'Gestão Financeira & Solvência',
+    shortLabel: 'Gestão Financeira',
+  },
+  { id: 'planejamento', label: 'Planejamento Estratégico & BSC', shortLabel: 'Planejamento' },
+  { id: 'precificacao', label: 'Formação de Preço & Custos', shortLabel: 'Precificação' },
+  { id: 'outros', label: 'Estudos Gerais & Outros', shortLabel: 'Outros' },
+]
+
+export function getCategoryLabel(category?: string | null): string {
+  if (!category) return 'Geral'
+  const found = LIBRARY_CATEGORIES.find((c) => c.id === category)
+  return found ? found.shortLabel : category
 }
 
 export interface DocumentFormData {
   title: string
   description?: string
   type: LibraryDocumentType
+  category?: LibraryCategory
   published: boolean
   published_at?: string
   content_text?: string
@@ -49,6 +74,10 @@ export async function getPublishedLibraryDocuments(
 
     if (params.type && params.type !== 'all') {
       filters.push(`type = "${params.type}"`)
+    }
+
+    if (params.category && params.category !== 'all') {
+      filters.push(`category = "${params.category}"`)
     }
 
     if (params.search && params.search.trim()) {
@@ -93,6 +122,9 @@ export async function createLibraryDocument(data: DocumentFormData): Promise<Lib
   formData.append('title', data.title.trim())
   formData.append('description', data.description?.trim() || '')
   formData.append('type', data.type)
+  if (data.category) {
+    formData.append('category', data.category)
+  }
   formData.append('published', String(data.published))
   formData.append('published_at', data.published_at || new Date().toISOString().split('T')[0])
   if (data.content_text) {
@@ -120,6 +152,7 @@ export async function updateLibraryDocument(
   if (data.title !== undefined) formData.append('title', data.title.trim())
   if (data.description !== undefined) formData.append('description', data.description.trim())
   if (data.type !== undefined) formData.append('type', data.type)
+  if (data.category !== undefined) formData.append('category', data.category)
   if (data.published !== undefined) formData.append('published', String(data.published))
   if (data.published_at !== undefined) formData.append('published_at', data.published_at)
   if (data.content_text !== undefined) formData.append('content_text', data.content_text.trim())
@@ -171,4 +204,31 @@ export function isUserAuthenticated(): boolean {
 
 export function getCurrentUser() {
   return pb.authStore.record
+}
+
+/**
+ * Alteração de senha do usuário logado no painel administrativo
+ */
+export async function changeAdminPassword(
+  oldPassword: string,
+  newPassword: string,
+): Promise<boolean> {
+  const current = pb.authStore.record
+  if (!current?.id) {
+    throw new Error('Usuário não está autenticado.')
+  }
+
+  // Validação básica de força de senha
+  if (!newPassword || newPassword.length < 8) {
+    throw new Error('A nova senha deve ter no mínimo 8 caracteres.')
+  }
+
+  // Atualizar registro do usuário autenticado no PocketBase
+  await pb.collection('users').update(current.id, {
+    oldPassword,
+    password: newPassword,
+    passwordConfirm: newPassword,
+  })
+
+  return true
 }

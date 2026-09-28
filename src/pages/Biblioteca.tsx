@@ -19,12 +19,15 @@ import {
   Calendar,
   HardDrive,
   Eye,
+  Tag,
 } from 'lucide-react'
-import { LibraryDocument, LibraryDocumentType } from '@/types'
+import { LibraryDocument, LibraryDocumentType, LibraryCategory } from '@/types'
 import {
   getPublishedLibraryDocuments,
   getDocumentFileUrl,
   formatFileSize,
+  LIBRARY_CATEGORIES,
+  getCategoryLabel,
 } from '@/services/library'
 import { useToast } from '@/hooks/use-toast'
 import {
@@ -40,6 +43,7 @@ export default function Biblioteca() {
   const [loading, setLoading] = useState(true)
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedType, setSelectedType] = useState<LibraryDocumentType | 'all'>('all')
+  const [selectedCategory, setSelectedCategory] = useState<LibraryCategory | 'all'>('all')
   const [copiedId, setCopiedId] = useState<string | null>(null)
   const [readingDoc, setReadingDoc] = useState<LibraryDocument | null>(null)
   const { toast } = useToast()
@@ -66,15 +70,21 @@ export default function Biblioteca() {
       const matchesType = selectedType === 'all' || doc.type === selectedType
       if (!matchesType) return false
 
+      const matchesCategory = selectedCategory === 'all' || doc.category === selectedCategory
+      if (!matchesCategory) return false
+
       if (!searchTerm.trim()) return true
       const term = searchTerm.toLowerCase().trim()
       const titleMatch = doc.title?.toLowerCase().includes(term)
       const descMatch = doc.description?.toLowerCase().includes(term)
       const contentMatch = doc.content_text?.toLowerCase().includes(term)
+      const catMatch = doc.category
+        ? getCategoryLabel(doc.category).toLowerCase().includes(term)
+        : false
 
-      return titleMatch || descMatch || contentMatch
+      return titleMatch || descMatch || contentMatch || catMatch
     })
-  }, [documents, selectedType, searchTerm])
+  }, [documents, selectedType, selectedCategory, searchTerm])
 
   // Contadores por tipo
   const counts = useMemo(() => {
@@ -228,6 +238,54 @@ export default function Biblioteca() {
               )}
             </div>
           </div>
+
+          {/* Filtro secundário por Categoria Temática */}
+          <div className="mt-3 pt-3 border-t border-stone-200/60 flex items-center gap-2 overflow-x-auto no-scrollbar py-0.5">
+            <span className="text-[11px] font-mono text-slate-500 uppercase tracking-wider shrink-0 flex items-center gap-1 font-semibold">
+              <Tag className="w-3 h-3 text-[#16A34A]" />
+              <span>Tema:</span>
+            </span>
+
+            <button
+              type="button"
+              onClick={() => setSelectedCategory('all')}
+              className={`px-2.5 py-1 rounded-md text-[11px] font-mono transition-colors shrink-0 ${
+                selectedCategory === 'all'
+                  ? 'bg-[#082852] text-white font-bold'
+                  : 'bg-stone-100 hover:bg-stone-200 text-slate-700'
+              }`}
+            >
+              Todos os temas
+            </button>
+
+            {LIBRARY_CATEGORIES.map((cat) => {
+              const isSelected = selectedCategory === cat.id
+              const countInCat = documents.filter((d) => d.category === cat.id).length
+              return (
+                <button
+                  key={cat.id}
+                  type="button"
+                  onClick={() => setSelectedCategory(cat.id)}
+                  className={`px-2.5 py-1 rounded-md text-[11px] font-mono transition-colors shrink-0 flex items-center gap-1.5 ${
+                    isSelected
+                      ? 'bg-[#082852] text-[#22C55E] font-bold shadow-xs'
+                      : 'bg-stone-100 hover:bg-stone-200 text-slate-700'
+                  }`}
+                >
+                  <span>{cat.shortLabel}</span>
+                  {countInCat > 0 && (
+                    <span
+                      className={`text-[9px] px-1 rounded ${
+                        isSelected ? 'bg-[#16A34A] text-white' : 'bg-stone-200 text-slate-600'
+                      }`}
+                    >
+                      {countInCat}
+                    </span>
+                  )}
+                </button>
+              )
+            })}
+          </div>
         </div>
       </section>
 
@@ -261,20 +319,21 @@ export default function Biblioteca() {
               Em breve novos conteúdos
             </h3>
             <p className="text-sm text-slate-600 leading-relaxed max-w-md mx-auto mb-6">
-              {searchTerm || selectedType !== 'all'
+              {searchTerm || selectedType !== 'all' || selectedCategory !== 'all'
                 ? 'Nenhum documento encontrado com os filtros aplicados. Tente buscar por outros termos ou verifique todas as categorias.'
                 : 'Nosso acervo de publicações técnicas está sendo continuamente alimentado por nossos especialistas.'}
             </p>
-            {(searchTerm || selectedType !== 'all') && (
+            {(searchTerm || selectedType !== 'all' || selectedCategory !== 'all') && (
               <button
                 type="button"
                 onClick={() => {
                   setSearchTerm('')
                   setSelectedType('all')
+                  setSelectedCategory('all')
                 }}
                 className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#0B3B7A] hover:bg-[#1557A6] text-white text-xs font-mono font-bold uppercase tracking-wider rounded-lg transition-colors shadow-xs"
               >
-                <span>Limpar filtros</span>
+                <span>Limpar todos os filtros</span>
               </button>
             )}
           </div>
@@ -307,22 +366,30 @@ export default function Biblioteca() {
                     <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#16A34A]/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
 
                     <div>
-                      {/* Top Meta: Tipo + Data */}
-                      <div className="flex items-center justify-between gap-2 mb-3">
-                        <span
-                          className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-mono font-bold uppercase tracking-wider ${
-                            isBook
-                              ? 'bg-blue-50 text-[#0B3B7A] border border-blue-200/80'
-                              : 'bg-emerald-50 text-[#15803D] border border-emerald-200/80'
-                          }`}
-                        >
-                          {isBook ? (
-                            <BookOpen className="w-3 h-3 text-[#0B3B7A]" />
-                          ) : (
-                            <FileText className="w-3 h-3 text-[#16A34A]" />
+                      {/* Top Meta: Tipo + Categoria + Data */}
+                      <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
+                        <div className="flex items-center gap-1.5 flex-wrap">
+                          <span
+                            className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-mono font-bold uppercase tracking-wider ${
+                              isBook
+                                ? 'bg-blue-50 text-[#0B3B7A] border border-blue-200/80'
+                                : 'bg-emerald-50 text-[#15803D] border border-emerald-200/80'
+                            }`}
+                          >
+                            {isBook ? (
+                              <BookOpen className="w-3 h-3 text-[#0B3B7A]" />
+                            ) : (
+                              <FileText className="w-3 h-3 text-[#16A34A]" />
+                            )}
+                            <span>{isBook ? 'Livro / Manual' : 'Artigo Técnico'}</span>
+                          </span>
+
+                          {doc.category && (
+                            <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-stone-100 text-[#082852] border border-stone-200">
+                              {getCategoryLabel(doc.category)}
+                            </span>
                           )}
-                          <span>{isBook ? 'Livro / Manual' : 'Artigo Técnico'}</span>
-                        </span>
+                        </div>
 
                         {doc.published_at && (
                           <span className="text-[11px] font-mono text-slate-500 flex items-center gap-1">
@@ -488,9 +555,14 @@ export default function Biblioteca() {
                 >
                   {readingDoc.type === 'livro' ? 'Livro / Manual' : 'Artigo Técnico'}
                 </span>
+                {readingDoc.category && (
+                  <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-stone-100 text-[#082852] border border-stone-200 font-semibold">
+                    {getCategoryLabel(readingDoc.category)}
+                  </span>
+                )}
                 {readingDoc.published_at && (
                   <span className="text-xs font-mono text-slate-500">
-                    Publicado em {readingDoc.published_at}
+                    • {readingDoc.published_at}
                   </span>
                 )}
               </div>

@@ -20,8 +20,11 @@ import {
   ChevronRight,
   RefreshCw,
   FileCheck,
+  KeyRound,
+  Eye,
+  EyeOff,
 } from 'lucide-react'
-import { LibraryDocument, LibraryDocumentType } from '@/types'
+import { LibraryDocument, LibraryDocumentType, LibraryCategory } from '@/types'
 import {
   adminLogin,
   adminLogout,
@@ -35,6 +38,9 @@ import {
   getDocumentFileUrl,
   formatFileSize,
   DocumentFormData,
+  changeAdminPassword,
+  LIBRARY_CATEGORIES,
+  getCategoryLabel,
 } from '@/services/library'
 import { useToast } from '@/hooks/use-toast'
 import {
@@ -84,6 +90,17 @@ export default function AdminBiblioteca() {
   // Modal de Confirmação de Exclusão
   const [deleteConfirmDoc, setDeleteConfirmDoc] = useState<LibraryDocument | null>(null)
   const [deleting, setDeleting] = useState(false)
+
+  // Modal e Estado de Troca de Senha
+  const [passwordDialogOpen, setPasswordDialogOpen] = useState(false)
+  const [currentPasswordInput, setCurrentPasswordInput] = useState('')
+  const [newPasswordInput, setNewPasswordInput] = useState('')
+  const [confirmPasswordInput, setConfirmPasswordInput] = useState('')
+  const [showCurrentPassword, setShowCurrentPassword] = useState(false)
+  const [showNewPassword, setShowNewPassword] = useState(false)
+  const [changingPassword, setChangingPassword] = useState(false)
+  const [passwordError, setPasswordError] = useState<string | null>(null)
+  const [passwordSuccess, setPasswordSuccess] = useState<string | null>(null)
 
   const loadAdminDocs = async () => {
     if (!isAuthenticated) return
@@ -156,6 +173,7 @@ export default function AdminBiblioteca() {
       title: '',
       description: '',
       type: 'livro',
+      category: 'reforma_tributaria',
       published: true,
       published_at: new Date().toISOString().split('T')[0],
       content_text: '',
@@ -171,6 +189,7 @@ export default function AdminBiblioteca() {
       title: doc.title || '',
       description: doc.description || '',
       type: doc.type || 'livro',
+      category: (doc.category as LibraryCategory) || 'reforma_tributaria',
       published: Boolean(doc.published),
       published_at: doc.published_at || new Date().toISOString().split('T')[0],
       content_text: doc.content_text || '',
@@ -263,6 +282,70 @@ export default function AdminBiblioteca() {
       })
     } finally {
       setDeleting(false)
+    }
+  }
+
+  // Manipulação de Troca de Senha
+  const openPasswordDialog = () => {
+    setCurrentPasswordInput('')
+    setNewPasswordInput('')
+    setConfirmPasswordInput('')
+    setPasswordError(null)
+    setPasswordSuccess(null)
+    setPasswordDialogOpen(true)
+  }
+
+  const handleChangePasswordSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setPasswordError(null)
+    setPasswordSuccess(null)
+
+    if (!currentPasswordInput) {
+      setPasswordError('Por favor informe a senha atual.')
+      return
+    }
+
+    if (newPasswordInput.length < 8) {
+      setPasswordError('A nova senha deve ter no mínimo 8 caracteres.')
+      return
+    }
+
+    if (newPasswordInput !== confirmPasswordInput) {
+      setPasswordError('A nova senha e a confirmação não coincidem.')
+      return
+    }
+
+    if (currentPasswordInput === newPasswordInput) {
+      setPasswordError('A nova senha deve ser diferente da senha atual.')
+      return
+    }
+
+    setChangingPassword(true)
+    try {
+      await changeAdminPassword(currentPasswordInput, newPasswordInput)
+      setPasswordSuccess('Senha alterada com sucesso! Utilize a nova senha nos próximos acessos.')
+      toast({
+        title: 'Senha atualizada',
+        description: 'Sua senha de administrador foi alterada com sucesso.',
+      })
+      setTimeout(() => {
+        setPasswordDialogOpen(false)
+      }, 1800)
+    } catch (err: any) {
+      console.error('Erro ao alterar senha:', err)
+      const msg =
+        err?.data?.data?.oldPassword?.message ||
+        err?.data?.message ||
+        err?.message ||
+        'Não foi possível alterar a senha. Verifique se a senha atual está correta.'
+      setPasswordError(msg)
+      toast({
+        title: 'Erro na alteração de senha',
+        description: msg,
+        variant: 'destructive',
+      })
+    } finally {
+      setChangingPassword(false)
     }
   }
 
@@ -396,13 +479,23 @@ export default function AdminBiblioteca() {
             </div>
           </div>
 
-          <div className="flex items-center gap-2.5">
+          <div className="flex flex-wrap items-center gap-2.5">
+            <button
+              type="button"
+              onClick={openPasswordDialog}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-mono text-amber-200 hover:text-white bg-amber-500/15 hover:bg-amber-500/25 rounded-lg border border-amber-400/40 transition-all"
+              title="Alterar senha de acesso do administrador"
+            >
+              <KeyRound className="w-3.5 h-3.5 text-amber-300" />
+              <span>Trocar Senha</span>
+            </button>
+
             <Link
               to="/biblioteca"
               target="_blank"
               className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-mono text-slate-300 hover:text-white bg-white/10 hover:bg-white/15 rounded-lg border border-white/15 transition-all"
             >
-              <span>Ver página pública</span>
+              <span>Página pública</span>
               <ExternalLink className="w-3.5 h-3.5 text-[#22C55E]" />
             </Link>
 
@@ -531,6 +624,12 @@ export default function AdminBiblioteca() {
                           <span>{isBook ? 'Livro' : 'Artigo'}</span>
                         </span>
 
+                        {doc.category && (
+                          <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-semibold bg-stone-100 text-slate-700 border border-stone-200">
+                            {getCategoryLabel(doc.category)}
+                          </span>
+                        )}
+
                         <button
                           type="button"
                           onClick={() => handleTogglePublish(doc)}
@@ -648,7 +747,7 @@ export default function AdminBiblioteca() {
               />
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div>
                 <label className="block text-xs font-mono font-bold uppercase tracking-wider text-slate-700 mb-1">
                   Tipo de Documento *
@@ -667,6 +766,25 @@ export default function AdminBiblioteca() {
 
               <div>
                 <label className="block text-xs font-mono font-bold uppercase tracking-wider text-slate-700 mb-1">
+                  Categoria Temática *
+                </label>
+                <select
+                  value={formData.category || 'reforma_tributaria'}
+                  onChange={(e) =>
+                    setFormData({ ...formData, category: e.target.value as LibraryCategory })
+                  }
+                  className="w-full px-3 py-2 text-xs sm:text-sm bg-stone-50 border border-stone-200 rounded-lg focus:outline-none focus:border-[#16A34A] text-slate-800"
+                >
+                  {LIBRARY_CATEGORIES.map((cat) => (
+                    <option key={cat.id} value={cat.id}>
+                      {cat.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-xs font-mono font-bold uppercase tracking-wider text-slate-700 mb-1">
                   Data de Publicação
                 </label>
                 <input
@@ -674,7 +792,7 @@ export default function AdminBiblioteca() {
                   value={formData.published_at}
                   onChange={(e) => setFormData({ ...formData, published_at: e.target.value })}
                   className="w-full px-3 py-2 text-xs sm:text-sm bg-stone-50 border border-stone-200 rounded-lg focus:outline-none focus:border-[#16A34A] text-slate-800"
-                ></input>
+                />
               </div>
             </div>
 
@@ -815,6 +933,130 @@ export default function AdminBiblioteca() {
               {deleting ? 'Excluindo...' : 'Excluir Definitivamente'}
             </button>
           </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Modal de Troca de Senha */}
+      <Dialog open={passwordDialogOpen} onOpenChange={setPasswordDialogOpen}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle className="font-serif text-lg font-bold text-[#082852] flex items-center gap-2">
+              <KeyRound className="w-5 h-5 text-[#16A34A]" />
+              <span>Alterar Senha do Administrador</span>
+            </DialogTitle>
+            <DialogDescription className="text-xs text-slate-600">
+              Atualize a senha de acesso da conta <strong>{currentUser?.email}</strong>. Escolha uma
+              senha segura com no mínimo 8 caracteres.
+            </DialogDescription>
+          </DialogHeader>
+
+          {passwordError && (
+            <div className="p-3 rounded-lg bg-red-50 border border-red-200 flex items-start gap-2 text-xs text-red-700">
+              <AlertCircle className="w-4 h-4 text-red-500 shrink-0 mt-0.5" />
+              <span>{passwordError}</span>
+            </div>
+          )}
+
+          {passwordSuccess && (
+            <div className="p-3 rounded-lg bg-emerald-50 border border-emerald-200 flex items-start gap-2 text-xs text-emerald-800">
+              <CheckCircle className="w-4 h-4 text-[#16A34A] shrink-0 mt-0.5" />
+              <span>{passwordSuccess}</span>
+            </div>
+          )}
+
+          <form onSubmit={handleChangePasswordSubmit} className="space-y-4 mt-1">
+            <div>
+              <label className="block text-xs font-mono font-bold uppercase tracking-wider text-slate-700 mb-1">
+                Senha Atual *
+              </label>
+              <div className="relative">
+                <input
+                  type={showCurrentPassword ? 'text' : 'password'}
+                  required
+                  value={currentPasswordInput}
+                  onChange={(e) => setCurrentPasswordInput(e.target.value)}
+                  placeholder="Digite sua senha atual"
+                  autoComplete="current-password"
+                  className="w-full pl-3 pr-9 py-2 text-xs sm:text-sm bg-stone-50 border border-stone-200 rounded-lg focus:outline-none focus:border-[#16A34A] text-slate-800"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowCurrentPassword((prev) => !prev)}
+                  className="absolute right-2.5 top-2.5 text-slate-400 hover:text-slate-600"
+                  tabIndex={-1}
+                >
+                  {showCurrentPassword ? (
+                    <EyeOff className="w-4 h-4" />
+                  ) : (
+                    <Eye className="w-4 h-4" />
+                  )}
+                </button>
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-xs font-mono font-bold uppercase tracking-wider text-slate-700 mb-1">
+                Nova Senha *
+              </label>
+              <div className="relative">
+                <input
+                  type={showNewPassword ? 'text' : 'password'}
+                  required
+                  minLength={8}
+                  value={newPasswordInput}
+                  onChange={(e) => setNewPasswordInput(e.target.value)}
+                  placeholder="Mínimo 8 caracteres"
+                  autoComplete="new-password"
+                  className="w-full pl-3 pr-9 py-2 text-xs sm:text-sm bg-stone-50 border border-stone-200 rounded-lg focus:outline-none focus:border-[#16A34A] text-slate-800"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowNewPassword((prev) => !prev)}
+                  className="absolute right-2.5 top-2.5 text-slate-400 hover:text-slate-600"
+                  tabIndex={-1}
+                >
+                  {showNewPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                </button>
+              </div>
+              <p className="text-[11px] text-slate-500 mt-1 font-sans">
+                Dica: combine letras maiúsculas, minúsculas, números e símbolos.
+              </p>
+            </div>
+
+            <div>
+              <label className="block text-xs font-mono font-bold uppercase tracking-wider text-slate-700 mb-1">
+                Confirmar Nova Senha *
+              </label>
+              <input
+                type="password"
+                required
+                minLength={8}
+                value={confirmPasswordInput}
+                onChange={(e) => setConfirmPasswordInput(e.target.value)}
+                placeholder="Repita a nova senha"
+                autoComplete="new-password"
+                className="w-full px-3 py-2 text-xs sm:text-sm bg-stone-50 border border-stone-200 rounded-lg focus:outline-none focus:border-[#16A34A] text-slate-800"
+              />
+            </div>
+
+            <DialogFooter className="pt-4 border-t border-stone-100 flex items-center justify-end gap-2">
+              <button
+                type="button"
+                onClick={() => setPasswordDialogOpen(false)}
+                className="px-4 py-2 text-xs font-mono font-semibold text-slate-700 bg-stone-100 hover:bg-stone-200 rounded-lg"
+              >
+                Cancelar
+              </button>
+              <button
+                type="submit"
+                disabled={changingPassword}
+                className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-mono font-bold uppercase tracking-wider bg-[#0B3B7A] hover:bg-[#1557A6] text-white rounded-lg shadow-xs disabled:opacity-50"
+              >
+                <KeyRound className="w-3.5 h-3.5 text-[#22C55E]" />
+                <span>{changingPassword ? 'Salvando...' : 'Salvar Nova Senha'}</span>
+              </button>
+            </DialogFooter>
+          </form>
         </DialogContent>
       </Dialog>
     </div>
