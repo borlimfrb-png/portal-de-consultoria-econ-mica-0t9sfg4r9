@@ -9,6 +9,7 @@ import {
   Linkedin,
   ExternalLink,
   FileSpreadsheet,
+  Lock,
 } from 'lucide-react'
 import logoBorlim from '@/assets/logo-borlim-debb0.png'
 import { subscribeNewsletter } from '@/services/news'
@@ -337,7 +338,20 @@ export default function Footer() {
 
         {/* Bottom Bar */}
         <div className="pt-8 border-t border-slate-800 flex flex-col md:flex-row items-center justify-between gap-4 text-[11px] text-slate-400">
-          <div>© {currentYear} BORLIM Consultoria Empresarial. Todos os direitos reservados.</div>
+          <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4 text-center sm:text-left">
+            <span>
+              © {currentYear} BORLIM Consultoria Empresarial. Todos os direitos reservados.
+            </span>
+            <span className="hidden sm:inline text-slate-600">•</span>
+            <Link
+              to="/admin/biblioteca"
+              className="inline-flex items-center gap-1.5 text-slate-400/80 hover:text-[#22C55E] transition-colors py-0.5 px-1.5 rounded hover:bg-white/5 group"
+              title="Acesso Restrito ao Painel da Biblioteca"
+            >
+              <Lock className="w-3 h-3 text-slate-500 group-hover:text-[#22C55E] transition-colors" />
+              <span>Área do Administrador</span>
+            </Link>
+          </div>
           <div className="text-center md:text-right italic text-slate-400">
             Este portal tem caráter informativo e não constitui recomendação direta de investimento
             ou consultoria jurídica individualizada.
