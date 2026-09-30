@@ -28,6 +28,7 @@ import {
   Sparkles,
 } from 'lucide-react'
 import Sparkline from '@/components/Sparkline'
+import StockHighlightsSection from '@/components/StockHighlightsSection'
 import { getStockIndices, StockIndexItem, FALLBACK_STOCK_INDICES } from '@/services/stocks'
 
 export default function BolsaDeValores() {
@@ -128,17 +129,26 @@ export default function BolsaDeValores() {
               produtivos.
             </p>
 
-            {/* CTAs Oficiais */}
+            {/* CTAs Oficiais e Atalho Rápido para Destaques */}
             <div className="mt-8 flex flex-wrap gap-3 sm:gap-4 items-center">
+              <a
+                href="#destaques-acoes"
+                className="inline-flex items-center gap-2.5 px-6 py-3.5 bg-gradient-to-r from-[#16A34A] to-[#15803D] hover:from-[#15803D] hover:to-[#166534] text-white text-xs sm:text-sm font-mono font-bold uppercase tracking-wider rounded-lg transition-all shadow-lg hover:shadow-2xl border border-[#22C55E]/40 hover:scale-[1.02] active:scale-[0.99] group relative overflow-hidden"
+              >
+                <span className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+                <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-200 group-hover:scale-110 transition-transform" />
+                <span>AÇÕES DESTAQUE (COMPRA & VENDA)</span>
+                <ChevronDown className="w-4 h-4 text-emerald-100 group-hover:translate-y-0.5 transition-transform" />
+              </a>
+
               <a
                 href={balanceAnalysisUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2.5 px-6 py-3.5 bg-gradient-to-r from-[#16A34A] to-[#15803D] hover:from-[#15803D] hover:to-[#166534] text-white text-xs sm:text-sm font-mono font-bold uppercase tracking-wider rounded-lg transition-all shadow-lg hover:shadow-2xl border border-[#22C55E]/40 hover:scale-[1.02] active:scale-[0.99] group relative overflow-hidden"
+                className="inline-flex items-center gap-2.5 px-5 py-3.5 bg-[#0B3B7A] hover:bg-[#1557A6] text-white text-xs sm:text-sm font-mono font-bold uppercase tracking-wider rounded-lg transition-all border border-[#16A34A]/50 shadow-md group"
                 title="Acessar o Sistema de Gestão Empresarial da Borlim (abre em nova aba)"
               >
-                <span className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-                <FileSpreadsheet className="w-4 h-4 sm:w-5 sm:h-5 text-white group-hover:scale-110 transition-transform" />
+                <FileSpreadsheet className="w-4 h-4 sm:w-5 sm:h-5 text-[#22C55E] group-hover:scale-110 transition-transform" />
                 <span>GESTÃO EMPRESARIAL</span>
                 <ExternalLink className="w-4 h-4 text-emerald-100 group-hover:translate-x-0.5 transition-transform" />
               </a>
@@ -161,12 +171,42 @@ export default function BolsaDeValores() {
                 <span>flavio@borlim.com.br</span>
               </a>
             </div>
+
+            {/* Barra de Navegação Interna por Âncoras */}
+            <div className="mt-8 pt-6 border-t border-white/10 flex flex-wrap items-center gap-2 text-xs font-mono">
+              <span className="text-slate-400 uppercase tracking-wider mr-1">Ir direto para:</span>
+              <a
+                href="#pregoes-mundo"
+                className="px-3 py-1.5 rounded-md bg-white/10 hover:bg-white/20 text-slate-200 hover:text-white transition-colors border border-white/10"
+              >
+                1. Bolsas do Mundo
+              </a>
+              <a
+                href="#destaques-acoes"
+                className="px-3 py-1.5 rounded-md bg-[#16A34A]/20 hover:bg-[#16A34A]/30 text-[#22C55E] font-bold transition-colors border border-[#22C55E]/40 flex items-center gap-1.5"
+              >
+                <Sparkles className="w-3 h-3" />
+                <span>2. Melhores Ações (Compra & Venda)</span>
+              </a>
+              <a
+                href="#guia-executivo"
+                className="px-3 py-1.5 rounded-md bg-white/10 hover:bg-white/20 text-slate-200 hover:text-white transition-colors border border-white/10"
+              >
+                3. Guia do Empresário
+              </a>
+              <a
+                href="#faq-bolsa"
+                className="px-3 py-1.5 rounded-md bg-white/10 hover:bg-white/20 text-slate-200 hover:text-white transition-colors border border-white/10"
+              >
+                4. Perguntas Frequentes
+              </a>
+            </div>
           </div>
         </div>
       </section>
 
       {/* 2. COTAÇÕES DAS BOLSAS DO MUNDO */}
-      <section className="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+      <section id="pregoes-mundo" className="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
           <div>
             <div className="flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-wider text-[#15803D]">
@@ -324,8 +364,11 @@ export default function BolsaDeValores() {
         </div>
       </section>
 
-      {/* 3. GUIA EDUCATIVO "COMO ATUAR NA BOLSA DE VALORES" (pt-BR, de empresário para empresário) */}
-      <section className="py-12 bg-white border-y border-stone-200">
+      {/* 3. NOVA SEÇÃO EM DESTAQUE: MELHORES AÇÕES PARA COMPRA E VENDA (BLUE CHIPS B3 COM GRÁFICOS E EXPLICAÇÕES) */}
+      <StockHighlightsSection balanceAnalysisUrl={balanceAnalysisUrl} whatsappUrl={whatsappUrl} />
+
+      {/* 4. GUIA EDUCATIVO "COMO ATUAR NA BOLSA DE VALORES" (pt-BR, de empresário para empresário) */}
+      <section id="guia-executivo" className="py-12 bg-white border-y border-stone-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mb-12">
             <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#16A34A]/10 border border-[#16A34A]/30 rounded-full text-xs font-mono font-bold text-[#15803D] mb-3">
@@ -629,8 +672,8 @@ export default function BolsaDeValores() {
         </div>
       </section>
 
-      {/* 4. PERGUNTAS FREQUENTES (FAQ EM ACORDEÃO) */}
-      <section className="py-14 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+      {/* 5. PERGUNTAS FREQUENTES (FAQ EM ACORDEÃO) */}
+      <section id="faq-bolsa" className="py-14 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         <div className="text-center mb-10">
           <div className="inline-flex items-center gap-2 px-3 py-1 bg-stone-200/80 rounded-full text-xs font-mono font-bold text-slate-700 mb-2">
             <HelpCircle className="w-3.5 h-3.5 text-[#16A34A]" />
@@ -675,7 +718,7 @@ export default function BolsaDeValores() {
         </div>
       </section>
 
-      {/* 5. BANNER CTA OFICIAL DE ENCERRAMENTO */}
+      {/* 6. BANNER CTA OFICIAL DE ENCERRAMENTO */}
       <section className="py-12 bg-[#082852] border-t border-[#0B3B7A] text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
