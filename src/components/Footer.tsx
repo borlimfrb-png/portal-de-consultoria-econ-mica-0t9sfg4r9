@@ -183,6 +183,14 @@ export default function Footer() {
               </li>
               <li>
                 <Link
+                  to="/matematica-financeira"
+                  className="hover:text-[#22C55E] transition-colors flex items-center gap-1.5 text-emerald-300 font-medium"
+                >
+                  <span className="text-[#22C55E] text-xs">›</span> Matemática Financeira (HP12C)
+                </Link>
+              </li>
+              <li>
+                <Link
                   to="/valuation"
                   className="hover:text-[#22C55E] transition-colors flex items-center gap-1.5"
                 >

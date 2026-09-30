@@ -24,6 +24,7 @@ import {
   Phone,
   MessageCircle,
   CircleDollarSign,
+  Calculator,
 } from 'lucide-react'
 import logoBorlim from '@/assets/logo-borlim-debb0.png'
 
@@ -88,7 +89,7 @@ export default function Navbar() {
     }, 150)
   }
 
-  // 5 serviços agrupados no dropdown
+  // 6 serviços agrupados no dropdown
   const serviceItems = [
     {
       label: 'Gestão Financeira',
@@ -96,6 +97,13 @@ export default function Navbar() {
       aliasPaths: ['/gestao-financeira-empresarial'],
       description: 'Fluxo de caixa, ferramentas de decisão, 48 indicadores e insolvência',
       icon: CircleDollarSign,
+    },
+    {
+      label: 'Matemática Financeira',
+      path: '/matematica-financeira',
+      aliasPaths: ['/hp12c'],
+      description: 'Calculadora HP12C, juros compostos, TVM, Price/SAC e VPL/TIR',
+      icon: Calculator,
     },
     {
       label: 'Valuation',
@@ -141,6 +149,12 @@ export default function Navbar() {
       aliasPaths: ['/gestao-financeira-empresarial'],
       icon: CircleDollarSign,
     },
+    {
+      label: 'Matemática Financeira',
+      path: '/matematica-financeira',
+      aliasPaths: ['/hp12c'],
+      icon: Calculator,
+    },
     { label: 'Indicadores', path: '/indicadores', icon: TrendingUp },
     { label: 'Biblioteca', path: '/biblioteca', icon: BookOpen },
     { label: 'Notícias', path: '/noticias', icon: Newspaper },
@@ -181,6 +195,12 @@ export default function Navbar() {
       path: '/gestao-financeira',
       aliasPaths: ['/gestao-financeira-empresarial'],
       icon: CircleDollarSign,
+    },
+    {
+      label: 'Matemática Financeira',
+      path: '/matematica-financeira',
+      aliasPaths: ['/hp12c'],
+      icon: Calculator,
     },
     { label: 'Indicadores', path: '/indicadores', icon: TrendingUp },
     { label: 'Biblioteca', path: '/biblioteca', icon: BookOpen },
@@ -234,14 +254,14 @@ export default function Navbar() {
       <Link
         key={link.path}
         to={link.path}
-        className={`group relative px-2.5 xl:px-3 py-2 text-[13px] xl:text-sm font-semibold tracking-normal transition-colors whitespace-nowrap rounded-md hover:bg-stone-100/80 shrink-0 ${
+        className={`group relative px-2 xl:px-2.5 py-1.5 text-[12.5px] xl:text-[13.5px] font-semibold tracking-normal transition-colors whitespace-nowrap rounded-md hover:bg-stone-100/80 shrink-0 ${
           isActive ? 'text-[#0B3B7A] font-bold' : 'text-slate-700 hover:text-[#0B3B7A]'
         }`}
       >
         <span>{link.label}</span>
         {/* Brand Green animated underline */}
         <span
-          className={`absolute bottom-0 left-2.5 right-2.5 h-[2px] bg-[#16A34A] transition-all duration-200 ${
+          className={`absolute bottom-0 left-2 right-2 h-[2px] bg-[#16A34A] transition-all duration-200 ${
             isActive
               ? 'opacity-100 scale-x-100'
               : 'opacity-0 scale-x-0 group-hover:opacity-100 group-hover:scale-x-100'
@@ -265,7 +285,7 @@ export default function Navbar() {
         aria-expanded={servicesDropdownOpen}
         aria-haspopup="true"
         aria-label="Menu de Serviços da Borlim"
-        className={`group relative inline-flex items-center gap-1.5 px-2.5 xl:px-3 py-2 text-[13px] xl:text-sm font-semibold tracking-normal transition-colors whitespace-nowrap rounded-md hover:bg-stone-100/80 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#16A34A] shrink-0 ${
+        className={`group relative inline-flex items-center gap-1 px-2 xl:px-2.5 py-1.5 text-[12.5px] xl:text-[13.5px] font-semibold tracking-normal transition-colors whitespace-nowrap rounded-md hover:bg-stone-100/80 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#16A34A] shrink-0 ${
           isServiceActive ? 'text-[#0B3B7A] font-bold' : 'text-slate-700 hover:text-[#0B3B7A]'
         }`}
       >
@@ -279,7 +299,7 @@ export default function Navbar() {
         />
         {/* Brand Green animated underline */}
         <span
-          className={`absolute bottom-0 left-2.5 right-2.5 h-[2px] bg-[#16A34A] transition-all duration-200 ${
+          className={`absolute bottom-0 left-2 right-2 h-[2px] bg-[#16A34A] transition-all duration-200 ${
             isServiceActive
               ? 'opacity-100 scale-x-100'
               : servicesDropdownOpen
@@ -455,39 +475,42 @@ export default function Navbar() {
           className="w-full max-w-[1780px] mx-auto px-4 lg:px-6 xl:px-8 py-1.5 flex items-center justify-center"
           aria-label="Navegação principal"
         >
-          <div className="flex items-center justify-center flex-wrap gap-x-1 xl:gap-x-2 2xl:gap-x-3 gap-y-1">
+          <div className="flex items-center justify-center flex-wrap gap-x-1 xl:gap-x-1.5 2xl:gap-x-2 gap-y-1">
             {/* 1. Início */}
             {renderNavLink(directNavLinksLine2[0])}
 
-            {/* 2. Gestão Financeira (Aba solicitada no Menu Principal) */}
+            {/* 2. Gestão Financeira */}
             {renderNavLink(directNavLinksLine2[1])}
 
-            {/* 3. Indicadores */}
+            {/* 3. Matemática Financeira (Aba solicitada no Menu) */}
             {renderNavLink(directNavLinksLine2[2])}
 
-            {/* 4. Biblioteca */}
+            {/* 4. Indicadores */}
             {renderNavLink(directNavLinksLine2[3])}
 
-            {/* 5. Notícias */}
+            {/* 5. Biblioteca */}
             {renderNavLink(directNavLinksLine2[4])}
 
-            {/* 6. Dropdown Serviços */}
-            {renderServicesDropdown()}
-
-            {/* 7. Agenda Tributária */}
+            {/* 6. Notícias */}
             {renderNavLink(directNavLinksLine2[5])}
 
-            {/* 8. Reforma Tributária */}
+            {/* 7. Dropdown Serviços */}
+            {renderServicesDropdown()}
+
+            {/* 8. Agenda Tributária */}
             {renderNavLink(directNavLinksLine2[6])}
 
-            {/* 9. Tributação */}
+            {/* 9. Reforma Tributária */}
             {renderNavLink(directNavLinksLine2[7])}
 
-            {/* 10. Bolsa de Valores */}
+            {/* 10. Tributação */}
             {renderNavLink(directNavLinksLine2[8])}
 
-            {/* 11. Sobre */}
+            {/* 11. Bolsa de Valores */}
             {renderNavLink(directNavLinksLine2[9])}
+
+            {/* 12. Sobre */}
+            {renderNavLink(directNavLinksLine2[10])}
           </div>
         </nav>
       </div>
@@ -497,7 +520,7 @@ export default function Navbar() {
           <div className="bg-white border-b border-stone-200 shadow-xl p-6 flex flex-col space-y-4 animate-slide-down max-h-[calc(100vh-110px)] overflow-y-auto">
             <div className="flex flex-col divide-y divide-slate-100">
               {/* Páginas principais no Mobile */}
-              {mobileNavLinks.slice(0, 5).map((link) => {
+              {mobileNavLinks.slice(0, 6).map((link) => {
                 const Icon = link.icon
                 const isActive =
                   location.pathname === link.path ||
@@ -559,7 +582,7 @@ export default function Navbar() {
               </div>
 
               {/* Demais links no Mobile */}
-              {mobileNavLinks.slice(5).map((link) => {
+              {mobileNavLinks.slice(6).map((link) => {
                 const Icon = link.icon
                 const targetPath = link.path.split('#')[0]
                 const targetHash =
