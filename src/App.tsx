@@ -20,6 +20,7 @@ import MatematicaFinanceira from './pages/MatematicaFinanceira'
 import AgendaTributaria from './pages/AgendaTributaria'
 import ReformaTributaria from './pages/ReformaTributaria'
 import BolsaDeValores from './pages/BolsaDeValores'
+import Ecommerce from './pages/Ecommerce'
 import NotFound from './pages/NotFound'
 
 const App = () => (
@@ -48,6 +49,8 @@ const App = () => (
           <Route path="/formacao-preco" element={<FormacaoPreco />} />
           <Route path="/balanced-scorecard" element={<BalancedScorecard />} />
           <Route path="/bsc" element={<BalancedScorecard />} />
+          <Route path="/ecommerce" element={<Ecommerce />} />
+          <Route path="/e-commerce" element={<Ecommerce />} />
           <Route path="/agenda-tributaria" element={<AgendaTributaria />} />
           <Route path="/reforma-tributaria" element={<ReformaTributaria />} />
           <Route path="/reforma" element={<ReformaTributaria />} />

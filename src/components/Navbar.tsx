@@ -25,6 +25,7 @@ import {
   MessageCircle,
   CircleDollarSign,
   Calculator,
+  ShoppingCart,
 } from 'lucide-react'
 import logoBorlim from '@/assets/logo-borlim-debb0.png'
 
@@ -89,7 +90,7 @@ export default function Navbar() {
     }, 150)
   }
 
-  // 6 serviços agrupados no dropdown
+  // Serviços agrupados no dropdown
   const serviceItems = [
     {
       label: 'Gestão Financeira',
@@ -133,6 +134,13 @@ export default function Navbar() {
       description: 'Gestão estratégica nas 4 perspectivas para não perder negócios',
       icon: Target,
     },
+    {
+      label: 'E-commerce',
+      path: '/ecommerce',
+      aliasPaths: ['/e-commerce'],
+      description: 'Margem real, comissões de plataformas, taxas e logística FULL',
+      icon: ShoppingCart,
+    },
   ]
 
   const isServiceActive = serviceItems.some(
@@ -140,7 +148,7 @@ export default function Navbar() {
   )
 
   // Direct nav links ordenados conforme especificação para a Linha 2:
-  // Início, Gestão Financeira (aba dedicada solicitada pelo cliente), Indicadores, Notícias, [Serviços dropdown], Agenda Tributária, Reforma Tributária, Tributação, Bolsa de Valores, Sobre
+  // Início, Gestão Financeira, Matemática Financeira, Indicadores, Biblioteca, Notícias, [Serviços dropdown], Agenda Tributária, Reforma Tributária, Tributação, Bolsa de Valores, E-commerce, Sobre
   const directNavLinksLine2 = [
     { label: 'Início', path: '/', icon: Home },
     {
@@ -183,6 +191,12 @@ export default function Navbar() {
       path: '/bolsa-de-valores',
       aliasPaths: ['/bolsa'],
       icon: Globe,
+    },
+    {
+      label: 'E-commerce',
+      path: '/ecommerce',
+      aliasPaths: ['/e-commerce'],
+      icon: ShoppingCart,
     },
     { label: 'Sobre', path: '/sobre', icon: Info },
   ]
@@ -229,6 +243,12 @@ export default function Navbar() {
       path: '/bolsa-de-valores',
       aliasPaths: ['/bolsa'],
       icon: Globe,
+    },
+    {
+      label: 'E-commerce',
+      path: '/ecommerce',
+      aliasPaths: ['/e-commerce'],
+      icon: ShoppingCart,
     },
     { label: 'Sobre', path: '/sobre', icon: Info },
   ]
@@ -321,7 +341,7 @@ export default function Navbar() {
               Soluções em Consultoria
             </span>
             <span className="text-[10px] font-semibold text-[#16A34A] bg-emerald-50 border border-emerald-100 px-1.5 py-0.5 rounded">
-              5 Especialidades
+              7 Especialidades
             </span>
           </div>
 
@@ -509,8 +529,11 @@ export default function Navbar() {
             {/* 11. Bolsa de Valores */}
             {renderNavLink(directNavLinksLine2[9])}
 
-            {/* 12. Sobre */}
+            {/* 12. E-commerce */}
             {renderNavLink(directNavLinksLine2[10])}
+
+            {/* 13. Sobre */}
+            {renderNavLink(directNavLinksLine2[11])}
           </div>
         </nav>
       </div>

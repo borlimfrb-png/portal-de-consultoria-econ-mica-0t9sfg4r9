@@ -18,6 +18,7 @@ import {
   Tag,
   Target,
   CircleDollarSign,
+  ShoppingCart,
 } from 'lucide-react'
 import {
   ResponsiveContainer,
@@ -610,7 +611,7 @@ export default function Index() {
             </a>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {/* Card 1: Gestão Financeira */}
             <div className="bg-white rounded-2xl border border-stone-200/90 p-6 sm:p-7 shadow-sm hover:shadow-xl hover:border-[#16A34A] card-hover-lift transition-all flex flex-col justify-between group relative overflow-hidden">
               <div className="absolute top-0 right-0 w-32 h-32 bg-[#16A34A]/5 rounded-bl-full pointer-events-none group-hover:bg-[#16A34A]/10 transition-colors" />
@@ -867,6 +868,58 @@ export default function Index() {
                   className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-[#082852] hover:bg-[#0B3B7A] text-white text-xs font-mono font-bold uppercase tracking-wider rounded-lg transition-all shadow group/btn border border-[#0B3B7A] hover:border-[#16A34A]"
                 >
                   <span>Conhecer o BSC</span>
+                  <ArrowRight className="w-4 h-4 text-[#22C55E] group-hover/btn:translate-x-1 transition-transform" />
+                </Link>
+              </div>
+            </div>
+
+            {/* Card 6: E-commerce & Vendas Online */}
+            <div className="bg-white rounded-2xl border border-stone-200/90 p-6 sm:p-7 shadow-sm hover:shadow-xl hover:border-[#16A34A] card-hover-lift transition-all flex flex-col justify-between group relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-[#16A34A]/5 rounded-bl-full pointer-events-none group-hover:bg-[#16A34A]/10 transition-colors" />
+              <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#16A34A]/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+
+              <div>
+                <div className="flex items-center justify-between mb-6">
+                  <div className="w-14 h-14 rounded-xl bg-[#082852] text-[#22C55E] flex items-center justify-center group-hover:scale-105 transition-transform shadow-sm">
+                    <ShoppingCart className="w-7 h-7" />
+                  </div>
+                  <span className="px-3 py-1 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider bg-emerald-50 text-[#15803D] border border-emerald-200">
+                    Vendas Online & FULL
+                  </span>
+                </div>
+
+                <h3 className="font-serif text-xl sm:text-2xl font-bold text-[#082852] mb-3 group-hover:text-[#0B3B7A] transition-colors leading-snug">
+                  E-commerce & Vendas Online
+                </h3>
+
+                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-sans mb-6">
+                  Margem real após comissões de marketplaces, taxas de pagamento e frete grátis
+                  compulsório. Ranking detalhado das plataformas brasileiras, desmistificação da
+                  logística FULL e fluxo de caixa com 48 indicadores da Borlim.
+                </p>
+
+                <div className="space-y-2 mb-8 pt-4 border-t border-slate-100 font-sans text-xs text-slate-600">
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-[#16A34A] shrink-0" />
+                    <span>Ranking das principais plataformas (comissões e taxas reais)</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-[#16A34A] shrink-0" />
+                    <span>Como o modelo FULL funciona (armazenagem, prós e riscos)</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-[#16A34A] shrink-0" />
+                    <span>Cálculo da margem líquida real que realmente sobra no bolso</span>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <Link
+                  to="/ecommerce"
+                  className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-[#082852] hover:bg-[#0B3B7A] text-white text-xs font-mono font-bold uppercase tracking-wider rounded-lg transition-all shadow group/btn border border-[#0B3B7A] hover:border-[#16A34A]"
+                >
+                  <span>Conhecer E-commerce</span>
                   <ArrowRight className="w-4 h-4 text-[#22C55E] group-hover/btn:translate-x-1 transition-transform" />
                 </Link>
               </div>

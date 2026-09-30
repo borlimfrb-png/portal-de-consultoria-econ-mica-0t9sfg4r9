@@ -225,6 +225,14 @@ export default function Footer() {
               </li>
               <li>
                 <Link
+                  to="/ecommerce"
+                  className="hover:text-[#22C55E] transition-colors flex items-center gap-1.5 text-emerald-300 font-medium"
+                >
+                  <span className="text-[#22C55E] text-xs">›</span> E-commerce & Vendas Online
+                </Link>
+              </li>
+              <li>
+                <Link
                   to="/sobre"
                   className="hover:text-[#22C55E] transition-colors flex items-center gap-1.5"
                 >
