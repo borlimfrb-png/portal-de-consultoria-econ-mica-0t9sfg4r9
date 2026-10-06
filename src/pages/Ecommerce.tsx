@@ -34,6 +34,12 @@ import {
   SearchCheck,
   Zap,
   Info,
+  Megaphone,
+  MousePointerClick,
+  Target,
+  BarChart3,
+  Flame,
+  XCircle,
 } from 'lucide-react'
 import logoBorlim from '@/assets/logo-borlim-debb0.png'
 
@@ -41,6 +47,9 @@ export default function Ecommerce() {
   const [activeTab, setActiveTab] = useState<
     'comissao' | 'pagamento' | 'frete' | 'impostos' | 'resultado'
   >('comissao')
+  const [activeAdsTab, setActiveAdsTab] = useState<
+    'cpc' | 'roas_acos' | 'comissao_extra' | 'leilao'
+  >('cpc')
   const [openFaq, setOpenFaq] = useState<number | null>(0)
 
   const balanceAnalysisUrl = 'https://analise-de-balanco-6514f.goskip.app'
@@ -286,6 +295,14 @@ export default function Ecommerce() {
   // 5. Perguntas Frequentes (FAQ)
   const faqs = [
     {
+      q: 'Quanto devo gastar em ADS nas plataformas e qual o limite saudável?',
+      a: 'A regra de ouro ensinada pela Borlim é: o ACOS máximo tolerável (Target ACOS) é rigorosamente igual à margem de contribuição líquida que o produto teria sem anúncio. Se após pagar a mercadoria (CMV), comissão do marketplace, frete compulsório e impostos sobrarem 22% do preço de venda, você NUNCA pode operar com ACOS acima de 22% de forma sustentada — caso contrário, estará pagando do próprio bolso para vender. Para produtos maduros, recomendamos manter o ACOS entre 8% e 15%, preservando de 7% a 14% de margem no bolso. Já em lançamentos estratégicos, aceita-se temporariamente empatar (ACOS = margem de contribuição) durante 15 a 30 dias apenas para conquistar as primeiras vendas, avaliações 5 estrelas e tracionar o algoritmo orgânico.',
+    },
+    {
+      q: 'Qual a diferença entre CPC, ROAS e ACOS no Mercado Ads e Amazon Ads?',
+      a: 'O CPC (Custo por Clique) é a moeda do leilão: quanto a plataforma desconta do seu saldo toda vez que um comprador clica no seu anúncio patrocinado (geralmente entre R$ 0,35 e R$ 2,50). O ROAS (Return On Advertising Spend) mede o multiplicador de receita gerada por real gasto (ex.: gastou R$ 100 e faturou R$ 500 = ROAS 5,0x). Já o ACOS (Advertising Cost of Sales) é exatamente o inverso percentual do ROAS e a métrica favorita da gestão financeira: representa quanto da receita da venda foi consumida pelo anúncio (no mesmo exemplo, R$ 100 ÷ R$ 500 = 20% de ACOS). No Mercado Ads chama-se ACOS objetivo; na Amazon Ads é o ACOS padrão da campanha.',
+    },
+    {
       q: 'Vale a pena começar vendendo no marketplace ou montando loja própria?',
       a: 'Para quem está começando, o marketplace (Mercado Livre, Amazon, Shopee) é o caminho mais rápido para validar o produto e gerar as primeiras vendas, porque o público já está lá comprando todos os dias — você não precisa gastar rios de dinheiro em anúncios no Google ou Instagram. Por outro lado, a longo prazo, depender 100% de marketplaces deixa o empresário refém de aumentos de comissão e bloqueios de conta. A recomendação da Borlim é um modelo híbrido: usar os marketplaces para capturar clientes e gerar caixa de curto prazo, enquanto constrói sua loja própria (como na Nuvemshop ou Shopify) para criar marca própria, recomprar com custo zero de comissão e preservar margens elevadas.',
     },
@@ -391,6 +408,57 @@ export default function Ecommerce() {
               >
                 <Mail className="w-4 h-4 text-emerald-300" />
                 <span>flavio@borlim.com.br</span>
+              </a>
+            </div>
+
+            {/* Barra de Atalhos Internos da Página (Quick Navigation) */}
+            <div className="mt-8 pt-6 border-t border-white/15 flex flex-wrap items-center gap-2 sm:gap-3 text-xs font-mono">
+              <span className="text-slate-300 text-[11px] uppercase tracking-wider flex items-center gap-1.5 font-semibold">
+                <Sparkles className="w-3.5 h-3.5 text-[#22C55E]" />
+                Navegar na página:
+              </span>
+              <a
+                href="#visao-operacional"
+                className="px-3 py-1.5 rounded-md bg-white/10 hover:bg-white/20 text-slate-200 hover:text-white transition-colors"
+              >
+                Como Funciona
+              </a>
+              <a
+                href="#ranking-plataformas"
+                className="px-3 py-1.5 rounded-md bg-white/10 hover:bg-white/20 text-slate-200 hover:text-white transition-colors"
+              >
+                Ranking Plataformas
+              </a>
+              <a
+                href="#custos-margem"
+                className="px-3 py-1.5 rounded-md bg-white/10 hover:bg-white/20 text-slate-200 hover:text-white transition-colors"
+              >
+                Custos & Margem
+              </a>
+              <a
+                href="#ads-plataformas"
+                className="px-3 py-1.5 rounded-md bg-gradient-to-r from-emerald-500/25 to-emerald-600/30 hover:from-emerald-500/40 hover:to-emerald-600/45 text-emerald-200 hover:text-white border border-[#22C55E]/40 transition-all font-bold flex items-center gap-1.5 shadow-xs"
+              >
+                <Megaphone className="w-3 h-3 text-[#22C55E]" />
+                ADS nas Plataformas
+              </a>
+              <a
+                href="#logistica-full"
+                className="px-3 py-1.5 rounded-md bg-white/10 hover:bg-white/20 text-slate-200 hover:text-white transition-colors"
+              >
+                Logística FULL
+              </a>
+              <a
+                href="#erros-classicos"
+                className="px-3 py-1.5 rounded-md bg-white/10 hover:bg-white/20 text-slate-200 hover:text-white transition-colors"
+              >
+                Erros Clássicos
+              </a>
+              <a
+                href="#faq"
+                className="px-3 py-1.5 rounded-md bg-white/10 hover:bg-white/20 text-slate-200 hover:text-white transition-colors"
+              >
+                FAQ
               </a>
             </div>
           </div>
@@ -503,7 +571,7 @@ export default function Ecommerce() {
       </section>
 
       {/* 4. COMO FUNCIONA O E-COMMERCE NA PRÁTICA (6 ETAPAS DA OPERAÇÃO) */}
-      <section className="bg-white py-16 sm:py-24 border-y border-slate-200">
+      <section id="visao-operacional" className="bg-white py-16 sm:py-24 border-y border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mb-12">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 mb-3">
@@ -607,7 +675,10 @@ export default function Ecommerce() {
       </section>
 
       {/* 5. RANKING DAS MELHORES PLATAFORMAS DE VENDAS */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+      <section
+        id="ranking-plataformas"
+        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24"
+      >
         <div className="max-w-3xl mb-12">
           <span className="text-xs font-mono uppercase tracking-widest text-[#15803D] font-bold">
             Análise Comparativa de Mercado
@@ -699,7 +770,7 @@ export default function Ecommerce() {
       </section>
 
       {/* 6. ABAS INTERATIVAS: PERCENTUAIS QUE COMEM A MARGEM */}
-      <section className="bg-white py-16 sm:py-24 border-y border-slate-200">
+      <section id="custos-margem" className="bg-white py-16 sm:py-24 border-y border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mb-12">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 mb-3">
@@ -1180,8 +1251,902 @@ export default function Ecommerce() {
         </div>
       </section>
 
+      {/* SEÇÃO NOVA: COMO FUNCIONAM OS ADS DENTRO DAS PLATAFORMAS */}
+      <section
+        id="ads-plataformas"
+        className="bg-[#082852] text-white py-16 sm:py-24 border-b border-[#0B3B7A] relative overflow-hidden"
+      >
+        {/* Glows e Grid Tecnológico */}
+        <div className="absolute inset-0 tech-grid-pattern opacity-30 pointer-events-none" />
+        <div className="absolute -top-24 right-1/4 w-[500px] h-[500px] bg-[#16A34A]/20 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 -left-20 w-[450px] h-[450px] bg-[#1557A6]/30 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          {/* Header da Seção de ADS */}
+          <div className="max-w-3xl mb-12">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#16A34A]/20 border border-[#22C55E]/40 mb-4 backdrop-blur-sm">
+              <Megaphone className="w-4 h-4 text-[#22C55E]" />
+              <span className="text-[11px] font-mono font-bold uppercase tracking-widest text-[#22C55E]">
+                Mídia Paga & Anúncios Patrocinados
+              </span>
+            </div>
+            <h2 className="font-serif text-2xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight">
+              Como Funcionam os <span className="text-emerald-300">ADS</span> Dentro das
+              Plataformas?
+            </h2>
+            <p className="text-sm sm:text-base text-slate-300 mt-4 font-sans leading-relaxed">
+              O termo correto do setor é <strong>ADS</strong> (anúncios patrocinados/mídia de
+              performance). São os espaços publicitários pagos vendidos pelas próprias plataformas —
+              como <strong>Mercado Ads</strong> (Mercado Livre), <strong>Amazon Ads</strong>{' '}
+              (Sponsored Products), <strong>Shopee Ads</strong> e, fora dos marketplaces, o Google
+              Shopping e o Meta Ads.
+            </p>
+            <p className="text-sm sm:text-base text-slate-300 mt-2 font-sans leading-relaxed">
+              A lógica de negócio das plataformas é direta:{' '}
+              <em>quem não anuncia fica escondido nas últimas páginas da busca</em>. Com anúncio
+              ativo e lance competitivo no leilão, seu produto ganha o topo imediato das pesquisas e
+              das páginas dos concorrentes. Porém, sem engenharia financeira por trás, o empresário
+              acaba <strong>comprando venda no prejuízo</strong>.
+            </p>
+          </div>
+
+          {/* Abas Interativas de Modelos de Cobrança */}
+          <div className="bg-[#0B3B7A]/60 backdrop-blur-sm p-6 sm:p-8 rounded-2xl border border-slate-700/80 mb-12 shadow-xl">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-700/80 pb-4 mb-6">
+              <div>
+                <span className="text-xs font-mono uppercase tracking-widest text-[#22C55E] font-bold">
+                  Mecânica Econômica da Publicidade
+                </span>
+                <h3 className="font-serif text-xl sm:text-2xl font-bold text-white mt-1">
+                  Os 4 Modelos de Cobrança e Métricas Essenciais de ADS
+                </h3>
+              </div>
+              <span className="text-xs font-mono text-slate-300 bg-white/10 px-3 py-1.5 rounded-lg border border-white/15">
+                Clique nas abas para detalhar
+              </span>
+            </div>
+
+            {/* Navegação das Abas de ADS */}
+            <div className="flex flex-wrap gap-2 pb-2 mb-6">
+              <button
+                onClick={() => setActiveAdsTab('cpc')}
+                className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-xs sm:text-sm font-mono font-bold uppercase tracking-wider transition-all ${
+                  activeAdsTab === 'cpc'
+                    ? 'bg-[#16A34A] text-white shadow-md border border-[#22C55E]'
+                    : 'bg-white/10 text-slate-200 hover:bg-white/15 border border-white/10'
+                }`}
+              >
+                <MousePointerClick className="w-4 h-4 text-emerald-200" />
+                <span>1. CPC (Custo por Clique)</span>
+              </button>
+
+              <button
+                onClick={() => setActiveAdsTab('roas_acos')}
+                className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-xs sm:text-sm font-mono font-bold uppercase tracking-wider transition-all ${
+                  activeAdsTab === 'roas_acos'
+                    ? 'bg-[#16A34A] text-white shadow-md border border-[#22C55E]'
+                    : 'bg-white/10 text-slate-200 hover:bg-white/15 border border-white/10'
+                }`}
+              >
+                <Target className="w-4 h-4 text-emerald-200" />
+                <span>2. ROAS & ACOS na Prática</span>
+              </button>
+
+              <button
+                onClick={() => setActiveAdsTab('comissao_extra')}
+                className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-xs sm:text-sm font-mono font-bold uppercase tracking-wider transition-all ${
+                  activeAdsTab === 'comissao_extra'
+                    ? 'bg-[#16A34A] text-white shadow-md border border-[#22C55E]'
+                    : 'bg-white/10 text-slate-200 hover:bg-white/15 border border-white/10'
+                }`}
+              >
+                <Percent className="w-4 h-4 text-emerald-200" />
+                <span>3. % de Comissão Extra Embutida</span>
+              </button>
+
+              <button
+                onClick={() => setActiveAdsTab('leilao')}
+                className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-xs sm:text-sm font-mono font-bold uppercase tracking-wider transition-all ${
+                  activeAdsTab === 'leilao'
+                    ? 'bg-[#16A34A] text-white shadow-md border border-[#22C55E]'
+                    : 'bg-white/10 text-slate-200 hover:bg-white/15 border border-white/10'
+                }`}
+              >
+                <BarChart3 className="w-4 h-4 text-emerald-200" />
+                <span>4. Leilão & Orçamento Diário</span>
+              </button>
+            </div>
+
+            {/* Conteúdo Aba: CPC */}
+            {activeAdsTab === 'cpc' && (
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start animate-fade-in">
+                <div className="lg:col-span-7 space-y-4 font-sans text-xs sm:text-sm text-slate-200 leading-relaxed">
+                  <div className="p-4 bg-white/5 border border-white/10 rounded-xl space-y-2">
+                    <span className="text-[#22C55E] font-mono font-bold uppercase text-xs block">
+                      Como funciona o CPC (Custo por Clique)
+                    </span>
+                    <p>
+                      Você só paga quando um comprador de fato clica no seu anúncio. A simples
+                      exibição na tela (impressão) não é cobrada. Ao clicar, o cliente é direcionado
+                      à sua página de produto.
+                    </p>
+                    <p className="text-slate-300">
+                      Entretanto, <strong>clique não é venda</strong>: se o anúncio tiver fotos
+                      ruins, descrição pobre ou frete caro, o cliente clica, gasta o seu saldo de
+                      publicidade e vai embora sem comprar.
+                    </p>
+                  </div>
+
+                  <div className="space-y-2">
+                    <span className="text-white font-mono font-bold text-xs uppercase tracking-wider block">
+                      Valores Típicos de CPC no Brasil por Categoria:
+                    </span>
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 font-mono text-xs">
+                      <div className="p-3 bg-[#082852] rounded-lg border border-slate-700">
+                        <span className="text-slate-400 block text-[10px] uppercase">
+                          Baixa Concorrência
+                        </span>
+                        <span className="text-emerald-300 text-sm font-bold">
+                          R$ 0,30 a R$ 0,70
+                        </span>
+                        <p className="text-[11px] text-slate-300 font-sans mt-1">
+                          Nicho artesanal, peças técnicas específicas.
+                        </p>
+                      </div>
+                      <div className="p-3 bg-[#082852] rounded-lg border border-slate-700">
+                        <span className="text-slate-400 block text-[10px] uppercase">
+                          Média Concorrência
+                        </span>
+                        <span className="text-amber-300 text-sm font-bold">R$ 0,75 a R$ 1,80</span>
+                        <p className="text-[11px] text-slate-300 font-sans mt-1">
+                          Casa e utilidades, autopeças, calçados e vestuário.
+                        </p>
+                      </div>
+                      <div className="p-3 bg-[#082852] rounded-lg border border-slate-700">
+                        <span className="text-slate-400 block text-[10px] uppercase">
+                          Alta Concorrência
+                        </span>
+                        <span className="text-rose-300 text-sm font-bold">R$ 2,00 a R$ 5,00+</span>
+                        <p className="text-[11px] text-slate-300 font-sans mt-1">
+                          Smartphones, eletrônicos, cosméticos e suplementos.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="lg:col-span-5 bg-[#082852] p-5 sm:p-6 rounded-xl border border-emerald-500/30 space-y-3 font-sans">
+                  <div className="flex items-center gap-2 text-emerald-300">
+                    <MousePointerClick className="w-5 h-5" />
+                    <span className="text-xs font-mono font-bold uppercase tracking-wider">
+                      A Matemática da Taxa de Conversão
+                    </span>
+                  </div>
+                  <p className="text-xs text-slate-300 leading-relaxed">
+                    Se sua taxa de conversão for de <strong>2%</strong> (2 vendas a cada 100
+                    cliques) e o seu CPC médio for de <strong>R$ 1,20</strong>:
+                  </p>
+                  <div className="p-3 bg-white/5 rounded-lg border border-white/10 font-mono text-xs space-y-1.5 text-slate-200">
+                    <div className="flex justify-between">
+                      <span>Custo de 100 cliques:</span>
+                      <span className="text-amber-300 font-bold">R$ 120,00</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Vendas geradas (2%):</span>
+                      <span className="text-white font-bold">2 pedidos</span>
+                    </div>
+                    <div className="flex justify-between pt-1 border-t border-slate-700 text-[#22C55E] font-bold">
+                      <span>Custo de Aquisição por Venda (CPA):</span>
+                      <span>R$ 60,00 / venda</span>
+                    </div>
+                  </div>
+                  <p className="text-[11px] text-slate-400 italic">
+                    * Se o produto for vendido a R$ 200,00, o custo de anúncio comeu R$ 60,00 (30,0%
+                    da receita bruta).
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {/* Conteúdo Aba: ROAS e ACOS */}
+            {activeAdsTab === 'roas_acos' && (
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start animate-fade-in">
+                <div className="lg:col-span-7 space-y-4 font-sans text-xs sm:text-sm text-slate-200 leading-relaxed">
+                  <div className="p-4 bg-white/5 border border-white/10 rounded-xl space-y-3">
+                    <span className="text-[#22C55E] font-mono font-bold uppercase text-xs block">
+                      A Diferença Conceitual: ROAS vs. ACOS
+                    </span>
+                    <p>
+                      <strong>ROAS (Return On Advertising Spend):</strong> É a métrica do
+                      profissional de marketing. Mede a receita bruta gerada por cada real
+                      investido:
+                      <br />
+                      <span className="font-mono text-emerald-300 font-bold">
+                        ROAS = Receita de Vendas Gerada ÷ Gasto em ADS
+                      </span>
+                    </p>
+                    <p>
+                      <strong>ACOS (Advertising Cost of Sales):</strong> É a métrica da gestão
+                      financeira e a adotada pelo <strong>Mercado Ads</strong> e pela{' '}
+                      <strong>Amazon</strong>. Mede o percentual do faturamento consumido pela
+                      publicidade:
+                      <br />
+                      <span className="font-mono text-emerald-300 font-bold">
+                        ACOS = (Gasto em ADS ÷ Receita de Vendas Gerada) × 100
+                      </span>
+                    </p>
+                  </div>
+
+                  <div className="p-4 bg-[#082852] rounded-xl border border-slate-700 space-y-2">
+                    <span className="text-white font-mono font-bold text-xs uppercase tracking-wider block">
+                      A Conta na Prática (Exemplo Real):
+                    </span>
+                    <div className="grid grid-cols-2 gap-3 font-mono text-xs">
+                      <div className="p-3 bg-white/5 rounded-lg border border-white/10">
+                        <span className="text-slate-400 text-[10px] block">
+                          Investimento no mês
+                        </span>
+                        <span className="text-rose-300 font-bold text-sm">R$ 100,00 em ADS</span>
+                      </div>
+                      <div className="p-3 bg-white/5 rounded-lg border border-white/10">
+                        <span className="text-slate-400 text-[10px] block">Vendas geradas</span>
+                        <span className="text-emerald-300 font-bold text-sm">
+                          R$ 500,00 faturados
+                        </span>
+                      </div>
+                    </div>
+                    <div className="pt-2 font-mono text-xs text-slate-300 space-y-1">
+                      <div className="flex justify-between">
+                        <span>• ROAS correspondente:</span>
+                        <span className="font-bold text-white">5,0x (R$ 500 ÷ R$ 100)</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>• ACOS correspondente:</span>
+                        <span className="font-bold text-[#22C55E]">20,0% (R$ 100 ÷ R$ 500)</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="lg:col-span-5 bg-[#082852] p-5 sm:p-6 rounded-xl border border-emerald-500/30 space-y-3 font-sans">
+                  <div className="flex items-center gap-2 text-emerald-300">
+                    <Target className="w-5 h-5" />
+                    <span className="text-xs font-mono font-bold uppercase tracking-wider">
+                      Tabela de Conversão ROAS ⇄ ACOS
+                    </span>
+                  </div>
+                  <p className="text-xs text-slate-300">
+                    Como o empresário deve traduzir as duas linguagens para a sua DRE:
+                  </p>
+                  <div className="space-y-1.5 font-mono text-xs">
+                    <div className="flex justify-between p-2 rounded bg-white/5 border border-white/10">
+                      <span className="text-slate-300">ROAS 10,0x</span>
+                      <span className="text-emerald-400 font-bold">ACOS = 10% (Excelente)</span>
+                    </div>
+                    <div className="flex justify-between p-2 rounded bg-white/5 border border-white/10">
+                      <span className="text-slate-300">ROAS 6,67x</span>
+                      <span className="text-emerald-400 font-bold">ACOS = 15% (Saudável)</span>
+                    </div>
+                    <div className="flex justify-between p-2 rounded bg-white/5 border border-white/10">
+                      <span className="text-slate-300">ROAS 5,00x</span>
+                      <span className="text-amber-400 font-bold">
+                        ACOS = 20% (Atenção à Margem)
+                      </span>
+                    </div>
+                    <div className="flex justify-between p-2 rounded bg-white/5 border border-white/10">
+                      <span className="text-slate-300">ROAS 3,33x</span>
+                      <span className="text-rose-400 font-bold">
+                        ACOS = 30% (Risco de Prejuízo)
+                      </span>
+                    </div>
+                  </div>
+                  <div className="text-[11px] font-mono text-emerald-300 pt-2 border-t border-slate-700">
+                    * Quanto MAIOR o ROAS, MENOR o ACOS e mais margem fica no bolso.
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Conteúdo Aba: Comissão Extra Embutida */}
+            {activeAdsTab === 'comissao_extra' && (
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start animate-fade-in">
+                <div className="lg:col-span-7 space-y-4 font-sans text-xs sm:text-sm text-slate-200 leading-relaxed">
+                  <div className="p-4 bg-white/5 border border-white/10 rounded-xl space-y-2">
+                    <span className="text-[#22C55E] font-mono font-bold uppercase text-xs block">
+                      A Exposição "Gratuita" que já Vem Cobrada na Comissão
+                    </span>
+                    <p>
+                      Muitos marketplaces vendem planos diferenciados de anúncio cujo valor não é
+                      cobrado por clique (CPC), mas sim como uma{' '}
+                      <strong>comissão percentual extra adicionada à taxa padrão</strong> da venda.
+                    </p>
+                    <p className="text-slate-300">
+                      O maior exemplo brasileiro é o plano <strong>Mercado Livre Premium</strong>: a
+                      comissão sobe de ~11% (Clássico) para ~16% a 19%. Essa diferença de 5% a 8%
+                      paga duas coisas: o parcelamento sem juros para o comprador e maior relevância
+                      no algoritmo de busca da plataforma.
+                    </p>
+                  </div>
+
+                  <div className="p-4 bg-[#082852] rounded-xl border border-slate-700 space-y-3 font-mono text-xs">
+                    <span className="text-white font-bold text-xs uppercase tracking-wider block">
+                      Programas de Destaque por Comissão Adicional:
+                    </span>
+                    <ul className="space-y-2 text-slate-300">
+                      <li className="flex items-start gap-2">
+                        <span className="text-[#22C55E] font-bold">•</span>
+                        <span>
+                          <strong>Shopee Frete Grátis Extra:</strong> Adiciona +6% de comissão (sobe
+                          de 14% para 20%) em troca de selo de destaque e cupons pagos pela
+                          plataforma.
+                        </span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="text-[#22C55E] font-bold">•</span>
+                        <span>
+                          <strong>Magalu Destaque / Campanhas Black:</strong> Redução ou acréscimo
+                          de comissão condicionado à participação em ofertas relâmpago.
+                        </span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="text-[#22C55E] font-bold">•</span>
+                        <span>
+                          <strong>Amazon Buy Box Promotions:</strong> Tarifas específicas de
+                          visibilidade para vendedores certificados.
+                        </span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div className="lg:col-span-5 bg-[#082852] p-5 sm:p-6 rounded-xl border border-emerald-500/30 space-y-3 font-sans">
+                  <div className="flex items-center gap-2 text-emerald-300">
+                    <Percent className="w-5 h-5" />
+                    <span className="text-xs font-mono font-bold uppercase tracking-wider">
+                      A Armadilha da Sobreposição
+                    </span>
+                  </div>
+                  <p className="text-xs text-slate-300 leading-relaxed">
+                    Um dos erros contábeis mais graves é pagar o{' '}
+                    <strong>plano Premium (16%)</strong> E TAMBÉM ligar o{' '}
+                    <strong>Mercado Ads com ACOS de 15%</strong>.
+                  </p>
+                  <div className="p-3 bg-rose-500/10 border border-rose-500/30 rounded-lg text-rose-200 text-xs font-mono space-y-1">
+                    <div className="flex justify-between">
+                      <span>Comissão Premium ML:</span>
+                      <span className="font-bold">16,0%</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Custo de Mercado Ads:</span>
+                      <span className="font-bold">15,0%</span>
+                    </div>
+                    <div className="flex justify-between pt-1 border-t border-rose-500/30 font-bold text-rose-300">
+                      <span>Total consumido em canal + ads:</span>
+                      <span>31,0% do faturamento</span>
+                    </div>
+                  </div>
+                  <p className="text-[11px] text-slate-300">
+                    Se a mercadoria (CMV) custar 45% e o frete + imposto custarem 20%, o empresário
+                    acabou de acumular 96% de custos — restando míseros 4% de margem antes dos
+                    custos fixos.
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {/* Conteúdo Aba: Leilão e Orçamento Diário */}
+            {activeAdsTab === 'leilao' && (
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start animate-fade-in">
+                <div className="lg:col-span-7 space-y-4 font-sans text-xs sm:text-sm text-slate-200 leading-relaxed">
+                  <div className="p-4 bg-white/5 border border-white/10 rounded-xl space-y-2">
+                    <span className="text-[#22C55E] font-mono font-bold uppercase text-xs block">
+                      Como Funciona o Leilão em Tempo Real (RTB)
+                    </span>
+                    <p>
+                      Toda vez que um consumidor digita uma busca (ex.: "tênis de corrida masculino"
+                      ou "furadeira 500w"), ocorre um{' '}
+                      <strong>leilão automático em milissegundos</strong>. Os critérios
+                      determinantes para quem aparece em 1º lugar são:
+                    </p>
+                    <ul className="space-y-1.5 text-slate-300 pl-4 list-disc font-mono text-xs">
+                      <li>
+                        <strong>Lance máximo de CPC ou ACOS Objetivo:</strong> Quanto você aceita
+                        pagar por clique ou por venda.
+                      </li>
+                      <li>
+                        <strong>Qualidade do Anúncio (Ad Rank):</strong> Título relevante, fotos
+                        profissionais, ficha técnica preenchida.
+                      </li>
+                      <li>
+                        <strong>Histórico de Conversão:</strong> Anúncios que já vendem muito ganham
+                        desconto no leilão.
+                      </li>
+                      <li>
+                        <strong>Reputação e Prazo de Entrega:</strong> Vendedores com reputação
+                        verde e no FULL pagam menos por clique para ganhar a mesma posição.
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div className="p-4 bg-[#082852] rounded-xl border border-slate-700 space-y-2 font-mono text-xs">
+                    <span className="text-white font-bold text-xs uppercase tracking-wider block">
+                      Gestão do Orçamento Diário (Daily Budget):
+                    </span>
+                    <p className="text-slate-300 font-sans">
+                      Você define um teto diário de gastos (ex.: R$ 50,00/dia). Assim que os cliques
+                      atingirem R$ 50,00, a campanha pausa automaticamente até o dia seguinte. O
+                      perigo: se o orçamento acabar às 11h da manhã, você perde todo o horário nobre
+                      de compras (19h às 23h).
+                    </p>
+                  </div>
+                </div>
+
+                <div className="lg:col-span-5 bg-[#082852] p-5 sm:p-6 rounded-xl border border-emerald-500/30 space-y-3 font-sans">
+                  <div className="flex items-center gap-2 text-emerald-300">
+                    <BarChart3 className="w-5 h-5" />
+                    <span className="text-xs font-mono font-bold uppercase tracking-wider">
+                      A Regra da Visibilidade
+                    </span>
+                  </div>
+                  <div className="p-4 rounded-xl bg-white/5 border border-white/10 space-y-2 text-xs font-mono text-slate-300">
+                    <div className="text-amber-300 font-bold uppercase text-[11px]">
+                      Sem Anúncio (Apenas Orgânico):
+                    </div>
+                    <p className="font-sans text-[11px] leading-relaxed">
+                      Seu produto aparece na 4ª ou 5ª página da busca. Menos de 5% dos compradores
+                      rolam a página além dos primeiros 10 resultados. Volume de vendas rastejante.
+                    </p>
+                    <div className="text-[#22C55E] font-bold uppercase text-[11px] pt-2 border-t border-slate-700">
+                      Com Anúncio Ativo (ADS):
+                    </div>
+                    <p className="font-sans text-[11px] leading-relaxed">
+                      Seu produto aparece nas 4 primeiras posições do topo da busca com a tag
+                      "Patrocinado". A taxa de cliques (CTR) sobe até 8x, gerando escala rápida.
+                    </p>
+                  </div>
+                  <p className="text-[11px] text-slate-400 italic">
+                    Conclusão Borlim: O anúncio é o acelerador do motor; a margem de contribuição é
+                    o combustível. Acelerar sem combustível quebra a empresa.
+                  </p>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Comparativo Numérico em Cascata: COM ADS vs. SEM ADS (Produto R$ 200,00) */}
+          <div className="p-6 sm:p-10 rounded-2xl bg-white text-slate-800 border border-slate-200 shadow-2xl space-y-6 mb-12">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-4">
+              <div>
+                <span className="text-xs font-mono uppercase tracking-widest text-[#15803D] font-bold">
+                  Simulação Numérica em Cascata — Produto de R$ 200,00
+                </span>
+                <h3 className="font-serif text-2xl sm:text-3xl font-bold text-[#082852] mt-1">
+                  Venda Orgânica (Sem Anúncio) vs. Venda Impulsionada por ADS
+                </h3>
+              </div>
+              <span className="px-3.5 py-1.5 rounded-full bg-emerald-100 text-[#15803D] border border-emerald-300 font-mono text-xs font-bold uppercase tracking-wider">
+                Comparativo de Margem Líquida
+              </span>
+            </div>
+
+            <p className="text-xs sm:text-sm text-slate-600 font-sans leading-relaxed">
+              Veja o que acontece com o mesmo produto vendido a <strong>R$ 200,00</strong> no
+              Mercado Livre (plano Clássico 11%): no lado esquerdo, a venda 100% orgânica (sem gasto
+              com publicidade); no lado direito, a venda gerada através do{' '}
+              <strong>Mercado Ads</strong> com ACOS alvo de 15% (R$ 30,00 por venda).
+            </p>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+              {/* Lado A: SEM ADS (Orgânico) */}
+              <div className="p-6 rounded-2xl bg-[#F0F4F8] border border-slate-300 space-y-3 font-mono text-xs sm:text-sm">
+                <div className="flex items-center justify-between border-b border-slate-300 pb-2">
+                  <span className="font-bold text-[#082852] text-sm uppercase">
+                    Cenário A: SEM ADS (Orgânico)
+                  </span>
+                  <span className="px-2 py-0.5 rounded bg-blue-100 text-[#082852] text-[10px] font-bold">
+                    Margem Alta
+                  </span>
+                </div>
+
+                <div className="flex justify-between py-1 border-b border-slate-200">
+                  <span>Preço de Venda (NF-e):</span>
+                  <span className="font-bold text-[#082852]">R$ 200,00 (100%)</span>
+                </div>
+                <div className="flex justify-between py-1 border-b border-slate-200 text-slate-600">
+                  <span>(-) CMV (compra/fabricação):</span>
+                  <span className="text-rose-600 font-semibold">- R$ 85,00 (42,5%)</span>
+                </div>
+                <div className="flex justify-between py-1 border-b border-slate-200 text-slate-600">
+                  <span>(-) Comissão Marketplace (11%):</span>
+                  <span className="text-rose-600 font-semibold">- R$ 22,00 (11,0%)</span>
+                </div>
+                <div className="flex justify-between py-1 border-b border-slate-200 text-slate-500 font-semibold">
+                  <span>(-) Custo de ADS / Mídia Paga:</span>
+                  <span className="text-emerald-700">R$ 0,00 (0,0%)</span>
+                </div>
+                <div className="flex justify-between py-1 border-b border-slate-200 text-slate-600">
+                  <span>(-) Gateway de Cartão (3,0%):</span>
+                  <span className="text-rose-600 font-semibold">- R$ 6,00 (3,0%)</span>
+                </div>
+                <div className="flex justify-between py-1 border-b border-slate-200 text-slate-600">
+                  <span>(-) Frete Compulsório Líder:</span>
+                  <span className="text-rose-600 font-semibold">- R$ 18,50 (9,25%)</span>
+                </div>
+                <div className="flex justify-between py-1 border-b border-slate-200 text-slate-600">
+                  <span>(-) Provisão Devoluções (3%):</span>
+                  <span className="text-rose-600 font-semibold">- R$ 6,00 (3,0%)</span>
+                </div>
+                <div className="flex justify-between py-1 border-b border-slate-200 text-slate-600">
+                  <span>(-) Imposto Simples (~8,5%):</span>
+                  <span className="text-rose-600 font-semibold">- R$ 17,00 (8,5%)</span>
+                </div>
+                <div className="flex justify-between py-1.5 border-t-2 border-[#16A34A] text-[#15803D] font-bold">
+                  <span>(=) Margem de Contribuição:</span>
+                  <span>R$ 45,50 (22,75%)</span>
+                </div>
+                <div className="flex justify-between py-1 text-slate-500 text-xs">
+                  <span>(-) Rateio Custos Fixos (10%):</span>
+                  <span>- R$ 20,00 (10,0%)</span>
+                </div>
+                <div className="flex justify-between py-2.5 bg-emerald-100 px-3 rounded-lg border border-emerald-300 font-bold text-[#15803D] text-sm sm:text-base mt-2">
+                  <span>LUCRO LÍQUIDO / UNIDADE:</span>
+                  <span>R$ 25,50 (12,75%)</span>
+                </div>
+
+                <div className="pt-2 text-[11px] font-sans text-slate-600 space-y-1">
+                  <p>
+                    <strong>Volume Típico:</strong> ~30 unidades/mês (baixo giro sem exposição).
+                  </p>
+                  <p>
+                    <strong>Lucro Total no Mês:</strong> 30 × R$ 25,50 ={' '}
+                    <strong className="text-[#15803D]">R$ 765,00</strong>
+                  </p>
+                </div>
+              </div>
+
+              {/* Lado B: COM ADS (Patrocinado ACOS 15%) */}
+              <div className="p-6 rounded-2xl bg-[#082852] text-white border border-[#0B3B7A] space-y-3 font-mono text-xs sm:text-sm shadow-xl">
+                <div className="flex items-center justify-between border-b border-slate-700 pb-2">
+                  <span className="font-bold text-emerald-300 text-sm uppercase">
+                    Cenário B: COM ADS (ACOS 15%)
+                  </span>
+                  <span className="px-2 py-0.5 rounded bg-emerald-500/20 text-[#22C55E] border border-emerald-500/40 text-[10px] font-bold">
+                    Volume Alto
+                  </span>
+                </div>
+
+                <div className="flex justify-between py-1 border-b border-slate-700/60">
+                  <span>Preço de Venda (NF-e):</span>
+                  <span className="font-bold text-white">R$ 200,00 (100%)</span>
+                </div>
+                <div className="flex justify-between py-1 border-b border-slate-700/60 text-slate-300">
+                  <span>(-) CMV (compra/fabricação):</span>
+                  <span className="text-rose-300">- R$ 85,00 (42,5%)</span>
+                </div>
+                <div className="flex justify-between py-1 border-b border-slate-700/60 text-slate-300">
+                  <span>(-) Comissão Marketplace (11%):</span>
+                  <span className="text-rose-300">- R$ 22,00 (11,0%)</span>
+                </div>
+                <div className="flex justify-between py-1 border-b border-slate-700/60 bg-amber-500/10 px-1 rounded text-amber-300 font-bold">
+                  <span>(-) Custo do Anúncio (ACOS 15%):</span>
+                  <span className="text-amber-300">- R$ 30,00 (15,0%)</span>
+                </div>
+                <div className="flex justify-between py-1 border-b border-slate-700/60 text-slate-300">
+                  <span>(-) Gateway de Cartão (3,0%):</span>
+                  <span className="text-rose-300">- R$ 6,00 (3,0%)</span>
+                </div>
+                <div className="flex justify-between py-1 border-b border-slate-700/60 text-slate-300">
+                  <span>(-) Frete Compulsório Líder:</span>
+                  <span className="text-rose-300">- R$ 18,50 (9,25%)</span>
+                </div>
+                <div className="flex justify-between py-1 border-b border-slate-700/60 text-slate-300">
+                  <span>(-) Provisão Devoluções (3%):</span>
+                  <span className="text-rose-300">- R$ 6,00 (3,0%)</span>
+                </div>
+                <div className="flex justify-between py-1 border-b border-slate-700/60 text-slate-300">
+                  <span>(-) Imposto Simples (~8,5%):</span>
+                  <span className="text-rose-300">- R$ 17,00 (8,5%)</span>
+                </div>
+                <div className="flex justify-between py-1.5 border-t-2 border-amber-400 text-amber-300 font-bold">
+                  <span>(=) Margem de Contribuição:</span>
+                  <span>R$ 15,50 (7,75%)</span>
+                </div>
+                <div className="flex justify-between py-1 text-slate-400 text-xs">
+                  <span>(-) Rateio Custos Fixos (diluído ~5%):</span>
+                  <span>- R$ 10,00 (5,0%)</span>
+                </div>
+                <div className="flex justify-between py-2.5 bg-[#16A34A]/25 px-3 rounded-lg border border-[#22C55E]/50 font-bold text-white text-sm sm:text-base mt-2">
+                  <span>LUCRO LÍQUIDO / UNIDADE:</span>
+                  <span className="text-[#22C55E]">R$ 5,50 (2,75%)</span>
+                </div>
+
+                <div className="pt-2 text-[11px] font-sans text-slate-300 space-y-1">
+                  <p>
+                    <strong>Volume Aumentado:</strong> ~250 unidades/mês (topo da busca e alta
+                    escala).
+                  </p>
+                  <p>
+                    <strong>Lucro Total no Mês:</strong> 250 × R$ 5,50 ={' '}
+                    <strong className="text-emerald-300">R$ 1.375,00</strong> (+79,7% no bolso!)
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Síntese do Trade-Off de Negócio */}
+            <div className="p-5 bg-amber-50 border border-amber-200 rounded-xl space-y-2 text-xs font-sans text-amber-950">
+              <div className="flex items-center gap-2 font-bold text-amber-900">
+                <Scale className="w-4 h-4 text-amber-700" />
+                <span>O Trade-Off de Empresário para Empresário:</span>
+              </div>
+              <p className="leading-relaxed">
+                Com <strong>ADS</strong>, a margem unitária cai de 12,75% (R$ 25,50) para 2,75% (R$
+                5,50) por peça. Contudo, você vende <strong>8 vezes mais volume</strong>, ganha
+                poder de negociação de compra com o fornecedor e gera mais dinheiro absoluto no fim
+                do mês.
+                <strong> Mas atenção:</strong> se o seu ACOS subir de 15% para 23%, o lucro líquido
+                se anula e a empresa quebra faturando milhões.
+              </p>
+            </div>
+          </div>
+
+          {/* Quando o ADS Vale a Pena x Quando Não Vale (Matriz Estratégica) */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+            {/* Quando Vale a Pena */}
+            <div className="bg-white/5 border border-emerald-500/40 p-6 sm:p-8 rounded-2xl space-y-4">
+              <div className="flex items-center gap-3 text-emerald-300">
+                <CheckCircle2 className="w-6 h-6 text-[#22C55E]" />
+                <h3 className="font-serif text-xl sm:text-2xl font-bold text-white">
+                  Quando o ADS Vale a Pena
+                </h3>
+              </div>
+              <ul className="space-y-3 font-sans text-xs sm:text-sm text-slate-300">
+                <li className="flex items-start gap-2.5">
+                  <Check className="w-4 h-4 text-[#22C55E] shrink-0 mt-1" />
+                  <span>
+                    <strong>
+                      Produto com Margem Saudável (&gt; 25% de margem de contribuição):
+                    </strong>{' '}
+                    Há folga matemática suficiente para absorver o custo de aquisição do cliente
+                    (CAC) e ainda sobrar lucro limpo.
+                  </span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <Check className="w-4 h-4 text-[#22C55E] shrink-0 mt-1" />
+                  <span>
+                    <strong>Lançamento de Produto (Fase de Tração):</strong> Para um produto novo
+                    sair do zero, ele precisa de avaliações, fotos de compradores e volume inicial.
+                    Aqui, aceita-se operar com lucro zero durante 15 a 30 dias para destravar o
+                    algoritmo orgânico.
+                  </span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <Check className="w-4 h-4 text-[#22C55E] shrink-0 mt-1" />
+                  <span>
+                    <strong>Produto no FULL com Alta Reputação:</strong> A conversão de anúncio em
+                    produtos com selo FULL é até 3 vezes maior, derrubando o custo por clique
+                    efetivo e maximizando o ROAS.
+                  </span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <Check className="w-4 h-4 text-[#22C55E] shrink-0 mt-1" />
+                  <span>
+                    <strong>Desova de Estoque Parado:</strong> É preferível queimar o estoque com
+                    ADS a preço de custo do que pagar meses de taxa de armazenagem prolongada no
+                    armazém da plataforma.
+                  </span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Quando Não Vale a Pena */}
+            <div className="bg-white/5 border border-rose-500/40 p-6 sm:p-8 rounded-2xl space-y-4">
+              <div className="flex items-center gap-3 text-rose-300">
+                <XCircle className="w-6 h-6 text-rose-400" />
+                <h3 className="font-serif text-xl sm:text-2xl font-bold text-white">
+                  Quando o ADS Não Vale a Pena (Perigo)
+                </h3>
+              </div>
+              <ul className="space-y-3 font-sans text-xs sm:text-sm text-slate-300">
+                <li className="flex items-start gap-2.5">
+                  <AlertTriangle className="w-4 h-4 text-rose-400 shrink-0 mt-1" />
+                  <span>
+                    <strong>Produto com Margem-Raspada (&lt; 10% a 12%):</strong> Qualquer anúncio
+                    ativado levará a venda diretamente para o território de prejuízo. A regra
+                    prática:{' '}
+                    <em>o ACOS máximo tolerável é rigorosamente igual à margem de contribuição</em>.
+                  </span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <AlertTriangle className="w-4 h-4 text-rose-400 shrink-0 mt-1" />
+                  <span>
+                    <strong>Produto sem Estoque Estável ou Fornecedor Inseguro:</strong> Ligar
+                    anúncio, gastar para posicionar e pausar por falta de estoque derruba o Ad Rank
+                    e desperdiça todo o dinheiro investido.
+                  </span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <AlertTriangle className="w-4 h-4 text-rose-400 shrink-0 mt-1" />
+                  <span>
+                    <strong>Conta com Reputação Amarela ou Laranja:</strong> Compradores desconfiam,
+                    a taxa de conversão desaba e o leilão cobra CPC mais caro do vendedor
+                    negativado.
+                  </span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <AlertTriangle className="w-4 h-4 text-rose-400 shrink-0 mt-1" />
+                  <span>
+                    <strong>Anúncio sem Engenharia de Conversão:</strong> Fotos amadoras, sem ficha
+                    técnica completa e sem vídeo. Anúncio ruim com tráfego pago vira ralo de
+                    dinheiro.
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Os 4 Erros Clássicos com ADS nas Plataformas */}
+          <div className="bg-[#0B3B7A]/70 backdrop-blur-sm p-6 sm:p-8 rounded-2xl border border-slate-700/80 mb-12">
+            <div className="flex items-center gap-2 mb-6">
+              <Flame className="w-5 h-5 text-amber-400" />
+              <h3 className="font-serif text-xl sm:text-2xl font-bold text-white">
+                Os 4 Erros Críticos que Queimam Caixa em ADS de Marketplace
+              </h3>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 font-sans text-xs">
+              <div className="p-4 bg-white/5 border border-white/10 rounded-xl space-y-2">
+                <span className="font-mono text-amber-300 font-bold block text-sm">
+                  #1 Anunciar sem Margem
+                </span>
+                <p className="text-slate-300 leading-relaxed">
+                  Ligar o anúncio sem ter a planilha de custos aberta. Se o produto deixa R$ 15,00
+                  de margem e o anúncio gasta R$ 18,00 por venda, quanto mais você vende, mais
+                  rápido a empresa quebra.
+                </p>
+              </div>
+
+              <div className="p-4 bg-white/5 border border-white/10 rounded-xl space-y-2">
+                <span className="font-mono text-amber-300 font-bold block text-sm">
+                  #2 Não Auditar o ACOS Semanalmente
+                </span>
+                <p className="text-slate-300 leading-relaxed">
+                  Colocar a campanha no modo automático e nunca mais olhar. A concorrência entra no
+                  leilão, o CPC sobe, o ACOS dispara de 12% para 35% e consome todo o faturamento da
+                  loja.
+                </p>
+              </div>
+
+              <div className="p-4 bg-white/5 border border-white/10 rounded-xl space-y-2">
+                <span className="font-mono text-amber-300 font-bold block text-sm">
+                  #3 Achar que ADS Conserta Produto Ruim
+                </span>
+                <p className="text-slate-300 leading-relaxed">
+                  Anúncio só compra tráfego, não compra desejo. Se o preço estiver fora do mercado,
+                  as fotos forem borradas ou as avaliações forem de 1 ou 2 estrelas, o clique não
+                  converte.
+                </p>
+              </div>
+
+              <div className="p-4 bg-white/5 border border-white/10 rounded-xl space-y-2">
+                <span className="font-mono text-amber-300 font-bold block text-sm">
+                  #4 Tratar Campanha como Custo Fixo
+                </span>
+                <p className="text-slate-300 leading-relaxed">
+                  Não pausar campanhas de produtos esgotados ou deixar palavras-chave negativas
+                  descontroladas, pagando por cliques de buscas que nada têm a ver com o item
+                  vendido.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Box de Conexão com a Borlim: Como a Consultoria Calcula o ACOS Máximo */}
+          <div className="bg-gradient-to-br from-[#082852] via-[#0B3B7A] to-[#082852] p-8 sm:p-10 rounded-3xl border-2 border-[#22C55E]/50 shadow-2xl relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-80 h-80 bg-[#16A34A]/20 rounded-full blur-3xl pointer-events-none" />
+
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
+              <div className="lg:col-span-8 space-y-4">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-400/40 text-[#22C55E] text-xs font-mono font-bold uppercase tracking-wider">
+                  <ShieldCheck className="w-4 h-4" />
+                  Metodologia Borlim de Gestão de Mídia
+                </div>
+                <h3 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-white leading-tight">
+                  Calculamos o <span className="text-emerald-300">ACOS Máximo Permitido</span> de
+                  Cada Produto Antes de Você Ligar o Anúncio
+                </h3>
+                <p className="text-xs sm:text-sm text-slate-200 font-sans leading-relaxed">
+                  Na <strong>Borlim Consultoria Empresarial</strong>, integramos a estratégia de ADS
+                  diretamente com a nossa metodologia de{' '}
+                  <Link
+                    to="/formacao-de-preco"
+                    className="text-emerald-300 underline underline-offset-4 hover:text-white font-semibold"
+                  >
+                    Formação de Preço
+                  </Link>{' '}
+                  e{' '}
+                  <Link
+                    to="/gestao-financeira"
+                    className="text-emerald-300 underline underline-offset-4 hover:text-white font-semibold"
+                  >
+                    Gestão Financeira
+                  </Link>
+                  .
+                </p>
+                <p className="text-xs sm:text-sm text-slate-300 font-sans leading-relaxed">
+                  Para cada SKU do seu catálogo, calculamos a margem de contribuição exata após
+                  comissões, gateways, fretes e impostos. Com esse número na mão, configuramos o
+                  teto inegociável de ACOS nas suas campanhas de Mercado Ads, Amazon Ads e Shopee
+                  Ads. O resultado é uma esteira de crescimento previsível: você ganha escala de
+                  vendas sem correr o risco de comprar faturamento às custas do seu patrimônio.
+                </p>
+
+                <div className="pt-2 flex flex-wrap gap-4 font-mono text-xs text-slate-200">
+                  <a
+                    href="https://wa.me/5517997650672"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 hover:text-[#22C55E] transition-colors"
+                  >
+                    <Phone className="w-4 h-4 text-[#22C55E]" />
+                    <span>(17) 99765-0672 (WhatsApp)</span>
+                  </a>
+                  <a
+                    href="mailto:flavio@borlim.com.br"
+                    className="flex items-center gap-2 hover:text-[#22C55E] transition-colors"
+                  >
+                    <Mail className="w-4 h-4 text-[#22C55E]" />
+                    <span>flavio@borlim.com.br</span>
+                  </a>
+                </div>
+              </div>
+
+              <div className="lg:col-span-4 bg-white/10 backdrop-blur-sm p-6 rounded-2xl border border-white/20 flex flex-col justify-between space-y-4 text-center">
+                <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#22C55E]">
+                  Diagnóstico Financeiro de ADS
+                </span>
+                <p className="font-serif text-lg font-bold text-white">
+                  Audite Agora os Anúncios do Seu E-commerce
+                </p>
+                <p className="text-xs text-slate-300 font-sans leading-relaxed">
+                  Descubra quais produtos estão gerando lucro real e quais campanhas estão drenando
+                  o seu caixa.
+                </p>
+
+                <div className="space-y-2.5 pt-2">
+                  <a
+                    href={whatsappUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full inline-flex items-center justify-center gap-2 px-5 py-3.5 bg-[#16A34A] hover:bg-[#15803D] text-white text-xs font-mono font-bold uppercase tracking-wider rounded-lg transition-all shadow-lg border border-[#22C55E]"
+                  >
+                    <Phone className="w-4 h-4" />
+                    <span>Falar no WhatsApp com o Flávio</span>
+                  </a>
+
+                  <a
+                    href={balanceAnalysisUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full inline-flex items-center justify-center gap-2 px-5 py-3 bg-white hover:bg-slate-100 text-[#082852] text-xs font-mono font-bold uppercase tracking-wider rounded-lg transition-all shadow"
+                    title="Acessar o Sistema de Gestão Empresarial da Borlim"
+                  >
+                    <FileSpreadsheet className="w-4 h-4 text-[#16A34A]" />
+                    <span>GESTÃO EMPRESARIAL</span>
+                    <ExternalLink className="w-3.5 h-3.5 text-slate-500" />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* 7. SEÇÃO "O QUE É O FULL" (DESTAQUE GRANDE) */}
-      <section className="bg-[#082852] text-white py-16 sm:py-24 border-b border-[#0B3B7A] relative overflow-hidden">
+      <section
+        id="logistica-full"
+        className="bg-[#082852] text-white py-16 sm:py-24 border-b border-[#0B3B7A] relative overflow-hidden"
+      >
         <div className="absolute inset-0 tech-grid-pattern opacity-25 pointer-events-none" />
         <div className="absolute top-1/3 right-10 w-96 h-96 bg-[#16A34A]/20 rounded-full blur-3xl pointer-events-none" />
 
@@ -1370,7 +2335,10 @@ export default function Ecommerce() {
       </section>
 
       {/* 8. OS 5 ERROS CLÁSSICOS DO VENDEDOR DE E-COMMERCE */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+      <section
+        id="erros-classicos"
+        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24"
+      >
         <div className="max-w-3xl mb-12">
           <span className="text-xs font-mono uppercase tracking-widest text-[#15803D] font-bold">
             Prevenção de Erros Críticos
@@ -1521,7 +2489,7 @@ export default function Ecommerce() {
       </section>
 
       {/* 10. FAQ - PERGUNTAS FREQUENTES EM ACORDEÃO */}
-      <section className="bg-white py-16 sm:py-24 border-b border-slate-200">
+      <section id="faq" className="bg-white py-16 sm:py-24 border-b border-slate-200">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-12">
             <span className="text-xs font-mono uppercase tracking-widest text-[#15803D] font-bold">
