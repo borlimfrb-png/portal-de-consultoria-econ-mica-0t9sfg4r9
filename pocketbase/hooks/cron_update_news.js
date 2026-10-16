@@ -161,6 +161,7 @@ cronAdd('update_news_feed', '0 */4 * * *', () => {
           const textForCat = (rawTitle + ' ' + rawDesc).toLowerCase()
           let category = feed.defaultCategory
 
+          // Regra de categorização compatível com a coleção news_articles (reforma_tributaria | economia | mercados | politica_fiscal)
           if (
             textForCat.includes('reforma tributaria') ||
             textForCat.includes('tributari') ||
@@ -197,7 +198,10 @@ cronAdd('update_news_feed', '0 */4 * * *', () => {
             textForCat.includes('bolsa') ||
             textForCat.includes('ibovespa') ||
             textForCat.includes('dolar') ||
+            textForCat.includes('dólar') ||
+            textForCat.includes('euro') ||
             textForCat.includes('cambio') ||
+            textForCat.includes('câmbio') ||
             textForCat.includes('mercado') ||
             textForCat.includes('renda fixa') ||
             textForCat.includes('juros') ||

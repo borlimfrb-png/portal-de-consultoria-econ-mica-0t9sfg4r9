@@ -9,6 +9,22 @@ export interface NewsListParams {
   isFeatured?: boolean
 }
 
+/**
+ * Busca lote representativo de notícias para agrupamento temático (ex: até 100 itens).
+ */
+export async function getAllNewsForGrouping(limit: number = 80): Promise<NewsArticle[]> {
+  try {
+    const records = await pb.collection('news_articles').getList<NewsArticle>(1, limit, {
+      sort: '-published_at',
+      requestKey: null,
+    })
+    return records.items
+  } catch (error) {
+    console.error('Erro ao buscar notícias para agrupamento:', error)
+    return []
+  }
+}
+
 export interface NewsListResult {
   items: NewsArticle[]
   page: number
