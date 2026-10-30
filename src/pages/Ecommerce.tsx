@@ -42,6 +42,7 @@ import {
   XCircle,
 } from 'lucide-react'
 import logoBorlim from '@/assets/logo-borlim-debb0.png'
+import { DropshippingSection } from '@/components/DropshippingSection'
 
 export default function Ecommerce() {
   const [activeTab, setActiveTab] = useState<
@@ -311,6 +312,14 @@ export default function Ecommerce() {
       a: 'A margem líquida saudável no e-commerce brasileiro costuma oscilar entre 8% e 18% da receita bruta. Uma venda de R$ 200,00 onde o custo da mercadoria é R$ 85,00, a comissão do canal é R$ 26,00 (13%), a taxa do cartão/gateway é R$ 6,00 (3%), o frete ou coparticipação é R$ 18,00, a provisão de devoluções é R$ 6,00 (3%) e o Simples Nacional consome R$ 18,00 (9%), deixa limpo no caixa aproximadamente R$ 41,00 (20,5% de margem de contribuição). Se deduzirmos os custos fixos da empresa (aluguel, equipe, software ERP), sobram entre R$ 20,00 e R$ 30,00 de lucro líquido real. Quem acha que colocar 100% de markup (dobrar o custo) é suficiente costuma ter prejuízo se não fizer a conta de trás para frente.',
     },
     {
+      q: 'Dropshipping vale a pena no Brasil?',
+      a: 'Sim, desde que utilizado com a estratégia correta: como um LABORATÓRIO DE PRODUTOS para testar demanda, validar criativos de anúncios e descobrir o comportamento do consumidor sem arriscar capital comprando lotes fechados de estoque. Contudo, como negócio único e perene, o dropshipping sofre com margens líquidas muito estreitas (~5% a 8%), dependência severa de tráfego pago (ADS) e fretes unitários mais caros. A recomendação da Borlim é a esteira de transição: testar e validar o produto no modelo sem estoque e, assim que ele demonstrar giro constante (50 a 100 peças/mês), comprar em lote diretamente da indústria para estocar no modelo FULL, multiplicando a margem líquida e acelerando o prazo de entrega.',
+    },
+    {
+      q: 'Preciso emitir nota fiscal no dropshipping?',
+      a: 'Sim, obrigatoriamente. Existe um mito perigoso no mercado de que o vendedor sem estoque não precisa emitir NF-e. Perante a Receita Federal e as Secretarias de Fazenda Estaduais (SEFAZ), a transação mercantil foi realizada entre a sua empresa e o consumidor final — portanto, você deve emitir a Nota Fiscal Eletrônica (NF-e) sobre o VALOR INTEGRAL pago pelo cliente (ex.: sobre os R$ 200,00 da venda, e não apenas sobre o lucro de R$ 12,00). O fornecedor, por sua vez, emite nota fiscal de venda mercantil para a sua empresa pelo valor de custo. Deixar de emitir nota configura sonegação fiscal e gera risco de bloqueio das contas bancárias e das plataformas de pagamento.',
+    },
+    {
       q: 'O que é o FULL e quando vale a pena aderir?',
       a: 'O FULL (Fulfillment) é o serviço onde você despacha seus produtos em lotes para os armazéns da plataforma (como o Mercado Livre FULL ou a Amazon FBA). A partir daí, a plataforma cuida de todo o processo operacional: estocagem, separação (picking), embalagem (packing), expedição ultrarrápida (geralmente com entrega no dia seguinte ou em até 24h) e gestão de devoluções. Vale muito a pena para produtos de ALTO GIRO, peso e volume padronizados, pois o selo FULL melhora radicalmente a taxa de conversão do anúncio e ganha prioridade no algoritmo. Contudo, NÃO vale a pena para produtos de giro lento, pois a cobrança de taxa de armazenagem por volume e o risco de estoque parado consomem a margem.',
     },
@@ -441,6 +450,13 @@ export default function Ecommerce() {
               >
                 <Megaphone className="w-3 h-3 text-[#22C55E]" />
                 ADS nas Plataformas
+              </a>
+              <a
+                href="#dropshipping"
+                className="px-3 py-1.5 rounded-md bg-emerald-500/20 hover:bg-emerald-500/35 text-emerald-200 hover:text-white border border-emerald-400/40 transition-colors font-bold flex items-center gap-1"
+              >
+                <Boxes className="w-3 h-3 text-[#22C55E]" />
+                Dropshipping
               </a>
               <a
                 href="#logistica-full"
@@ -2141,6 +2157,9 @@ export default function Ecommerce() {
           </div>
         </div>
       </section>
+
+      {/* SEÇÃO DROPSHIPPING (MECÂNICA, CASCATA R$ 200, PRÓS/CONTRAS, ERROS E BORLIM) */}
+      <DropshippingSection />
 
       {/* 7. SEÇÃO "O QUE É O FULL" (DESTAQUE GRANDE) */}
       <section
