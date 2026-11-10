@@ -39,6 +39,10 @@ import {
   WHATSAPP_URL_TRABALHISTA,
   GESTAO_EMPRESARIAL_URL,
 } from '@/data/trabalhista'
+import {
+  CalculadoraFerias,
+  CalculadoraRescisao,
+} from '@/components/trabalhista/CalculadoraFeriasRescisao'
 
 const ICONE_MAP: Record<string, typeof Clock> = {
   Clock,
@@ -119,6 +123,26 @@ export default function Trabalhista() {
               >
                 <Mail className="w-4 h-4 text-emerald-300" />
                 <span>flavio@borlim.com.br</span>
+              </a>
+            </div>
+
+            {/* Atalhos para as calculadoras */}
+            <div className="mt-6 flex flex-wrap gap-3 sm:gap-4 items-center">
+              <a
+                href="#calculadora-ferias"
+                className="inline-flex items-center gap-2 px-5 py-3 rounded-lg bg-white/10 hover:bg-white/20 text-white border border-[#22C55E]/40 text-xs sm:text-sm font-mono font-bold uppercase tracking-wider transition-all group"
+              >
+                <Calculator className="w-4 h-4 text-[#22C55E]" />
+                <span>Calculadora de Férias</span>
+                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+              </a>
+              <a
+                href="#calculadora-rescisao"
+                className="inline-flex items-center gap-2 px-5 py-3 rounded-lg bg-white/10 hover:bg-white/20 text-white border border-[#22C55E]/40 text-xs sm:text-sm font-mono font-bold uppercase tracking-wider transition-all group"
+              >
+                <Wallet className="w-4 h-4 text-[#22C55E]" />
+                <span>Calculadora de Rescisão</span>
+                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
               </a>
             </div>
           </div>
@@ -596,6 +620,48 @@ export default function Trabalhista() {
             </table>
           </div>
         </div>
+      </section>
+
+      {/* 5B. CALCULADORA DE FÉRIAS */}
+      <section
+        id="calculadora-ferias"
+        className="bg-white py-16 sm:py-20 border-y border-stone-200 scroll-mt-20"
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto mb-12">
+            <span className="text-xs font-mono uppercase tracking-widest text-[#15803D] font-bold">
+              Calculadora Interativa
+            </span>
+            <h2 className="font-serif text-2xl sm:text-4xl font-bold text-[#082852] mt-2">
+              Calculadora de Férias
+            </h2>
+            <p className="text-sm sm:text-base text-slate-600 mt-3 font-sans leading-relaxed">
+              Férias proporcionais, 1/3 constitucional, abono pecuniário, INSS e IRRF das tabelas
+              vigentes — com memória de cálculo passo a passo. Cálculo ao vivo no navegador.
+            </p>
+          </div>
+          <CalculadoraFerias />
+        </div>
+      </section>
+
+      {/* 5C. CALCULADORA DE RESCISÃO */}
+      <section
+        id="calculadora-rescisao"
+        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 scroll-mt-20"
+      >
+        <div className="text-center max-w-3xl mx-auto mb-12">
+          <span className="text-xs font-mono uppercase tracking-widest text-[#15803D] font-bold">
+            Calculadora Interativa
+          </span>
+          <h2 className="font-serif text-2xl sm:text-4xl font-bold text-[#082852] mt-2">
+            Calculadora de Rescisão
+          </h2>
+          <p className="text-sm sm:text-base text-slate-600 mt-3 font-sans leading-relaxed">
+            Escolha o motivo da rescisão e veja as verbas mudarem: saldo de salário, 13º e férias
+            proporcionais, aviso prévio, multa e saque do FGTS — tudo passo a passo.
+          </p>
+        </div>
+        <CalculadoraRescisao />
       </section>
 
       {/* 6. PONTOS DE ATENÇÃO PARA O EMPREGADOR */}

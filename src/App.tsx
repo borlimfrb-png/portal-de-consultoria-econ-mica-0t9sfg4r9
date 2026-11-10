@@ -22,6 +22,7 @@ import ReformaTributaria from './pages/ReformaTributaria'
 import BolsaDeValores from './pages/BolsaDeValores'
 import Ecommerce from './pages/Ecommerce'
 import Trabalhista from './pages/Trabalhista'
+import ESocial from './pages/ESocial'
 import NotFound from './pages/NotFound'
 
 const App = () => (
@@ -56,6 +57,7 @@ const App = () => (
           <Route path="/reforma-tributaria" element={<ReformaTributaria />} />
           <Route path="/reforma" element={<ReformaTributaria />} />
           <Route path="/trabalhista" element={<Trabalhista />} />
+          <Route path="/esocial" element={<ESocial />} />
           <Route path="/sobre" element={<Sobre />} />
         </Route>
         {/* Painel Administrativo Interno da Biblioteca */}

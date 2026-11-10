@@ -27,6 +27,7 @@ import {
   Calculator,
   ShoppingCart,
   Users,
+  Network,
 } from 'lucide-react'
 import logoBorlim from '@/assets/logo-borlim-debb0.png'
 
@@ -194,6 +195,12 @@ export default function Navbar() {
       icon: Users,
     },
     {
+      label: 'eSocial',
+      path: '/esocial',
+      aliasPaths: [],
+      icon: Network,
+    },
+    {
       label: 'Bolsa de Valores',
       path: '/bolsa-de-valores',
       aliasPaths: ['/bolsa'],
@@ -250,6 +257,12 @@ export default function Navbar() {
       path: '/trabalhista',
       aliasPaths: [],
       icon: Users,
+    },
+    {
+      label: 'eSocial',
+      path: '/esocial',
+      aliasPaths: [],
+      icon: Network,
     },
     {
       label: 'Bolsa de Valores',
