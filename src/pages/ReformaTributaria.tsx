@@ -28,10 +28,12 @@ import {
   ArrowUpRight,
   Flame,
   Wallet,
+  Calculator,
 } from 'lucide-react'
 import logoBorlim from '@/assets/logo-borlim-debb0.png'
 import FormasDeTributacaoSection from '@/components/FormasDeTributacaoSection'
 import CalculoCbsIbsSection from '@/components/CalculoCbsIbsSection'
+import CalculadoraCbsIbsSection from '@/components/calculadora/CalculadoraCbsIbs'
 
 export default function ReformaTributaria() {
   const [activeTransitionTab, setActiveTransitionTab] = useState<number>(0)
@@ -421,6 +423,15 @@ export default function ReformaTributaria() {
               </a>
 
               <a
+                href="#calculadora-cbs-ibs"
+                className="inline-flex items-center gap-2 px-4 py-3 rounded-lg bg-emerald-500/25 hover:bg-emerald-500/35 text-white border border-[#22C55E]/50 text-xs sm:text-sm font-mono font-bold transition-all shadow-sm"
+              >
+                <Calculator className="w-4 h-4 text-[#22C55E]" />
+                <span>Calculadora CBS/IBS</span>
+                <ArrowRight className="w-3.5 h-3.5 text-emerald-300" />
+              </a>
+
+              <a
                 href="#formas-de-tributacao"
                 className="inline-flex items-center gap-2 px-4 py-3 rounded-lg bg-white/10 hover:bg-white/15 text-emerald-200 border border-white/20 text-xs sm:text-sm font-mono font-semibold transition-all"
               >
@@ -712,6 +723,9 @@ export default function ReformaTributaria() {
 
       {/* 4.8. NOVA SEÇÃO DEDICADA: COMO SE CALCULA O CBS E O IBS NA PRÁTICA */}
       <CalculoCbsIbsSection />
+
+      {/* 4.9. NOVA SEÇÃO: CALCULADORA EDUCATIVA CBS/IBS (inspirada no piloto da Receita) */}
+      <CalculadoraCbsIbsSection />
 
       {/* 5. ANÁLISE COMPARATIVA: PONTOS FORTES vs PONTOS FRACOS (DESAFIOS) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
