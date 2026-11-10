@@ -233,6 +233,14 @@ export default function Footer() {
               </li>
               <li>
                 <Link
+                  to="/trabalhista"
+                  className="hover:text-[#22C55E] transition-colors flex items-center gap-1.5"
+                >
+                  <span className="text-[#16A34A] text-xs">›</span> Trabalhista (Escala 5x2)
+                </Link>
+              </li>
+              <li>
+                <Link
                   to="/sobre"
                   className="hover:text-[#22C55E] transition-colors flex items-center gap-1.5"
                 >

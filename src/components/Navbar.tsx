@@ -26,6 +26,7 @@ import {
   CircleDollarSign,
   Calculator,
   ShoppingCart,
+  Users,
 } from 'lucide-react'
 import logoBorlim from '@/assets/logo-borlim-debb0.png'
 
@@ -187,6 +188,12 @@ export default function Navbar() {
       hash: '#formas-de-tributacao',
     },
     {
+      label: 'Trabalhista',
+      path: '/trabalhista',
+      aliasPaths: [],
+      icon: Users,
+    },
+    {
       label: 'Bolsa de Valores',
       path: '/bolsa-de-valores',
       aliasPaths: ['/bolsa'],
@@ -237,6 +244,12 @@ export default function Navbar() {
       aliasPaths: [],
       icon: Scale,
       hash: '#formas-de-tributacao',
+    },
+    {
+      label: 'Trabalhista',
+      path: '/trabalhista',
+      aliasPaths: [],
+      icon: Users,
     },
     {
       label: 'Bolsa de Valores',

@@ -320,6 +320,7 @@ export function calcularMemoriaSimples(
 }
 
 export function calcularMemoriaSplit(resumo: ResumoConsolidado): LinhaMemoria[] {
+  // eslint-disable-line
   const bruto = resumo.totalNota
   const retido = resumo.totalTributos
   const liquido = bruto - retido
