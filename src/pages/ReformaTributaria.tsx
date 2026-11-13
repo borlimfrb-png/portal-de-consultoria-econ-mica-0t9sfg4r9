@@ -34,6 +34,7 @@ import logoBorlim from '@/assets/logo-borlim-debb0.png'
 import FormasDeTributacaoSection from '@/components/FormasDeTributacaoSection'
 import CalculoCbsIbsSection from '@/components/CalculoCbsIbsSection'
 import CalculadoraCbsIbsSection from '@/components/calculadora/CalculadoraCbsIbs'
+import SimplesHibridoSection from '@/components/SimplesHibridoSection'
 
 export default function ReformaTributaria() {
   const [activeTransitionTab, setActiveTransitionTab] = useState<number>(0)
@@ -340,6 +341,18 @@ export default function ReformaTributaria() {
       a: 'Ambos compõem o chamado IVA Dual brasileiro e possuem a mesma base de cálculo (o valor da operação de bens ou serviços). A diferença é federativa: a CBS (Contribuição sobre Bens e Serviços) é de competência EXCLUSIVA DA UNIÃO (substitui PIS e Cofins) e é recolhida pela Receita Federal. O IBS (Imposto sobre Bens e Serviços) é de competência COMPARTILHADA ENTRE ESTADOS E MUNICÍPIOS (substitui ICMS e ISS) e será gerido por um órgão público colegiado independente, o Comitê Gestor do IBS, que distribuirá a arrecadação conforme o destino de cada consumo.',
     },
     {
+      q: 'O que é o Simples Nacional Híbrido e quando vale a pena?',
+      a: 'É a opção prevista no art. 52 da LC 123/2006 (e no art. 55 da Lei 11.196/2005) pela qual a empresa optante do Simples exclui o PIS e a Cofins do DAS e passa a recolhê-los "por fora", no regime não cumulativo (1,65% + 7,6%), com direito a crédito de insumos, mercadorias revendidas, energia e aluguéis. O restante dos tributos continua no DAS normalmente. Costuma valer a pena para indústrias e comércios com alta carga de insumos creditáveis e clientes B2B que aproveitam os créditos; raramente compensa para serviços com poucas compras geradoras de crédito. Use a calculadora da seção "Simples Nacional — Híbrido" desta página para simular o seu caso.',
+    },
+    {
+      q: 'A empresa híbrida perde algum benefício do Simples?',
+      a: 'Não perde o enquadramento no Simples, o limite de faturamento nem os demais benefícios do regime — apenas deixa de recolher PIS/Cofins dentro do DAS. Em contrapartida, assume obrigações próprias: apuração mensal em regime não cumulativo, escrituração segregada e entrega da EFD Contribuições todos os meses. Também deixa de usufruir da alíquota reduzida dessas contribuições embutida nas faixas do anexo, e o que já foi recolhido a menor não pode ser estornado — por isso a decisão deve ser precedida de análise de margem e carga de insumos.',
+    },
+    {
+      q: 'Como fica o híbrido com a CBS/IBS?',
+      a: 'A empresa híbrida já opera com dois regimes e essa experiência conta a favor na transição: quando a CBS substituir PIS/Cofins (2027) e o IBS substituir ICMS/ISS, a empresa que já recolhe contribuições "por fora" terá menos choque operacional para migrar a parte não cumulativa, além de poder transferir créditos cheios de CBS aos clientes B2B sobre essa parcela. A parcela que permanece no DAS segue as regras de opção do Simples: continuar recolhendo CBS/IBS dentro do DAS (com crédito reduzido para o cliente) ou excluí-las e recolher por fora, conforme a escolha mais vantajosa para cada operação.',
+    },
+    {
       q: 'Como a BORLIM Consultoria apoia as empresas durante toda a transição da Reforma?',
       a: 'A Borlim oferece suporte prático, econômico e gerencial de ponta a ponta: recalibramos a Formação de Preço para Vendas da sua empresa no novo modelo "por fora"; recalculamos as projeções de Lucro Mensal e Capital de Giro no Planejamento Econômico-Financeiro; monitoramos os 48 indicadores financeiros para prevenir problemas de liquidez gerados pelo split payment; e orientamos a governança dos vencimentos na transição por meio da nossa Agenda Tributária Mensal. De empresário para empresário, garantimos que sua empresa atravesse a transição fortalecida e protegida.',
     },
@@ -429,6 +442,15 @@ export default function ReformaTributaria() {
                 <Calculator className="w-4 h-4 text-[#22C55E]" />
                 <span>Calculadora CBS/IBS</span>
                 <ArrowRight className="w-3.5 h-3.5 text-emerald-300" />
+              </a>
+
+              <a
+                href="#simples-hibrido"
+                className="inline-flex items-center gap-2 px-4 py-3 rounded-lg bg-white/10 hover:bg-white/15 text-emerald-200 border border-white/20 text-xs sm:text-sm font-mono font-semibold transition-all"
+              >
+                <Layers className="w-4 h-4 text-[#22C55E]" />
+                <span>Simples Híbrido</span>
+                <ArrowRight className="w-3.5 h-3.5" />
               </a>
 
               <a
@@ -726,6 +748,9 @@ export default function ReformaTributaria() {
 
       {/* 4.9. NOVA SEÇÃO: CALCULADORA EDUCATIVA CBS/IBS (inspirada no piloto da Receita) */}
       <CalculadoraCbsIbsSection />
+
+      {/* 4.95. NOVA SEÇÃO: SIMPLES NACIONAL — HÍBRIDO (explicação, exemplo e calculadora) */}
+      <SimplesHibridoSection />
 
       {/* 5. ANÁLISE COMPARATIVA: PONTOS FORTES vs PONTOS FRACOS (DESAFIOS) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
