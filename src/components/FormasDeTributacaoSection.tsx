@@ -1,7 +1,9 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import CalculadoraTresRegimes from './calculadora/CalculadoraTresRegimes'
 import {
   Building2,
+  Calculator,
   CheckCircle2,
   AlertTriangle,
   Scale,
@@ -605,6 +607,27 @@ export default function FormasDeTributacaoSection() {
               </tbody>
             </table>
           </div>
+        </div>
+
+        {/* CALCULADORA COMPARATIVA: SIMPLES × PRESUMIDO × REAL (100% client-side) */}
+        <div className="mb-12">
+          <div className="text-center max-w-3xl mx-auto mb-6">
+            <div className="inline-flex items-center gap-2 mb-2 px-3 py-1 rounded-full bg-[#082852] text-white">
+              <Calculator className="w-3.5 h-3.5 text-[#22C55E]" />
+              <span className="text-[11px] font-mono uppercase tracking-[0.2em] font-bold">
+                Simulação dos 3 Regimes
+              </span>
+            </div>
+            <h3 className="font-serif text-xl sm:text-3xl font-bold text-[#082852] leading-tight">
+              Calculadora: Simples Nacional × Lucro Presumido × Lucro Real
+            </h3>
+            <p className="text-xs sm:text-sm text-slate-600 mt-2 font-sans leading-relaxed">
+              Informe o faturamento do mês (aceita vírgula, ex.: 150.000,00) e veja os três regimes
+              recalculados a cada tecla, com memória de cálculo passo a passo e o ranking do menor
+              imposto — tudo no navegador, sem gravar nenhum dado.
+            </p>
+          </div>
+          <CalculadoraTresRegimes />
         </div>
 
         {/* NOTA INSTITUCIONAL OBRIGATÓRIA BORLIM */}

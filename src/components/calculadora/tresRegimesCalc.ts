@@ -221,10 +221,10 @@ export function calcularVereditoTresRegimes(
   presumido: { totalTributos: number },
   simples: { dasTotal: number },
 ): VereditoTresRegimes {
-  const bruto: Array<{ regime: RegimeComparado; total: number }> = [
-    { regime: 'Lucro Real', total: real.totalTributos },
-    { regime: 'Lucro Presumido', total: presumido.totalTributos },
-    { regime: 'Simples Nacional', total: simples.dasTotal },
+  const bruto: Omit<ColocacaoRegime, 'diferenca' | 'diferencaPct'>[] = [
+    { regime: 'Lucro Real' as const, total: real.totalTributos },
+    { regime: 'Lucro Presumido' as const, total: presumido.totalTributos },
+    { regime: 'Simples Nacional' as const, total: simples.dasTotal },
   ].sort((a, b) => a.total - b.total)
 
   const melhorTotal = bruto[0].total
@@ -235,14 +235,17 @@ export function calcularVereditoTresRegimes(
   }))
 
   const pior = ordenados[ordenados.length - 1]
+  const diferencaTotal = pior.total - melhorTotal
   return {
     ordenados,
     melhor: ordenados[0].regime,
     melhorTotal,
     pior: pior.regime,
     piorTotal: pior.total,
-    diferencaTotal: pior.total - melhorTotal,
-    diferencaPct: ordenados[0].diferencaPct === 0 ? pior.diferencaPct : 0,
+    diferencaTotal,
+    // Diferença % do PIOR em relação ao MELHOR (base coerente com o box
+    // "MENOR IMPOSTO NESTE MÊS"): (pior − melhor) ÷ melhor × 100.
+    diferencaPct: melhorTotal > 0 ? (diferencaTotal / melhorTotal) * 100 : 0,
   }
 }
 
@@ -251,9 +254,7 @@ export function calcularVereditoTresRegimes(
 export function calcularMemoriaLucroReal(r: ResultadoLucroReal): LinhaMemoria[] {
   const linhas: LinhaMemoria[] = [
     {
-      rotulo: `1. Receita bruta total do mês = comércio ${formatarBRL(
-        r.receitaTotal - parseCurrency(''),
-      )} (comércio + serviços)`,
+      rotulo: '1. Receita bruta total do mês = comércio + serviços',
       valor: formatarBRL(r.receitaTotal),
       destaque: 'base',
     },
