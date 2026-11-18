@@ -20,6 +20,7 @@
 import { formatarBRL, formatarPercentual, parseCurrency } from './cbsIbsCalc'
 import type { LinhaMemoria } from './cbsIbsCalc'
 import { anexoPorId } from './simplesHibridoCalc'
+import type { AnexoSimples } from './simplesHibridoCalc'
 import {
   calcularPresumido,
   ADICIONAL_IRPJ_PCT,
@@ -56,20 +57,44 @@ export interface EntradaTresRegimes {
   pctCreditos: string
   /** RBT12 do Simples Nacional. */
   rbt12: string
-  /** Anexo do Simples (I a V). */
+  /** Anexo do Simples (I a V) ou "auto" (Fator R decide o anexo dos serviços). */
   anexoId: string
+  /**
+   * Folha bruta de salários/pró-labore dos 12 meses (escala do Fator R, que é
+   * sempre 12 meses ÷ 12 meses). Alimentada junto com a folha mensal.
+   */
+  folha12Simples: string
+  /** Atividade de serviços com retenção de ISS / do § 5º-C (Anexo IV do Simples). */
+  anexoIvRetencaoIss: boolean
   /** Alíquota de ISS do município para o Presumido (2% a 5%). */
   pctIss: string
 }
 
+/** Valores default da calculadora (comércio puro, sem serviços). */
 export const entradaTresRegimesInicial: EntradaTresRegimes = {
   receitaComercio: '150.000,00',
   receitaServicos: '0,00',
   custosDedutiveis: '90.000,00',
   folhaPagamento: '25.000,00',
+  folha12Simples: '300.000,00',
   pctCreditos: '80,00',
   rbt12: '1.500.000,00',
-  anexoId: 'anexo-i',
+  anexoId: 'auto',
+  anexoIvRetencaoIss: false,
+  pctIss: '3,00',
+}
+
+/** Caso real pré-carregável: cliente típica com comércio + serviços (Fator R). */
+export const entradaTresRegimesCasoReal: EntradaTresRegimes = {
+  receitaComercio: '120.000,00',
+  receitaServicos: '60.000,00',
+  custosDedutiveis: '40.000,00',
+  folhaPagamento: '35.000,00',
+  folha12Simples: '420.000,00',
+  pctCreditos: '80,00',
+  rbt12: '2.160.000,00',
+  anexoId: 'auto',
+  anexoIvRetencaoIss: false,
   pctIss: '3,00',
 }
 
@@ -150,46 +175,144 @@ export function calcularLucroReal(e: EntradaTresRegimes): ResultadoLucroReal {
 
 /* =========================== SIMPLES NACIONAL ============================ */
 
-export interface ResultadoSimplesRegimes {
-  receitaTotal: number
-  rbt12: number
+export interface FatiaSimples {
   anexoNome: string
   indiceFaixa: number
+  /** Base tributada nesta fatia (comércio ou serviços). */
+  base: number
   aliquotaNominal: number
   parcelaDeduzir: number
   aliquotaEfetiva: number
+  das: number
+  pctPisCofins: number
+}
+
+export interface ResultadoSimplesRegimes {
+  receitaComercio: number
+  receitaServicos: number
+  receitaTotal: number
+  rbt12: number
+  folha12: number
+  /** Fator R em % (folha 12m ÷ RBT12 × 100) — informativo mesmo sem serviços. */
+  fatorR: number
+  /** true quando o Fator R determinou o anexo dos serviços (modo automático). */
+  fatorRAplica: boolean
+  /** Motivo da escolha do(s) anexo(s), exibido na memória de cálculo. */
+  motivoAnexo: string
+  /** Nome(s) do(s) anexo(s) usados, para o card (ex.: "Anexo I + Anexo V (Fator R)"). */
+  anexoNome: string
+  /** Texto de faixa(s) para o card (ex.: "4ª faixa + 3ª faixa"). */
+  faixaTexto: string
+  /** Fatias de DAS por anexo utilizado (1 no modo manual; até 2 no automático). */
+  fatias: FatiaSimples[]
   dasTotal: number
-  pctPisCofinsFaixa: number
+  aliquotaEfetiva: number
+  pctPisCofinsMedio: number
   parcelaPisCofinsEmbutida: number
   limiteUltrapassado: boolean
 }
 
-export function calcularSimplesRegimes(e: EntradaTresRegimes): ResultadoSimplesRegimes {
-  const receitaTotal = parseCurrency(e.receitaComercio) + parseCurrency(e.receitaServicos)
-  const rbt12 = parseCurrency(e.rbt12)
-  const anexo = anexoPorId(e.anexoId)
+/** Limite do Fator R (LC 123/2006, art. 18, §§ 5º-A a 5º-J): 28% da receita bruta. */
+export const FATOR_R_LIMITE = 28
 
+function nomeCurtoAnexo(nome: string): string {
+  return nome.split(' — ')[0] ?? nome
+}
+
+function fatiaDoAnexo(anexo: AnexoSimples, base: number, rbt12: number): FatiaSimples {
   let indice = anexo.faixas.findIndex((f) => rbt12 <= f.limite)
   if (indice < 0) indice = anexo.faixas.length - 1
   const faixa = anexo.faixas[indice]
-
   const aliquotaEfetiva =
     rbt12 > 0 ? (rbt12 * faixa.aliquotaNominal - faixa.parcelaDeduzir) / rbt12 : 0
-  const dasTotal = (receitaTotal * aliquotaEfetiva) / 100
-  const parcelaPisCofinsEmbutida = (dasTotal * faixa.pctPisCofins) / 100
-
   return {
-    receitaTotal,
-    rbt12,
     anexoNome: anexo.nome,
     indiceFaixa: indice,
+    base,
     aliquotaNominal: faixa.aliquotaNominal,
     parcelaDeduzir: faixa.parcelaDeduzir,
     aliquotaEfetiva,
+    das: (base * aliquotaEfetiva) / 100,
+    pctPisCofins: faixa.pctPisCofins,
+  }
+}
+
+export function calcularSimplesRegimes(e: EntradaTresRegimes): ResultadoSimplesRegimes {
+  const receitaComercio = parseCurrency(e.receitaComercio)
+  const receitaServicos = parseCurrency(e.receitaServicos)
+  const receitaTotal = receitaComercio + receitaServicos
+  const rbt12 = parseCurrency(e.rbt12)
+  const folha12 = parseCurrency(e.folha12Simples)
+  const fatorR = rbt12 > 0 ? (folha12 / rbt12) * 100 : 0
+
+  const fatias: FatiaSimples[] = []
+  let motivoAnexo = ''
+  let fatorRAplica = false
+
+  if (e.anexoId !== 'auto') {
+    const anexo = anexoPorId(e.anexoId)
+    fatias.push(fatiaDoAnexo(anexo, receitaTotal, rbt12))
+    motivoAnexo = `Anexo escolhido manualmente: ${anexo.nome} para toda a receita do mês`
+  } else if (receitaServicos <= 0) {
+    const anexo = anexoPorId('anexo-i')
+    fatias.push(fatiaDoAnexo(anexo, receitaTotal, rbt12))
+    motivoAnexo = `Automático: sem receita de serviços no mês — Anexo I (Comércio) para toda a receita. Fator R informativo: ${formatarPercentual(
+      fatorR,
+    )}`
+  } else {
+    // Modo automático COM serviços: comércio/indústria fica no Anexo I e os
+    // serviços seguem o Fator R (folha 12m ÷ RBT12): ≥ 28% → Anexo III;
+    // < 28% → Anexo V (LC 123/2006, art. 18, §§ 5º-A e 5º-I).
+    fatorRAplica = true
+    const anexoComercio = anexoPorId('anexo-i')
+    const anexoServicos = anexoPorId(fatorR >= FATOR_R_LIMITE ? 'anexo-iii' : 'anexo-v')
+    if (receitaComercio > 0) fatias.push(fatiaDoAnexo(anexoComercio, receitaComercio, rbt12))
+    fatias.push(fatiaDoAnexo(anexoServicos, receitaServicos, rbt12))
+    motivoAnexo =
+      fatorR >= FATOR_R_LIMITE
+        ? `Automático: Fator R (folha 12m ÷ RBT12) = ${formatarPercentual(
+            fatorR,
+          )} ≥ ${formatarPercentual(FATOR_R_LIMITE)} — serviços no Anexo III (LC 123/2006, art. 18, § 5º-A) e comércio/indústria no Anexo I`
+        : `Automático: Fator R (folha 12m ÷ RBT12) = ${formatarPercentual(
+            fatorR,
+          )} < ${formatarPercentual(FATOR_R_LIMITE)} — serviços no Anexo V (LC 123/2006, art. 18, § 5º-I) e comércio/indústria no Anexo I`
+  }
+
+  const dasTotal = fatias.reduce((acc, f) => acc + f.das, 0)
+  const aliquotaEfetiva = receitaTotal > 0 ? (dasTotal / receitaTotal) * 100 : 0
+  const pctPisCofinsMedio =
+    dasTotal > 0 ? fatias.reduce((acc, f) => acc + f.das * f.pctPisCofins, 0) / dasTotal : 0
+  const parcelaPisCofinsEmbutida = (dasTotal * pctPisCofinsMedio) / 100
+
+  const anexoNome =
+    fatias.length === 1
+      ? fatias[0].anexoNome
+      : `${fatias.map((f) => nomeCurtoAnexo(f.anexoNome)).join(' + ')} (Fator R)`
+  const faixaTexto =
+    fatias.length === 1
+      ? `${fatias[0].indiceFaixa + 1}ª faixa`
+      : fatias.map((f) => `${f.indiceFaixa + 1}ª faixa`).join(' + ')
+
+  const anexoTeto = anexoPorId('anexo-i')
+  const tetoSimples = anexoTeto.faixas[anexoTeto.faixas.length - 1].limite
+
+  return {
+    receitaComercio,
+    receitaServicos,
+    receitaTotal,
+    rbt12,
+    folha12,
+    fatorR,
+    fatorRAplica,
+    motivoAnexo,
+    anexoNome,
+    faixaTexto,
+    fatias,
     dasTotal,
-    pctPisCofinsFaixa: faixa.pctPisCofins,
+    aliquotaEfetiva,
+    pctPisCofinsMedio,
     parcelaPisCofinsEmbutida,
-    limiteUltrapassado: rbt12 > anexo.faixas[anexo.faixas.length - 1].limite,
+    limiteUltrapassado: rbt12 > tetoSimples,
   }
 }
 
@@ -341,48 +464,75 @@ export function calcularMemoriaLucroReal(r: ResultadoLucroReal): LinhaMemoria[] 
 }
 
 export function calcularMemoriaSimplesRegimes(r: ResultadoSimplesRegimes): LinhaMemoria[] {
-  return [
+  const linhas: LinhaMemoria[] = [
     {
-      rotulo: `Faixa localizada: RBT12 de ${formatarBRL(r.rbt12)} na ${
-        r.indiceFaixa + 1
-      }ª faixa do ${r.anexoNome}`,
+      rotulo: `Cenário do mês: comércio/indústria ${formatarBRL(
+        r.receitaComercio,
+      )} + serviços ${formatarBRL(r.receitaServicos)} · RBT12 ${formatarBRL(r.rbt12)}`,
       valor: '',
     },
     {
-      rotulo: 'Alíquota nominal da faixa',
-      valor: formatarPercentual(r.aliquotaNominal),
-    },
-    {
-      rotulo: '(−) Parcela a deduzir da faixa',
-      valor: formatarBRL(r.parcelaDeduzir),
-    },
-    {
-      rotulo: '1. Alíquota efetiva = (RBT12 × nominal − dedução) ÷ RBT12',
-      valor: formatarPercentual(r.aliquotaEfetiva),
+      rotulo: `Fator R = folha bruta dos 12 meses (${formatarBRL(
+        r.folha12,
+      )}) ÷ receita bruta dos 12 meses (${formatarBRL(r.rbt12)})`,
+      valor: formatarPercentual(r.fatorR),
       destaque: 'base',
     },
     {
-      rotulo: '2. DAS = receita bruta do mês × alíquota efetiva',
-      valor: formatarBRL(r.dasTotal),
-      destaque: 'total',
-    },
-    {
-      rotulo: `PIS/Cofins embutido na alíquota efetiva desta faixa: ${formatarPercentual(
-        r.pctPisCofinsFaixa,
-      )} ≈ ${formatarBRL(r.parcelaPisCofinsEmbutida)} (para comparação honesta)`,
-      valor: '',
-    },
-    {
-      rotulo: 'Alíquota efetiva sobre a receita bruta total',
-      valor: formatarPercentual(r.aliquotaEfetiva),
-    },
-    {
-      rotulo: `Nota: disponível até R$ 4,8 milhões/ano; tributa o FATURAMENTO (mesmo com prejuízo). Custos e folha não reduzem o DAS${
-        r.limiteUltrapassado ? ' — ATENÇÃO: RBT12 acima do teto do anexo' : ''
-      }`,
+      rotulo: `Anexo aplicado e por quê: ${r.motivoAnexo}`,
       valor: '',
     },
   ]
+
+  r.fatias.forEach((f, i) => {
+    const prefixo = r.fatias.length > 1 ? `${i + 1}. ` : ''
+    linhas.push({
+      rotulo: `${prefixo}${f.anexoNome} — base tributada de ${formatarBRL(
+        f.base,
+      )} na ${f.indiceFaixa + 1}ª faixa`,
+      valor: '',
+    })
+    linhas.push({
+      rotulo: '   Alíquota nominal da faixa',
+      valor: formatarPercentual(f.aliquotaNominal),
+    })
+    linhas.push({
+      rotulo: '   (−) Parcela a deduzir da faixa',
+      valor: formatarBRL(f.parcelaDeduzir),
+    })
+    linhas.push({
+      rotulo: '   Alíquota efetiva = (RBT12 × nominal − dedução) ÷ RBT12',
+      valor: formatarPercentual(f.aliquotaEfetiva),
+      destaque: 'base',
+    })
+    linhas.push({
+      rotulo: `   DAS parcial = ${formatarBRL(f.base)} × alíquota efetiva`,
+      valor: formatarBRL(f.das),
+    })
+  })
+
+  linhas.push({
+    rotulo: 'RESULTADO — DAS total do mês (soma das fatias por anexo)',
+    valor: formatarBRL(r.dasTotal),
+    destaque: 'total',
+  })
+  linhas.push({
+    rotulo: 'Alíquota efetiva global sobre a receita bruta do mês',
+    valor: formatarPercentual(r.aliquotaEfetiva),
+  })
+  linhas.push({
+    rotulo: `PIS/Cofins embutido no DAS (repartição média das faixas usadas): ${formatarPercentual(
+      r.pctPisCofinsMedio,
+    )} ≈ ${formatarBRL(r.parcelaPisCofinsEmbutida)} (para comparação honesta)`,
+    valor: '',
+  })
+  linhas.push({
+    rotulo: `Nota: disponível até R$ 4,8 milhões/ano; tributa o FATURAMENTO (mesmo com prejuízo). No Simples a folha só influencia o anexo pelo Fator R — não deduz do DAS${
+      r.limiteUltrapassado ? ' — ATENÇÃO: RBT12 acima do teto do anexo' : ''
+    }`,
+    valor: '',
+  })
+  return linhas
 }
 
 export function calcularMemoriaPresumidoRegimes(r: ResultadoPresumido): LinhaMemoria[] {
@@ -404,6 +554,14 @@ export function calcularMemoriaPresumidoRegimes(r: ResultadoPresumido): LinhaMem
     valor: formatarBRL(r.lucroPresumidoTotal),
     destaque: 'base',
   })
+  if (r.despesasDedutiveis > 0) {
+    linhas.push({
+      rotulo: `   (−) Despesas dedutíveis de ${formatarBRL(
+        r.despesasDedutiveis,
+      )} rateadas proporcionalmente às receitas de cada bloco (simplificação educativa)`,
+      valor: '',
+    })
+  }
   linhas.push({
     rotulo: `3. IRPJ = lucro presumido × ${formatarPercentual(PCT_IRPJ_ALIQUOTA)}`,
     valor: formatarBRL(r.irpj),
@@ -445,8 +603,11 @@ export function calcularMemoriaPresumidoRegimes(r: ResultadoPresumido): LinhaMem
     valor: formatarPercentual(r.aliquotaEfetiva),
   })
   linhas.push({
-    rotulo:
-      'Nota: no Presumido os custos e a folha NÃO reduzem o imposto — a base é a presunção legal da receita (Lei 9.249/1995)',
+    rotulo: `Nota: no Presumido a folha NÃO reduz o imposto — a base é a presunção legal da receita (Lei 9.249/1995)${
+      r.despesasDedutiveis > 0
+        ? '; as despesas dedutíveis entram apenas pelo rateio educativo da presunção'
+        : '; custos e despesas não reduzem o imposto'
+    }`,
     valor: '',
   })
   return linhas

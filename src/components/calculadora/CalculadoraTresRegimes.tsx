@@ -6,6 +6,7 @@
 
 import { useMemo, useState } from 'react'
 import {
+  Briefcase,
   Calculator,
   Landmark,
   RefreshCw,
@@ -18,8 +19,11 @@ import {
 import { formatarBRL, formatarPercentual } from './cbsIbsCalc'
 import { ListaMemoria, AvisoEducativo } from './CalculadoraMemoria'
 import { ANEXOS_SIMPLES } from './simplesHibridoCalc'
+import { Checkbox } from '@/components/ui/checkbox'
 import {
   entradaTresRegimesInicial,
+  entradaTresRegimesCasoReal,
+  FATOR_R_LIMITE,
   calcularLucroReal,
   calcularSimplesRegimes,
   calcularVereditoTresRegimes,
@@ -28,12 +32,7 @@ import {
   calcularMemoriaPresumidoRegimes,
 } from './tresRegimesCalc'
 import type { EntradaTresRegimes } from './tresRegimesCalc'
-import {
-  calcularPresumido,
-  PCT_PIS_CUMULATIVO,
-  PCT_COFINS_CUMULATIVO,
-  entradaPresumidoInicial,
-} from './lucroPresumidoCalc'
+import { calcularPresumido, PCT_PIS_CUMULATIVO, PCT_COFINS_CUMULATIVO } from './lucroPresumidoCalc'
 import type { EntradaPresumido } from './lucroPresumidoCalc'
 
 const INPUT_CLS =
@@ -43,6 +42,11 @@ const LABEL_CLS =
   'block text-[11px] font-mono uppercase tracking-wider font-bold text-slate-600 mb-1.5'
 
 const cardPapel = 'bg-white rounded-2xl border border-stone-200 shadow-xs p-5 sm:p-6'
+
+/** Nome curto do anexo ("Anexo I" em vez de "Anexo I — Comércio"). */
+function nomeCurtoAnexo(nome: string): string {
+  return nome.split(' — ')[0] ?? nome
+}
 
 function CampoMoeda({
   label,
@@ -124,9 +128,9 @@ export default function CalculadoraTresRegimes() {
       receitaComercio: entrada.receitaComercio,
       receitaServicos: entrada.receitaServicos,
       pctIss: entrada.pctIss,
-      despesasDedutiveis: '0,00',
+      despesasDedutiveis: entrada.custosDedutiveis,
     }),
-    [entrada.receitaComercio, entrada.receitaServicos, entrada.pctIss],
+    [entrada.receitaComercio, entrada.receitaServicos, entrada.pctIss, entrada.custosDedutiveis],
   )
   const presumido = useMemo(() => calcularPresumido(entradaPresumido), [entradaPresumido])
 
@@ -148,7 +152,11 @@ export default function CalculadoraTresRegimes() {
   const set = (campo: keyof EntradaTresRegimes) => (v: string) =>
     setEntrada((e) => ({ ...e, [campo]: v }))
 
+  const setFlag = (campo: keyof EntradaTresRegimes) => (v: boolean) =>
+    setEntrada((e) => ({ ...e, [campo]: v }))
+
   const carregarExemplo = () => setEntrada(entradaTresRegimesInicial)
+  const carregarCasoReal = () => setEntrada(entradaTresRegimesCasoReal)
 
   return (
     <div className="space-y-6">
@@ -159,11 +167,19 @@ export default function CalculadoraTresRegimes() {
         </span>
         <button
           type="button"
+          onClick={carregarCasoReal}
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#16A34A] text-white text-[11px] font-mono font-bold uppercase tracking-wider hover:bg-[#1F7A4D] transition-colors"
+        >
+          <Briefcase className="w-3 h-3" />
+          <span>Carregar caso real (comércio + serviços, R$ 180 mil/mês)</span>
+        </button>
+        <button
+          type="button"
           onClick={carregarExemplo}
           className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#082852] text-white text-[11px] font-mono font-bold uppercase tracking-wider hover:bg-[#0B3B7A] transition-colors"
         >
           <RefreshCw className="w-3 h-3" />
-          <span>Comércio R$ 150 mil/mês (pré-carregado)</span>
+          <span>Voltar ao padrão (comércio R$ 150 mil/mês)</span>
         </button>
       </div>
 
@@ -193,7 +209,7 @@ export default function CalculadoraTresRegimes() {
               label="RBT12 (receita bruta acumulada em 12 meses)"
               valor={entrada.rbt12}
               onChange={set('rbt12')}
-              hint="Define a faixa e a alíquota efetiva do DAS no Simples Nacional."
+              hint="Define a faixa e a alíquota efetiva do DAS no Simples Nacional — e é o denominador do Fator R."
             />
             <div>
               <label className={LABEL_CLS}>Anexo do Simples Nacional (LC 123/2006)</label>
@@ -202,24 +218,45 @@ export default function CalculadoraTresRegimes() {
                 value={entrada.anexoId}
                 onChange={(e) => set('anexoId')(e.target.value)}
               >
+                <option value="auto">Automático — Fator R decide o anexo dos serviços</option>
                 {ANEXOS_SIMPLES.map((a) => (
                   <option key={a.id} value={a.id}>
-                    {a.nome}
+                    {a.nome} (fixo)
                   </option>
                 ))}
               </select>
             </div>
             <CampoMoeda
+              label="Folha de salários dos 12 meses (Fator R do Simples)"
+              valor={entrada.folha12Simples}
+              onChange={set('folha12Simples')}
+              hint="Salários, pró-labore e encargos dos últimos 12 meses. Fator R = folha 12m ÷ RBT12: ≥ 28% → serviços no Anexo III; < 28% → Anexo V. Só vale para receita de serviços."
+            />
+            <label className="flex items-start gap-2 cursor-pointer group">
+              <Checkbox
+                checked={entrada.anexoIvRetencaoIss}
+                onCheckedChange={(v) => setFlag('anexoIvRetencaoIss')(v === true)}
+                className="mt-0.5"
+              />
+              <span className="text-[11px] text-slate-600 leading-snug group-hover:text-slate-800">
+                <strong className="text-slate-800">
+                  Serviços com retenção de ISS / do § 5º-C (Anexo IV)
+                </strong>{' '}
+                — administração e locação de imóveis, academias, vigilância, limpeza e obras. No
+                modo automático, a receita de serviços vai para o Anexo IV em vez do Fator R.
+              </span>
+            </label>
+            <CampoMoeda
               label="Custos e despesas dedutíveis no mês"
               valor={entrada.custosDedutiveis}
               onChange={set('custosDedutiveis')}
-              hint="Reduzem o lucro no Lucro Real e geram crédito de PIS/Cofins. No Presumido e no Simples NÃO reduzem o imposto."
+              hint="Reduzem o lucro no Lucro Real (e geram crédito de PIS/Cofins); no Presumido entram pelo rateio educativo. No Simples não reduzem o DAS."
             />
             <CampoMoeda
               label="Folha de pagamento no mês"
               valor={entrada.folhaPagamento}
               onChange={set('folhaPagamento')}
-              hint="Dedutível no Lucro Real; no Presumido e no Simples não altera o imposto."
+              hint="Dedutível no Lucro Real; no Presumido e no Simples não reduz o imposto do mês."
             />
             <CampoPercentual
               label="% de aproveitamento de crédito de PIS/Cofins (Lucro Real)"
@@ -271,8 +308,19 @@ export default function CalculadoraTresRegimes() {
                 {formatarBRL(simples.dasTotal)}
               </p>
               <p className="mt-2 text-[11px] text-slate-600 leading-snug">
-                {simples.anexoNome} · {simples.indiceFaixa + 1}ª faixa — alíquota efetiva{' '}
+                {simples.anexoNome} · {simples.faixaTexto} — alíquota efetiva{' '}
                 {formatarPercentual(simples.aliquotaEfetiva)}
+              </p>
+              {simples.fatias.length > 1 ? (
+                <p className="mt-1 text-[10px] text-slate-500 leading-snug">
+                  {simples.fatias
+                    .map((f) => `${nomeCurtoAnexo(f.anexoNome)}: ${formatarBRL(f.das)}`)
+                    .join(' · ')}
+                </p>
+              ) : null}
+              <p className="mt-1 text-[10px] font-mono uppercase tracking-wider text-slate-500 font-bold">
+                Fator R: {formatarPercentual(simples.fatorR)}{' '}
+                {simples.fatorR >= FATOR_R_LIMITE ? '(≥ 28% — Anexo III)' : '(< 28% — Anexo V)'}
               </p>
             </div>
 
