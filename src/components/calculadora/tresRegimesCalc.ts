@@ -22,6 +22,19 @@ import type { LinhaMemoria } from './cbsIbsCalc'
 import { anexoPorId } from './simplesHibridoCalc'
 import type { AnexoSimples } from './simplesHibridoCalc'
 import {
+  blocoComumInicial,
+  blocoComumCasoReal,
+  pctPisCofinsRealPadrao,
+  pctPisCofinsPresumidoPadrao,
+  calcularImpostoLiquido,
+  comprasDe,
+  totalCustosDespesas,
+  temIcmsIpi,
+  linhaImpostoLiquido,
+} from './creditosDebitosCalc'
+import type { BlocoComum, PctPisCofinsRegime } from './creditosDebitosCalc'
+import type { ResultadoImpostoLiquido } from './creditosDebitosCalc'
+import {
   calcularPresumido,
   ADICIONAL_IRPJ_PCT,
   ADICIONAL_IRPJ_BASE_LIMITE,
@@ -68,6 +81,19 @@ export interface EntradaTresRegimes {
   anexoIvRetencaoIss: boolean
   /** Alíquota de ISS do município para o Presumido (2% a 5%). */
   pctIss: string
+  /** Bloco CRÉDITOS / DÉBITOS / CUSTOS E DESPESAS (compras, % ICMS/IPI, despesas). */
+  blocoComum: BlocoComum
+  /** Percentuais de PIS/Cofins (compras e vendas) do LUCRO REAL — não cumulativo. */
+  pctPisCofinsReal: PctPisCofinsRegime
+  /** Percentuais de PIS/Cofins (compras e vendas) do LUCRO PRESUMIDO — cumulativo. */
+  pctPisCofinsPresumido: PctPisCofinsRegime
+}
+
+/** Bloco de créditos/débitos/custos zerado + percentuais default de cada regime. */
+export const blocosComplementaresInicial = {
+  blocoComum: blocoComumInicial,
+  pctPisCofinsReal: pctPisCofinsRealPadrao,
+  pctPisCofinsPresumido: pctPisCofinsPresumidoPadrao,
 }
 
 /** Valores default da calculadora (comércio puro, sem serviços). */
@@ -82,6 +108,7 @@ export const entradaTresRegimesInicial: EntradaTresRegimes = {
   anexoId: 'auto',
   anexoIvRetencaoIss: false,
   pctIss: '3,00',
+  ...blocosComplementaresInicial,
 }
 
 /** Caso real pré-carregável: cliente típica com comércio + serviços (Fator R). */
@@ -96,6 +123,8 @@ export const entradaTresRegimesCasoReal: EntradaTresRegimes = {
   anexoId: 'auto',
   anexoIvRetencaoIss: false,
   pctIss: '3,00',
+  ...blocosComplementaresInicial,
+  blocoComum: blocoComumCasoReal,
 }
 
 /* ============================== LUCRO REAL =============================== */
@@ -105,7 +134,6 @@ export interface ResultadoLucroReal {
   custosDedutiveis: number
   folhaPagamento: number
   pctCreditos: number
-
   lucroReal: number
   tevePrejuizo: boolean
   irpj: number
@@ -115,10 +143,26 @@ export interface ResultadoLucroReal {
   pisBruto: number
   cofinsBruto: number
   creditos: number
+  creditosCustos: number
   pisCofinsLiquido: number
 
   iss: number
   pctIss: number
+
+  // Bloco CRÉDITOS / DÉBITOS — PIS, Cofins, ICMS e IPI apurados com os
+  // percentuais INFORMADOS pelo usuário (débito sobre vendas − crédito sobre compras).
+  comprasMateriaPrima: number
+  pis: ResultadoImpostoLiquido
+  cofins: ResultadoImpostoLiquido
+  icms: ResultadoImpostoLiquido
+  ipi: ResultadoImpostoLiquido
+
+  // Bloco CUSTOS E DESPESAS (custo da matéria-prima + fixas + financeiras + outras)
+  custoMateriaPrima: number
+  despesasFixas: number
+  despesasFinanceiras: number
+  outrasDespesas: number
+  totalCustosDespesas: number
 
   totalTributos: number
   aliquotaEfetiva: number
@@ -133,7 +177,50 @@ export function calcularLucroReal(e: EntradaTresRegimes): ResultadoLucroReal {
   const pctCreditos = parseCurrency(e.pctCreditos)
   const pctIss = parseCurrency(e.pctIss)
 
-  const resultadoContabil = receitaTotal - custosDedutiveis - folhaPagamento
+  // Bloco CRÉDITOS / DÉBITOS — percentuais informados pelo usuário.
+  const compras = comprasDe(e.blocoComum)
+  const pctReal = e.pctPisCofinsReal
+  const pis = calcularImpostoLiquido(
+    receitaTotal,
+    compras,
+    pctReal.pctPisVendas,
+    pctReal.pctPisCompras,
+  )
+  const cofins = calcularImpostoLiquido(
+    receitaTotal,
+    compras,
+    pctReal.pctCofinsVendas,
+    pctReal.pctCofinsCompras,
+  )
+  const icms = calcularImpostoLiquido(
+    receitaTotal,
+    compras,
+    e.blocoComum.pctIcmsVendas,
+    e.blocoComum.pctIcmsCompras,
+  )
+  const ipi = calcularImpostoLiquido(
+    receitaTotal,
+    compras,
+    e.blocoComum.pctIpiVendas,
+    e.blocoComum.pctIpiCompras,
+  )
+
+  // Bloco CUSTOS E DESPESAS — deduzido do lucro real (base do IRPJ/CSLL).
+  const custoMateriaPrima = parseCurrency(e.blocoComum.custoMateriaPrima)
+  const despesasFixas = parseCurrency(e.blocoComum.despesasFixas)
+  const despesasFinanceiras = parseCurrency(e.blocoComum.despesasFinanceiras)
+  const outrasDespesas = parseCurrency(e.blocoComum.outrasDespesas)
+  const totalCustosDespesasBloco =
+    custoMateriaPrima + despesasFixas + despesasFinanceiras + outrasDespesas
+
+  const resultadoContabil =
+    receitaTotal -
+    custosDedutiveis -
+    folhaPagamento -
+    custoMateriaPrima -
+    despesasFixas -
+    despesasFinanceiras -
+    outrasDespesas
   const lucroReal = Math.max(0, resultadoContabil)
   const tevePrejuizo = resultadoContabil <= 0
 
@@ -142,14 +229,19 @@ export function calcularLucroReal(e: EntradaTresRegimes): ResultadoLucroReal {
   const adicionalIrpj = (baseAdicional * ADICIONAL_IRPJ_PCT) / 100
   const csll = (lucroReal * PCT_CSLL_REAL) / 100
 
-  const pisBruto = (receitaTotal * PCT_PIS_NAO_CUMULATIVO) / 100
-  const cofinsBruto = (receitaTotal * PCT_COFINS_NAO_CUMULATIVO) / 100
-  const creditos = (custosDedutiveis * PCT_PIS_COFINS_CREDITO * pctCreditos) / 100 / 100
+  // PIS/Cofins: DÉBITO (sobre a receita) já apurado com os % informados;
+  // CRÉDITO sobre as compras + crédito de custos/despesas com % de aproveitamento.
+  const pisBruto = pis.debito
+  const cofinsBruto = cofins.debito
+  const creditosCompras = pis.credito + cofins.credito
+  const creditosCustos = (custosDedutiveis * PCT_PIS_COFINS_CREDITO * pctCreditos) / 100 / 100
+  const creditos = creditosCompras + creditosCustos
   const pisCofinsLiquido = Math.max(0, pisBruto + cofinsBruto - creditos)
 
   const iss = (receitaServicos * pctIss) / 100
 
-  const totalTributos = irpj + adicionalIrpj + csll + pisCofinsLiquido + iss
+  const totalTributos =
+    irpj + adicionalIrpj + csll + pisCofinsLiquido + iss + icms.liquido + ipi.liquido
   const aliquotaEfetiva = receitaTotal > 0 ? (totalTributos / receitaTotal) * 100 : 0
 
   return {
@@ -165,9 +257,20 @@ export function calcularLucroReal(e: EntradaTresRegimes): ResultadoLucroReal {
     pisBruto,
     cofinsBruto,
     creditos,
+    creditosCustos,
     pisCofinsLiquido,
     iss,
     pctIss,
+    comprasMateriaPrima: compras,
+    pis,
+    cofins,
+    icms,
+    ipi,
+    custoMateriaPrima,
+    despesasFixas,
+    despesasFinanceiras,
+    outrasDespesas,
+    totalCustosDespesas: totalCustosDespesasBloco,
     totalTributos,
     aliquotaEfetiva,
   }
@@ -391,6 +494,38 @@ export function calcularMemoriaLucroReal(r: ResultadoLucroReal): LinhaMemoria[] 
     },
   ]
 
+  // CUSTOS E DESPESAS do bloco novo (dedutíveis do lucro real):
+  if (r.totalCustosDespesas > 0) {
+    linhas.push({
+      rotulo: `   (−) Custo das matérias-primas`,
+      valor: formatarBRL(r.custoMateriaPrima),
+    })
+    linhas.push({
+      rotulo: `   (−) Despesas fixas`,
+      valor: formatarBRL(r.despesasFixas),
+    })
+    if (r.despesasFinanceiras > 0) {
+      linhas.push({
+        rotulo: `   (−) Despesas financeiras`,
+        valor: formatarBRL(r.despesasFinanceiras),
+      })
+    }
+    if (r.outrasDespesas > 0) {
+      linhas.push({
+        rotulo: `   (−) Outras despesas`,
+        valor: formatarBRL(r.outrasDespesas),
+      })
+    }
+  }
+
+  if (r.totalCustosDespesas > 0 && !r.tevePrejuizo) {
+    linhas.push({
+      rotulo: '   = Lucro contábil do mês (antes do IRPJ e da CSLL)',
+      valor: formatarBRL(r.lucroReal),
+      destaque: 'base',
+    })
+  }
+
   if (r.tevePrejuizo) {
     linhas.push({
       rotulo:
@@ -399,11 +534,13 @@ export function calcularMemoriaLucroReal(r: ResultadoLucroReal): LinhaMemoria[] 
       destaque: 'total',
     })
   } else {
-    linhas.push({
-      rotulo: '= Lucro real do mês (base do IRPJ e da CSLL)',
-      valor: formatarBRL(r.lucroReal),
-      destaque: 'base',
-    })
+    if (r.totalCustosDespesas === 0) {
+      linhas.push({
+        rotulo: '= Lucro real do mês (base do IRPJ e da CSLL)',
+        valor: formatarBRL(r.lucroReal),
+        destaque: 'base',
+      })
+    }
     linhas.push({
       rotulo: `2. IRPJ = lucro real × ${formatarPercentual(PCT_IRPJ_REAL)}`,
       valor: formatarBRL(r.irpj),
@@ -420,34 +557,48 @@ export function calcularMemoriaLucroReal(r: ResultadoLucroReal): LinhaMemoria[] 
     })
   }
 
+  // CRÉDITOS E DÉBITOS por tributo, com os percentuais INFORMADOS pelo usuário:
+  const comprasTxt = `compras de matéria-prima ${formatarBRL(r.comprasMateriaPrima)}`
   linhas.push({
-    rotulo: `4. PIS = receita bruta × ${formatarPercentual(PCT_PIS_NAO_CUMULATIVO)} (não cumulativo)`,
-    valor: formatarBRL(r.pisBruto),
+    rotulo: `4. PIS = débito ${formatarBRL(r.pisBruto)} (receita × ${formatarPercentual(r.pis.pctDebito)}) − crédito ${formatarBRL(r.pis.credito)} (${comprasTxt} × ${formatarPercentual(r.pis.pctCredito)})`,
+    valor: formatarBRL(r.pis.liquido),
   })
   linhas.push({
-    rotulo: `5. Cofins = receita bruta × ${formatarPercentual(PCT_COFINS_NAO_CUMULATIVO)} (não cumulativo)`,
-    valor: formatarBRL(r.cofinsBruto),
+    rotulo: `5. Cofins = débito ${formatarBRL(r.cofinsBruto)} (receita × ${formatarPercentual(r.cofins.pctDebito)}) − crédito ${formatarBRL(r.cofins.credito)} (${comprasTxt} × ${formatarPercentual(r.cofins.pctCredito)})`,
+    valor: formatarBRL(r.cofins.liquido),
   })
+  if (temIcmsIpi(r.icms, r.ipi)) {
+    linhas.push({
+      rotulo: `6. ICMS = débito ${formatarBRL(r.icms.debito)} (receita × ${formatarPercentual(r.icms.pctDebito)}) − crédito ${formatarBRL(r.icms.credito)} (${comprasTxt} × ${formatarPercentual(r.icms.pctCredito)})`,
+      valor: formatarBRL(r.icms.liquido),
+    })
+    linhas.push({
+      rotulo: `7. IPI = débito ${formatarBRL(r.ipi.debito)} (receita × ${formatarPercentual(r.ipi.pctDebito)}) − crédito ${formatarBRL(r.ipi.credito)} (${comprasTxt} × ${formatarPercentual(r.ipi.pctCredito)})`,
+      valor: formatarBRL(r.ipi.liquido),
+    })
+  }
+  if (r.creditosCustos > 0) {
+    linhas.push({
+      rotulo: `   (−) Créditos de PIS/Cofins = custos × ${formatarPercentual(
+        PCT_PIS_COFINS_CREDITO,
+      )} × aproveitamento de ${formatarPercentual(r.pctCreditos)}`,
+      valor: formatarBRL(r.creditosCustos),
+    })
+  }
   linhas.push({
-    rotulo: `   (−) Créditos = custos × ${formatarPercentual(
-      PCT_PIS_COFINS_CREDITO,
-    )} × aproveitamento de ${formatarPercentual(r.pctCreditos)}`,
-    valor: formatarBRL(r.creditos),
-  })
-  linhas.push({
-    rotulo: '= PIS/Cofins líquido (depois dos créditos)',
+    rotulo: '= PIS/Cofins/ICMS/IPI líquidos (depois dos créditos)',
     valor: formatarBRL(r.pisCofinsLiquido),
     destaque: 'cbs',
   })
   if (r.iss > 0) {
     linhas.push({
-      rotulo: `6. ISS = receita de serviços × ${formatarPercentual(r.pctIss)} (alíquota do município)`,
+      rotulo: `8. ISS = receita de serviços × ${formatarPercentual(r.pctIss)} (alíquota do município)`,
       valor: formatarBRL(r.iss),
     })
   }
   linhas.push({
     rotulo:
-      'RESULTADO — Total de tributos do LUCRO REAL (IRPJ + adicion. + CSLL + PIS/Cofins líq. + ISS)',
+      'RESULTADO — Total de tributos do LUCRO REAL (IRPJ + adicion. + CSLL + PIS/Cofins/ICMS/IPI líq. + ISS)',
     valor: formatarBRL(r.totalTributos),
     destaque: 'total',
   })

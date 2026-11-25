@@ -35,9 +35,20 @@ import {
 import type { EntradaPresumido } from './lucroPresumidoCalc'
 // Lucro Real REAPROVEITADO do módulo da calculadora dos 3 regimes
 // (seção Tributação) — mesma lógica, sem duplicação.
-import { calcularLucroReal, calcularMemoriaLucroReal } from './tresRegimesCalc'
+import {
+  calcularLucroReal,
+  calcularMemoriaLucroReal,
+  entradaTresRegimesBase,
+} from './tresRegimesCalc'
 import type { EntradaTresRegimes } from './tresRegimesCalc'
 import { CardLucroReal, MemoriaLucroReal } from './CardLucroReal'
+import {
+  blocoComumInicial,
+  blocoComumCasoReal,
+  pctPisCofinsRealPadrao,
+  pctPisCofinsPresumidoPadrao,
+} from './creditosDebitosCalc'
+import { BlocosCreditosDebitos } from './BlocosCreditosDebitos'
 
 const INPUT_CLS =
   'w-full bg-white border border-stone-300 rounded-lg px-3 py-2 text-sm text-slate-800 font-mono tabular-nums focus:outline-none focus:ring-2 focus:ring-[#16A34A]/40 focus:border-[#16A34A]'
@@ -116,21 +127,27 @@ export default function CalculadoraSimplesHibrido() {
   )
   const [entradaPresumido, setEntradaPresumido] =
     useState<EntradaPresumido>(entradaPresumidoInicial)
+  // Blocos CRÉDITOS / DÉBITOS / CUSTOS E DESPESAS (compartilhados entre
+  // Presumido e Real; os % de PIS/Cofins são um conjunto por regime).
+  const [blocoComum, setBlocoComum] = useState<BlocoComum>(blocoComumInicial)
+  const [pctReal, setPctReal] = useState<PctPisCofinsRegime>(pctPisCofinsRealPadrao)
+  const [pctPresumido, setPctPresumido] = useState<PctPisCofinsRegime>(pctPisCofinsPresumidoPadrao)
 
   // Entradas do Lucro Real — reaproveita os MESMOS campos da tela (receitas,
   // despesas dedutíveis = receita de insumos do híbrido, % de aproveitamento
-  // e alíquota de ISS do Presumido). Sem campos novos na tela.
+  // e alíquota de ISS do Presumido) MAIS os blocos de créditos/débitos/custos.
   const [entradaReal, setEntradaReal] = useState<EntradaTresRegimes>(() => ({
+    ...entradaTresRegimesBase(),
     receitaComercio: entradaHibridoInicial.receitaMes,
     receitaServicos: '0,00',
     custosDedutiveis: entradaHibridoInicial.receitaInsumos,
-    folhaPagamento: '0,00',
     pctCreditos: entradaHibridoInicial.pctAproveitamento,
     rbt12: entradaHibridoInicial.rbt12,
     anexoId: entradaHibridoInicial.anexoId,
     folha12Simples: '0,00',
-    anexoIvRetencaoIss: false,
     pctIss: entradaPresumidoInicial.pctIss,
+    blocoComum: blocoComumInicial,
+    pctPisCofinsReal: pctPisCofinsRealPadrao,
   }))
 
   const anexoAtual = ANEXOS_SIMPLES.find((a) => a.id === entrada.anexoId) ?? ANEXOS_SIMPLES[0]
@@ -143,9 +160,14 @@ export default function CalculadoraSimplesHibrido() {
   )
   const memoria = useMemo(() => calcularMemoriaHibrido(resultado), [resultado])
 
-  // Lucro Presumido — recalcula junto, na mesma tela.
+  // Lucro Presumido — recalcula junto, na mesma tela. Recebe o MESMO bloco
+  // comum (custos/despesas e ICMS/IPI) preenchido na tela.
   const resultadoPresumido = useMemo(() => {
-    const r = calcularPresumido(entradaPresumido)
+    const r = calcularPresumido({
+      ...entradaPresumido,
+      blocoComum,
+      pctPisCofinsPresumido: pctPresumido,
+    })
     const diferencaVsHibrido = r.totalTributos - resultado.totalHibrido
     return {
       ...r,
@@ -154,7 +176,7 @@ export default function CalculadoraSimplesHibrido() {
         resultado.totalHibrido > 0 ? (diferencaVsHibrido / resultado.totalHibrido) * 100 : 0,
       presumidoGanhaVsHibrido: diferencaVsHibrido < 0,
     }
-  }, [entradaPresumido, resultado.totalHibrido])
+  }, [entradaPresumido, blocoComum, pctPresumido, resultado.totalHibrido])
 
   const memoriaPresumido = useMemo(
     () => calcularMemoriaPresumido(resultadoPresumido),
@@ -162,7 +184,12 @@ export default function CalculadoraSimplesHibrido() {
   )
 
   // Lucro Real — sincronizado com os campos da tela; recalcula a cada tecla.
-  const resultadoReal = useMemo(() => calcularLucroReal(entradaReal), [entradaReal])
+  // O bloco comum e os % de PIS/Cofins vêm dos blocos novos da tela.
+  const entradaRealEfetiva = useMemo<EntradaTresRegimes>(
+    () => ({ ...entradaReal, blocoComum, pctPisCofinsReal: pctReal }),
+    [entradaReal, blocoComum, pctReal],
+  )
+  const resultadoReal = useMemo(() => calcularLucroReal(entradaRealEfetiva), [entradaRealEfetiva])
   const memoriaReal = useMemo(
     () => calcularMemoriaLucroReal({ ...resultadoReal, folhaPagamento: 0 }),
     [resultadoReal],
@@ -190,6 +217,13 @@ export default function CalculadoraSimplesHibrido() {
 
   const setPresumido = (campo: keyof EntradaPresumido) => (v: string) =>
     setEntradaPresumido((e) => ({ ...e, [campo]: v }))
+
+  const setComum = (campo: keyof BlocoComum, v: string) =>
+    setBlocoComum((b) => ({ ...b, [campo]: v }))
+  const setRealPct = (campo: keyof PctPisCofinsRegime, v: string) =>
+    setPctReal((p) => ({ ...p, [campo]: v }))
+  const setPresumidoPct = (campo: keyof PctPisCofinsRegime, v: string) =>
+    setPctPresumido((p) => ({ ...p, [campo]: v }))
 
   const trocarAnexo = (anexoId: string) => {
     const anexo = ANEXOS_SIMPLES.find((a) => a.id === anexoId) ?? ANEXOS_SIMPLES[0]

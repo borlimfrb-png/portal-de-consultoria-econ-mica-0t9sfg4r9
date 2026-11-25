@@ -18,6 +18,14 @@
 
 import { formatarBRL, formatarPercentual, parseCurrency } from './cbsIbsCalc'
 import type { LinhaMemoria } from './cbsIbsCalc'
+import {
+  calcularImpostoLiquido,
+  comprasDe,
+  temIcmsIpi,
+  linhaImpostoLiquido,
+  pctPisCofinsPresumidoPadrao,
+} from './creditosDebitosCalc'
+import type { BlocoComum, PctPisCofinsRegime, ResultadoImpostoLiquido } from './creditosDebitosCalc'
 
 export type { LinhaMemoria }
 
@@ -34,6 +42,13 @@ export interface EntradaPresumido {
   pctIss: string
   /** Despesas dedutíveis do IRPJ/CSLL (operação, folha, etc.) em string pt-BR. */
   despesasDedutiveis: string
+  /**
+   * Bloco CRÉDITOS / DÉBITOS / CUSTOS E DESPESAS — opcional para não quebrar
+   * os usos existentes; quando ausente, o cálculo fica como antes.
+   */
+  blocoComum?: BlocoComum
+  /** Percentuais de PIS/Cofins (compras e vendas) do PRESUMIDO — cumulativo. */
+  pctPisCofinsPresumido?: PctPisCofinsRegime
 }
 
 export const entradaPresumidoInicial: EntradaPresumido = {
@@ -103,9 +118,22 @@ export interface ResultadoPresumido {
   // CSLL
   csll: number
 
-  // PIS/Cofins cumulativos
+  // PIS/Cofins cumulativos (percentuais INFORMADOS, com crédito sobre compras)
   pis: number
   cofins: number
+  pisDetalhe: ResultadoImpostoLiquido
+  cofinsDetalhe: ResultadoImpostoLiquido
+
+  // ICMS/IPI apurados com os % informados (são devidos mesmo no cumulativo)
+  icms: ResultadoImpostoLiquido | null
+  ipi: ResultadoImpostoLiquido | null
+
+  // Bloco CUSTOS E DESPESAS (informativo — não altera a presunção legal)
+  comprasMateriaPrima: number
+  custoMateriaPrima: number
+  despesasFixas: number
+  despesasFinanceiras: number
+  outrasDespesas: number
 
   // ISS
   iss: number
@@ -165,15 +193,56 @@ export function calcularPresumido(e: EntradaPresumido): ResultadoPresumido {
   const csllBaseTotal = csllBaseComercio + csllBaseServicos
   const csll = (csllBaseTotal * PCT_CSLL_ALIQUOTA) / 100
 
-  // PIS/Cofins cumulativos sobre a RECEITA BRUTA (não sobre o lucro):
-  const pis = (receitaTotal * PCT_PIS_CUMULATIVO) / 100
-  const cofins = (receitaTotal * PCT_COFINS_CUMULATIVO) / 100
+  // PIS/Cofins: percentuais INFORMADOS pelo usuário (default cumulativo
+  // 0,65%/3%, sem crédito; o usuário pode ajustar para o caso real).
+  const pctP = e.pctPisCofinsPresumido ?? pctPisCofinsPresumidoPadrao
+  const compras = e.blocoComum ? comprasDe(e.blocoComum) : 0
+  const pisL = calcularImpostoLiquido(receitaTotal, compras, pctP.pctPisVendas, pctP.pctPisCompras)
+  const cofinsL = calcularImpostoLiquido(
+    receitaTotal,
+    compras,
+    pctP.pctCofinsVendas,
+    pctP.pctCofinsCompras,
+  )
+  const icms = e.blocoComum
+    ? calcularImpostoLiquido(
+        receitaTotal,
+        compras,
+        e.blocoComum.pctIcmsVendas,
+        e.blocoComum.pctIcmsCompras,
+      )
+    : null
+  const ipi = e.blocoComum
+    ? calcularImpostoLiquido(
+        receitaTotal,
+        compras,
+        e.blocoComum.pctIpiVendas,
+        e.blocoComum.pctIpiCompras,
+      )
+    : null
+
+  // PIS/Cofins da base: débito (receita × % vendas) − crédito (compras × % compras).
+  const pis = pisL.liquido
+  const cofins = cofinsL.liquido
+
+  // ICMS/IPI no Presumido: apurados com os % informados e SOMADOS ao total do
+  // mês (o regime cumulativo não dá crédito, mas o ICMS/IPI são devidos igual).
+  const icmsLiquido = icms ? icms.liquido : 0
+  const ipiLiquido = ipi ? ipi.liquido : 0
 
   // ISS sobre a receita de serviços (default 3%, editável — LC 116/2003).
   const iss = (receitaServicos * pctIss) / 100
 
-  const totalTributos = irpj + adicionalIrpj + csll + pis + cofins + iss
+  const totalTributos = irpj + adicionalIrpj + csll + pis + cofins + iss + icmsLiquido + ipiLiquido
   const aliquotaEfetiva = receitaTotal > 0 ? (totalTributos / receitaTotal) * 100 : 0
+
+  // Custo das matérias-primas e despesas do bloco novo — não mudam a presunção
+  // legal, mas entram no "lucro efetivo estimado" exibido na memória.
+  const custoMateriaPrima = e.blocoComum ? parseCurrency(e.blocoComum.custoMateriaPrima) : 0
+  const despesasFixas = e.blocoComum ? parseCurrency(e.blocoComum.despesasFixas) : 0
+  const despesasFinanceiras = e.blocoComum ? parseCurrency(e.blocoComum.despesasFinanceiras) : 0
+  const outrasDespesas = e.blocoComum ? parseCurrency(e.blocoComum.outrasDespesas) : 0
+  const comprasMateriaPrima = compras
 
   return {
     receitaComercio,
@@ -190,6 +259,15 @@ export function calcularPresumido(e: EntradaPresumido): ResultadoPresumido {
     pis,
     cofins,
     iss,
+    comprasMateriaPrima,
+    pisDetalhe: pisL,
+    cofinsDetalhe: cofinsL,
+    icms,
+    ipi,
+    custoMateriaPrima,
+    despesasFixas,
+    despesasFinanceiras,
+    outrasDespesas,
     totalTributos,
     aliquotaEfetiva,
     diferencaVsHibrido: 0,
@@ -300,24 +378,37 @@ export function calcularMemoriaPresumido(r: ResultadoPresumido): LinhaMemoria[] 
     rotulo: `4. CSLL = (receita comércio × 12% + receita serviços × 32%) × 9%`,
     valor: formatarBRL(r.csll),
   })
-  linhas.push({
-    rotulo: `5. PIS = receita bruta total × 0,65% (cumulativo)`,
-    valor: formatarBRL(r.pis),
-  })
-  linhas.push({
-    rotulo: `6. Cofins = receita bruta total × 3% (cumulativo)`,
-    valor: formatarBRL(r.cofins),
-  })
+  linhas.push(linhaImpostoLiquido('5.', 'PIS = débito − crédito das compras', r.pisDetalhe))
+  linhas.push(linhaImpostoLiquido('6.', 'Cofins = débito − crédito das compras', r.cofinsDetalhe))
+  if (r.icms && temIcmsIpi(r.icms, r.ipi ?? r.icms)) {
+    linhas.push(linhaImpostoLiquido('7.', 'ICMS = débito − crédito das compras', r.icms))
+    if (r.ipi) {
+      linhas.push(linhaImpostoLiquido('8.', 'IPI = débito − crédito das compras', r.ipi))
+    }
+  }
   if (r.receitaServicos > 0) {
     linhas.push({
-      rotulo: `7. ISS = receita de serviços × ${formatarPercentual(r.pctIss)} (alíquota do município, LC 116/2003)`,
+      rotulo: `9. ISS = receita de serviços × ${formatarPercentual(r.pctIss)} (alíquota do município, LC 116/2003)`,
       valor: formatarBRL(r.iss),
+    })
+  }
+  if (
+    r.custoMateriaPrima > 0 ||
+    r.despesasFixas > 0 ||
+    r.despesasFinanceiras > 0 ||
+    r.outrasDespesas > 0
+  ) {
+    linhas.push({
+      rotulo: '(−) Custo das matérias-primas e despesas do mês (não reduzem a presunção legal)',
+      valor: formatarBRL(
+        r.custoMateriaPrima + r.despesasFixas + r.despesasFinanceiras + r.outrasDespesas,
+      ),
     })
   }
 
   linhas.push({
     rotulo:
-      'RESULTADO — Total de tributos do LUCRO PRESUMIDO (IRPJ + adicion. + CSLL + PIS + Cofins + ISS)',
+      'RESULTADO — Total de tributos do LUCRO PRESUMIDO (IRPJ + adicion. + CSLL + PIS + Cofins + ISS + ICMS/IPI)',
     valor: formatarBRL(r.totalTributos),
     destaque: 'total',
   })
@@ -325,6 +416,17 @@ export function calcularMemoriaPresumido(r: ResultadoPresumido): LinhaMemoria[] 
     rotulo: `Alíquota efetiva sobre a receita bruta total`,
     valor: formatarPercentual(r.aliquotaEfetiva),
   })
+  // Lucro efetivo estimado: receita − custos/despesas informados − tributos.
+  const totalDespesas =
+    r.custoMateriaPrima + r.despesasFixas + r.despesasFinanceiras + r.outrasDespesas
+  if (r.receitaTotal > 0 && (totalDespesas > 0 || r.despesasDedutiveis > 0)) {
+    const lucroEfetivo = r.receitaTotal - totalDespesas - r.totalTributos
+    linhas.push({
+      rotulo: 'Lucro efetivo estimado = receita − custos/despesas − tributos do mês',
+      valor: formatarBRL(lucroEfetivo),
+      destaque: 'total',
+    })
+  }
   linhas.push({
     rotulo: `Diferença vs Simples híbrido: ${formatarBRL(r.diferencaVsHibrido)} (${r.presumidoGanhaVsHibrido ? 'presumido paga menos' : 'híbrido paga menos'})`,
     valor: formatarPercentual(r.diferencaVsHibridoPct),

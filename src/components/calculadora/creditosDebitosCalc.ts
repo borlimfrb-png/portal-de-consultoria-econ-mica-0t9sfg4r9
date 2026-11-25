@@ -73,15 +73,15 @@ export const blocoComumInicial: BlocoComum = {
 
 /** Caso real pré-carregável (comércio + serviços, R$ 180 mil/mês). */
 export const blocoComumCasoReal: BlocoComum = {
-  comprasMateriaPrima: '45.000,00',
+  comprasMateriaPrima: '50.000,00',
   pctIcmsCompras: '18,00',
-  pctIpiCompras: '5,00',
+  pctIpiCompras: '10,00',
   pctIcmsVendas: '18,00',
   pctIpiVendas: '0,00',
-  custoMateriaPrima: '45.000,00',
-  despesasFixas: '18.000,00',
-  despesasFinanceiras: '3.500,00',
-  outrasDespesas: '4.000,00',
+  custoMateriaPrima: '50.000,00',
+  despesasFixas: '25.000,00',
+  despesasFinanceiras: '5.000,00',
+  outrasDespesas: '10.000,00',
 }
 
 /** Lucro Real: PIS 1,65% e Cofins 7,6% não cumulativos, com crédito sobre compras. */
