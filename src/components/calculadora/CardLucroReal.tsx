@@ -6,6 +6,7 @@ import { Building2, Trophy } from 'lucide-react'
 import { formatarBRL, formatarPercentual } from './cbsIbsCalc'
 import type { LinhaMemoria } from './cbsIbsCalc'
 import { ListaMemoria } from './CalculadoraMemoria'
+import { ApuracaoLucroRealTabela } from './ApuracaoLucroRealTabela'
 import { PCT_PIS_NAO_CUMULATIVO, PCT_COFINS_NAO_CUMULATIVO } from './tresRegimesCalc'
 import type { ResultadoLucroReal } from './tresRegimesCalc'
 
@@ -42,6 +43,7 @@ export function CardLucroReal({
       <p className="mt-2 text-[11px] text-slate-600 leading-snug">
         Alíquota efetiva: {formatarPercentual(resultado.aliquotaEfetiva)} da receita bruta
       </p>
+      <ApuracaoLucroRealTabela apuracao={resultado.apuracao} />
     </div>
   )
 }

@@ -35,6 +35,7 @@ import type { EntradaTresRegimes } from './tresRegimesCalc'
 import { calcularPresumido, PCT_PIS_CUMULATIVO, PCT_COFINS_CUMULATIVO } from './lucroPresumidoCalc'
 import type { EntradaPresumido } from './lucroPresumidoCalc'
 import { BlocosCreditosDebitos } from './BlocosCreditosDebitos'
+import { ApuracaoLucroRealTabela } from './ApuracaoLucroRealTabela'
 import type { BlocoComum, PctPisCofinsRegime } from './creditosDebitosCalc'
 
 const INPUT_CLS =
@@ -476,6 +477,7 @@ export default function CalculadoraTresRegimes() {
           </div>
           <div className={cardPapel}>
             <ListaMemoria linhas={memoriaReal} titulo="Memória de cálculo — Lucro Real" />
+            <ApuracaoLucroRealTabela apuracao={real.apuracao} />
           </div>
           <AvisoEducativo />
         </div>

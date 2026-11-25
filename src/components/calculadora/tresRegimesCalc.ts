@@ -45,6 +45,172 @@ import type { ResultadoPresumido } from './lucroPresumidoCalc'
 
 export type { LinhaMemoria }
 
+/* ===================== APURAÇÃO CONTÁBIL DO LUCRO REAL =================== */
+
+/** Saldo de um tributo: débito (sobre vendas) − crédito (sobre compras), SEM
+ * cortar em zero — saldo negativo = crédito a aproveitar no período. */
+export interface SaldoTributo {
+  pctDebito: number
+  pctCredito: number
+  debito: number
+  credito: number
+  /** débito − crédito (negativo = crédito a aproveitar). */
+  saldo: number
+  /** true quando o saldo é imposto a RECOLHER (saldo ≥ 0). */
+  aRecolher: boolean
+}
+
+/** Demonstração completa da apuração do Lucro Real (tabela financeira). */
+export interface ApuracaoLucroReal {
+  /** Débito, crédito e saldo de PIS, Cofins, ICMS e IPI (nesta ordem). */
+  tributos: Record<'pis' | 'cofins' | 'icms' | 'ipi', SaldoTributo>
+  /** Total dos tributos líquidos (b) — inclui o crédito de custos/despesas. */
+  totalTributosLiquidados: number
+
+  /** Demonstração do resultado (c): lucro contábil APURADO. */
+  receitaTotal: number
+  custosDedutiveis: number
+  folhaPagamento: number
+  custoMateriaPrima: number
+  despesasFixas: number
+  despesasFinanceiras: number
+  outrasDespesas: number
+  totalCustosDespesas: number
+  /** LUCRO APURADO = receita − custos/despesas − tributos líquidos. */
+  lucroApurado: number
+  tevePrejuizo: boolean
+
+  /** Apuração do IRPJ e da CSLL sobre o lucro apurado (d). */
+  baseIrpj: number
+  pctIrpj: number
+  irpj: number
+  baseAdicional: number
+  pctAdicionalIrpj: number
+  adicionalIrpj: number
+  pctCsll: number
+  csll: number
+  totalIrpjCsll: number
+
+  /** Totais do período (e): impostos totais e lucro líquido final. */
+  totalImpostos: number
+  lucroLiquidoFinal: number
+  iss: number
+}
+
+interface EntradaApuracao {
+  receitaTotal: number
+  receitaServicos: number
+  custosDedutiveis: number
+  folhaPagamento: number
+  pctCreditos: number
+  pctIss: number
+  compras: number
+  pis: ResultadoImpostoLiquido
+  cofins: ResultadoImpostoLiquido
+  icms: ResultadoImpostoLiquido
+  ipi: ResultadoImpostoLiquido
+  custoMateriaPrima: number
+  despesasFixas: number
+  despesasFinanceiras: number
+  outrasDespesas: number
+}
+
+/**
+ * Monta a apuração contábil completa do Lucro Real:
+ *   1. PIS, Cofins, ICMS e IPI entre DÉBITO (receita × %) e CRÉDITO
+ *      (compras × %), com o saldo de cada um (negativo = crédito);
+ *   2. lucro contábil APURADO = receita − custos/despesas − tributos líquidos;
+ *   3. IRPJ (15% + adicional de 10% acima de R$ 20.000/mês) e CSLL (9%)
+ *      sobre o lucro APURADO — não sobre presunção; prejuízo ⇒ IRPJ/CSLL = 0.
+ */
+export function lucroRealApuracao(x: EntradaApuracao): ApuracaoLucroReal {
+  const creditosCustos = (x.custosDedutiveis * PCT_PIS_COFINS_CREDITO * x.pctCreditos) / 100 / 100
+
+  const tributos = {
+    pis: saldoDe(x.pis),
+    cofins: saldoDe(x.cofins),
+    icms: saldoDe(x.icms),
+    ipi: saldoDe(x.ipi),
+  }
+
+  // ISS sobre a receita de serviços (entra nos tributos líquidos e no total).
+  const iss = (x.receitaServicos * x.pctIss) / 100
+  // Tributos líquidos do mês: soma dos saldos (crédito excedente NÃO compensa
+  // outros impostos — simplificação educativa), mais o ISS sobre serviços.
+  const tributosLiquidos = Math.max(
+    0,
+    tributos.pis.debito +
+      tributos.cofins.debito +
+      tributos.icms.debito +
+      tributos.ipi.debito -
+      tributos.pis.credito -
+      tributos.cofins.credito -
+      tributos.icms.credito -
+      tributos.ipi.credito -
+      creditosCustos,
+  )
+  const totalTributosLiquidados = tributosLiquidos + iss
+
+  const totalCustosDespesas =
+    x.custoMateriaPrima + x.despesasFixas + x.despesasFinanceiras + x.outrasDespesas
+
+  const lucroApurado =
+    x.receitaTotal -
+    x.custosDedutiveis -
+    x.folhaPagamento -
+    totalCustosDespesas -
+    totalTributosLiquidados
+  const tevePrejuizo = lucroApurado < 0
+  const baseIrpj = Math.max(0, lucroApurado)
+
+  const irpj = (baseIrpj * PCT_IRPJ_REAL) / 100
+  const baseAdicional = Math.max(0, baseIrpj - ADICIONAL_IRPJ_BASE_LIMITE)
+  const adicionalIrpj = (baseAdicional * ADICIONAL_IRPJ_PCT) / 100
+  const csll = (baseIrpj * PCT_CSLL_REAL) / 100
+  const totalIrpjCsll = irpj + adicionalIrpj + csll
+
+  const totalImpostos = totalTributosLiquidados + totalIrpjCsll
+
+  return {
+    tributos,
+    totalTributosLiquidados,
+    receitaTotal: x.receitaTotal,
+    custosDedutiveis: x.custosDedutiveis,
+    folhaPagamento: x.folhaPagamento,
+    custoMateriaPrima: x.custoMateriaPrima,
+    despesasFixas: x.despesasFixas,
+    despesasFinanceiras: x.despesasFinanceiras,
+    outrasDespesas: x.outrasDespesas,
+    totalCustosDespesas,
+    lucroApurado,
+    tevePrejuizo,
+    baseIrpj,
+    pctIrpj: PCT_IRPJ_REAL,
+    irpj,
+    baseAdicional,
+    pctAdicionalIrpj: ADICIONAL_IRPJ_PCT,
+    adicionalIrpj,
+    pctCsll: PCT_CSLL_REAL,
+    csll,
+    totalIrpjCsll,
+    totalImpostos,
+    lucroLiquidoFinal: x.receitaTotal - totalCustosDespesas - totalImpostos,
+    iss,
+  }
+}
+
+/** Débito, crédito e saldo (débito − crédito, sem cortar em zero). */
+function saldoDe(r: ResultadoImpostoLiquido): SaldoTributo {
+  return {
+    pctDebito: r.pctDebito,
+    pctCredito: r.pctCredito,
+    debito: r.debito,
+    credito: r.credito,
+    saldo: r.debito - r.credito,
+    aRecolher: r.debito - r.credito >= 0,
+  }
+}
+
 /* ============================ PERCENTUAIS LEGAIS ========================= */
 
 export const PCT_IRPJ_REAL = PCT_IRPJ_ALIQUOTA // 15%
@@ -154,17 +320,12 @@ export interface ResultadoLucroReal {
   custosDedutiveis: number
   folhaPagamento: number
   pctCreditos: number
+  /** Lucro contábil APURADO (receita − custos/despesas − tributos líquidos). */
   lucroReal: number
   tevePrejuizo: boolean
   irpj: number
   adicionalIrpj: number
   csll: number
-
-  pisBruto: number
-  cofinsBruto: number
-  creditos: number
-  creditosCustos: number
-  pisCofinsLiquido: number
 
   iss: number
   pctIss: number
@@ -183,6 +344,9 @@ export interface ResultadoLucroReal {
   despesasFinanceiras: number
   outrasDespesas: number
   totalCustosDespesas: number
+
+  /** Demonstração completa da apuração (tabela "Apuração do Lucro Real"). */
+  apuracao: ApuracaoLucroReal
 
   totalTributos: number
   aliquotaEfetiva: number
@@ -233,35 +397,28 @@ export function calcularLucroReal(e: EntradaTresRegimes): ResultadoLucroReal {
   const totalCustosDespesasBloco =
     custoMateriaPrima + despesasFixas + despesasFinanceiras + outrasDespesas
 
-  const resultadoContabil =
-    receitaTotal -
-    custosDedutiveis -
-    folhaPagamento -
-    custoMateriaPrima -
-    despesasFixas -
-    despesasFinanceiras -
-    outrasDespesas
-  const lucroReal = Math.max(0, resultadoContabil)
-  const tevePrejuizo = resultadoContabil <= 0
+  // Apuração contábil completa: IRPJ (15% + adicional 10%) e CSLL (9%) sobre o
+  // LUCRO APURADO (receita − custos/despesas − tributos líquidos), não sobre
+  // presunção. Prejuízo fiscal ⇒ IRPJ e CSLL = R$ 0,00 no período.
+  const apuracao = lucroRealApuracao({
+    receitaTotal,
+    receitaServicos,
+    custosDedutiveis,
+    folhaPagamento,
+    pctCreditos,
+    pctIss,
+    compras,
+    pis,
+    cofins,
+    icms,
+    ipi,
+    custoMateriaPrima,
+    despesasFixas,
+    despesasFinanceiras,
+    outrasDespesas,
+  })
 
-  const irpj = (lucroReal * PCT_IRPJ_REAL) / 100
-  const baseAdicional = Math.max(0, lucroReal - ADICIONAL_IRPJ_BASE_LIMITE)
-  const adicionalIrpj = (baseAdicional * ADICIONAL_IRPJ_PCT) / 100
-  const csll = (lucroReal * PCT_CSLL_REAL) / 100
-
-  // PIS/Cofins: DÉBITO (sobre a receita) já apurado com os % informados;
-  // CRÉDITO sobre as compras + crédito de custos/despesas com % de aproveitamento.
-  const pisBruto = pis.debito
-  const cofinsBruto = cofins.debito
-  const creditosCompras = pis.credito + cofins.credito
-  const creditosCustos = (custosDedutiveis * PCT_PIS_COFINS_CREDITO * pctCreditos) / 100 / 100
-  const creditos = creditosCompras + creditosCustos
-  const pisCofinsLiquido = Math.max(0, pisBruto + cofinsBruto - creditos)
-
-  const iss = (receitaServicos * pctIss) / 100
-
-  const totalTributos =
-    irpj + adicionalIrpj + csll + pisCofinsLiquido + iss + icms.liquido + ipi.liquido
+  const totalTributos = apuracao.totalImpostos
   const aliquotaEfetiva = receitaTotal > 0 ? (totalTributos / receitaTotal) * 100 : 0
 
   return {
@@ -269,17 +426,12 @@ export function calcularLucroReal(e: EntradaTresRegimes): ResultadoLucroReal {
     custosDedutiveis,
     folhaPagamento,
     pctCreditos,
-    lucroReal,
-    tevePrejuizo,
-    irpj,
-    adicionalIrpj,
-    csll,
-    pisBruto,
-    cofinsBruto,
-    creditos,
-    creditosCustos,
-    pisCofinsLiquido,
-    iss,
+    lucroReal: apuracao.lucroApurado,
+    tevePrejuizo: apuracao.tevePrejuizo,
+    irpj: apuracao.irpj,
+    adicionalIrpj: apuracao.adicionalIrpj,
+    csll: apuracao.csll,
+    iss: apuracao.iss,
     pctIss,
     comprasMateriaPrima: compras,
     pis,
@@ -291,6 +443,7 @@ export function calcularLucroReal(e: EntradaTresRegimes): ResultadoLucroReal {
     despesasFinanceiras,
     outrasDespesas,
     totalCustosDespesas: totalCustosDespesasBloco,
+    apuracao,
     totalTributos,
     aliquotaEfetiva,
   }
@@ -498,137 +651,164 @@ export function calcularVereditoTresRegimes(
 /* ============================ MEMÓRIA DE CÁLCULO ========================= */
 
 export function calcularMemoriaLucroReal(r: ResultadoLucroReal): LinhaMemoria[] {
+  const a = r.apuracao
   const linhas: LinhaMemoria[] = [
     {
-      rotulo: '1. Receita bruta total do mês = comércio + serviços',
-      valor: formatarBRL(r.receitaTotal),
-      destaque: 'base',
-    },
-    {
-      rotulo: '(−) Custos/despesas dedutíveis (compram crédito de PIS/Cofins)',
-      valor: formatarBRL(r.custosDedutiveis),
-    },
-    {
-      rotulo: '(−) Folha de pagamento (dedutível no Lucro Real)',
-      valor: formatarBRL(r.folhaPagamento),
+      rotulo: 'APURAÇÃO DOS TRIBUTOS SOBRE VENDAS E COMPRAS — débito (vendas) − crédito (compras)',
+      valor: '',
     },
   ]
 
-  // CUSTOS E DESPESAS do bloco novo (dedutíveis do lucro real):
-  if (r.totalCustosDespesas > 0) {
+  const linhaSaldo = (numero: string, nome: string, s: SaldoTributo, creditoExtra?: string) => {
     linhas.push({
-      rotulo: `   (−) Custo das matérias-primas`,
-      valor: formatarBRL(r.custoMateriaPrima),
+      rotulo: `${numero} ${nome} — DÉBITO = receita × ${formatarPercentual(s.pctDebito)}`,
+      valor: formatarBRL(s.debito),
     })
     linhas.push({
-      rotulo: `   (−) Despesas fixas`,
-      valor: formatarBRL(r.despesasFixas),
+      rotulo: `   (−) CRÉDITO = compras de matéria-prima × ${formatarPercentual(s.pctCredito)}${creditoExtra ? ` ${creditoExtra}` : ''}`,
+      valor: formatarBRL(s.credito),
     })
-    if (r.despesasFinanceiras > 0) {
-      linhas.push({
-        rotulo: `   (−) Despesas financeiras`,
-        valor: formatarBRL(r.despesasFinanceiras),
-      })
-    }
-    if (r.outrasDespesas > 0) {
-      linhas.push({
-        rotulo: `   (−) Outras despesas`,
-        valor: formatarBRL(r.outrasDespesas),
-      })
-    }
-  }
-
-  if (r.totalCustosDespesas > 0 && !r.tevePrejuizo) {
     linhas.push({
-      rotulo: '   = Lucro contábil do mês (antes do IRPJ e da CSLL)',
-      valor: formatarBRL(r.lucroReal),
-      destaque: 'base',
+      rotulo: `   = SALDO ${s.aRecolher ? 'a RECOLHER' : 'NEGATIVO — crédito a aproveitar'}`,
+      valor: formatarBRL(s.saldo),
+      destaque: 'cbs',
     })
   }
 
-  if (r.tevePrejuizo) {
-    linhas.push({
-      rotulo:
-        '= Resultado NEGATIVO (prejuízo): IRPJ e CSLL = R$ 0,00 neste mês — vantagem do Lucro Real',
-      valor: formatarBRL(0),
-      destaque: 'total',
-    })
-  } else {
-    if (r.totalCustosDespesas === 0) {
-      linhas.push({
-        rotulo: '= Lucro real do mês (base do IRPJ e da CSLL)',
-        valor: formatarBRL(r.lucroReal),
-        destaque: 'base',
-      })
-    }
-    linhas.push({
-      rotulo: `2. IRPJ = lucro real × ${formatarPercentual(PCT_IRPJ_REAL)}`,
-      valor: formatarBRL(r.irpj),
-    })
-    if (r.adicionalIrpj > 0) {
-      linhas.push({
-        rotulo: `   (+) Adicional IRPJ = 10% sobre o lucro que excede R$ 20.000/mês`,
-        valor: formatarBRL(r.adicionalIrpj),
-      })
-    }
-    linhas.push({
-      rotulo: `3. CSLL = lucro real × ${formatarPercentual(PCT_CSLL_REAL)}`,
-      valor: formatarBRL(r.csll),
-    })
-  }
+  linhaSaldo('1.', 'PIS', a.tributos.pis)
+  linhaSaldo('2.', 'Cofins', a.tributos.cofins)
+  linhaSaldo('3.', 'ICMS', a.tributos.icms)
+  linhaSaldo('4.', 'IPI', a.tributos.ipi)
 
-  // CRÉDITOS E DÉBITOS por tributo, com os percentuais INFORMADOS pelo usuário:
-  const comprasTxt = `compras de matéria-prima ${formatarBRL(r.comprasMateriaPrima)}`
-  linhas.push({
-    rotulo: `4. PIS = débito ${formatarBRL(r.pisBruto)} (receita × ${formatarPercentual(r.pis.pctDebito)}) − crédito ${formatarBRL(r.pis.credito)} (${comprasTxt} × ${formatarPercentual(r.pis.pctCredito)})`,
-    valor: formatarBRL(r.pis.liquido),
-  })
-  linhas.push({
-    rotulo: `5. Cofins = débito ${formatarBRL(r.cofinsBruto)} (receita × ${formatarPercentual(r.cofins.pctDebito)}) − crédito ${formatarBRL(r.cofins.credito)} (${comprasTxt} × ${formatarPercentual(r.cofins.pctCredito)})`,
-    valor: formatarBRL(r.cofins.liquido),
-  })
-  if (temIcmsIpi(r.icms, r.ipi)) {
-    linhas.push({
-      rotulo: `6. ICMS = débito ${formatarBRL(r.icms.debito)} (receita × ${formatarPercentual(r.icms.pctDebito)}) − crédito ${formatarBRL(r.icms.credito)} (${comprasTxt} × ${formatarPercentual(r.icms.pctCredito)})`,
-      valor: formatarBRL(r.icms.liquido),
-    })
-    linhas.push({
-      rotulo: `7. IPI = débito ${formatarBRL(r.ipi.debito)} (receita × ${formatarPercentual(r.ipi.pctDebito)}) − crédito ${formatarBRL(r.ipi.credito)} (${comprasTxt} × ${formatarPercentual(r.ipi.pctCredito)})`,
-      valor: formatarBRL(r.ipi.liquido),
-    })
-  }
-  if (r.creditosCustos > 0) {
+  if (
+    a.totalTributosLiquidados >
+    a.tributos.pis.saldo + a.tributos.cofins.saldo + a.tributos.icms.saldo + a.tributos.ipi.saldo
+  ) {
     linhas.push({
       rotulo: `   (−) Créditos de PIS/Cofins = custos × ${formatarPercentual(
         PCT_PIS_COFINS_CREDITO,
       )} × aproveitamento de ${formatarPercentual(r.pctCreditos)}`,
-      valor: formatarBRL(r.creditosCustos),
+      valor: formatarBRL((a.custosDedutiveis * PCT_PIS_COFINS_CREDITO * r.pctCreditos) / 100 / 100),
     })
   }
   linhas.push({
-    rotulo: '= PIS/Cofins/ICMS/IPI líquidos (depois dos créditos)',
-    valor: formatarBRL(r.pisCofinsLiquido),
-    destaque: 'cbs',
+    rotulo: 'RESULTADO — Total dos tributos líquidos do mês (PIS + Cofins + ICMS + IPI + ISS)',
+    valor: formatarBRL(a.totalTributosLiquidados),
+    destaque: 'total',
   })
-  if (r.iss > 0) {
+
+  // DEMONSTRAÇÃO DO RESULTADO — lucro contábil APURADO:
+  linhas.push({
+    rotulo: 'DEMONSTRAÇÃO DO RESULTADO — lucro contábil do mês',
+    valor: '',
+  })
+  linhas.push({
+    rotulo: '5. Receita bruta total (comércio + serviços)',
+    valor: formatarBRL(a.receitaTotal),
+    destaque: 'base',
+  })
+  if (a.custosDedutiveis > 0) {
     linhas.push({
-      rotulo: `8. ISS = receita de serviços × ${formatarPercentual(r.pctIss)} (alíquota do município)`,
-      valor: formatarBRL(r.iss),
+      rotulo: '   (−) Custos/despesas dedutíveis (compram crédito de PIS/Cofins)',
+      valor: formatarBRL(a.custosDedutiveis),
+    })
+  }
+  if (a.folhaPagamento > 0) {
+    linhas.push({
+      rotulo: '   (−) Folha de pagamento (dedutível no Lucro Real)',
+      valor: formatarBRL(a.folhaPagamento),
+    })
+  }
+  if (a.custoMateriaPrima > 0) {
+    linhas.push({
+      rotulo: '   (−) Custo das matérias-primas',
+      valor: formatarBRL(a.custoMateriaPrima),
+    })
+  }
+  if (a.despesasFixas > 0) {
+    linhas.push({
+      rotulo: '   (−) Despesas fixas',
+      valor: formatarBRL(a.despesasFixas),
+    })
+  }
+  if (a.despesasFinanceiras > 0) {
+    linhas.push({
+      rotulo: '   (−) Despesas financeiras',
+      valor: formatarBRL(a.despesasFinanceiras),
+    })
+  }
+  if (a.outrasDespesas > 0) {
+    linhas.push({
+      rotulo: '   (−) Outras despesas',
+      valor: formatarBRL(a.outrasDespesas),
     })
   }
   linhas.push({
-    rotulo:
-      'RESULTADO — Total de tributos do LUCRO REAL (IRPJ + adicion. + CSLL + PIS/Cofins/ICMS/IPI líq. + ISS)',
-    valor: formatarBRL(r.totalTributos),
+    rotulo: '   (−) Tributos líquidos apurados acima (PIS/Cofins/ICMS/IPI + ISS)',
+    valor: formatarBRL(a.totalTributosLiquidados),
+  })
+  linhas.push({
+    rotulo: a.tevePrejuizo
+      ? '= LUCRO APURADO NEGATIVO — prejuízo fiscal: IRPJ e CSLL = R$ 0,00 neste mês'
+      : '= LUCRO APURADO (lucro contábil do mês — base do IRPJ e da CSLL)',
+    valor: formatarBRL(a.lucroApurado),
+    destaque: 'base',
+  })
+
+  // APURAÇÃO DO IRPJ E DA CSLL sobre o lucro APURADO:
+  linhas.push({
+    rotulo: 'APURAÇÃO DO IRPJ E DA CSLL — sobre o lucro apurado (não sobre presunção)',
+    valor: '',
+  })
+  if (a.tevePrejuizo) {
+    linhas.push({
+      rotulo:
+        '6. Prejuízo fiscal — sem IRPJ/CSLL no período (prejuízo pode ser compensado nos períodos seguintes, dentro dos limites legais)',
+      valor: formatarBRL(0),
+      destaque: 'total',
+    })
+  } else {
+    linhas.push({
+      rotulo: `6. IRPJ = lucro apurado ${formatarBRL(a.baseIrpj)} × ${formatarPercentual(a.pctIrpj)}`,
+      valor: formatarBRL(a.irpj),
+    })
+    if (a.adicionalIrpj > 0) {
+      linhas.push({
+        rotulo: `   (+) Adicional IRPJ = ${formatarPercentual(a.pctAdicionalIrpj)} sobre o lucro que excede R$ 20.000,00/mês (excedente de ${formatarBRL(a.baseAdicional)})`,
+        valor: formatarBRL(a.adicionalIrpj),
+      })
+    }
+    linhas.push({
+      rotulo: `7. CSLL = lucro apurado × ${formatarPercentual(a.pctCsll)}`,
+      valor: formatarBRL(a.csll),
+    })
+    linhas.push({
+      rotulo: '= TOTAL IRPJ + CSLL do mês',
+      valor: formatarBRL(a.totalIrpjCsll),
+      destaque: 'total',
+    })
+  }
+
+  // TOTAIS DO PERÍODO (e):
+  linhas.push({
+    rotulo: 'RESULTADO — IMPOSTOS TOTAIS DO PERÍODO (tributos líquidos + IRPJ + adicional + CSLL)',
+    valor: formatarBRL(a.totalImpostos),
     destaque: 'total',
   })
   linhas.push({
-    rotulo: 'Alíquota efetiva sobre a receita bruta total',
-    valor: formatarPercentual(r.aliquotaEfetiva),
+    rotulo: 'LUCRO LÍQUIDO FINAL após todos os impostos',
+    valor: formatarBRL(a.lucroLiquidoFinal),
+    destaque: 'base',
   })
+  if (a.iss > 0) {
+    linhas.push({
+      rotulo: `Nota: ISS de ${formatarBRL(a.iss)} (receita de serviços × ${formatarPercentual(r.pctIss)}) integra os tributos líquidos do mês`,
+      valor: '',
+    })
+  }
   linhas.push({
     rotulo:
-      'Nota: o Lucro Real é OBRIGATÓRIO acima de R$ 78 milhões/ano (ou por atividade) e tende a vencer com margens apertadas ou muitas despesas geradoras de crédito',
+      'Nota: no Lucro Real o IRPJ e a CSLL incidem sobre o LUCRO CONTÁBIL apurado — despesas e créditos reduzem o imposto; obrigatório acima de R$ 78 milhões/ano',
     valor: '',
   })
   return linhas
