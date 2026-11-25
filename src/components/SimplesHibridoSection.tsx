@@ -362,8 +362,8 @@ export default function SimplesHibridoSection() {
           <strong>não cumulativo</strong>. É a chamada{' '}
           <strong className="text-[#082852]">operação híbrida</strong>: dois regimes convivendo ao
           mesmo tempo. Abaixo, a lógica, o passo a passo, as vantagens e os cuidados — e uma
-          calculadora que compara <strong>três cenários na mesma tela</strong>: Simples puro ×
-          Simples híbrido × Lucro Presumido.
+          calculadora que compara <strong>quatro cenários na mesma tela</strong>: Simples puro ×
+          Simples híbrido × Lucro Presumido × Lucro Real.
         </p>
       </div>
 
@@ -442,7 +442,7 @@ export default function SimplesHibridoSection() {
       <div className="mb-6">
         <h3 className="font-mono text-sm font-bold uppercase tracking-wider text-[#082852] mb-4 flex items-center gap-2">
           <Calculator className="w-4 h-4 text-[#16A34A]" />
-          Calculadora — Simples PURO × Simples HÍBRIDO × Lucro PRESUMIDO
+          Calculadora — Simples PURO × Simples HÍBRIDO × Lucro PRESUMIDO × Lucro REAL
         </h3>
         <CalculadoraSimplesHibrido />
       </div>

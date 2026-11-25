@@ -1,6 +1,6 @@
 // Calculadora Educativa "Simples Híbrido" — Simples Nacional com PIS/Cofins
 // por fora (art. 52 LC 123/2006 e art. 55 Lei 11.196/2005) comparada, na MESMA
-// tela, com o Simples PURO e com o LUCRO PRESUMIDO (Lei 9.249/1995).
+// tela, com o Simples PURO, o LUCRO PRESUMIDO (Lei 9.249/1995) e o LUCRO REAL.
 // 100% no navegador, sem gravação de dados.
 
 import { useMemo, useState } from 'react'
@@ -26,13 +26,18 @@ import {
 import type { EntradaHibrido } from './simplesHibridoCalc'
 import {
   calcularPresumido,
-  calcularVereditoTresCenarios,
+  calcularVereditoQuatroCenarios,
   calcularMemoriaPresumido,
   entradaPresumidoInicial,
   PCT_PIS_CUMULATIVO,
   PCT_COFINS_CUMULATIVO,
 } from './lucroPresumidoCalc'
 import type { EntradaPresumido } from './lucroPresumidoCalc'
+// Lucro Real REAPROVEITADO do módulo da calculadora dos 3 regimes
+// (seção Tributação) — mesma lógica, sem duplicação.
+import { calcularLucroReal, calcularMemoriaLucroReal } from './tresRegimesCalc'
+import type { EntradaTresRegimes } from './tresRegimesCalc'
+import { CardLucroReal, MemoriaLucroReal } from './CardLucroReal'
 
 const INPUT_CLS =
   'w-full bg-white border border-stone-300 rounded-lg px-3 py-2 text-sm text-slate-800 font-mono tabular-nums focus:outline-none focus:ring-2 focus:ring-[#16A34A]/40 focus:border-[#16A34A]'
@@ -112,6 +117,22 @@ export default function CalculadoraSimplesHibrido() {
   const [entradaPresumido, setEntradaPresumido] =
     useState<EntradaPresumido>(entradaPresumidoInicial)
 
+  // Entradas do Lucro Real — reaproveita os MESMOS campos da tela (receitas,
+  // despesas dedutíveis = receita de insumos do híbrido, % de aproveitamento
+  // e alíquota de ISS do Presumido). Sem campos novos na tela.
+  const [entradaReal, setEntradaReal] = useState<EntradaTresRegimes>(() => ({
+    receitaComercio: entradaHibridoInicial.receitaMes,
+    receitaServicos: '0,00',
+    custosDedutiveis: entradaHibridoInicial.receitaInsumos,
+    folhaPagamento: '0,00',
+    pctCreditos: entradaHibridoInicial.pctAproveitamento,
+    rbt12: entradaHibridoInicial.rbt12,
+    anexoId: entradaHibridoInicial.anexoId,
+    folha12Simples: '0,00',
+    anexoIvRetencaoIss: false,
+    pctIss: entradaPresumidoInicial.pctIss,
+  }))
+
   const anexoAtual = ANEXOS_SIMPLES.find((a) => a.id === entrada.anexoId) ?? ANEXOS_SIMPLES[0]
 
   // Recalcula sempre que qualquer campo muda — inclusive a % de PIS/Cofins,
@@ -140,14 +161,28 @@ export default function CalculadoraSimplesHibrido() {
     [resultadoPresumido],
   )
 
-  // Veredito do MENOR imposto entre os TRÊS cenários.
+  // Lucro Real — sincronizado com os campos da tela; recalcula a cada tecla.
+  const resultadoReal = useMemo(() => calcularLucroReal(entradaReal), [entradaReal])
+  const memoriaReal = useMemo(
+    () => calcularMemoriaLucroReal({ ...resultadoReal, folhaPagamento: 0 }),
+    [resultadoReal],
+  )
+
+  // Veredito do MENOR imposto entre os QUATRO cenários (Simples puro,
+  // híbrido, Presumido e Real).
   const veredito = useMemo(
     () =>
-      calcularVereditoTresCenarios(
+      calcularVereditoQuatroCenarios(
         { dasPuro: resultado.dasPuro, totalHibrido: resultado.totalHibrido },
         { totalTributos: resultadoPresumido.totalTributos },
+        { totalTributos: resultadoReal.totalTributos },
       ),
-    [resultado.dasPuro, resultado.totalHibrido, resultadoPresumido.totalTributos],
+    [
+      resultado.dasPuro,
+      resultado.totalHibrido,
+      resultadoPresumido.totalTributos,
+      resultadoReal.totalTributos,
+    ],
   )
 
   const set = (campo: keyof EntradaHibrido) => (v: string) =>
@@ -170,6 +205,14 @@ export default function CalculadoraSimplesHibrido() {
       ...entradaPresumidoInicial,
       receitaComercio: entradaHibridoInicial.receitaMes,
     })
+    setEntradaReal((e) => ({
+      ...e,
+      receitaComercio: entradaHibridoInicial.receitaMes,
+      receitaServicos: entradaPresumidoInicial.receitaServicos,
+      custosDedutiveis: entradaHibridoInicial.receitaInsumos,
+      pctCreditos: entradaHibridoInicial.pctAproveitamento,
+      pctIss: entradaPresumidoInicial.pctIss,
+    }))
   }
 
   return (
@@ -204,13 +247,13 @@ export default function CalculadoraSimplesHibrido() {
                 label="Receita de faturamento do mês"
                 valor={entrada.receitaMes}
                 onChange={set('receitaMes')}
-                hint="Receita bruta auferida no mês de apuração (usada nos cenários Simples puro e híbrido)."
+                hint="Receita bruta auferida no mês (usada nos cenários do Simples)."
               />
               <CampoMoeda
                 label="RBT12 (receita bruta acumulada em 12 meses)"
                 valor={entrada.rbt12}
                 onChange={set('rbt12')}
-                hint="Define a faixa do anexo e a alíquota efetiva do DAS."
+                hint="Define a faixa do anexo e a alíquota efetiva do DAS (não afeta o Lucro Real)."
               />
               <div>
                 <label className={LABEL_CLS}>Anexo do Simples Nacional (LC 123/2006)</label>
@@ -238,43 +281,60 @@ export default function CalculadoraSimplesHibrido() {
               <CampoMoeda
                 label="Receita de insumos/compras geradoras de crédito"
                 valor={entrada.receitaInsumos}
-                onChange={set('receitaInsumos')}
+                onChange={(v) => {
+                  set('receitaInsumos')(v)
+                  // No Lucro Real, esses custos geram crédito E deduzem do lucro.
+                  setEntradaReal((e) => ({ ...e, custosDedutiveis: v }))
+                }}
                 hint="Compras com direito a crédito no regime não cumulativo (insumos, revenda, energia, aluguéis)."
               />
               <CampoPercentual
                 label="% de aproveitamento de crédito"
                 valor={entrada.pctAproveitamento}
-                onChange={set('pctAproveitamento')}
+                onChange={(v) => {
+                  set('pctAproveitamento')(v)
+                  // Mesmo % de crédito aproveitado pelo Lucro Real.
+                  setEntradaReal((e) => ({ ...e, pctCreditos: v }))
+                }}
                 hint={`Padrão: ${formatarPercentual(PCT_PIS_COFINS_NAO_CUMULATIVO)} (PIS 1,65% + Cofins 7,6%).`}
               />
             </div>
           </div>
 
-          {/* Entradas do Lucro Presumido */}
+          {/* Entradas do Lucro Presumido (compartilhadas com o Lucro Real) */}
           <div className={cardPapel}>
             <div className="flex items-center gap-2.5 mb-4">
               <Landmark className="w-5 h-5 text-[#082852]" />
               <span className="font-mono text-xs font-bold uppercase tracking-wider text-[#082852]">
-                Dados do Lucro Presumido (Lei 9.249/1995)
+                Dados do Lucro Presumido e do Lucro Real
               </span>
             </div>
             <div className="space-y-4">
               <CampoMoeda
                 label="Receita de comércio/indústria no mês (presunção 8%)"
                 valor={entradaPresumido.receitaComercio}
-                onChange={setPresumido('receitaComercio')}
-                hint="Revenda de mercadorias, industrialização — presunção de 8% para IRPJ (art. 15 da Lei 9.249/95)."
+                onChange={(v) => {
+                  setPresumido('receitaComercio')(v)
+                  setEntradaReal((e) => ({ ...e, receitaComercio: v }))
+                }}
+                hint="Revenda de mercadorias, industrialização — presunção de 8% para IRPJ (art. 15 da Lei 9.249/95). Usada também pelo Lucro Real."
               />
               <CampoMoeda
                 label="Receita de serviços no mês (presunção 32%)"
                 valor={entradaPresumido.receitaServicos}
-                onChange={setPresumido('receitaServicos')}
-                hint="Serviços em geral, consultoria, administração de bens — presunção de 32% para IRPJ."
+                onChange={(v) => {
+                  setPresumido('receitaServicos')(v)
+                  setEntradaReal((e) => ({ ...e, receitaServicos: v }))
+                }}
+                hint="Serviços em geral, consultoria, administração de bens — presunção de 32% para IRPJ. Usada também pelo Lucro Real."
               />
               <CampoPercentual
                 label="Alíquota de ISS do município (2% a 5%)"
                 valor={entradaPresumido.pctIss}
-                onChange={setPresumido('pctIss')}
+                onChange={(v) => {
+                  setPresumido('pctIss')(v)
+                  setEntradaReal((e) => ({ ...e, pctIss: v }))
+                }}
                 hint="LC 116/2003: cada município fixa a alíquota entre 2% e 5%. Padrão educativo: 3%."
               />
               <CampoMoeda
@@ -287,9 +347,14 @@ export default function CalculadoraSimplesHibrido() {
             <p className="mt-4 text-[11px] text-slate-500 leading-relaxed flex items-start gap-1.5">
               <Info className="w-3.5 h-3.5 text-[#16A34A] shrink-0 mt-0.5" />
               <span>
-                PIS 0,65% e Cofins 3% (cumulativos) sobre a receita bruta, ISS sobre a receita de
-                serviços. Cálculo 100% no navegador: nada é gravado ou enviado para servidores.
-                Valores educativos — não substituem a apuração contábil.
+                No Lucro Real, IRPJ 15% + adicional 10% e CSLL 9% incidem sobre o{' '}
+                <strong className="text-[#082852]">lucro contábil</strong> (receita − despesas
+                dedutíveis − folha), e PIS 1,65% e Cofins 7,6% (não cumulativos) geram crédito sobre
+                os insumos — o mesmo % de aproveitamento do bloco acima. Como esta tela não tem
+                folha de pagamento, o Real aqui considera folha R$ 0,00; a calculadora completa dos
+                três regimes (seção Tributação) inclui a folha. Cálculo 100% no navegador: nada é
+                gravado ou enviado para servidores. Valores educativos — não substituem a apuração
+                contábil.
               </span>
             </p>
           </div>
@@ -297,7 +362,7 @@ export default function CalculadoraSimplesHibrido() {
 
         {/* ------------------------ RESULTADOS ------------------------ */}
         <div className="space-y-4">
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {/* Simples PURO */}
             <div className="rounded-2xl border border-stone-200 bg-[#F0F4F8]/70 p-4 sm:p-5">
               <div className="flex items-center gap-2 mb-3">
@@ -374,9 +439,15 @@ export default function CalculadoraSimplesHibrido() {
                 receita bruta
               </p>
             </div>
+
+            {/* Lucro REAL — card reutilizado do módulo dos 3 regimes */}
+            <CardLucroReal
+              resultado={resultadoReal}
+              melhor={veredito.melhorRegime === 'Lucro real'}
+            />
           </div>
 
-          {/* Veredito entre os TRÊS cenários */}
+          {/* Veredito entre os QUATRO cenários */}
           <div
             className={`rounded-2xl border p-5 ${
               veredito.hibridoGanha
@@ -419,12 +490,13 @@ export default function CalculadoraSimplesHibrido() {
               <strong>Simples puro</strong> favorece margens altas com poucos créditos; o{' '}
               <strong>híbrido</strong> favorece cadeias com alta carga de insumos e clientes B2B; o{' '}
               <strong>Lucro Presumido</strong> favorece margens de lucro acima da presunção legal
-              (8%/32%) e clientes que exigem créditos de PIS/Cofins — mas carrega mais obrigações
-              acessórias.
+              (8%/32%) e clientes que exigem créditos de PIS/Cofins; e o <strong>Lucro Real</strong>{' '}
+              favorece margens apertadas ou prejuízo no mês, com muitas despesas geradoras de
+              crédito de PIS/Cofins.
             </p>
           </div>
 
-          {/* Memória de cálculo */}
+          {/* Memórias de cálculo */}
           <div className={cardPapel}>
             <ListaMemoria linhas={memoria} titulo="Memória de cálculo — Simples puro × híbrido" />
           </div>
@@ -433,9 +505,10 @@ export default function CalculadoraSimplesHibrido() {
             <p className="mt-3 text-[11px] text-slate-500 leading-relaxed">
               PIS {formatarPercentual(PCT_PIS_CUMULATIVO)} e Cofins{' '}
               {formatarPercentual(PCT_COFINS_CUMULATIVO)} são cumulativos no Presumido — não há
-              crédito sobre insumos, diferente do híbrido.
+              crédito sobre insumos, diferente do híbrido e do Lucro Real.
             </p>
           </div>
+          <MemoriaLucroReal linhas={memoriaReal} />
         </div>
       </div>
     </div>

@@ -198,17 +198,23 @@ export function calcularPresumido(e: EntradaPresumido): ResultadoPresumido {
   }
 }
 
-/* ==================== COMPARAÇÃO TRIPLO (Simples × Híbrido × Presumido) === */
+/* ============ COMPARAÇÃO QUÁDRUPLA (Simples × Híbrido × Pres. × Real) ===== */
 
-export interface VereditoTresCenarios {
+export type RegimeCenarioHibrido =
+  | 'Simples puro'
+  | 'Simples híbrido'
+  | 'Lucro presumido'
+  | 'Lucro real'
+
+export interface VereditoQuatroCenarios {
   /** IDs dos regimes ordenados do menor para o maior imposto do mês. */
   ordenados: Array<{
-    regime: 'Simples puro' | 'Simples híbrido' | 'Lucro presumido'
+    regime: RegimeCenarioHibrido
     total: number
   }>
-  melhorRegime: 'Simples puro' | 'Simples híbrido' | 'Lucro presumido'
+  melhorRegime: RegimeCenarioHibrido
   melhorTotal: number
-  piorRegime: 'Simples puro' | 'Simples híbrido' | 'Lucro presumido'
+  piorRegime: RegimeCenarioHibrido
   piorTotal: number
   /** Diferença do pior em relação ao melhor. */
   diferencaTotal: number
@@ -217,14 +223,16 @@ export interface VereditoTresCenarios {
   hibridoGanha: boolean
 }
 
-export function calcularVereditoTresCenarios(
+export function calcularVereditoQuatroCenarios(
   rHibrido: { dasPuro: number; totalHibrido: number },
   rPresumido: { totalTributos: number },
-): VereditoTresCenarios {
+  rReal: { totalTributos: number },
+): VereditoQuatroCenarios {
   const cenarios = [
     { regime: 'Simples puro' as const, total: rHibrido.dasPuro },
     { regime: 'Simples híbrido' as const, total: rHibrido.totalHibrido },
     { regime: 'Lucro presumido' as const, total: rPresumido.totalTributos },
+    { regime: 'Lucro real' as const, total: rReal.totalTributos },
   ].sort((a, b) => a.total - b.total)
 
   const melhor = cenarios[0]
