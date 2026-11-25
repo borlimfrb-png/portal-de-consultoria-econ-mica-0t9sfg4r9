@@ -111,6 +111,26 @@ export const entradaTresRegimesInicial: EntradaTresRegimes = {
   ...blocosComplementaresInicial,
 }
 
+/**
+ * Entrada "base" (campos fora dos blocos zerados) usada pela calculadora do
+ * Simples Híbrido, que sobrescreve cada campo com o valor da sua tela.
+ */
+export function entradaTresRegimesBase(): EntradaTresRegimes {
+  return {
+    receitaComercio: '0,00',
+    receitaServicos: '0,00',
+    custosDedutiveis: '0,00',
+    folhaPagamento: '0,00',
+    folha12Simples: '0,00',
+    pctCreditos: '80,00',
+    rbt12: '0,00',
+    anexoId: 'auto',
+    anexoIvRetencaoIss: false,
+    pctIss: '3,00',
+    ...blocosComplementaresInicial,
+  }
+}
+
 /** Caso real pré-carregável: cliente típica com comércio + serviços (Fator R). */
 export const entradaTresRegimesCasoReal: EntradaTresRegimes = {
   receitaComercio: '120.000,00',
@@ -729,17 +749,40 @@ export function calcularMemoriaPresumidoRegimes(r: ResultadoPresumido): LinhaMem
     )}`,
     valor: formatarBRL(r.csll),
   })
-  linhas.push({
-    rotulo: '5. PIS = receita bruta total × 0,65% (cumulativo, sem crédito)',
-    valor: formatarBRL(r.pis),
-  })
-  linhas.push({
-    rotulo: '6. Cofins = receita bruta total × 3% (cumulativo, sem crédito)',
-    valor: formatarBRL(r.cofins),
-  })
+  linhas.push(
+    linhaImpostoLiquido('5.', 'PIS (débito sobre vendas − crédito sobre compras)', r.pisDetalhe),
+  )
+  linhas.push(
+    linhaImpostoLiquido(
+      '6.',
+      'Cofins (débito sobre vendas − crédito sobre compras)',
+      r.cofinsDetalhe,
+    ),
+  )
+  let passo = 7
+  if (r.icms && temIcmsIpi(r.icms, r.ipi ?? r.icms)) {
+    linhas.push(
+      linhaImpostoLiquido(
+        `${passo}.`,
+        'ICMS (débito sobre vendas − crédito sobre compras)',
+        r.icms,
+      ),
+    )
+    passo++
+    if (r.ipi) {
+      linhas.push(
+        linhaImpostoLiquido(
+          `${passo}.`,
+          'IPI (débito sobre vendas − crédito sobre compras)',
+          r.ipi,
+        ),
+      )
+      passo++
+    }
+  }
   if (r.iss > 0) {
     linhas.push({
-      rotulo: `7. ISS = receita de serviços × ${formatarPercentual(r.pctIss)} (LC 116/2003)`,
+      rotulo: `${passo}. ISS = receita de serviços × ${formatarPercentual(r.pctIss)} (LC 116/2003)`,
       valor: formatarBRL(r.iss),
     })
   }

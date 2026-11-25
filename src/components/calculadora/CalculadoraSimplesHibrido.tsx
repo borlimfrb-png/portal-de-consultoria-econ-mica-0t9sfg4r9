@@ -48,6 +48,7 @@ import {
   pctPisCofinsRealPadrao,
   pctPisCofinsPresumidoPadrao,
 } from './creditosDebitosCalc'
+import type { BlocoComum, PctPisCofinsRegime } from './creditosDebitosCalc'
 import { BlocosCreditosDebitos } from './BlocosCreditosDebitos'
 
 const INPUT_CLS =
@@ -247,6 +248,10 @@ export default function CalculadoraSimplesHibrido() {
       pctCreditos: entradaHibridoInicial.pctAproveitamento,
       pctIss: entradaPresumidoInicial.pctIss,
     }))
+    // Campos NOVOS do bloco Créditos/Débitos/Custos (também pré-carregados):
+    setBlocoComum(blocoComumCasoReal)
+    setPctReal(pctPisCofinsRealPadrao)
+    setPctPresumido(pctPisCofinsPresumidoPadrao)
   }
 
   return (
@@ -376,6 +381,15 @@ export default function CalculadoraSimplesHibrido() {
                 valor={entradaPresumido.despesasDedutiveis}
                 onChange={setPresumido('despesasDedutiveis')}
                 hint="Rateia proporcionalmente sobre a presunção (não deixa o lucro presumido negativo). Deixe R$ 0,00 para a regra geral."
+              />
+              {/* Blocos NOVOS — Créditos, Débitos e Custos/Despesas */}
+              <BlocosCreditosDebitos
+                blocoComum={blocoComum}
+                setBlocoComum={setComum}
+                pctReal={pctReal}
+                setPctReal={setRealPct}
+                pctPresumido={pctPresumido}
+                setPctPresumido={setPresumidoPct}
               />
             </div>
             <p className="mt-4 text-[11px] text-slate-500 leading-relaxed flex items-start gap-1.5">

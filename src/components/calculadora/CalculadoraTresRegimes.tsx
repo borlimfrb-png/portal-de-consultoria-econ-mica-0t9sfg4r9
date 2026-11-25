@@ -34,6 +34,8 @@ import {
 import type { EntradaTresRegimes } from './tresRegimesCalc'
 import { calcularPresumido, PCT_PIS_CUMULATIVO, PCT_COFINS_CUMULATIVO } from './lucroPresumidoCalc'
 import type { EntradaPresumido } from './lucroPresumidoCalc'
+import { BlocosCreditosDebitos } from './BlocosCreditosDebitos'
+import type { BlocoComum, PctPisCofinsRegime } from './creditosDebitosCalc'
 
 const INPUT_CLS =
   'w-full bg-white border border-stone-300 rounded-lg px-3 py-2 text-sm text-slate-800 font-mono tabular-nums focus:outline-none focus:ring-2 focus:ring-[#16A34A]/40 focus:border-[#16A34A]'
@@ -129,8 +131,18 @@ export default function CalculadoraTresRegimes() {
       receitaServicos: entrada.receitaServicos,
       pctIss: entrada.pctIss,
       despesasDedutiveis: entrada.custosDedutiveis,
+      // Blocos CRÉDITOS / DÉBITOS / CUSTOS E DESPESAS informados na tela:
+      blocoComum: entrada.blocoComum,
+      pctPisCofinsPresumido: entrada.pctPisCofinsPresumido,
     }),
-    [entrada.receitaComercio, entrada.receitaServicos, entrada.pctIss, entrada.custosDedutiveis],
+    [
+      entrada.receitaComercio,
+      entrada.receitaServicos,
+      entrada.pctIss,
+      entrada.custosDedutiveis,
+      entrada.blocoComum,
+      entrada.pctPisCofinsPresumido,
+    ],
   )
   const presumido = useMemo(() => calcularPresumido(entradaPresumido), [entradaPresumido])
 
@@ -154,6 +166,14 @@ export default function CalculadoraTresRegimes() {
 
   const setFlag = (campo: keyof EntradaTresRegimes) => (v: boolean) =>
     setEntrada((e) => ({ ...e, [campo]: v }))
+
+  // Blocos CRÉDITOS / DÉBITOS / CUSTOS E DESPESAS (aninhados na entrada):
+  const setBlocoComum = (campo: keyof BlocoComum, v: string) =>
+    setEntrada((e) => ({ ...e, blocoComum: { ...e.blocoComum, [campo]: v } }))
+  const setPctReal = (campo: keyof PctPisCofinsRegime, v: string) =>
+    setEntrada((e) => ({ ...e, pctPisCofinsReal: { ...e.pctPisCofinsReal, [campo]: v } }))
+  const setPctPresumido = (campo: keyof PctPisCofinsRegime, v: string) =>
+    setEntrada((e) => ({ ...e, pctPisCofinsPresumido: { ...e.pctPisCofinsPresumido, [campo]: v } }))
 
   const carregarExemplo = () => setEntrada(entradaTresRegimesInicial)
   const carregarCasoReal = () => setEntrada(entradaTresRegimesCasoReal)
@@ -271,6 +291,14 @@ export default function CalculadoraTresRegimes() {
               hint="LC 116/2003: cada município fixa a alíquota entre 2% e 5%. Padrão educativo: 3%."
             />
           </div>
+          <BlocosCreditosDebitos
+            blocoComum={entrada.blocoComum}
+            setBlocoComum={setBlocoComum}
+            pctReal={entrada.pctPisCofinsReal}
+            setPctReal={setPctReal}
+            pctPresumido={entrada.pctPisCofinsPresumido}
+            setPctPresumido={setPctPresumido}
+          />
           <p className="mt-4 text-[11px] text-slate-500 leading-relaxed flex items-start gap-1.5">
             <Info className="w-3.5 h-3.5 text-[#16A34A] shrink-0 mt-0.5" />
             <span>
