@@ -34,9 +34,14 @@ export interface BlocoComum {
   pctIpiVendas: string
   /**
    * Base de cálculo do PIS/Cofins do LUCRO REAL, editável (string pt-BR).
-   * Vazia = automático: faturamento − ICMS das vendas. Só afeta o Lucro Real.
+   * Vazia = automático: faturamento − ICMS das vendas − IPI das vendas.
    */
   basePisCofinsManual: string
+  /**
+   * Base de cálculo do PIS/Cofins do LUCRO PRESUMIDO, editável (string pt-BR).
+   * Vazia = automático: faturamento − ICMS das vendas − IPI das vendas.
+   */
+  basePisCofinsManualPresumido: string
   /** Custo das matérias-primas consumido no mês (dedutível no Lucro Real). */
   custoMateriaPrima: string
   /** Despesas fixas do mês (administrativas, aluguéis, folha administrativa…). */
@@ -71,6 +76,7 @@ export const blocoComumInicial: BlocoComum = {
   pctIcmsVendas: '0,00',
   pctIpiVendas: '0,00',
   basePisCofinsManual: '',
+  basePisCofinsManualPresumido: '',
   custoMateriaPrima: '0,00',
   despesasFixas: '0,00',
   despesasFinanceiras: '0,00',
@@ -84,8 +90,10 @@ export const blocoComumCasoReal: BlocoComum = {
   pctIpiCompras: '10,00',
   pctIcmsVendas: '18,00',
   pctIpiVendas: '0,00',
-  // Automático: faturamento R$ 180 mil − ICMS de vendas (18% = R$ 32.400) = R$ 147.600.
+  // Automático nos dois regimes: faturamento R$ 180 mil − ICMS de vendas
+  // (18% = R$ 32.400) − IPI de vendas (0%) = R$ 147.600.
   basePisCofinsManual: '',
+  basePisCofinsManualPresumido: '',
   custoMateriaPrima: '50.000,00',
   despesasFixas: '25.000,00',
   despesasFinanceiras: '5.000,00',
@@ -107,10 +115,43 @@ export function basePisCofinsRealDe(
   bloco: BlocoComum,
   receitaTotal: number,
   icmsDebito: number,
+  ipiDebito: number,
 ): string {
   if (basePisCofinsEditadaDe(bloco)) return bloco.basePisCofinsManual
-  const automatica = Math.max(0, receitaTotal - icmsDebito)
-  return automatica.toLocaleString('pt-BR', {
+  const automatica = basePisCofinsAutomatica(receitaTotal, icmsDebito, ipiDebito)
+  return formatarValorBase(automatica)
+}
+
+/** true quando o usuário digitou uma base de PIS/Cofins manual (Lucro Presumido). */
+export function basePisCofinsPresumidoEditadaDe(bloco: BlocoComum): boolean {
+  return bloco.basePisCofinsManualPresumido.trim() !== ''
+}
+
+/**
+ * Base de cálculo do PIS/Cofins do LUCRO PRESUMIDO (string pt-BR): manual quando
+ * digitada; senão FATURAMENTO − ICMS das vendas − IPI das vendas.
+ */
+export function basePisCofinsPresumidoDe(
+  bloco: BlocoComum,
+  receitaTotal: number,
+  icmsDebito: number,
+  ipiDebito: number,
+): string {
+  if (basePisCofinsPresumidoEditadaDe(bloco)) return bloco.basePisCofinsManualPresumido
+  return formatarValorBase(basePisCofinsAutomatica(receitaTotal, icmsDebito, ipiDebito))
+}
+
+/** Base automática: faturamento − ICMS das vendas − IPI das vendas (nunca negativa). */
+export function basePisCofinsAutomatica(
+  receitaTotal: number,
+  icmsDebito: number,
+  ipiDebito: number,
+): number {
+  return Math.max(0, receitaTotal - icmsDebito - ipiDebito)
+}
+
+function formatarValorBase(v: number): string {
+  return v.toLocaleString('pt-BR', {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   })
@@ -122,10 +163,28 @@ export function linhaBasePisCofinsReal(
   automatica: boolean,
   receitaTotal: number,
   icmsDebito: number,
+  ipiDebito: number,
 ): LinhaMemoria {
   return {
     rotulo: automatica
-      ? `Base PIS/Cofins = faturamento ${formatarBRL(receitaTotal)} − ICMS das vendas ${formatarBRL(icmsDebito)}`
+      ? `Base PIS/Cofins = faturamento ${formatarBRL(receitaTotal)} − ICMS das vendas ${formatarBRL(icmsDebito)} − IPI das vendas ${formatarBRL(ipiDebito)}`
+      : 'Base PIS/Cofins = valor informado manualmente (editável no bloco Débitos)',
+    valor: formatarBRL(base),
+    destaque: 'base',
+  }
+}
+
+/** Linha da memória de cálculo da base do PIS/Cofins do Lucro Presumido. */
+export function linhaBasePisCofinsPresumido(
+  base: number,
+  automatica: boolean,
+  receitaTotal: number,
+  icmsDebito: number,
+  ipiDebito: number,
+): LinhaMemoria {
+  return {
+    rotulo: automatica
+      ? `Base PIS/Cofins = faturamento ${formatarBRL(receitaTotal)} − ICMS das vendas ${formatarBRL(icmsDebito)} − IPI das vendas ${formatarBRL(ipiDebito)}`
       : 'Base PIS/Cofins = valor informado manualmente (editável no bloco Débitos)',
     valor: formatarBRL(base),
     destaque: 'base',
@@ -209,10 +268,11 @@ export function linhaImpostoLiquido(
   nome: string,
   r: ResultadoImpostoLiquido,
   informativo = false,
+  nomeBase = 'receita',
 ): LinhaMemoria {
   const sufixo = informativo ? ' (informativo — no Presumido não altera o total do mês)' : ''
   return {
-    rotulo: `${numero} ${nome} = débito ${formatarBRL(r.debito)} (receita × ${formatarPercentual(r.pctDebito)}) − crédito ${formatarBRL(r.credito)} (compras × ${formatarPercentual(r.pctCredito)})${sufixo}`,
+    rotulo: `${numero} ${nome} = débito ${formatarBRL(r.debito)} (${nomeBase} × ${formatarPercentual(r.pctDebito)}) − crédito ${formatarBRL(r.credito)} (compras × ${formatarPercentual(r.pctCredito)})${sufixo}`,
     valor: formatarBRL(r.liquido),
   }
 }
