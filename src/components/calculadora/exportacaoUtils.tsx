@@ -8,6 +8,7 @@
 
 import { FileDown, FileSpreadsheet } from 'lucide-react'
 import { toast } from 'sonner'
+import { formatarBRL } from './cbsIbsCalc'
 
 export interface LinhaExport {
   rotulo: string
@@ -333,4 +334,39 @@ export function BotoesExportacao({
       </button>
     </div>
   )
+}
+
+/**
+ * Converte as linhas de uma memória de cálculo ({@link LinhaMemoria} dos módulos
+ * de cálculo) em uma seção de exportação. Tipado estruturalmente para aceitar a
+ * LinhaMemoria de qualquer módulo (cbsIbsCalc, simplesHibridoCalc, tresRegimesCalc…).
+ */
+export function memoriaParaSecao(
+  titulo: string,
+  linhas: readonly { rotulo: string; valor: string; destaque?: unknown }[],
+): SecaoExport {
+  return {
+    titulo,
+    linhas: linhas.map((l) => ({
+      rotulo: l.rotulo.trim(),
+      valor: l.valor || '—',
+      destaque: l.destaque !== undefined ? true : undefined,
+    })),
+  }
+}
+
+/** Converte o ranking de regimes (ordenados do veredito) em linhas de exportação. */
+export function rankingParaExport(
+  ordenados: readonly { regime: string; total: number; diferenca?: number }[],
+): RankingExport[] {
+  return ordenados.map((c, i) => ({
+    nome: c.regime,
+    total: formatarBRL(c.total),
+    detalhe:
+      i === 0
+        ? 'Menor imposto neste mês'
+        : typeof c.diferenca === 'number' && c.diferenca > 0
+          ? `+${formatarBRL(c.diferenca)} sobre o menor`
+          : undefined,
+  }))
 }
