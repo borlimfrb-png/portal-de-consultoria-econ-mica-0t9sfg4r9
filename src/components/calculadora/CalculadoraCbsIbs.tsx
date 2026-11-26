@@ -36,8 +36,17 @@ import {
 import type { ItemOperacao } from './cbsIbsCalc'
 import { ListaMemoria, AvisoEducativo } from './CalculadoraMemoria'
 import CalculadoraModos from './CalculadoraModos'
+import { BotoesExportacao, memoriaParaSecao } from './exportacaoUtils'
 
 type Modo = 'regular' | 'simples' | 'comparativo' | 'pedagio' | 'bases'
+
+const MODO_ROTULO: Record<Modo, string> = {
+  regular: 'Regime Regular',
+  simples: 'Simples Nacional',
+  comparativo: 'Comparativo Regular × Simples',
+  pedagio: 'Pedágio (CBS sobre CT-e)',
+  bases: 'Bases de Cálculo (IVA componente a componente)',
+}
 
 const UFS = [
   'AC',
@@ -135,9 +144,100 @@ export default function CalculadoraCbsIbsSection() {
   const memSplit = useMemo(() => calcularMemoriaSplit(resumo), [resumo])
   const liquidoFornecedor = resumo.totalNota - resumo.totalTributos
 
+  // Dados da operação e resultados correntes para a exportação PDF/Excel.
+  const dadosExportacao = useMemo(
+    () => ({
+      titulo: 'Simulação Tributária — Calculadora de Tributação sobre o Consumo (CBS/IBS)',
+      nomeArquivo: 'simulacao-cbs-ibs',
+      empresa: [
+        { rotulo: 'Data do fato gerador', valor: dataBR(dataFatoGerador) },
+        { rotulo: 'Local da operação (UF)', valor: uf },
+        { rotulo: 'Município', valor: municipio || '—' },
+        { rotulo: 'Tipo de documento fiscal', valor: tipoDoc },
+        { rotulo: 'Modo da simulação', valor: MODO_ROTULO[modo] ?? modo },
+        { rotulo: 'Alíquotas de referência', valor: 'CBS 8,80% · IBS 17,70% (total ~26,5%)' },
+      ],
+      tabelas: [
+        {
+          titulo: 'Itens da operação',
+          colunas: ['Item', 'Descrição', 'Base IBS/CBS', 'CBS', 'IBS', 'IS', 'Total'],
+          linhas: resultadosItens.map((calc, idx) => [
+            String(idx + 1),
+            itens[idx]?.descricao || `Item ${idx + 1}`,
+            calc.base,
+            calc.cbs,
+            calc.ibs,
+            calc.is,
+            calc.total,
+          ]),
+        },
+        {
+          titulo: 'Resumo consolidado',
+          colunas: ['Indicador', 'Valor'],
+          linhas: [
+            ['Base IBS/CBS total', resumo.totalBase],
+            ['CBS total', resumo.totalCBS],
+            ['IBS total', resumo.totalIBS],
+            ['IS total', resumo.totalIS],
+            ['Total de tributos', resumo.totalTributos],
+            ['Bruto da nota', resumo.totalNota],
+            ['Alíquota efetiva', `${resumo.aliquotaEfetiva.toFixed(2).replace('.', ',')}%`],
+            ...(splitAtivo
+              ? ([
+                  ['Retido na fonte (CBS+IBS+IS)', resumo.totalTributos],
+                  ['Líquido do fornecedor', liquidoFornecedor],
+                ] as (string | number)[][])
+              : []),
+          ],
+        },
+      ],
+      secoes: [memoriaParaSecao('Memória de cálculo — Regime Regular', memRegular)],
+      notaExtra:
+        'Versão educativa e simplificada da Calculadora de Consumo do piloto CBS/IBS da Receita Federal (piloto-cbs.tributos.gov.br).',
+    }),
+    [
+      dataFatoGerador,
+      uf,
+      municipio,
+      tipoDoc,
+      modo,
+      resultadosItens,
+      itens,
+      resumo,
+      splitAtivo,
+      liquidoFornecedor,
+      memRegular,
+    ],
+  )
+
+  const dadosExportacaoSimples = useMemo(
+    () => ({
+      ...dadosExportacao,
+      titulo: 'Simulação Tributária — Simples Nacional (CBS/IBS)',
+      tabelas: [],
+      secoes: [
+        memoriaParaSecao('Memória de cálculo — Simples Nacional', memSimples),
+        ...(splitAtivo ? [memoriaParaSecao('Split Payment — memória de cálculo', memSplit)] : []),
+      ],
+    }),
+    [dadosExportacao, memSimples, memSplit, splitAtivo],
+  )
+
+  const dadosExportacaoSplit = useMemo(
+    () => ({
+      ...dadosExportacao,
+      secoes: [
+        ...dadosExportacao.secoes,
+        ...(splitAtivo ? [memoriaParaSecao('Split Payment — memória de cálculo', memSplit)] : []),
+      ],
+    }),
+    [dadosExportacao, memSplit, splitAtivo],
+  )
+
   const resumoRegular = (
     <div className="p-5 sm:p-6 space-y-5">
       <ListaMemoria linhas={memRegular} titulo="Memória de cálculo — passo a passo" />
+      <BotoesExportacao dados={dadosExportacao} />
       <div className="bg-[#082852] rounded-xl p-4 sm:p-5 text-white">
         <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-[#22C55E] block mb-3">
           Resultado Total
@@ -711,6 +811,7 @@ export default function CalculadoraCbsIbsSection() {
                         linhas={memSimples}
                         titulo="Memória de cálculo — Simples Nacional"
                       />
+                      <BotoesExportacao dados={dadosExportacaoSimples} />
                     </div>
                   </div>
                 </div>
@@ -729,6 +830,7 @@ export default function CalculadoraCbsIbsSection() {
                       linhas={memSimples}
                       titulo="Memória de cálculo — Simples Nacional"
                     />
+                    <BotoesExportacao dados={dadosExportacaoSimples} />
                   </div>
                 </div>
               )}
@@ -799,6 +901,7 @@ export default function CalculadoraCbsIbsSection() {
                         </div>
                       </div>
                       <ListaMemoria linhas={memSplit} titulo="Split Payment — memória de cálculo" />
+                      <BotoesExportacao dados={dadosExportacaoSplit} />
                     </div>
                   )}
                 </div>

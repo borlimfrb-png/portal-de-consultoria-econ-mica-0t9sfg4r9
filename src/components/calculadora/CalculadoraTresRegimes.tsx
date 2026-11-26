@@ -37,6 +37,7 @@ import type { EntradaPresumido } from './lucroPresumidoCalc'
 import { BlocosCreditosDebitos } from './BlocosCreditosDebitos'
 import { ApuracaoLucroRealTabela } from './ApuracaoLucroRealTabela'
 import type { BlocoComum, PctPisCofinsRegime } from './creditosDebitosCalc'
+import { BotoesExportacao, memoriaParaSecao, rankingParaExport } from './exportacaoUtils'
 
 const INPUT_CLS =
   'w-full bg-white border border-stone-300 rounded-lg px-3 py-2 text-sm text-slate-800 font-mono tabular-nums focus:outline-none focus:ring-2 focus:ring-[#16A34A]/40 focus:border-[#16A34A]'
@@ -160,6 +161,37 @@ export default function CalculadoraTresRegimes() {
         { dasTotal: simples.dasTotal },
       ),
     [real.totalTributos, presumido.totalTributos, simples.dasTotal],
+  )
+
+  // Dados consolidados para a exportação em PDF/Excel (espelham o estado atual).
+  const dadosExportacao = useMemo(
+    () => ({
+      titulo: 'Simulação Tributária — Simples Nacional × Lucro Presumido × Lucro Real',
+      nomeArquivo: 'simulacao-3-regimes',
+      empresa: [
+        { rotulo: 'Receita de comércio/indústria no mês', valor: `R$ ${entrada.receitaComercio}` },
+        { rotulo: 'Receita de serviços no mês', valor: `R$ ${entrada.receitaServicos}` },
+        { rotulo: 'RBT12 (receita bruta acumulada 12 meses)', valor: `R$ ${entrada.rbt12}` },
+        { rotulo: 'Folha de salários 12 meses (Fator R)', valor: `R$ ${entrada.folha12Simples}` },
+        {
+          rotulo: 'Serviços com retenção de ISS (Anexo IV)',
+          valor: entrada.anexoIvRetencaoIss ? 'Sim' : 'Não',
+        },
+        { rotulo: 'Custos e despesas dedutíveis no mês', valor: `R$ ${entrada.custosDedutiveis}` },
+        { rotulo: 'Folha de pagamento no mês', valor: `R$ ${entrada.folhaPagamento}` },
+        { rotulo: '% de crédito de PIS/Cofins (Lucro Real)', valor: `${entrada.pctCreditos}%` },
+        { rotulo: 'Alíquota de ISS do município', valor: `${entrada.pctIss}%` },
+      ],
+      ranking: rankingParaExport(veredito.ordenados),
+      secoes: [
+        memoriaParaSecao('Memória de cálculo — Simples Nacional', memoriaSimples),
+        memoriaParaSecao('Memória de cálculo — Lucro Presumido', memoriaPresumido),
+        memoriaParaSecao('Memória de cálculo — Lucro Real', memoriaReal),
+      ],
+      notaExtra:
+        'Comparação educativa entre regimes na mesma base de dados. IRPJ/CSLL do Lucro Real incidem sobre o lucro contábil apurado do mês.',
+    }),
+    [entrada, veredito, memoriaSimples, memoriaPresumido, memoriaReal],
   )
 
   const set = (campo: keyof EntradaTresRegimes) => (v: string) =>
@@ -411,6 +443,9 @@ export default function CalculadoraTresRegimes() {
               </p>
             </div>
           </div>
+
+          {/* Exportação PDF / Excel */}
+          <BotoesExportacao dados={dadosExportacao} />
 
           {/* Veredito entre os TRÊS regimes */}
           <div

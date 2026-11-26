@@ -19,6 +19,8 @@ import {
 } from './cbsIbsCalcModos'
 import type { ComponentesBase } from './cbsIbsCalcModos'
 import { ListaMemoria } from './CalculadoraMemoria'
+import { BotoesExportacao, memoriaParaSecao } from './exportacaoUtils'
+import { formatarPercentual as formatarPctComum } from './cbsIbsCalc'
 
 const INPUT_CLS =
   'w-full bg-white border border-stone-300 rounded-lg px-3 py-2 text-sm text-slate-800 font-mono tabular-nums focus:outline-none focus:ring-2 focus:ring-[#16A34A]/40 focus:border-[#16A34A]'
@@ -83,6 +85,19 @@ function ModoPedagio() {
   const resultado = useMemo(() => calcularPedagio(valor, pctCBS), [valor, pctCBS])
   const memoria = useMemo(() => calcularMemoriaPedagio(resultado), [resultado])
 
+  const dadosExportacao = useMemo(
+    () => ({
+      titulo: 'Simulação Tributária — Pedágio (CBS sobre CT-e)',
+      nomeArquivo: 'simulacao-cbs-ibs-pedagio',
+      empresa: [
+        { rotulo: 'Valor do pedágio destacado no frete (CT-e)', valor: `R$ ${valor}` },
+        { rotulo: 'Alíquota CBS', valor: `${formatarPctComum(parseCurrency(pctCBS))}` },
+      ],
+      secoes: [memoriaParaSecao('Memória de cálculo — Pedágio', memoria)],
+    }),
+    [valor, pctCBS, memoria],
+  )
+
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
       <div className={cardPapel}>
@@ -143,6 +158,9 @@ function ModoPedagio() {
           </div>
         </div>
         <ListaMemoria linhas={memoria} titulo="Memória de cálculo — Pedágio" />
+        <div className="mt-4">
+          <BotoesExportacao dados={dadosExportacao} />
+        </div>
         <p className="mt-4 text-[11px] text-slate-500 leading-relaxed flex items-start gap-1.5">
           <Info className="w-3.5 h-3.5 text-[#16A34A] shrink-0 mt-0.5" />
           <span>
@@ -168,6 +186,23 @@ function ModoBases() {
 
   const r = useMemo(() => calcularBases(componentes, pctCBS, pctIBS), [componentes, pctCBS, pctIBS])
   const memoria = useMemo(() => calcularMemoriaBases(r), [r])
+
+  const dadosExportacao = useMemo(
+    () => ({
+      titulo: 'Simulação Tributária — Bases de Cálculo (IVA componente a componente)',
+      nomeArquivo: 'simulacao-cbs-ibs-bases',
+      empresa: [
+        { rotulo: 'Alíquota CBS', valor: `${formatarPctComum(parseCurrency(pctCBS))}` },
+        { rotulo: 'Alíquota IBS', valor: `${formatarPctComum(parseCurrency(pctIBS))}` },
+        { rotulo: 'Base de cálculo do IVA', valor: formatarBRL(r.base) },
+        { rotulo: 'CBS devida', valor: formatarBRL(r.cbs) },
+        { rotulo: 'IBS devido', valor: formatarBRL(r.ibs) },
+        { rotulo: 'Total do IVA', valor: formatarBRL(r.ivaTotal) },
+      ],
+      secoes: [memoriaParaSecao('Memória de cálculo — Bases de Cálculo', memoria)],
+    }),
+    [pctCBS, pctIBS, r, memoria],
+  )
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
@@ -290,6 +325,9 @@ function ModoBases() {
         </div>
 
         <ListaMemoria linhas={memoria} titulo="Memória de cálculo completa" />
+        <div className="mt-4">
+          <BotoesExportacao dados={dadosExportacao} />
+        </div>
       </div>
     </div>
   )
