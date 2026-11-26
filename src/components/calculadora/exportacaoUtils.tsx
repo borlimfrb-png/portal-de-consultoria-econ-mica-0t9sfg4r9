@@ -1,364 +1,336 @@
-// Exportação em PDF e Excel das calculadoras tributárias — 100% no navegador.
-// PDF: jsPDF + jspdf-autotable (relatório consultivo A4, memória de cálculo
-// linha a linha). Excel: xlsx (SheetJS) com valores NUMÉRICOS nas células.
-// Nada é gravado em banco ou enviado a servidores: download local apenas.
+// Exportação em PDF e Excel das calculadoras de simulação tributária.
+// 100% no navegador: jspdf + jspdf-autotable + xlsx são carregados sob demanda
+// (dynamic import) e NADA é gravado no banco nem enviado a servidores.
+// PDF: valores formatados em R$ (pt-BR), cabeçalho, memória de cálculo em
+// tabelas, ranking dos regimes e rodapé com a identidade Borlim.
+// Excel: números crus (não texto) para permitir fórmulas do usuário, com
+// formatação pt-BR ("R$" #.##0,00 e %) aplicada nas células numéricas.
 
-import { DocumentText, FileSpreadsheet } from 'lucide-react'
+import { FileDown, FileSpreadsheet } from 'lucide-react'
 import { toast } from 'sonner'
 
-/** Converte "1.234,56" (formato pt-BR dos inputs) em número. */
-export function paraNumero(valorBr: string): number {
-  if (!valorBr) return 0
-  const limpo = valorBr
-    .replace(/\s|R\$/g, '')
-    .replace(/\./g, '')
-    .replace(',', '.')
-  const n = Number(limpo)
-  return Number.isFinite(n) ? n : 0
-}
-
-/** Linha monetária da memória de exportação. */
-export function linhaExport(descricao: string, valor: number, bold = false): LinhaExport {
-  return { descricao, valor, bold }
-}
-
-/** Linha informativa (sem valor) da memória de exportação. */
-export function linhaInfoExport(descricao: string, bold = false): LinhaExport {
-  return { descricao, valor: null, bold }
-}
-
-// ------------------------------------------------------------------ tipos ----
-
 export interface LinhaExport {
-  descricao: string
-  valor: number | null // null = linha informativa sem valor (ex.: textos)
-  bold?: boolean
+  rotulo: string
+  valor: string
+  destaque?: boolean
 }
 
 export interface SecaoExport {
   titulo: string
-  linhas: LinhaExport[]
+  linhas: readonly LinhaExport[]
 }
 
-export interface DadosEmpresa {
-  rotulo: string
-  valor: string
+export interface TabelaExport {
+  titulo: string
+  colunas: string[]
+  linhas: readonly (string | number)[][]
 }
 
-export interface RankingItem {
-  posicao: number
-  regime: string
-  total: number
-  melhor?: boolean
+export interface RankingExport {
+  nome: string
+  total: string
+  detalhe?: string
 }
 
-export interface ExportacaoPayload {
-  tituloCalculadora: string
-  subtitulo?: string
-  dataHora: Date
-  empresa: DadosEmpresa[]
-  ranking?: RankingItem[]
-  observacao?: string
-  secoes: SecaoExport[]
+export interface DadosExportacao {
+  titulo: string
   nomeArquivo: string
+  empresa: readonly LinhaExport[]
+  secoes: readonly SecaoExport[]
+  ranking?: readonly RankingExport[]
+  tabelas?: readonly TabelaExport[]
+  notaExtra?: string
 }
 
-// ----------------------------------------------------------------- helpers ---
+const CONTATO = 'Borlim Consultoria Empresarial  ·  flavio@borlim.com.br  ·  (17) 99765-0672'
+const NOTA_EDUCATIVA =
+  'Simulação de caráter exclusivamente educativo — os valores não substituem a apuração contábil oficial (PGDAS-D, EFD, PER/DCOMP) nem a calculadora oficial do piloto CBS/IBS da Receita Federal.'
 
-function baixarBlob(blob: Blob, nomeArquivo: string) {
-  const url = URL.createObjectURL(blob)
-  const a = document.createElement('a')
-  a.href = url
-  a.download = nomeArquivo
-  document.body.appendChild(a)
-  a.click()
-  document.body.removeChild(a)
-  URL.revokeObjectURL(url)
+const COR_AZUL: [number, number, number] = [8, 40, 82]
+const COR_CINZA: [number, number, number] = [100, 116, 139]
+
+function carimboArquivo(): string {
+  const d = new Date()
+  const mm = String(d.getMonth() + 1).padStart(2, '0')
+  const dd = String(d.getDate()).padStart(2, '0')
+  return `${d.getFullYear()}-${mm}-${dd}`
 }
 
-function timestampArquivo(d: Date): string {
-  const p = (n: number) => String(n).padStart(2, '0')
-  return `${d.getFullYear()}${p(d.getMonth() + 1)}${p(d.getDate())}-${p(d.getHours())}${p(d.getMinutes())}`
+function dataGeracao(): string {
+  return new Date().toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' })
 }
 
-function dataHoraLegivel(d: Date): string {
-  return d.toLocaleString('pt-BR', {
-    day: '2-digit',
-    month: '2-digit',
-    year: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
-  })
-}
-
-// --------------------------------------------------------------------- PDF ---
-
-async function gerarPdf(payload: ExportacaoPayload) {
-  const [{ jsPDF }, autoTableMod] = await Promise.all([import('jspdf'), import('jspdf-autotable')])
-  const autoTable = autoTableMod.default
-
-  const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' })
-  const largura = doc.internal.pageSize.getWidth()
-  const AZUL = '#0B1F3A'
-  const VERDE = '#1F7A4D'
-  const CINZA = '#6B7280'
-
-  // Cabeçalho editorial
-  doc.setFillColor(11, 31, 58)
-  doc.rect(0, 0, largura, 26, 'F')
-  doc.setTextColor(255, 255, 255)
-  doc.setFont('times', 'bold')
-  doc.setFontSize(15)
-  doc.text('Borlim — Portal de Consultoria Econômica', 14, 11)
-  doc.setFont('helvetica', 'normal')
-  doc.setFontSize(9)
-  doc.text('Relatório de simulação tributária — uso educativo', 14, 18)
-  doc.text(dataHoraLegivel(payload.dataHora), largura - 14, 18, { align: 'right' })
-
-  let y = 34
-  doc.setTextColor(AZUL)
-  doc.setFont('times', 'bold')
-  doc.setFontSize(14)
-  doc.text(payload.tituloCalculadora, 14, y)
-  y += 6
-  if (payload.subtitulo) {
-    doc.setFont('helvetica', 'italic')
-    doc.setFontSize(9.5)
-    doc.setTextColor(CINZA)
-    doc.text(payload.subtitulo, 14, y)
-    y += 6
-  }
-
-  // Dados informados
-  autoTable(doc, {
-    startY: y,
-    head: [['Dados informados na simulação', 'Valor']],
-    body: payload.empresa.map((d) => [d.rotulo, d.valor]),
-    theme: 'grid',
-    headStyles: { fillColor: [31, 122, 77], textColor: 255, fontSize: 8.5, fontStyle: 'bold' },
-    bodyStyles: { fontSize: 8.5, textColor: [30, 41, 59] },
-    alternateRowStyles: { fillColor: [245, 247, 250] },
-    margin: { left: 14, right: 14 },
-  })
-
-  type DocComAuto = typeof doc & { lastAutoTable?: { finalY: number } }
-  y = ((doc as DocComAuto).lastAutoTable?.finalY ?? y) + 8
-
-  // Ranking (quando houver)
-  if (payload.ranking && payload.ranking.length > 0) {
-    autoTable(doc, {
-      startY: y,
-      head: [['Posição', 'Regime', 'Total de tributos no mês']],
-      body: payload.ranking.map((r) => [
-        `${r.posicao}º`,
-        r.regime + (r.melhor ? '  ★' : ''),
-        r.total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }),
-      ]),
-      theme: 'grid',
-      headStyles: { fillColor: [11, 31, 58], textColor: 255, fontSize: 8.5, fontStyle: 'bold' },
-      bodyStyles: { fontSize: 9, textColor: [30, 41, 59] },
-      didParseCell: (data) => {
-        if (
-          data.section === 'body' &&
-          data.column.index === 1 &&
-          data.cell.raw &&
-          String(data.cell.raw).includes('★')
-        ) {
-          data.cell.styles.fontStyle = 'bold'
-          data.cell.styles.textColor = [31, 122, 77]
-        }
-      },
-      margin: { left: 14, right: 14 },
+function formatarNumeroPdf(valor: string | number): string {
+  if (typeof valor === 'number') {
+    return valor.toLocaleString('pt-BR', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
     })
-    y = ((doc as DocComAuto).lastAutoTable?.finalY ?? y) + 8
   }
+  return valor
+}
 
-  if (payload.observacao) {
-    doc.setFont('helvetica', 'italic')
-    doc.setFontSize(8)
-    doc.setTextColor(CINZA)
-    const linhas = doc.splitTextToSize(payload.observacao, largura - 28)
-    doc.text(linhas, 14, y)
-    y += linhas.length * 4 + 4
+/** Reconhece texto numérico pt-BR ("1.234,56", "R$ 1.234,56", "26,5%") e devolve número cru + formato de célula. */
+function converterNumeroPtBR(texto: string): { v: number; z: string } | null {
+  const t = texto.trim()
+  if (!t) return null
+  const pct = t.endsWith('%')
+  const corpo = pct ? t.slice(0, -1).trim() : t
+  const limpo = corpo.replace(/^R\$\s?/i, '').replace(/\s/g, '')
+  if (pct) {
+    if (!/^-?\d+(,\d+)?$/.test(limpo)) return null
+  } else if (!/^-?\d{1,3}(\.\d{3})+(,\d+)?$/.test(limpo) && !/^-?\d+,\d+$/.test(limpo)) {
+    // Inteiros puros sem separador (NCM, cClassTrib, anos) permanecem texto.
+    return null
   }
+  const n = Number(limpo.replace(/\./g, '').replace(',', '.'))
+  if (!Number.isFinite(n)) return null
+  return { v: n, z: pct ? '0.00"%"' : '"R$" #,##0.00' }
+}
 
-  // Memória de cálculo — uma tabela por seção
-  for (const secao of payload.secoes) {
-    if (y > 250) {
-      doc.addPage()
-      y = 20
-      doc.setFont('times', 'bold')
-      doc.setFontSize(11)
-      doc.setTextColor(AZUL)
-      doc.text(secao.titulo, 14, y)
-      y += 6
-    }
-    autoTable(doc, {
-      startY: y,
-      head: [[secao.titulo, 'Valor']],
-      body: secao.linhas.map((l) => [
-        l.descricao,
-        l.valor === null
-          ? ''
-          : l.valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }),
-      ]),
-      theme: 'grid',
-      headStyles: { fillColor: [31, 122, 77], textColor: 255, fontSize: 8, fontStyle: 'bold' },
-      bodyStyles: { fontSize: 8, textColor: [30, 41, 59] },
-      columnStyles: { 1: { halign: 'right', cellWidth: 42 } },
-      didParseCell: (data) => {
-        if (data.section === 'body' && secao.linhas[data.row.index]?.bold) {
-          data.cell.styles.fontStyle = 'bold'
-          data.cell.styles.fillColor = [235, 242, 238]
-        }
-      },
-      margin: { left: 14, right: 14 },
+export async function exportarPdf(dados: DadosExportacao): Promise<void> {
+  try {
+    const { jsPDF } = await import('jspdf')
+    const autoTable = (await import('jspdf-autotable')).default
+
+    const doc = new jsPDF({ unit: 'mm', format: 'a4' })
+    doc.setProperties({
+      title: dados.titulo,
+      author: 'Borlim Consultoria Empresarial',
+      subject: 'Simulação tributária de caráter educativo',
     })
-    y = ((doc as DocComAuto).lastAutoTable?.finalY ?? y) + 7
-  }
 
-  // Rodapé em todas as páginas
-  const totalPaginas = doc.getNumberOfPages()
-  for (let i = 1; i <= totalPaginas; i++) {
-    doc.setPage(i)
+    const largura = doc.internal.pageSize.getWidth()
+    const altura = doc.internal.pageSize.getHeight()
+    const margem = 14
+    const larguraUtil = largura - margem * 2
+
+    // Cabeçalho (primeira página)
+    doc.setFillColor(...COR_AZUL)
+    doc.rect(0, 0, largura, 26, 'F')
+    doc.setTextColor(255, 255, 255)
+    doc.setFont('helvetica', 'bold')
+    doc.setFontSize(13)
+    doc.text(dados.titulo, margem, 10, { maxWidth: larguraUtil })
     doc.setFont('helvetica', 'normal')
-    doc.setFontSize(7.5)
-    doc.setTextColor(140, 148, 160)
-    doc.text(
-      'Material educativo — não substitui apuração contábil ou orientação profissional.',
-      14,
-      doc.internal.pageSize.getHeight() - 8,
-    )
-    doc.text(
-      `Página ${i} de ${totalPaginas}`,
-      largura - 14,
-      doc.internal.pageSize.getHeight() - 8,
-      {
-        align: 'right',
-      },
-    )
-  }
+    doc.setFontSize(8)
+    doc.text('Borlim Consultoria Empresarial — simulação tributária', margem, 15.5)
+    doc.text(`Gerado em ${dataGeracao()}`, margem, 20.5)
 
-  baixarBlob(doc.output('blob'), `${payload.nomeArquivo}-${timestampArquivo(payload.dataHora)}.pdf`)
+    let y = 33
+
+    const rodape = () => {
+      doc.setDrawColor(203, 213, 225)
+      doc.setLineWidth(0.2)
+      doc.line(margem, altura - 14, largura - margem, altura - 14)
+      doc.setFont('helvetica', 'normal')
+      doc.setFontSize(7)
+      doc.setTextColor(...COR_CINZA)
+      doc.text(CONTATO, margem, altura - 10)
+      doc.text(NOTA_EDUCATIVA, margem, altura - 6.5, { maxWidth: larguraUtil })
+      doc.text(`Página ${doc.getNumberOfPages()}`, largura - margem, altura - 10, {
+        align: 'right',
+      })
+      doc.setTextColor(15, 23, 42)
+    }
+
+    const desenhaTabela = (opts: {
+      head: string[][]
+      body: (string | number)[][]
+      destaques?: Set<number>
+    }) => {
+      autoTable(doc, {
+        startY: y,
+        head: opts.head,
+        body: opts.body.map((r) => r.map(formatarNumeroPdf)),
+        margin: { left: margem, right: margem, bottom: 22 },
+        styles: {
+          font: 'helvetica',
+          fontSize: 8.5,
+          cellPadding: 1.8,
+          textColor: [15, 23, 42],
+          lineColor: [226, 232, 240],
+          lineWidth: 0.1,
+        },
+        headStyles: { fillColor: COR_AZUL, textColor: 255, fontStyle: 'bold', fontSize: 8.5 },
+        alternateRowStyles: { fillColor: [248, 250, 252] },
+        didParseCell: (data) => {
+          if (data.section === 'body' && opts.destaques?.has(data.row.index)) {
+            data.cell.styles.fontStyle = 'bold'
+            data.cell.styles.fillColor = [240, 244, 248]
+          }
+        },
+        didDrawPage: () => rodape(),
+      })
+      const docT = doc as jsPDF & { lastAutoTable?: { finalY: number } }
+      y = (docT.lastAutoTable?.finalY ?? y) + 8
+    }
+
+    const tituloBloco = (texto: string) => {
+      if (y > altura - 42) {
+        doc.addPage()
+        y = 20
+      }
+      doc.setFont('helvetica', 'bold')
+      doc.setFontSize(10.5)
+      doc.setTextColor(...COR_AZUL)
+      doc.text(texto, margem, y)
+      doc.setTextColor(15, 23, 42)
+      y += 3.5
+    }
+
+    tituloBloco('Dados da empresa')
+    desenhaTabela({
+      head: [['Campo', 'Valor informado']],
+      body: dados.empresa.map((l) => [l.rotulo, l.valor]),
+    })
+
+    for (const tabela of dados.tabelas ?? []) {
+      tituloBloco(tabela.titulo)
+      desenhaTabela({ head: [tabela.colunas], body: tabela.linhas.map((r) => [...r]) })
+    }
+
+    for (const secao of dados.secoes) {
+      tituloBloco(secao.titulo)
+      desenhaTabela({
+        head: [['Descrição', 'Valor']],
+        body: secao.linhas.map((l) => [l.rotulo, l.valor]),
+        destaques: new Set(secao.linhas.map((l, i) => (l.destaque ? i : -1)).filter((i) => i >= 0)),
+      })
+    }
+
+    if (dados.ranking?.length) {
+      tituloBloco('Ranking — menor imposto neste mês')
+      desenhaTabela({
+        head: [['Posição', 'Regime', 'Total', 'Observação']],
+        body: dados.ranking.map((r, i) => [`${i + 1}º`, r.nome, r.total, r.detalhe ?? '']),
+      })
+    }
+
+    if (dados.notaExtra) {
+      if (y > altura - 30) {
+        doc.addPage()
+        y = 20
+      }
+      doc.setFont('helvetica', 'italic')
+      doc.setFontSize(8)
+      doc.setTextColor(...COR_CINZA)
+      doc.text(dados.notaExtra, margem, y, { maxWidth: larguraUtil })
+      doc.setTextColor(15, 23, 42)
+    }
+
+    rodape()
+    doc.save(`${dados.nomeArquivo}-${carimboArquivo()}.pdf`)
+    toast.success('PDF gerado com sucesso.')
+  } catch (erro) {
+    console.error('Falha ao gerar o PDF da simulação', erro)
+    toast.error('Não foi possível gerar o PDF. Tente novamente.')
+  }
 }
 
-// ------------------------------------------------------------------- Excel ---
+export async function exportarExcel(dados: DadosExportacao): Promise<void> {
+  try {
+    const XLSX = await import('xlsx')
+    const wb = XLSX.utils.book_new()
 
-async function gerarExcel(payload: ExportacaoPayload) {
-  const XLSX = await import('xlsx')
+    const planilha: (string | number)[][] = [
+      [dados.titulo],
+      [`Gerado em ${dataGeracao()} — Borlim Consultoria Empresarial`],
+      [],
+      ['DADOS DA EMPRESA'],
+      ['Campo', 'Valor informado'],
+      ...dados.empresa.map((l) => [l.rotulo, l.valor]),
+      [],
+    ]
 
-  const wb = XLSX.utils.book_new()
-  const nomeAbaBase = payload.nomeArquivo.replace(/[^a-zA-Z0-9]/g, '').slice(0, 24) || 'Simulacao'
-
-  const linhasCabecalho: (string | number)[] = [
-    payload.tituloCalculadora,
-    `Borlim — Portal de Consultoria Econômica`,
-    `Simulação gerada em ${dataHoraLegivel(payload.dataHora)}`,
-  ]
-  if (payload.subtitulo) linhasCabecalho.push(payload.subtitulo)
-
-  const wsResumo: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet([
-    linhasCabecalho,
-    [],
-    ['Dados informados', 'Valor'],
-    ...payload.empresa.map((d) => [d.rotulo, d.valor]),
-  ])
-  if (payload.ranking && payload.ranking.length > 0) {
-    XLSX.utils.sheet_add_aoa(
-      wsResumo,
-      [
-        [],
-        ['Ranking — menor imposto no mês', 'Total (R$)'],
-        ...payload.ranking.map((r) => [
-          `${r.posicao}º — ${r.regime}${r.melhor ? ' ★' : ''}`,
-          r.total,
-        ]),
-      ],
-      { origin: -1 },
-    )
-  }
-  if (payload.observacao) {
-    XLSX.utils.sheet_add_aoa(wsResumo, [[], [payload.observacao]], { origin: -1 })
-  }
-  wsResumo['!cols'] = [{ wch: 52 }, { wch: 20 }]
-  XLSX.utils.book_append_sheet(wb, wsResumo, 'Resumo')
-
-  // Uma aba por seção (regime / memória), valores como NÚMEROS.
-  payload.secoes.forEach((secao, i) => {
-    const aoa: (string | number)[][] = [[secao.titulo], ['Descrição', 'Valor (R$)']]
-    for (const l of secao.linhas) {
-      aoa.push([l.descricao, l.valor === null ? '' : l.valor])
+    for (const tabela of dados.tabelas ?? []) {
+      planilha.push([tabela.titulo], tabela.colunas, ...tabela.linhas.map((r) => [...r]), [])
     }
-    const ws = XLSX.utils.aoa_to_sheet(aoa)
-    // Formato monetário na coluna B (linhas com número).
-    const rng = XLSX.utils.decode_range(ws['!ref'] ?? 'A1')
-    for (let r = 2; r <= rng.e.r; r++) {
-      const addr = XLSX.utils.encode_cell({ r, c: 1 })
-      const cell = ws[addr]
-      if (cell && typeof cell.v === 'number') {
-        cell.t = 'n'
-        cell.z = '"R$"#,##0.00'
+
+    for (const secao of dados.secoes) {
+      planilha.push(
+        [secao.titulo],
+        ['Descrição', 'Valor'],
+        ...secao.linhas.map((l) => [l.rotulo, l.valor]),
+        [],
+      )
+    }
+
+    if (dados.ranking?.length) {
+      planilha.push(
+        ['RANKING — MENOR IMPOSTO NESTE MÊS'],
+        ['Posição', 'Regime', 'Total', 'Observação'],
+      )
+      dados.ranking.forEach((r, i) =>
+        planilha.push([`${i + 1}º`, r.nome, r.total, r.detalhe ?? '']),
+      )
+      planilha.push([])
+    }
+
+    planilha.push([NOTA_EDUCATIVA], [CONTATO])
+    if (dados.notaExtra) planilha.push([dados.notaExtra])
+
+    const ws = XLSX.utils.aoa_to_sheet(planilha)
+
+    // Converte células de texto numérico pt-BR em NÚMEROS CRUS (não texto),
+    // mantendo a formatação R$/% para leitura humana.
+    const ref = ws['!ref'] ?? 'A1'
+    const faixa = XLSX.utils.decode_range(ref)
+    for (let r = faixa.s.r; r <= faixa.e.r; r++) {
+      for (let c = faixa.s.c; c <= faixa.e.c; c++) {
+        const end = XLSX.utils.encode_cell({ r, c })
+        const cel = ws[end]
+        if (!cel || cel.t !== 's' || typeof cel.v !== 'string') continue
+        const conv = converterNumeroPtBR(cel.v)
+        if (conv) ws[end] = { t: 'n', v: conv.v, z: conv.z }
       }
     }
-    ws['!cols'] = [{ wch: 56 }, { wch: 18 }]
-    const nomeAba = secao.titulo.replace(/[\\/*?:[\]]/g, '').slice(0, 28) || `Secao${i + 1}`
-    XLSX.utils.book_append_sheet(wb, ws, nomeAba)
-  })
 
-  const saida = XLSX.write(wb, { bookType: 'xlsx', type: 'array' })
-  baixarBlob(
-    new Blob([saida], {
-      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-    }),
-    `${payload.nomeArquivo}-${timestampArquivo(payload.dataHora)}.xlsx`,
-  )
-}
-
-// ------------------------------------------------------------------ botões ---
-
-interface BotoesExportacaoProps {
-  gerarPayload: () => ExportacaoPayload
-  className?: string
-}
-
-export function BotoesExportacao({ gerarPayload, className = '' }: BotoesExportacaoProps) {
-  const exportar = async (tipo: 'pdf' | 'excel') => {
-    const id = toast.loading(tipo === 'pdf' ? 'Gerando PDF…' : 'Gerando Excel…')
-    try {
-      const payload = gerarPayload()
-      if (tipo === 'pdf') await gerarPdf(payload)
-      else await gerarExcel(payload)
-      toast.success(
-        tipo === 'pdf' ? 'PDF baixado com sucesso.' : 'Planilha Excel baixada com sucesso.',
-        { id },
-      )
-    } catch (err) {
-      console.error('Falha na exportação:', err)
-      toast.error('Não foi possível gerar o arquivo. Tente novamente.', { id })
-    }
+    ws['!cols'] = [{ wch: 46 }, { wch: 22 }, { wch: 24 }, { wch: 26 }]
+    XLSX.utils.book_append_sheet(wb, ws, 'Simulação')
+    XLSX.writeFile(wb, `${dados.nomeArquivo}-${carimboArquivo()}.xlsx`)
+    toast.success('Planilha Excel gerada com sucesso.')
+  } catch (erro) {
+    console.error('Falha ao gerar a planilha Excel da simulação', erro)
+    toast.error('Não foi possível gerar a planilha Excel. Tente novamente.')
   }
+}
 
+/** Par de botões discreto (PDF / Excel), no padrão visual do portal. */
+export function BotoesExportacao({
+  dados,
+  className,
+}: {
+  dados: DadosExportacao
+  className?: string
+}) {
+  const cls =
+    'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-stone-300 bg-white text-[#082852] text-[11px] font-mono font-bold uppercase tracking-wider hover:border-[#16A34A] hover:text-[#15803D] transition-colors cursor-pointer'
   return (
-    <div className={`flex flex-wrap items-center gap-2 ${className}`}>
-      <button
-        type="button"
-        onClick={() => exportar('pdf')}
-        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0B1F3A] text-white text-[11px] font-mono font-bold uppercase tracking-wider hover:bg-[#12305c] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0B1F3A]"
-      >
-        <DocumentText className="w-3.5 h-3.5" aria-hidden="true" />
-        <span>Baixar PDF</span>
-      </button>
-      <button
-        type="button"
-        onClick={() => exportar('excel')}
-        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#1F7A4D] text-white text-[11px] font-mono font-bold uppercase tracking-wider hover:bg-[#18603C] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1F7A4D]"
-      >
-        <FileSpreadsheet className="w-3.5 h-3.5" aria-hidden="true" />
-        <span>Baixar Excel</span>
-      </button>
-      <span className="sr-only">
-        A exportação é gerada no seu navegador; nenhum dado é enviado ou gravado.
+    <div className={`flex flex-wrap items-center gap-2 ${className ?? ''}`}>
+      <span className="text-[11px] font-mono uppercase tracking-wider font-bold text-slate-500">
+        Exportar:
       </span>
+      <button
+        type="button"
+        onClick={() => void exportarPdf(dados)}
+        title="Exportar em PDF"
+        aria-label="Exportar simulação em PDF"
+        className={cls}
+      >
+        <FileDown className="w-3.5 h-3.5" />
+        <span>PDF</span>
+      </button>
+      <button
+        type="button"
+        onClick={() => void exportarExcel(dados)}
+        title="Exportar em Excel"
+        aria-label="Exportar simulação em Excel"
+        className={cls}
+      >
+        <FileSpreadsheet className="w-3.5 h-3.5" />
+        <span>Excel</span>
+      </button>
     </div>
   )
 }
