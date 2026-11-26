@@ -162,7 +162,7 @@ export async function exportarPdf(dados: DadosExportacao): Promise<void> {
         },
         didDrawPage: () => rodape(),
       })
-      const docT = doc as jsPDF & { lastAutoTable?: { finalY: number } }
+      const docT = doc as { lastAutoTable?: { finalY: number } }
       y = (docT.lastAutoTable?.finalY ?? y) + 8
     }
 
