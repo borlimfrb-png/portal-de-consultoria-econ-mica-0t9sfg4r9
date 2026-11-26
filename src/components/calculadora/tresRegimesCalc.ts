@@ -31,6 +31,9 @@ import {
   totalCustosDespesas,
   temIcmsIpi,
   linhaImpostoLiquido,
+  basePisCofinsEditadaDe,
+  basePisCofinsRealDe,
+  linhaBasePisCofinsReal,
 } from './creditosDebitosCalc'
 import type { BlocoComum, PctPisCofinsRegime } from './creditosDebitosCalc'
 import type { ResultadoImpostoLiquido } from './creditosDebitosCalc'
@@ -64,6 +67,10 @@ export interface SaldoTributo {
 export interface ApuracaoLucroReal {
   /** Débito, crédito e saldo de PIS, Cofins, ICMS e IPI (nesta ordem). */
   tributos: Record<'pis' | 'cofins' | 'icms' | 'ipi', SaldoTributo>
+  /** Base de cálculo do PIS/Cofins do mês (faturamento − ICMS das vendas, ou manual). */
+  basePisCofins: number
+  /** true quando a base veio do padrão automático (faturamento − ICMS das vendas). */
+  basePisCofinsAutomatica: boolean
   /** Total dos tributos líquidos (b) — inclui o crédito de custos/despesas. */
   totalTributosLiquidados: number
 
@@ -105,6 +112,8 @@ interface EntradaApuracao {
   pctCreditos: number
   pctIss: number
   compras: number
+  basePisCofins: number
+  basePisCofinsAutomatica: boolean
   pis: ResultadoImpostoLiquido
   cofins: ResultadoImpostoLiquido
   icms: ResultadoImpostoLiquido
@@ -132,6 +141,10 @@ export function lucroRealApuracao(x: EntradaApuracao): ApuracaoLucroReal {
     icms: saldoDe(x.icms),
     ipi: saldoDe(x.ipi),
   }
+
+  // Base de cálculo do PIS/Cofins do mês (padrão: faturamento − ICMS das vendas).
+  const basePisCofins = Math.max(0, x.basePisCofins)
+  const basePisCofinsAutomatica = x.basePisCofinsAutomatica
 
   // ISS sobre a receita de serviços (entra nos tributos líquidos e no total).
   const iss = (x.receitaServicos * x.pctIss) / 100
@@ -173,6 +186,8 @@ export function lucroRealApuracao(x: EntradaApuracao): ApuracaoLucroReal {
 
   return {
     tributos,
+    basePisCofins,
+    basePisCofinsAutomatica,
     totalTributosLiquidados,
     receitaTotal: x.receitaTotal,
     custosDedutiveis: x.custosDedutiveis,
@@ -333,6 +348,12 @@ export interface ResultadoLucroReal {
   // Bloco CRÉDITOS / DÉBITOS — PIS, Cofins, ICMS e IPI apurados com os
   // percentuais INFORMADOS pelo usuário (débito sobre vendas − crédito sobre compras).
   comprasMateriaPrima: number
+  /** Base de cálculo do PIS/Cofins (faturamento − ICMS das vendas, ou manual). */
+  basePisCofins: number
+  /** true quando a base veio do padrão automático (não digitada pelo usuário). */
+  basePisCofinsAutomatica: boolean
+  /** Valor exibido no campo da base (manual ou automático), string pt-BR. */
+  basePisCofinsDisplay: string
   pis: ResultadoImpostoLiquido
   cofins: ResultadoImpostoLiquido
   icms: ResultadoImpostoLiquido
@@ -364,23 +385,31 @@ export function calcularLucroReal(e: EntradaTresRegimes): ResultadoLucroReal {
   // Bloco CRÉDITOS / DÉBITOS — percentuais informados pelo usuário.
   const compras = comprasDe(e.blocoComum)
   const pctReal = e.pctPisCofinsReal
-  const pis = calcularImpostoLiquido(
-    receitaTotal,
-    compras,
-    pctReal.pctPisVendas,
-    pctReal.pctPisCompras,
-  )
-  const cofins = calcularImpostoLiquido(
-    receitaTotal,
-    compras,
-    pctReal.pctCofinsVendas,
-    pctReal.pctCofinsCompras,
-  )
   const icms = calcularImpostoLiquido(
     receitaTotal,
     compras,
     e.blocoComum.pctIcmsVendas,
     e.blocoComum.pctIcmsCompras,
+  )
+
+  // Base de cálculo do PIS/Cofins: padrão automático = FATURAMENTO (receita de
+  // comércio + serviços) − ICMS das vendas; se o usuário digitou um valor no
+  // campo do bloco Débitos, ele prevalece sobre o automático.
+  const basePisCofinsAutomatica = !basePisCofinsEditadaDe(e.blocoComum)
+  const basePisCofinsDisplay = basePisCofinsRealDe(e.blocoComum, receitaTotal, icms.debito)
+  const basePisCofins = parseCurrency(basePisCofinsDisplay)
+
+  const pis = calcularImpostoLiquido(
+    basePisCofins,
+    compras,
+    pctReal.pctPisVendas,
+    pctReal.pctPisCompras,
+  )
+  const cofins = calcularImpostoLiquido(
+    basePisCofins,
+    compras,
+    pctReal.pctCofinsVendas,
+    pctReal.pctCofinsCompras,
   )
   const ipi = calcularImpostoLiquido(
     receitaTotal,
@@ -408,6 +437,8 @@ export function calcularLucroReal(e: EntradaTresRegimes): ResultadoLucroReal {
     pctCreditos,
     pctIss,
     compras,
+    basePisCofins,
+    basePisCofinsAutomatica,
     pis,
     cofins,
     icms,
@@ -434,6 +465,9 @@ export function calcularLucroReal(e: EntradaTresRegimes): ResultadoLucroReal {
     iss: apuracao.iss,
     pctIss,
     comprasMateriaPrima: compras,
+    basePisCofins,
+    basePisCofinsAutomatica,
+    basePisCofinsDisplay,
     pis,
     cofins,
     icms,
@@ -659,9 +693,25 @@ export function calcularMemoriaLucroReal(r: ResultadoLucroReal): LinhaMemoria[] 
     },
   ]
 
-  const linhaSaldo = (numero: string, nome: string, s: SaldoTributo, creditoExtra?: string) => {
+  // Base de cálculo do PIS/Cofins (padrão: faturamento − ICMS das vendas).
+  linhas.push(
+    linhaBasePisCofinsReal(
+      a.basePisCofins,
+      a.basePisCofinsAutomatica,
+      r.receitaTotal,
+      r.icms.debito,
+    ),
+  )
+
+  const linhaSaldo = (
+    numero: string,
+    nome: string,
+    s: SaldoTributo,
+    creditoExtra?: string,
+    nomeBase?: string,
+  ) => {
     linhas.push({
-      rotulo: `${numero} ${nome} — DÉBITO = receita × ${formatarPercentual(s.pctDebito)}`,
+      rotulo: `${numero} ${nome} — DÉBITO = ${nomeBase ?? 'receita'} × ${formatarPercentual(s.pctDebito)}`,
       valor: formatarBRL(s.debito),
     })
     linhas.push({
@@ -675,8 +725,8 @@ export function calcularMemoriaLucroReal(r: ResultadoLucroReal): LinhaMemoria[] 
     })
   }
 
-  linhaSaldo('1.', 'PIS', a.tributos.pis)
-  linhaSaldo('2.', 'Cofins', a.tributos.cofins)
+  linhaSaldo('1.', 'PIS', a.tributos.pis, undefined, 'base PIS/Cofins')
+  linhaSaldo('2.', 'Cofins', a.tributos.cofins, undefined, 'base PIS/Cofins')
   linhaSaldo('3.', 'ICMS', a.tributos.icms)
   linhaSaldo('4.', 'IPI', a.tributos.ipi)
 

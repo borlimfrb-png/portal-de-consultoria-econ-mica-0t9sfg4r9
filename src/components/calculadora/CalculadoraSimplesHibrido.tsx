@@ -390,6 +390,10 @@ export default function CalculadoraSimplesHibrido() {
                 setPctReal={setRealPct}
                 pctPresumido={pctPresumido}
                 setPctPresumido={setPresumidoPct}
+                basePisCofinsDisplay={resultadoReal.basePisCofinsDisplay}
+                basePisCofinsAutomatica={resultadoReal.basePisCofinsAutomatica}
+                receitaTotal={resultadoReal.receitaTotal}
+                icmsDebito={resultadoReal.icms.debito}
               />
             </div>
             <p className="mt-4 text-[11px] text-slate-500 leading-relaxed flex items-start gap-1.5">

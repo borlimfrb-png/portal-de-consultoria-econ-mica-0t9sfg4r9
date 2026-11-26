@@ -331,6 +331,10 @@ export default function CalculadoraTresRegimes() {
             setPctReal={setPctReal}
             pctPresumido={entrada.pctPisCofinsPresumido}
             setPctPresumido={setPctPresumido}
+            basePisCofinsDisplay={real.basePisCofinsDisplay}
+            basePisCofinsAutomatica={real.basePisCofinsAutomatica}
+            receitaTotal={real.receitaTotal}
+            icmsDebito={real.icms.debito}
           />
           <p className="mt-4 text-[11px] text-slate-500 leading-relaxed flex items-start gap-1.5">
             <Info className="w-3.5 h-3.5 text-[#16A34A] shrink-0 mt-0.5" />

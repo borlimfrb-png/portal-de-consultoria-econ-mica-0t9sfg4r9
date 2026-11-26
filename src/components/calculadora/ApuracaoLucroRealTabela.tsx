@@ -23,7 +23,7 @@ function Linha({ rotulo, valor, forte }: { rotulo: string; valor: string; forte?
   )
 }
 
-function SecaoTributo({ nome, s }: { nome: string; s: SaldoTributo }) {
+function SecaoTributo({ nome, s, base }: { nome: string; s: SaldoTributo; base?: number }) {
   return (
     <div>
       <div className={LINHA_CLS}>
@@ -31,8 +31,14 @@ function SecaoTributo({ nome, s }: { nome: string; s: SaldoTributo }) {
         <span className="sr-only">débito, crédito e saldo</span>
       </div>
       <div className="pl-3 space-y-1">
+        {base !== undefined && (
+          <Linha
+            rotulo="   Base de cálculo (faturamento − ICMS das vendas, ou valor informado)"
+            valor={formatarBRL(base)}
+          />
+        )}
         <Linha
-          rotulo={`DÉBITO = receita × ${formatarPercentual(s.pctDebito)}`}
+          rotulo={`DÉBITO = base PIS/Cofins × ${formatarPercentual(s.pctDebito)}`}
           valor={formatarBRL(s.debito)}
         />
         <Linha
@@ -62,14 +68,30 @@ export function ApuracaoLucroRealTabela({ apuracao }: { apuracao: ApuracaoLucroR
         <span className={SECAO_CLS}>Apuração do Lucro Real — mês</span>
       </div>
 
+      {/* a0. Base de cálculo do PIS/Cofins */}
+      <div className="space-y-1">
+        <p className={SECAO_CLS}>1. Base de cálculo do PIS/Cofins</p>
+        <div className="pl-3 space-y-1">
+          <Linha
+            rotulo={
+              a.basePisCofinsAutomatica
+                ? 'Base PIS/Cofins = faturamento − ICMS das vendas (padrão automático, editável no bloco Débitos)'
+                : 'Base PIS/Cofins = valor informado manualmente (editável no bloco Débitos)'
+            }
+            valor={formatarBRL(a.basePisCofins)}
+            forte
+          />
+        </div>
+      </div>
+
       {/* a. Tributos sobre vendas e compras: débito, crédito e saldo */}
       <div className="space-y-3">
         <p className={SECAO_CLS}>
-          1. Tributos sobre vendas e compras — débito (vendas) − crédito (compras)
+          2. Tributos sobre vendas e compras — débito (base/compras) − crédito (compras)
         </p>
         <div className="pl-3 space-y-3">
-          <SecaoTributo nome="PIS" s={a.tributos.pis} />
-          <SecaoTributo nome="Cofins" s={a.tributos.cofins} />
+          <SecaoTributo nome="PIS" s={a.tributos.pis} base={a.basePisCofins} />
+          <SecaoTributo nome="Cofins" s={a.tributos.cofins} base={a.basePisCofins} />
           <SecaoTributo nome="ICMS" s={a.tributos.icms} />
           <SecaoTributo nome="IPI" s={a.tributos.ipi} />
         </div>
@@ -78,7 +100,7 @@ export function ApuracaoLucroRealTabela({ apuracao }: { apuracao: ApuracaoLucroR
       {/* b. Total dos tributos líquidos */}
       <div className="border-t border-stone-200 pt-3">
         <Linha
-          rotulo="2. Total dos tributos líquidos (PIS + Cofins + ICMS + IPI + ISS)"
+          rotulo="3. Total dos tributos líquidos (PIS + Cofins + ICMS + IPI + ISS)"
           valor={formatarBRL(a.totalTributosLiquidados)}
           forte
         />
@@ -86,7 +108,7 @@ export function ApuracaoLucroRealTabela({ apuracao }: { apuracao: ApuracaoLucroR
 
       {/* c. Demonstração do resultado — lucro apurado */}
       <div className="space-y-1 border-t border-stone-200 pt-3">
-        <p className={SECAO_CLS}>3. Demonstração do resultado — lucro contábil do mês</p>
+        <p className={SECAO_CLS}>4. Demonstração do resultado — lucro contábil do mês</p>
         <div className="pl-3 space-y-1">
           <Linha
             rotulo="Receita bruta total (comércio + serviços)"
@@ -127,7 +149,7 @@ export function ApuracaoLucroRealTabela({ apuracao }: { apuracao: ApuracaoLucroR
 
       {/* d. IRPJ + adicional + CSLL sobre o lucro apurado */}
       <div className="space-y-1 border-t border-stone-200 pt-3">
-        <p className={SECAO_CLS}>4. Apuração do IRPJ e da CSLL — sobre o lucro apurado</p>
+        <p className={SECAO_CLS}>5. Apuração do IRPJ e da CSLL — sobre o lucro apurado</p>
         <div className="pl-3 space-y-1">
           {a.tevePrejuizo ? (
             <>
@@ -162,7 +184,7 @@ export function ApuracaoLucroRealTabela({ apuracao }: { apuracao: ApuracaoLucroR
       <div className="space-y-1 border-t border-stone-200 pt-3">
         <div className="flex items-baseline justify-between gap-3">
           <span className="font-mono text-xs font-bold uppercase tracking-wide text-[#082852] sm:text-sm">
-            5. Impostos totais do período
+            6. Impostos totais do período
           </span>
           <span className="whitespace-nowrap text-sm font-extrabold tabular-nums text-[#082852] sm:text-base">
             {formatarBRL(a.totalImpostos)}

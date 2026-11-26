@@ -5,7 +5,9 @@
 // 100% no navegador, sem persistência.
 
 import { Info, Package, Percent, Receipt } from 'lucide-react'
+import { formatarBRL } from './cbsIbsCalc'
 import type { BlocoComum, PctPisCofinsRegime } from './creditosDebitosCalc'
+import { basePisCofinsEditadaDe } from './creditosDebitosCalc'
 
 export const INPUT_CLS_BLOCOS =
   'w-full bg-white border border-stone-300 rounded-lg px-3 py-2 text-sm text-slate-800 font-mono tabular-nums focus:outline-none focus:ring-2 focus:ring-[#16A34A]/40 focus:border-[#16A34A]'
@@ -82,6 +84,14 @@ interface Props {
   setPctReal: (campo: keyof PctPisCofinsRegime, v: string) => void
   pctPresumido: PctPisCofinsRegime
   setPctPresumido: (campo: keyof PctPisCofinsRegime, v: string) => void
+  /** Base de cálculo do PIS/Cofins (string pt-BR) — automática ou digitada. */
+  basePisCofinsDisplay: string
+  /** true quando a base veio do padrão automático (faturamento − ICMS das vendas). */
+  basePisCofinsAutomatica: boolean
+  /** Faturamento total (comércio + serviços) — mostrado na dica do campo. */
+  receitaTotal: number
+  /** Débito de ICMS sobre as vendas — mostrado na dica do campo. */
+  icmsDebito: number
 }
 
 export function BlocosCreditosDebitos({
@@ -91,7 +101,14 @@ export function BlocosCreditosDebitos({
   setPctReal,
   pctPresumido,
   setPctPresumido,
+  basePisCofinsDisplay,
+  basePisCofinsAutomatica,
+  receitaTotal,
+  icmsDebito,
 }: Props) {
+  const hintBase = basePisCofinsAutomatica
+    ? `Padrão automático: faturamento ${formatarBRL(receitaTotal)} − ICMS das vendas ${formatarBRL(icmsDebito)} = ${basePisCofinsDisplay}. Digite outro valor para usar uma base própria no Lucro Real.`
+    : `Valor informado manualmente. Apague o campo para voltar ao padrão automático (faturamento ${formatarBRL(receitaTotal)} − ICMS das vendas ${formatarBRL(icmsDebito)}).`
   return (
     <div className="mt-4 pt-4 border-t border-stone-200 space-y-5">
       {/* ------------------------- CRÉDITOS ------------------------- */}
@@ -153,6 +170,14 @@ export function BlocosCreditosDebitos({
             Débitos — percentuais sobre as vendas
           </span>
         </div>
+        {/* Base de cálculo do PIS/Cofins do Lucro Real — editável, padrão
+            automático = faturamento − ICMS das vendas. */}
+        <CampoMoedaB
+          label="Base de cálculo do PIS/Cofins (Lucro Real)"
+          valor={basePisCofinsDisplay}
+          onChange={(v) => setBlocoComum('basePisCofinsManual', v)}
+          hint={hintBase}
+        />
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           <CampoPercentualB
             label="PIS s/ vendas (Real)"
@@ -190,8 +215,9 @@ export function BlocosCreditosDebitos({
         <p className="mt-3 text-[10px] text-slate-500 leading-relaxed flex items-start gap-1.5">
           <Info className="w-3 h-3 shrink-0 mt-0.5" />
           <span>
-            Débito = receita bruta × % informado; crédito = compras × % informado. O imposto pago é
-            a diferença (nunca negativa).
+            Débito = receita bruta × % informado (no Lucro Real, PIS e Cofins incidem sobre a{' '}
+            <strong>base de cálculo</strong> acima); crédito = compras × % informado. O imposto pago
+            é a diferença (nunca negativa).
           </span>
         </p>
       </div>

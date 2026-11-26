@@ -32,6 +32,11 @@ export interface BlocoComum {
   pctIcmsVendas: string
   /** % de débito de IPI sobre as vendas (0% para quem não é indústria). */
   pctIpiVendas: string
+  /**
+   * Base de cálculo do PIS/Cofins do LUCRO REAL, editável (string pt-BR).
+   * Vazia = automático: faturamento − ICMS das vendas. Só afeta o Lucro Real.
+   */
+  basePisCofinsManual: string
   /** Custo das matérias-primas consumido no mês (dedutível no Lucro Real). */
   custoMateriaPrima: string
   /** Despesas fixas do mês (administrativas, aluguéis, folha administrativa…). */
@@ -57,7 +62,7 @@ export interface PctPisCofinsRegime {
 /**
  * Padrão inicial: compras e custos zerados e ICMS/IPI zerados — assim os
  * resultados dos regimes permanecem EXATAMENTE os de antes até o usuário
- * preencher os campos novos.
+ * preencher os campos novos. basePisCofinsManual vazio = automático.
  */
 export const blocoComumInicial: BlocoComum = {
   comprasMateriaPrima: '0,00',
@@ -65,6 +70,7 @@ export const blocoComumInicial: BlocoComum = {
   pctIpiCompras: '10,00',
   pctIcmsVendas: '0,00',
   pctIpiVendas: '0,00',
+  basePisCofinsManual: '',
   custoMateriaPrima: '0,00',
   despesasFixas: '0,00',
   despesasFinanceiras: '0,00',
@@ -78,10 +84,52 @@ export const blocoComumCasoReal: BlocoComum = {
   pctIpiCompras: '10,00',
   pctIcmsVendas: '18,00',
   pctIpiVendas: '0,00',
+  // Automático: faturamento R$ 180 mil − ICMS de vendas (18% = R$ 32.400) = R$ 147.600.
+  basePisCofinsManual: '',
   custoMateriaPrima: '50.000,00',
   despesasFixas: '25.000,00',
   despesasFinanceiras: '5.000,00',
   outrasDespesas: '10.000,00',
+}
+
+/** true quando o usuário digitou uma base de PIS/Cofins manual (Lucro Real). */
+export function basePisCofinsEditadaDe(bloco: BlocoComum): boolean {
+  return bloco.basePisCofinsManual.trim() !== ''
+}
+
+/**
+ * Base de cálculo do PIS/Cofins do LUCRO REAL (string pt-BR) a partir do estado
+ * existente: quando o usuário digitou um valor manual, ele manda; quando não,
+ * o padrão automático é FATURAMENTO (receita de comércio + serviços do mês)
+ * menos o ICMS das vendas. Usada por tresRegimesCalc.ts e pelas duas telas.
+ */
+export function basePisCofinsRealDe(
+  bloco: BlocoComum,
+  receitaTotal: number,
+  icmsDebito: number,
+): string {
+  if (basePisCofinsEditadaDe(bloco)) return bloco.basePisCofinsManual
+  const automatica = Math.max(0, receitaTotal - icmsDebito)
+  return automatica.toLocaleString('pt-BR', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  })
+}
+
+/** Linha da memória de cálculo da base do PIS/Cofins do Lucro Real. */
+export function linhaBasePisCofinsReal(
+  base: number,
+  automatica: boolean,
+  receitaTotal: number,
+  icmsDebito: number,
+): LinhaMemoria {
+  return {
+    rotulo: automatica
+      ? `Base PIS/Cofins = faturamento ${formatarBRL(receitaTotal)} − ICMS das vendas ${formatarBRL(icmsDebito)}`
+      : 'Base PIS/Cofins = valor informado manualmente (editável no bloco Débitos)',
+    valor: formatarBRL(base),
+    destaque: 'base',
+  }
 }
 
 /** Lucro Real: PIS 1,65% e Cofins 7,6% não cumulativos, com crédito sobre compras. */
@@ -113,7 +161,7 @@ export interface ResultadoImpostoLiquido {
   liquido: number
 }
 
-/** Débito (sobre a receita) − crédito (sobre as compras) de um imposto. */
+/** Débito (sobre a receita OU sobre a base informada) − crédito (sobre as compras). */
 export function calcularImpostoLiquido(
   receitaTotal: number,
   compras: number,
